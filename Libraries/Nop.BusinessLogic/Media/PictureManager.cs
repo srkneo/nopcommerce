@@ -585,13 +585,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Media
             extension = CommonHelper.EnsureMaximumLength(extension, 20);
             
             pictureBinary = ValidatePicture(pictureBinary);
-                        
-            var picture = new Picture();
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var picture = context.Pictures.CreateObject();
             picture.PictureBinary = (PictureManager.StoreInDB ? pictureBinary : new byte[0]);
             picture.Extension = extension;
             picture.IsNew = isNew;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.Pictures.AddObject(picture);
             context.SaveChanges();
 

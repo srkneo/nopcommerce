@@ -186,14 +186,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
 
             zip = CommonHelper.EnsureMaximumLength(zip, 50);
 
-            var taxRate = new TaxRate();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var taxRate = context.TaxRates.CreateObject();
             taxRate.TaxCategoryId = taxCategoryId;
             taxRate.CountryId = countryId;
             taxRate.StateProvinceId = stateProvinceId;
             taxRate.Zip = zip;
             taxRate.Percentage = percentage;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.TaxRates.AddObject(taxRate);
             context.SaveChanges();
             

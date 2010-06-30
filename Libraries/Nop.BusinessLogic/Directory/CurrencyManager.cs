@@ -211,7 +211,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
                 throw new NopException("Specified display locale culture is not supported");
             }
 
-            var currency = new Currency();
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var currency = context.Currencies.CreateObject();
             currency.Name = name;
             currency.CurrencyCode = currencyCode;
             currency.Rate = rate;
@@ -222,7 +223,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
             currency.CreatedOn = createdOn;
             currency.UpdatedOn = updatedOn;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.Currencies.AddObject(currency);
             context.SaveChanges();
 

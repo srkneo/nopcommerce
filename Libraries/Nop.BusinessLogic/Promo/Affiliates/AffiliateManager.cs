@@ -119,7 +119,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Affiliates
             stateProvince = CommonHelper.EnsureMaximumLength(stateProvince, 100);
             zipPostalCode = CommonHelper.EnsureMaximumLength(zipPostalCode, 10);
 
-            var affiliate = new Affiliate();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var affiliate = context.Affiliates.CreateObject();
             affiliate.FirstName = firstName;
             affiliate.LastName = lastName;
             affiliate.MiddleName = middleName;
@@ -136,7 +138,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Affiliates
             affiliate.Deleted = deleted;
             affiliate.Active = active;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.Affiliates.AddObject(affiliate);
             context.SaveChanges();
             return affiliate;

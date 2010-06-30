@@ -415,7 +415,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             metaTitle = CommonHelper.EnsureMaximumLength(metaTitle, 400);
             seName = CommonHelper.EnsureMaximumLength(seName, 100);
 
-            var product = new Product();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var product = context.Products.CreateObject();
             product.Name = name;
             product.ShortDescription = shortDescription;
             product.FullDescription = fullDescription;
@@ -436,7 +438,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             product.CreatedOn = createdOn;
             product.UpdatedOn = updatedOn;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.Products.AddObject(product);
             context.SaveChanges();
 
@@ -619,7 +620,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             metaTitle = CommonHelper.EnsureMaximumLength(metaTitle, 400);
             seName = CommonHelper.EnsureMaximumLength(seName, 100);
 
-            var productLocalized = new ProductLocalized();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var productLocalized = context.ProductLocalized.CreateObject();
             productLocalized.ProductId = productId;
             productLocalized.LanguageId = languageId;
             productLocalized.Name = name;
@@ -630,7 +633,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             productLocalized.MetaTitle = metaTitle;
             productLocalized.SEName = seName;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.ProductLocalized.AddObject(productLocalized);
             context.SaveChanges();
 
@@ -1561,7 +1563,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             adminComment = CommonHelper.EnsureMaximumLength(adminComment, 4000);
             manufacturerPartNumber = CommonHelper.EnsureMaximumLength(manufacturerPartNumber, 100);
 
-            var productVariant = new ProductVariant();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var productVariant = context.ProductVariants.CreateObject();
             productVariant.ProductId = productId;
             productVariant.Name = name;
             productVariant.SKU = sku;
@@ -1618,7 +1622,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             productVariant.CreatedOn = createdOn;
             productVariant.UpdatedOn = updatedOn;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.ProductVariants.AddObject(productVariant);
             context.SaveChanges();
 
@@ -1949,13 +1952,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         {
             name = CommonHelper.EnsureMaximumLength(name, 400);
 
-            var productVariantLocalized = new ProductVariantLocalized();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var productVariantLocalized = context.ProductVariantLocalized.CreateObject();
             productVariantLocalized.ProductVariantId = productVariantId;
             productVariantLocalized.LanguageId = languageId;
             productVariantLocalized.Name = name;
             productVariantLocalized.Description = description;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.ProductVariantLocalized.AddObject(productVariantLocalized);
             context.SaveChanges();
 
@@ -2223,12 +2227,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         public static ProductPicture InsertProductPicture(int productId,
             int pictureId, int displayOrder)
         {
-            var productPicture = new ProductPicture();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var productPicture = context.ProductPictures.CreateObject();
             productPicture.ProductId = productId;
             productPicture.PictureId = pictureId;
             productPicture.DisplayOrder = displayOrder;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.ProductPictures.AddObject(productPicture);
             context.SaveChanges();
 
@@ -2430,7 +2435,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             ipAddress = CommonHelper.EnsureMaximumLength(ipAddress, 100);
             title = CommonHelper.EnsureMaximumLength(title, 1000);
 
-            var productReview = new ProductReview();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var productReview = context.ProductReviews.CreateObject();
             productReview.ProductId = productId;
             productReview.CustomerId = customerId;
             productReview.IPAddress = ipAddress;
@@ -2442,7 +2449,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             productReview.IsApproved = isApproved;
             productReview.CreatedOn = createdOn;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.ProductReviews.AddObject(productReview);
             context.SaveChanges();
                         
@@ -2539,7 +2545,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             context.SaveChanges();
 
             //insert new helpfulness
-            var newPrh = new ProductReviewHelpfulness();
+            var newPrh = context.ProductReviewHelpfulness.CreateObject();
             newPrh.ProductReviewId = productReviewId;
             newPrh.CustomerId = NopContext.Current.User.CustomerId;
             newPrh.WasHelpful = wasHelpful;
@@ -2677,12 +2683,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         public static RelatedProduct InsertRelatedProduct(int productId1, 
             int productId2, int displayOrder)
         {
-            var relatedProduct = new RelatedProduct();
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var relatedProduct = context.RelatedProducts.CreateObject();
             relatedProduct.ProductId1 = productId1;
             relatedProduct.ProductId2 = productId2;
             relatedProduct.DisplayOrder = displayOrder;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.RelatedProducts.AddObject(relatedProduct);
             context.SaveChanges();
 
@@ -2844,7 +2850,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             body = CommonHelper.EnsureMaximumLength(body, 500);
             footer = CommonHelper.EnsureMaximumLength(footer, 500);
 
-            var pricelist = new Pricelist();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var pricelist = context.Pricelists.CreateObject();
             pricelist.ExportModeId = (int)exportMode;
             pricelist.ExportTypeId = (int)exportType;
             pricelist.AffiliateId = affiliateId;
@@ -2864,7 +2872,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             pricelist.CreatedOn = createdOn;
             pricelist.UpdatedOn = updatedOn;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.Pricelists.AddObject(pricelist);
             context.SaveChanges();
 
@@ -3012,14 +3019,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             int pricelistId, PriceAdjustmentTypeEnum priceAdjustmentType,
             decimal priceAdjustment, DateTime updatedOn)
         {
-            var productVariantPricelist = new ProductVariantPricelist();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var productVariantPricelist = context.ProductVariantPricelists.CreateObject();
             productVariantPricelist.ProductVariantId = productVariantId;
             productVariantPricelist.PricelistId = pricelistId;
             productVariantPricelist.PriceAdjustmentTypeId = (int)priceAdjustmentType;
             productVariantPricelist.PriceAdjustment = priceAdjustment;
             productVariantPricelist.UpdatedOn = updatedOn;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.ProductVariantPricelists.AddObject(productVariantPricelist);
             context.SaveChanges();
             return productVariantPricelist;
@@ -3149,12 +3157,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         public static TierPrice InsertTierPrice(int productVariantId, 
             int quantity, decimal price)
         {
-            var tierPrice = new TierPrice();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var tierPrice = context.TierPrices.CreateObject();
             tierPrice.ProductVariantId = productVariantId;
             tierPrice.Quantity = quantity;
             tierPrice.Price = price;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.TierPrices.AddObject(tierPrice);
             context.SaveChanges();
 
@@ -3286,12 +3295,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
         public static CustomerRoleProductPrice InsertCustomerRoleProductPrice(int customerRoleId,
             int productVariantId, decimal price)
         {
-            var customerRoleProductPrice = new CustomerRoleProductPrice();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var customerRoleProductPrice = context.CustomerRoleProductPrices.CreateObject();
             customerRoleProductPrice.CustomerRoleId = customerRoleId;
             customerRoleProductPrice.ProductVariantId = productVariantId;
             customerRoleProductPrice.Price = price;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.CustomerRoleProductPrices.AddObject(customerRoleProductPrice);
             context.SaveChanges();
 
@@ -3412,11 +3422,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
 
             name = CommonHelper.EnsureMaximumLength(name, 100);
 
-            var productTag = new ProductTag();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var productTag = context.ProductTags.CreateObject();
             productTag.Name = name;
             productTag.ProductCount = productCount;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.ProductTags.AddObject(productTag);
             context.SaveChanges();
 

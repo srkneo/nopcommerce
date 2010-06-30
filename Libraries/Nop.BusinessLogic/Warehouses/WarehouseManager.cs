@@ -113,7 +113,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Warehouses
             stateProvince = CommonHelper.EnsureMaximumLength(stateProvince, 100);
             zipPostalCode = CommonHelper.EnsureMaximumLength(zipPostalCode, 10);
 
-            var warehouse = new Warehouse();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var warehouse = context.Warehouses.CreateObject();
             warehouse.Name = name;
             warehouse.PhoneNumber = phoneNumber;
             warehouse.Email = email;
@@ -128,7 +130,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Warehouses
             warehouse.CreatedOn = createdOn;
             warehouse.UpdatedOn = updatedOn;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.Warehouses.AddObject(warehouse);
             context.SaveChanges();
 

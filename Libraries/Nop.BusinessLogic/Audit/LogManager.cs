@@ -164,7 +164,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
 
             DateTime createdOn = DateTime.UtcNow;
 
-            var log = new Log();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var log = context.Log.CreateObject();
             log.LogTypeId = (int)logType;
             log.Severity = severity;
             log.Message = message;
@@ -175,7 +177,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
             log.ReferrerUrl = referrerUrl;
             log.CreatedOn = createdOn;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.Log.AddObject(log);
             context.SaveChanges();
 

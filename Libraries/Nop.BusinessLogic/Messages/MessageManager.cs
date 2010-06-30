@@ -434,7 +434,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             bccEmailAddresses = CommonHelper.EnsureMaximumLength(bccEmailAddresses, 200);
             subject = CommonHelper.EnsureMaximumLength(subject, 200);
 
-            var localizedMessageTemplate = new LocalizedMessageTemplate();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var localizedMessageTemplate = context.LocalizedMessageTemplates.CreateObject();
             localizedMessageTemplate.MessageTemplateId = messageTemplateId;
             localizedMessageTemplate.LanguageId = languageId;
             localizedMessageTemplate.BccEmailAddresses = bccEmailAddresses;
@@ -442,7 +444,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             localizedMessageTemplate.Body = body;
             localizedMessageTemplate.IsActive = isActive;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.LocalizedMessageTemplates.AddObject(localizedMessageTemplate);
             context.SaveChanges();
 
@@ -630,7 +631,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             bcc = CommonHelper.EnsureMaximumLength(bcc, 500);
             subject = CommonHelper.EnsureMaximumLength(subject, 500);
 
-            var queuedEmail = new QueuedEmail();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var queuedEmail = context.QueuedEmails.CreateObject();
             queuedEmail.Priority = priority;
             queuedEmail.From = from;
             queuedEmail.FromName = fromName;
@@ -644,7 +647,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             queuedEmail.SendTries = sendTries;
             queuedEmail.SentOn = sentOn;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.QueuedEmails.AddObject(queuedEmail);
             context.SaveChanges();
 
@@ -723,13 +725,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Messages
             email = email.Trim();
             email = CommonHelper.EnsureMaximumLength(email, 255);
 
-            var newsLetterSubscription = new NewsLetterSubscription();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var newsLetterSubscription = context.NewsLetterSubscriptions.CreateObject();
             newsLetterSubscription.NewsLetterSubscriptionGuid = Guid.NewGuid();
             newsLetterSubscription.Email = email;
             newsLetterSubscription.Active = active;
             newsLetterSubscription.CreatedOn = DateTime.UtcNow;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.NewsLetterSubscriptions.AddObject(newsLetterSubscription);
             context.SaveChanges();
 

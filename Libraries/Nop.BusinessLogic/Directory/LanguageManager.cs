@@ -146,14 +146,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
             languageCulture = CommonHelper.EnsureMaximumLength(languageCulture, 20);
             flagImageFileName = CommonHelper.EnsureMaximumLength(flagImageFileName, 50);
 
-            var language = new Language();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var language = context.Languages.CreateObject();
             language.Name = name;
             language.LanguageCulture = languageCulture;
             language.FlagImageFileName = flagImageFileName;
             language.Published = published;
             language.DisplayOrder = displayOrder;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.Languages.AddObject(language);
             context.SaveChanges();
 

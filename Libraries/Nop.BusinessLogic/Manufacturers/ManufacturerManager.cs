@@ -181,7 +181,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
             seName = CommonHelper.EnsureMaximumLength(seName, 100);
             priceRanges = CommonHelper.EnsureMaximumLength(priceRanges, 400);
 
-            var manufacturer = new Manufacturer();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var manufacturer = context.Manufacturers.CreateObject();
             manufacturer.Name = name;
             manufacturer.Description = description;
             manufacturer.TemplateId = templateId;
@@ -198,7 +200,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
             manufacturer.CreatedOn = createdOn;
             manufacturer.UpdatedOn = updatedOn;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.Manufacturers.AddObject(manufacturer);
             context.SaveChanges();
 
@@ -358,7 +359,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
             metaTitle = CommonHelper.EnsureMaximumLength(metaTitle, 400);
             seName = CommonHelper.EnsureMaximumLength(seName, 100);
 
-            var manufacturerLocalized = new ManufacturerLocalized();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var manufacturerLocalized = context.ManufacturerLocalized.CreateObject();
             manufacturerLocalized.ManufacturerId = manufacturerId;
             manufacturerLocalized.LanguageId = languageId;
             manufacturerLocalized.Name = name;
@@ -368,7 +371,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
             manufacturerLocalized.MetaTitle = metaTitle;
             manufacturerLocalized.SEName = seName;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.ManufacturerLocalized.AddObject(manufacturerLocalized);
             context.SaveChanges();
 
@@ -566,13 +568,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
         public static ProductManufacturer InsertProductManufacturer(int productId, 
             int manufacturerId, bool isFeaturedProduct, int displayOrder)
         {
-            var productManufacturer = new ProductManufacturer();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var productManufacturer = context.ProductManufacturers.CreateObject();
             productManufacturer.ProductId = productId;
             productManufacturer.ManufacturerId = manufacturerId;
             productManufacturer.IsFeaturedProduct = isFeaturedProduct;
             productManufacturer.DisplayOrder = displayOrder;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.ProductManufacturers.AddObject(productManufacturer);
             context.SaveChanges();
 

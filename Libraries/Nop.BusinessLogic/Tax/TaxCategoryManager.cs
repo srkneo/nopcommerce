@@ -125,13 +125,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
         {
             name = CommonHelper.EnsureMaximumLength(name, 100);
 
-            var taxCategory = new TaxCategory();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var taxCategory = context.TaxCategories.CreateObject();
             taxCategory.Name = name;
             taxCategory.DisplayOrder = displayOrder;
             taxCategory.CreatedOn = createdOn;
             taxCategory.UpdatedOn = updatedOn;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.TaxCategories.AddObject(taxCategory);
             context.SaveChanges();
 

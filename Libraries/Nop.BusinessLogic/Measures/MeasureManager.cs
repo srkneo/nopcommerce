@@ -152,13 +152,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Measures
             name = CommonHelper.EnsureMaximumLength(name, 100);
             systemKeyword = CommonHelper.EnsureMaximumLength(systemKeyword, 100);
 
-            var measure = new MeasureDimension();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var measure = context.MeasureDimensions.CreateObject();
             measure.Name = name;
             measure.SystemKeyword = systemKeyword;
             measure.Ratio = ratio;
             measure.DisplayOrder = displayOrder;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.MeasureDimensions.AddObject(measure);
             context.SaveChanges();
 
@@ -379,13 +380,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Measures
             name = CommonHelper.EnsureMaximumLength(name, 100);
             systemKeyword = CommonHelper.EnsureMaximumLength(systemKeyword, 100);
 
-            var weight = new MeasureWeight();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var weight = context.MeasureWeights.CreateObject();
             weight.Name = name;
             weight.SystemKeyword = systemKeyword;
             weight.Ratio = ratio;
             weight.DisplayOrder = displayOrder;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.MeasureWeights.AddObject(weight);
             context.SaveChanges();
 

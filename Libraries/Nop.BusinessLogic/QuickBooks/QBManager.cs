@@ -100,7 +100,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.QuickBooks
         /// <returns>QBEntity</returns>
         public static QBEntity CreateQBEntity(string qbEntityId, EntityTypeEnum entityType, int nopEntityId, SynStateEnum synState, string seqNum)
         {
-            QBEntity entity = new QBEntity();
+            NopObjectContext context = ObjectContextHelper.CurrentObjectContext;
+            QBEntity entity = context.QBEntities.CreateObject();
 
             entity.QBEntityId = CommonHelper.EnsureMaximumLength(qbEntityId, 50);
             entity.EntityType = entityType;
@@ -110,10 +111,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.QuickBooks
             entity.CreatedOn = DateTime.UtcNow;
             entity.UpdatedOn = DateTime.UtcNow;
 
-            NopObjectContext context = ObjectContextHelper.CurrentObjectContext;
-
             context.QBEntities.AddObject(entity);
-
             context.SaveChanges();
 
             return entity;

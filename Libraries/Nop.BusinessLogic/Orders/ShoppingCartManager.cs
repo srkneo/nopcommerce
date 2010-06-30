@@ -151,7 +151,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             if (attributesXml == null)
                 attributesXml = string.Empty;
 
-            var shoppingCartItem = new ShoppingCartItem();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var shoppingCartItem = context.ShoppingCartItems.CreateObject();
             shoppingCartItem.ShoppingCartTypeId = (int)shoppingCartType;
             shoppingCartItem.CustomerSessionGuid = customerSessionGuid;
             shoppingCartItem.ProductVariantId = productVariantId;
@@ -161,7 +163,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             shoppingCartItem.CreatedOn = createdOn;
             shoppingCartItem.UpdatedOn = updatedOn;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.ShoppingCartItems.AddObject(shoppingCartItem);
             context.SaveChanges();
 

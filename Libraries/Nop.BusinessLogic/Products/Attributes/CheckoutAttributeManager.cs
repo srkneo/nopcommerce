@@ -145,7 +145,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
             name = CommonHelper.EnsureMaximumLength(name, 100);
             textPrompt = CommonHelper.EnsureMaximumLength(textPrompt, 300);
 
-            var checkoutAttribute = new CheckoutAttribute();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var checkoutAttribute = context.CheckoutAttributes.CreateObject();
             checkoutAttribute.Name = name;
             checkoutAttribute.TextPrompt = textPrompt;
             checkoutAttribute.IsRequired = isRequired;
@@ -155,7 +157,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
             checkoutAttribute.AttributeControlTypeId = attributeControlTypeId;
             checkoutAttribute.DisplayOrder = displayOrder;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.CheckoutAttributes.AddObject(checkoutAttribute);
             context.SaveChanges();
 
@@ -286,13 +287,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
             name = CommonHelper.EnsureMaximumLength(name, 100);
             textPrompt = CommonHelper.EnsureMaximumLength(textPrompt, 300);
 
-            var checkoutAttributeLocalized = new CheckoutAttributeLocalized();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var checkoutAttributeLocalized = context.CheckoutAttributeLocalized.CreateObject();
             checkoutAttributeLocalized.CheckoutAttributeId = checkoutAttributeId;
             checkoutAttributeLocalized.LanguageId = languageId;
             checkoutAttributeLocalized.Name = name;
             checkoutAttributeLocalized.TextPrompt = textPrompt;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.CheckoutAttributeLocalized.AddObject(checkoutAttributeLocalized);
             context.SaveChanges();
 
@@ -444,7 +446,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         {
             name = CommonHelper.EnsureMaximumLength(name, 100);
 
-            var checkoutAttributeValue = new CheckoutAttributeValue();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var checkoutAttributeValue = context.CheckoutAttributeValues.CreateObject();
             checkoutAttributeValue.CheckoutAttributeId = checkoutAttributeId;
             checkoutAttributeValue.Name = name;
             checkoutAttributeValue.PriceAdjustment = priceAdjustment;
@@ -452,7 +456,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
             checkoutAttributeValue.IsPreSelected = isPreSelected;
             checkoutAttributeValue.DisplayOrder = displayOrder;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.CheckoutAttributeValues.AddObject(checkoutAttributeValue);
             context.SaveChanges();
 
@@ -576,12 +579,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         {
             name = CommonHelper.EnsureMaximumLength(name, 100);
 
-            var checkoutAttributeValueLocalized = new CheckoutAttributeValueLocalized();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var checkoutAttributeValueLocalized = context.CheckoutAttributeValueLocalized.CreateObject();
             checkoutAttributeValueLocalized.CheckoutAttributeValueId = checkoutAttributeValueId;
             checkoutAttributeValueLocalized.LanguageId = languageId;
             checkoutAttributeValueLocalized.Name = name;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.CheckoutAttributeValueLocalized.AddObject(checkoutAttributeValueLocalized);
             context.SaveChanges();
 

@@ -818,7 +818,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             shippingMethod = CommonHelper.EnsureMaximumLength(shippingMethod, 100);
             trackingNumber = CommonHelper.EnsureMaximumLength(trackingNumber, 100);
 
-            var order = new Order();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var order = context.Orders.CreateObject();
             order.OrderGuid = orderGuid;
             order.CustomerId = customerId;
             order.CustomerLanguageId = customerLanguageId;
@@ -904,7 +906,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             order.Deleted = deleted;
             order.CreatedOn = createdOn;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.Orders.AddObject(order);
             context.SaveChanges();
 
@@ -1484,7 +1485,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
 
             attributeDescription = CommonHelper.EnsureMaximumLength(attributeDescription, 4000);
 
-            var opv = new OrderProductVariant();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var opv = context.OrderProductVariants.CreateObject();
             opv.OrderProductVariantGuid = orderProductVariantGuid;
             opv.OrderId = orderId;
             opv.ProductVariantId = productVariantId;
@@ -1505,7 +1508,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             opv.IsDownloadActivated = isDownloadActivated;
             opv.LicenseDownloadId = licenseDownloadId;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.OrderProductVariants.AddObject(opv);
             context.SaveChanges();
 
@@ -1715,13 +1717,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         {
             note = CommonHelper.EnsureMaximumLength(note, 4000);
 
-            var orderNote = new OrderNote();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var orderNote = context.OrderNotes.CreateObject();
             orderNote.OrderId = orderId;
             orderNote.Note = note;
             orderNote.DisplayToCustomer = displayToCustomer;
             orderNote.CreatedOn = createdOn;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.OrderNotes.AddObject(orderNote);
             context.SaveChanges();
             return orderNote;
@@ -2039,7 +2042,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             int cycleLength, int cyclePeriod, int totalCycles,
             DateTime startDate, bool isActive, bool deleted, DateTime createdOn)
         {
-            var recurringPayment = new RecurringPayment();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var recurringPayment = context.RecurringPayments.CreateObject();
             recurringPayment.InitialOrderId = initialOrderId;
             recurringPayment.CycleLength = cycleLength;
             recurringPayment.CyclePeriod = cyclePeriod;
@@ -2049,7 +2054,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             recurringPayment.Deleted = deleted;
             recurringPayment.CreatedOn = createdOn;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.RecurringPayments.AddObject(recurringPayment);
             context.SaveChanges();
 
@@ -2176,12 +2180,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
         public static RecurringPaymentHistory InsertRecurringPaymentHistory(int recurringPaymentId,
             int orderId, DateTime createdOn)
         {
-            var recurringPaymentHistory = new RecurringPaymentHistory();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var recurringPaymentHistory = context.RecurringPaymentHistory.CreateObject();
             recurringPaymentHistory.RecurringPaymentId = recurringPaymentId;
             recurringPaymentHistory.OrderId = orderId;
             recurringPaymentHistory.CreatedOn = createdOn;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.RecurringPaymentHistory.AddObject(recurringPaymentHistory);
             context.SaveChanges();
             return recurringPaymentHistory;
@@ -2335,7 +2340,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             senderEmail = CommonHelper.EnsureMaximumLength(senderEmail, 100);
             message = CommonHelper.EnsureMaximumLength(message, 4000);
 
-            var giftCard = new GiftCard();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var giftCard = context.GiftCards.CreateObject();
             giftCard.PurchasedOrderProductVariantId = purchasedOrderProductVariantId;
             giftCard.Amount = amount;
             giftCard.IsGiftCardActivated = isGiftCardActivated;
@@ -2348,7 +2355,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             giftCard.IsRecipientNotified = isRecipientNotified;
             giftCard.CreatedOn = createdOn;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.GiftCards.AddObject(giftCard);
             context.SaveChanges();
 
@@ -2473,7 +2479,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             int customerId, int orderId, decimal usedValue, 
             decimal usedValueInCustomerCurrency, DateTime createdOn)
         {
-            var giftCardUsageHistory = new GiftCardUsageHistory();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var giftCardUsageHistory = context.GiftCardUsageHistory.CreateObject();
             giftCardUsageHistory.GiftCardId = giftCardId;
             giftCardUsageHistory.CustomerId = customerId;
             giftCardUsageHistory.OrderId = orderId;
@@ -2481,7 +2489,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             giftCardUsageHistory.UsedValueInCustomerCurrency = usedValueInCustomerCurrency;
             giftCardUsageHistory.CreatedOn = createdOn;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.GiftCardUsageHistory.AddObject(giftCardUsageHistory);
             context.SaveChanges();
 
@@ -2615,7 +2622,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
 
             int newPointsBalance = customer.RewardPointsBalance + points;
 
-            var rewardPointsHistory = new RewardPointsHistory();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var rewardPointsHistory = context.RewardPointsHistory.CreateObject();
             rewardPointsHistory.CustomerId = customerId;
             rewardPointsHistory.OrderId = orderId;
             rewardPointsHistory.Points = points;
@@ -2626,7 +2635,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
             rewardPointsHistory.Message = message;
             rewardPointsHistory.CreatedOn = createdOn;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.RewardPointsHistory.AddObject(rewardPointsHistory);
             context.SaveChanges();
 

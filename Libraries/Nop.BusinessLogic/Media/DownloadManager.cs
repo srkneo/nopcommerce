@@ -164,7 +164,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Media
             filename = CommonHelper.EnsureMaximumLength(filename, 100);
             extension = CommonHelper.EnsureMaximumLength(extension, 20);
 
-            var download = new Download();
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var download = context.Downloads.CreateObject();
             download.UseDownloadUrl = useDownloadUrl;
             download.DownloadUrl = downloadUrl;
             download.DownloadBinary = downloadBinary;
@@ -173,7 +174,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Media
             download.Extension = extension;
             download.IsNew = isNew;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.Downloads.AddObject(download);
             context.SaveChanges();
 

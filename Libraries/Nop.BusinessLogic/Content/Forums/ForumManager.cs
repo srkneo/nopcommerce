@@ -144,15 +144,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
             int displayOrder, DateTime createdOn, DateTime updatedOn)
         {
             name = CommonHelper.EnsureMaximumLength(name, 200);
-            
-            var forumGroup = new ForumGroup();
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var forumGroup = context.ForumGroups.CreateObject();
             forumGroup.Name = name;
             forumGroup.Description = description;
             forumGroup.DisplayOrder = displayOrder;
             forumGroup.CreatedOn = createdOn;
             forumGroup.UpdatedOn = updatedOn;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.ForumGroups.AddObject(forumGroup);
             context.SaveChanges();
 
@@ -306,7 +307,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         {
             name = CommonHelper.EnsureMaximumLength(name, 200);
 
-            var forum = new Forum();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var forum = context.Forums.CreateObject();
             forum.ForumGroupId = forumGroupId;
             forum.Name = name;
             forum.Description = description;
@@ -320,7 +323,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
             forum.CreatedOn = createdOn;
             forum.UpdatedOn = updatedOn;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.Forums.AddObject(forum);
             context.SaveChanges();
 
@@ -554,8 +556,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
             }
 
             subject = CommonHelper.EnsureMaximumLength(subject, 450);
-            
-            var forumTopic = new ForumTopic();
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var forumTopic = context.ForumTopics.CreateObject();
             forumTopic.ForumId = forumId;
             forumTopic.UserId = userId;
             forumTopic.TopicTypeId = (int)topicType;
@@ -568,7 +572,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
             forumTopic.CreatedOn = createdOn;
             forumTopic.UpdatedOn = updatedOn;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.ForumTopics.AddObject(forumTopic);
             context.SaveChanges();
 
@@ -831,8 +834,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
             }
 
             ipAddress = CommonHelper.EnsureMaximumLength(ipAddress, 100);
-            
-            var forumPost = new ForumPost();
+
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var forumPost = context.ForumPosts.CreateObject();
             forumPost.TopicId = forumTopicId;
             forumPost.UserId = userId;
             forumPost.Text = text;
@@ -840,7 +845,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
             forumPost.CreatedOn = createdOn;
             forumPost.UpdatedOn = updatedOn;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.ForumPosts.AddObject(forumPost);
             context.SaveChanges();
 
@@ -1040,7 +1044,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
             if (customerTo == null)
                 throw new NopException("Recipient could not be loaded");
 
-            var privateMessage = new PrivateMessage();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var privateMessage = context.PrivateMessages.CreateObject();
             privateMessage.FromUserId = fromUserId;
             privateMessage.ToUserId = toUserId;
             privateMessage.Subject = subject;
@@ -1050,7 +1056,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
             privateMessage.IsDeletedByRecipient = isDeletedByRecipient;
             privateMessage.CreatedOn = createdOn;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.PrivateMessages.AddObject(privateMessage);
             context.SaveChanges();
             
@@ -1225,14 +1230,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Forums
         public static ForumSubscription InsertSubscription(Guid subscriptionGuid, int userId,
             int forumId, int topicId, DateTime createdOn)
         {
-            var forumSubscription = new ForumSubscription();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var forumSubscription = context.ForumSubscriptions.CreateObject();
             forumSubscription.SubscriptionGuid = subscriptionGuid;
             forumSubscription.UserId = userId;
             forumSubscription.ForumId = forumId;
             forumSubscription.TopicId = topicId;
             forumSubscription.CreatedOn = createdOn;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.ForumSubscriptions.AddObject(forumSubscription);
             context.SaveChanges();
 

@@ -147,13 +147,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
             name = CommonHelper.EnsureMaximumLength(name, 100);
             abbreviation = CommonHelper.EnsureMaximumLength(abbreviation, 30);
 
-            var stateProvince = new StateProvince();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var stateProvince = context.StateProvinces.CreateObject();
             stateProvince.CountryId = countryId;
             stateProvince.Name = name;
             stateProvince.Abbreviation = abbreviation;
             stateProvince.DisplayOrder = displayOrder;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.StateProvinces.AddObject(stateProvince);
             context.SaveChanges();
             

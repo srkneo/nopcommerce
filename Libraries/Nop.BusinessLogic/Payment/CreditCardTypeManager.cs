@@ -128,13 +128,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
             name = CommonHelper.EnsureMaximumLength(name, 100);
             systemKeyword = CommonHelper.EnsureMaximumLength(systemKeyword, 100);
 
-            var creditCardType = new CreditCardType();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var creditCardType = context.CreditCardTypes.CreateObject();
             creditCardType.Name = name;
             creditCardType.SystemKeyword = systemKeyword;
             creditCardType.DisplayOrder = displayOrder;
             creditCardType.Deleted = deleted;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.CreditCardTypes.AddObject(creditCardType);
             context.SaveChanges();
 

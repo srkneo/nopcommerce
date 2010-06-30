@@ -132,11 +132,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
         {
             name = CommonHelper.EnsureMaximumLength(name, 100);
 
-            var specificationAttribute = new SpecificationAttribute();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var specificationAttribute = context.SpecificationAttributes.CreateObject();
             specificationAttribute.Name = name;
             specificationAttribute.DisplayOrder = displayOrder;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.SpecificationAttributes.AddObject(specificationAttribute);
             context.SaveChanges();
 
@@ -252,12 +253,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
         {
             name = CommonHelper.EnsureMaximumLength(name, 100);
 
-            var specificationAttributeLocalized = new SpecificationAttributeLocalized();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var specificationAttributeLocalized = context.SpecificationAttributeLocalized.CreateObject();
             specificationAttributeLocalized.SpecificationAttributeId = specificationAttributeId;
             specificationAttributeLocalized.LanguageId = languageId;
             specificationAttributeLocalized.Name = name;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.SpecificationAttributeLocalized.AddObject(specificationAttributeLocalized);
             context.SaveChanges();
 
@@ -394,12 +396,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
         {
             name = CommonHelper.EnsureMaximumLength(name, 500);
 
-            var specificationAttributeOption = new SpecificationAttributeOption();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var specificationAttributeOption = context.SpecificationAttributeOptions.CreateObject();
             specificationAttributeOption.SpecificationAttributeId = specificationAttributeId;
             specificationAttributeOption.Name = name;
             specificationAttributeOption.DisplayOrder = displayOrder;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.SpecificationAttributeOptions.AddObject(specificationAttributeOption);
             context.SaveChanges();
 
@@ -519,12 +522,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
         {
             name = CommonHelper.EnsureMaximumLength(name, 500);
 
-            var specificationAttributeOptionLocalized = new SpecificationAttributeOptionLocalized();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var specificationAttributeOptionLocalized = context.SpecificationAttributeOptionLocalized.CreateObject();
             specificationAttributeOptionLocalized.SpecificationAttributeOptionId = specificationAttributeOptionId;
             specificationAttributeOptionLocalized.LanguageId = languageId;
             specificationAttributeOptionLocalized.Name = name;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.SpecificationAttributeOptionLocalized.AddObject(specificationAttributeOptionLocalized);
             context.SaveChanges();
 
@@ -684,14 +688,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
             int specificationAttributeOptionId, bool allowFiltering, 
             bool showOnProductPage, int displayOrder)
         {
-            var productSpecificationAttribute = new ProductSpecificationAttribute();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var productSpecificationAttribute = context.ProductSpecificationAttributes.CreateObject();
             productSpecificationAttribute.ProductId = productId;
             productSpecificationAttribute.SpecificationAttributeOptionId = specificationAttributeOptionId;
             productSpecificationAttribute.AllowFiltering = allowFiltering;
             productSpecificationAttribute.ShowOnProductPage = showOnProductPage;
             productSpecificationAttribute.DisplayOrder = displayOrder;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.ProductSpecificationAttributes.AddObject(productSpecificationAttribute);
             context.SaveChanges();
 

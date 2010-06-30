@@ -138,11 +138,12 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
             name = CommonHelper.EnsureMaximumLength(name, 100);
             description = CommonHelper.EnsureMaximumLength(description, 400);
 
-            var productAttribute = new ProductAttribute();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var productAttribute = context.ProductAttributes.CreateObject();
             productAttribute.Name = name;
             productAttribute.Description = description;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.ProductAttributes.AddObject(productAttribute);
             context.SaveChanges();
 
@@ -261,13 +262,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
             name = CommonHelper.EnsureMaximumLength(name, 100);
             description = CommonHelper.EnsureMaximumLength(description, 400);
 
-            var productAttributeLocalized = new ProductAttributeLocalized();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var productAttributeLocalized = context.ProductAttributeLocalized.CreateObject();
             productAttributeLocalized.ProductAttributeId = productAttributeId;
             productAttributeLocalized.LanguageId = languageId;
             productAttributeLocalized.Name = name;
             productAttributeLocalized.Description = description;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.ProductAttributeLocalized.AddObject(productAttributeLocalized);
             context.SaveChanges();
 
@@ -421,7 +423,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         {
             textPrompt = CommonHelper.EnsureMaximumLength(textPrompt, 200);
 
-            var productVariantAttribute = new ProductVariantAttribute();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var productVariantAttribute = context.ProductVariantAttributes.CreateObject();
             productVariantAttribute.ProductVariantId = productVariantId;
             productVariantAttribute.ProductAttributeId = productAttributeId;
             productVariantAttribute.TextPrompt = textPrompt;
@@ -429,7 +433,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
             productVariantAttribute.AttributeControlTypeId = (int)attributeControlType;
             productVariantAttribute.DisplayOrder = displayOrder;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.ProductVariantAttributes.AddObject(productVariantAttribute);
             context.SaveChanges();
 
@@ -588,7 +591,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         {
             name = CommonHelper.EnsureMaximumLength(name, 100);
 
-            var productVariantAttributeValue = new ProductVariantAttributeValue();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var productVariantAttributeValue = context.ProductVariantAttributeValues.CreateObject();
             productVariantAttributeValue.ProductVariantAttributeId = productVariantAttributeId;
             productVariantAttributeValue.Name = name;
             productVariantAttributeValue.PriceAdjustment = priceAdjustment;
@@ -596,7 +601,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
             productVariantAttributeValue.IsPreSelected = isPreSelected;
             productVariantAttributeValue.DisplayOrder = displayOrder;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.ProductVariantAttributeValues.AddObject(productVariantAttributeValue);
             context.SaveChanges();
 
@@ -723,12 +727,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
         {
             name = CommonHelper.EnsureMaximumLength(name, 100);
 
-            var productVariantAttributeValueLocalized = new ProductVariantAttributeValueLocalized();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var productVariantAttributeValueLocalized = context.ProductVariantAttributeValueLocalized.CreateObject();
             productVariantAttributeValueLocalized.ProductVariantAttributeValueId = productVariantAttributeValueId;
             productVariantAttributeValueLocalized.LanguageId = languageId;
             productVariantAttributeValueLocalized.Name = name;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.ProductVariantAttributeValueLocalized.AddObject(productVariantAttributeValueLocalized);
             context.SaveChanges();
             
@@ -849,13 +854,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
             int stockQuantity,
             bool allowOutOfStockOrders)
         {
-            var combination = new ProductVariantAttributeCombination();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var combination = context.ProductVariantAttributeCombinations.CreateObject();
             combination.ProductVariantId = productVariantId;
             combination.AttributesXml = attributesXml;
             combination.StockQuantity = stockQuantity;
             combination.AllowOutOfStockOrders = allowOutOfStockOrders;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.ProductVariantAttributeCombinations.AddObject(combination);
             context.SaveChanges();
 

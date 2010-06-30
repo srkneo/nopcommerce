@@ -174,12 +174,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings
             name = CommonHelper.EnsureMaximumLength(name, 200);
             value = CommonHelper.EnsureMaximumLength(value, 2000);
 
-            var setting = new Setting();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var setting = context.Settings.CreateObject();
             setting.Name = name;
             setting.Value = value;
             setting.Description = description;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.Settings.AddObject(setting);
             context.SaveChanges();
 

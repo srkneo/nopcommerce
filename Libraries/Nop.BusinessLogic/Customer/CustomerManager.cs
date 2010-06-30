@@ -187,7 +187,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             city = CommonHelper.EnsureMaximumLength(city, 100);
             zipPostalCode = CommonHelper.EnsureMaximumLength(zipPostalCode, 10);
 
-            var address = new Address();
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var address = context.Addresses.CreateObject();
             address.CustomerId = customerId;
             address.IsBillingAddress = isBillingAddress;
             address.FirstName = firstName;
@@ -205,7 +206,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             address.CreatedOn = createdOn;
             address.UpdatedOn = updatedOn;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.Addresses.AddObject(address);
             context.SaveChanges();
             return address;
@@ -1318,7 +1318,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             adminComment = CommonHelper.EnsureMaximumLength(adminComment, 4000);
             timeZoneId = CommonHelper.EnsureMaximumLength(timeZoneId, 200);
 
-            var customer = new Customer();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var customer = context.Customers.CreateObject();
             customer.CustomerGuid = customerGuid;
             customer.Email = email;
             customer.Username = username;
@@ -1347,7 +1349,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             customer.TimeZoneId = timeZoneId;
             customer.AvatarId = avatarId;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.Customers.AddObject(customer);
             context.SaveChanges();
 
@@ -1906,12 +1907,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             key = CommonHelper.EnsureMaximumLength(key, 100);
             value = CommonHelper.EnsureMaximumLength(value, 1000);
 
-            var customerAttribute = new CustomerAttribute();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var customerAttribute = context.CustomerAttributes.CreateObject();
             customerAttribute.CustomerId = customerId;
             customerAttribute.Key = key;
             customerAttribute.Value = value;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.CustomerAttributes.AddObject(customerAttribute);
             context.SaveChanges();
 
@@ -2082,14 +2084,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         {
             name = CommonHelper.EnsureMaximumLength(name, 255);
 
-            var customerRole = new CustomerRole();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var customerRole = context.CustomerRoles.CreateObject();
             customerRole.Name = name;
             customerRole.FreeShipping = freeShipping;
             customerRole.TaxExempt = taxExempt;
             customerRole.Active = active;
             customerRole.Deleted = deleted;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.CustomerRoles.AddObject(customerRole);
             context.SaveChanges();
 
@@ -2378,13 +2381,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         protected static CustomerSession InsertCustomerSession(Guid customerSessionGuid,
             int customerId, DateTime lastAccessed, bool isExpired)
         {
-            var customerSession = new CustomerSession();
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var customerSession = context.CustomerSessions.CreateObject();
             customerSession.CustomerSessionGuid = customerSessionGuid;
             customerSession.CustomerId = customerId;
             customerSession.LastAccessed = lastAccessed;
             customerSession.IsExpired = isExpired;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.CustomerSessions.AddObject(customerSession);
             context.SaveChanges();
             return customerSession;

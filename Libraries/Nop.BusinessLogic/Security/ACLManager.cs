@@ -138,13 +138,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
             systemKeyword = CommonHelper.EnsureMaximumLength(systemKeyword, 100);
             comment = CommonHelper.EnsureMaximumLength(comment, 1000);
 
-            var customerAction = new CustomerAction();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var customerAction = context.CustomerActions.CreateObject();
             customerAction.Name = name;
             customerAction.SystemKeyword = systemKeyword;
             customerAction.Comment = comment;
             customerAction.DisplayOrder = displayOrder;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.CustomerActions.AddObject(customerAction);
             context.SaveChanges();
 
@@ -265,12 +266,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
         public static ACL InsertAcl(int customerActionId,
             int customerRoleId, bool allow)
         {
-            var acl = new ACL();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var acl = context.ACL.CreateObject();
             acl.CustomerActionId = customerActionId;
             acl.CustomerRoleId = customerRoleId;
             acl.Allow = allow;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.ACL.AddObject(acl);
             context.SaveChanges();
 

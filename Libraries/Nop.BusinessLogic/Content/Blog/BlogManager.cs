@@ -150,7 +150,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
         {
             blogPostTitle = CommonHelper.EnsureMaximumLength(blogPostTitle, 200);
 
-            var blogPost = new BlogPost();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var blogPost = context.BlogPosts.CreateObject();
             blogPost.LanguageId = languageId;
             blogPost.BlogPostTitle = blogPostTitle;
             blogPost.BlogPostBody = blogPostBody;
@@ -158,7 +160,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
             blogPost.CreatedById = createdById;
             blogPost.CreatedOn = createdOn;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.BlogPosts.AddObject(blogPost);
             context.SaveChanges();
 
@@ -327,14 +328,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
         {
             ipAddress = CommonHelper.EnsureMaximumLength(ipAddress, 100);
 
-            var blogComment = new BlogComment();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var blogComment = context.BlogComments.CreateObject();
             blogComment.BlogPostId = blogPostId;
             blogComment.CustomerId = customerId;
             blogComment.IPAddress = ipAddress;
             blogComment.CommentText = commentText;
             blogComment.CreatedOn = createdOn;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.BlogComments.AddObject(blogComment);
             context.SaveChanges();
 

@@ -132,14 +132,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Tax
             configureTemplatePath = CommonHelper.EnsureMaximumLength(configureTemplatePath, 500);
             className = CommonHelper.EnsureMaximumLength(className, 500);
 
-            var taxProvider = new TaxProvider();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var taxProvider = context.TaxProviders.CreateObject();
             taxProvider.Name = name;
             taxProvider.Description = description;
             taxProvider.ConfigureTemplatePath = configureTemplatePath;
             taxProvider.ClassName = className;
             taxProvider.DisplayOrder = displayOrder;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.TaxProviders.AddObject(taxProvider);
             context.SaveChanges();
 

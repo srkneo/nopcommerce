@@ -260,7 +260,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
             twoLetterIsoCode = CommonHelper.EnsureMaximumLength(twoLetterIsoCode, 2);
             threeLetterIsoCode = CommonHelper.EnsureMaximumLength(threeLetterIsoCode, 3);
 
-            var country = new Country();
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var country = context.Countries.CreateObject();
             country.Name = name;
             country.AllowsRegistration = allowsRegistration;
             country.AllowsBilling = allowsBilling;
@@ -271,7 +272,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
             country.Published = published;
             country.DisplayOrder = displayOrder;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.Countries.AddObject(country);
             context.SaveChanges();
 

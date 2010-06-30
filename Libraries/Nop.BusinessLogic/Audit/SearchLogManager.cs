@@ -94,12 +94,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
         {
             searchTerm = CommonHelper.EnsureMaximumLength(searchTerm, 100);
 
-            var searchLog = new SearchLog();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var searchLog = context.SearchLog.CreateObject();
             searchLog.SearchTerm = searchTerm;
             searchLog.CustomerId = customerId;
             searchLog.CreatedOn = createdOn;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.SearchLog.AddObject(searchLog);
             context.SaveChanges();
             return searchLog;

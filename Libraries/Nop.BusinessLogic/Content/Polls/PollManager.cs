@@ -187,7 +187,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
             name = CommonHelper.EnsureMaximumLength(name, 400);
             systemKeyword = CommonHelper.EnsureMaximumLength(systemKeyword, 400);
 
-            var poll = new Poll();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var poll = context.Polls.CreateObject();
             poll.LanguageId = languageId;
             poll.Name = name;
             poll.SystemKeyword = systemKeyword;
@@ -197,7 +199,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
             poll.StartDate = startDate;
             poll.EndDate = endDate;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.Polls.AddObject(poll);
             context.SaveChanges();
 
@@ -357,13 +358,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
         {
             name = CommonHelper.EnsureMaximumLength(name, 400);
 
-            var pollAnswer = new PollAnswer();
+            var context = ObjectContextHelper.CurrentObjectContext;
+            var pollAnswer = context.PollAnswers.CreateObject();
             pollAnswer.PollId = pollId;
             pollAnswer.Name = name;
             pollAnswer.Count = count;
             pollAnswer.DisplayOrder = displayOrder;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.PollAnswers.AddObject(pollAnswer);
             context.SaveChanges();
 
@@ -437,7 +438,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
             context.SaveChanges();
 
             //insert new vote
-            var newPvr = new PollVotingRecord();
+            var newPvr = context.PollVotingRecords.CreateObject();
             newPvr.PollAnswerId = pollAnswerId;
             newPvr.CustomerId = customerId;
 

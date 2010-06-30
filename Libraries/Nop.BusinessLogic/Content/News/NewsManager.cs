@@ -213,7 +213,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
             title = CommonHelper.EnsureMaximumLength(title, 1000);
             shortText = CommonHelper.EnsureMaximumLength(shortText, 4000);
 
-            var news = new News();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var news = context.News.CreateObject();
             news.LanguageId =languageId;
             news.Title =title;
             news.Short =shortText;
@@ -222,7 +224,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
             news.AllowComments =allowComments;
             news.CreatedOn =createdOn;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.News.AddObject(news);
             context.SaveChanges();
 
@@ -397,7 +398,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
             ipAddress = CommonHelper.EnsureMaximumLength(ipAddress, 100);
             title = CommonHelper.EnsureMaximumLength(title, 1000);
 
-            var newsComment = new NewsComment();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var newsComment = context.NewsComments.CreateObject();
             newsComment.NewsId = newsId;
             newsComment.CustomerId = customerId;
             newsComment.IPAddress = ipAddress;
@@ -405,7 +408,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
             newsComment.Comment = comment;
             newsComment.CreatedOn = createdOn;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.NewsComments.AddObject(newsComment);
             context.SaveChanges();
             

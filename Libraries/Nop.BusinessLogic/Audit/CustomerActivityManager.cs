@@ -49,12 +49,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
             systemKeyword = CommonHelper.EnsureMaximumLength(systemKeyword, 50);
             name = CommonHelper.EnsureMaximumLength(name, 100);
 
-            var activityLogType = new ActivityLogType();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var activityLogType = context.ActivityLogTypes.CreateObject();
             activityLogType.SystemKeyword = systemKeyword;
             activityLogType.Name = name;
             activityLogType.Enabled = enabled;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.ActivityLogTypes.AddObject(activityLogType);
             context.SaveChanges();
 
@@ -225,13 +226,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
             comment = string.Format(comment, commentParams);
             comment = CommonHelper.EnsureMaximumLength(comment, 4000);
 
-            var activity = new ActivityLog();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var activity = context.ActivityLog.CreateObject();
             activity.ActivityLogTypeId = activityType.ActivityLogTypeId;
             activity.CustomerId = customerId;
             activity.Comment = comment;
             activity.CreatedOn = createdOn;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.ActivityLog.AddObject(activity);
             context.SaveChanges();
 

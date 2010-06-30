@@ -102,13 +102,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Campaigns
             name = CommonHelper.EnsureMaximumLength(name, 200);
             subject = CommonHelper.EnsureMaximumLength(subject, 200);
 
-            var campaign = new Campaign();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var campaign = context.Campaigns.CreateObject();
             campaign.Name = name;
             campaign.Subject = subject;
             campaign.Body = body;
             campaign.CreatedOn = createdOn;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.Campaigns.AddObject(campaign);
             context.SaveChanges();
 

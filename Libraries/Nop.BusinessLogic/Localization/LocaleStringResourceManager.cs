@@ -119,12 +119,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Localization
         {
             resourceName = CommonHelper.EnsureMaximumLength(resourceName, 200);
 
-            var localeStringResource = new LocaleStringResource();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var localeStringResource = context.LocaleStringResources.CreateObject();
             localeStringResource.LanguageId = languageId;
             localeStringResource.ResourceName = resourceName;
             localeStringResource.ResourceValue = resourceValue;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.LocaleStringResources.AddObject(localeStringResource);
             context.SaveChanges();
 

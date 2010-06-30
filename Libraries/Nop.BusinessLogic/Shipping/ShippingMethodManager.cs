@@ -125,12 +125,13 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
             name = CommonHelper.EnsureMaximumLength(name, 100);
             description = CommonHelper.EnsureMaximumLength(description, 2000);
 
-            var shippingMethod = new ShippingMethod();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var shippingMethod = context.ShippingMethods.CreateObject();
             shippingMethod.Name = name;
             shippingMethod.Description = description;
             shippingMethod.DisplayOrder = displayOrder;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.ShippingMethods.AddObject(shippingMethod);
             context.SaveChanges();
 

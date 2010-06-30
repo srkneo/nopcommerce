@@ -167,7 +167,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
             className = CommonHelper.EnsureMaximumLength(className, 500);
             systemKeyword = CommonHelper.EnsureMaximumLength(systemKeyword, 500);
 
-            var paymentMethod = new PaymentMethod();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var paymentMethod = context.PaymentMethods.CreateObject();
             paymentMethod.Name = name;
             paymentMethod.VisibleName = visibleName;
             paymentMethod.Description = description;
@@ -179,7 +181,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Payment
             paymentMethod.IsActive = isActive;
             paymentMethod.DisplayOrder = displayOrder;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.PaymentMethods.AddObject(paymentMethod);
             context.SaveChanges();
 

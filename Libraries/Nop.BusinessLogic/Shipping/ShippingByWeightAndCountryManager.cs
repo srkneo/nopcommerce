@@ -95,7 +95,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
             int countryId, decimal from, decimal to, bool usePercentage,
             decimal shippingChargePercentage, decimal shippingChargeAmount)
         {
-            var shippingByWeightAndCountry = new ShippingByWeightAndCountry();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var shippingByWeightAndCountry = context.ShippingByWeightAndCountry.CreateObject();
             shippingByWeightAndCountry.ShippingMethodId = shippingMethodId;
             shippingByWeightAndCountry.CountryId = countryId;
             shippingByWeightAndCountry.From = from;
@@ -104,7 +106,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
             shippingByWeightAndCountry.ShippingChargePercentage = shippingChargePercentage;
             shippingByWeightAndCountry.ShippingChargeAmount = shippingChargeAmount;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.ShippingByWeightAndCountry.AddObject(shippingByWeightAndCountry);
             context.SaveChanges();
 

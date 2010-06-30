@@ -93,7 +93,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
             decimal from, decimal to, bool usePercentage,
             decimal shippingChargePercentage, decimal shippingChargeAmount)
         {
-            var shippingByTotal = new ShippingByTotal();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var shippingByTotal = context.ShippingByTotal.CreateObject();
             shippingByTotal.ShippingMethodId = shippingMethodId;
             shippingByTotal.From = from;
             shippingByTotal.To = to;
@@ -101,7 +103,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
             shippingByTotal.ShippingChargePercentage = shippingChargePercentage;
             shippingByTotal.ShippingChargeAmount = shippingChargeAmount;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.ShippingByTotal.AddObject(shippingByTotal);
             context.SaveChanges();
 

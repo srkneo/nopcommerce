@@ -134,14 +134,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
             name = CommonHelper.EnsureMaximumLength(name, 100);
             templatePath = CommonHelper.EnsureMaximumLength(templatePath, 200);
 
-            var categoryTemplate = new CategoryTemplate();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var categoryTemplate = context.CategoryTemplates.CreateObject();
             categoryTemplate.Name = name;
             categoryTemplate.TemplatePath = templatePath;
             categoryTemplate.DisplayOrder = displayOrder;
             categoryTemplate.CreatedOn = createdOn;
             categoryTemplate.UpdatedOn = updatedOn;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.CategoryTemplates.AddObject(categoryTemplate);
             context.SaveChanges();
 
@@ -286,14 +287,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
             name = CommonHelper.EnsureMaximumLength(name, 100);
             templatePath = CommonHelper.EnsureMaximumLength(templatePath, 200);
 
-            var manufacturerTemplate = new ManufacturerTemplate();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var manufacturerTemplate = context.ManufacturerTemplates.CreateObject();
             manufacturerTemplate.Name = name;
             manufacturerTemplate.TemplatePath = templatePath;
             manufacturerTemplate.DisplayOrder = displayOrder;
             manufacturerTemplate.CreatedOn = createdOn;
             manufacturerTemplate.UpdatedOn = updatedOn;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.ManufacturerTemplates.AddObject(manufacturerTemplate);
             context.SaveChanges();
 
@@ -437,14 +439,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Templates
             name = CommonHelper.EnsureMaximumLength(name, 100);
             templatePath = CommonHelper.EnsureMaximumLength(templatePath, 200);
 
-            var productTemplate = new ProductTemplate();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var productTemplate = context.ProductTemplates.CreateObject();
             productTemplate.Name = name;
             productTemplate.TemplatePath = templatePath;
             productTemplate.DisplayOrder = displayOrder;
             productTemplate.CreatedOn = createdOn;
             productTemplate.UpdatedOn = updatedOn;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.ProductTemplates.AddObject(productTemplate);
             context.SaveChanges();
 

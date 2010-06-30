@@ -67,10 +67,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Topics
         {
             name = CommonHelper.EnsureMaximumLength(name, 200);
 
-            var topic = new Topic();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var topic = context.Topics.CreateObject();
             topic.Name = name;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.Topics.AddObject(topic);
             context.SaveChanges();
 
@@ -246,7 +247,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Topics
             metaKeywords = CommonHelper.EnsureMaximumLength(metaKeywords, 400);
             metaDescription = CommonHelper.EnsureMaximumLength(metaDescription, 4000);
 
-            var localizedTopic = new LocalizedTopic();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var localizedTopic = context.LocalizedTopics.CreateObject();
             localizedTopic.TopicId = topicId;
             localizedTopic.LanguageId = languageId;
             localizedTopic.Title = title;
@@ -257,7 +260,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Topics
             localizedTopic.MetaDescription = metaDescription;
             localizedTopic.MetaTitle = metaTitle;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.LocalizedTopics.AddObject(localizedTopic);
             context.SaveChanges();
 

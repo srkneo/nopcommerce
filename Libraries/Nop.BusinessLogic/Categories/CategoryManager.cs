@@ -222,7 +222,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
             seName = CommonHelper.EnsureMaximumLength(seName, 100);
             priceRanges = CommonHelper.EnsureMaximumLength(priceRanges, 400);
 
-            var category = new Category();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var category = context.Categories.CreateObject();
             category.Name = name;
             category.Description = description;
             category.TemplateId = templateId;
@@ -241,7 +243,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
             category.CreatedOn = createdOn;
             category.UpdatedOn = updatedOn;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.Categories.AddObject(category);
             context.SaveChanges();
 
@@ -417,7 +418,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
             metaTitle = CommonHelper.EnsureMaximumLength(metaTitle, 400);
             seName = CommonHelper.EnsureMaximumLength(seName, 100);
 
-            var categoryLocalized = new CategoryLocalized();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var categoryLocalized = context.CategoryLocalized.CreateObject();
             categoryLocalized.CategoryId = categoryId;
             categoryLocalized.LanguageId = languageId;
             categoryLocalized.Name = name;
@@ -427,7 +430,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
             categoryLocalized.MetaTitle = metaTitle;
             categoryLocalized.SEName = seName;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.CategoryLocalized.AddObject(categoryLocalized);
             context.SaveChanges();
 
@@ -626,13 +628,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
         public static ProductCategory InsertProductCategory(int productId, int categoryId,
            bool isFeaturedProduct, int displayOrder)
         {
-            var productCategory = new ProductCategory();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var productCategory = context.ProductCategories.CreateObject();
             productCategory.ProductId = productId;
             productCategory.CategoryId = categoryId;
             productCategory.IsFeaturedProduct = isFeaturedProduct;
             productCategory.DisplayOrder = displayOrder;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.ProductCategories.AddObject(productCategory);
             context.SaveChanges();
 

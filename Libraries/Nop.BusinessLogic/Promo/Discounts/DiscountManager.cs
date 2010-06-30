@@ -207,7 +207,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
             name = CommonHelper.EnsureMaximumLength(name, 100);
             couponCode = CommonHelper.EnsureMaximumLength(couponCode, 100);
 
-            var discount = new Discount();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var discount = context.Discounts.CreateObject();
             discount.DiscountTypeId = (int)discountType;
             discount.DiscountRequirementId = (int)discountRequirement;
             discount.DiscountLimitationId = (int)discountLimitation;
@@ -221,7 +223,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
             discount.CouponCode = couponCode;
             discount.Deleted = deleted;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.Discounts.AddObject(discount);
             context.SaveChanges();
 
@@ -678,13 +679,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
         public static DiscountUsageHistory InsertDiscountUsageHistory(int discountId,
             int customerId, int orderId, DateTime createdOn)
         {
-            var discountUsageHistory = new DiscountUsageHistory();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var discountUsageHistory = context.DiscountUsageHistory.CreateObject();
             discountUsageHistory.DiscountId = discountId;
             discountUsageHistory.CustomerId = customerId;
             discountUsageHistory.OrderId = orderId;
             discountUsageHistory.CreatedOn = createdOn;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.DiscountUsageHistory.AddObject(discountUsageHistory);
             context.SaveChanges();
 

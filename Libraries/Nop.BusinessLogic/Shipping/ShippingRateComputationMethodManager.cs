@@ -148,7 +148,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
             configureTemplatePath = CommonHelper.EnsureMaximumLength(configureTemplatePath, 500);
             className = CommonHelper.EnsureMaximumLength(className, 500);
 
-            var shippingRateComputationMethod = new ShippingRateComputationMethod();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var shippingRateComputationMethod = context.ShippingRateComputationMethods.CreateObject();
             shippingRateComputationMethod.Name = name;
             shippingRateComputationMethod.Description = description;
             shippingRateComputationMethod.ConfigureTemplatePath = configureTemplatePath;
@@ -156,7 +158,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Shipping
             shippingRateComputationMethod.IsActive = isActive;
             shippingRateComputationMethod.DisplayOrder = displayOrder;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.ShippingRateComputationMethods.AddObject(shippingRateComputationMethod);
             context.SaveChanges();
 

@@ -125,13 +125,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
             address = CommonHelper.EnsureMaximumLength(address, 50);
             comment = CommonHelper.EnsureMaximumLength(comment, 500);
 
-            var ipAddress = new BannedIpAddress();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var ipAddress = context.BannedIpAddresses.CreateObject();
             ipAddress.Address = address;
             ipAddress.Comment = comment;
             ipAddress.CreatedOn = createdOn;
             ipAddress.UpdatedOn = updatedOn;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.BannedIpAddresses.AddObject(ipAddress);
             context.SaveChanges();
 
@@ -268,7 +269,9 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
             endAddress = CommonHelper.EnsureMaximumLength(endAddress, 50);
             comment = CommonHelper.EnsureMaximumLength(comment, 500);
 
-            var ipNetwork = new BannedIpNetwork();
+            var context = ObjectContextHelper.CurrentObjectContext;
+
+            var ipNetwork = context.BannedIpNetworks.CreateObject();
             ipNetwork.StartAddress = startAddress;
             ipNetwork.EndAddress = endAddress;
             ipNetwork.Comment = comment;
@@ -276,7 +279,6 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
             ipNetwork.CreatedOn = createdOn;
             ipNetwork.UpdatedOn = updatedOn;
 
-            var context = ObjectContextHelper.CurrentObjectContext;
             context.BannedIpNetworks.AddObject(ipNetwork);
             context.SaveChanges();
 
