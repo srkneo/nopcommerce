@@ -32,6 +32,10 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Promo.Discounts
         /// </summary>
         AssignedToSKUs = 2,
         /// <summary>
+        /// Assigned to product variants  (SKUs) mapped to a certain category
+        /// </summary>
+        AssignedToCategories = 5,
+        /// <summary>
         /// Assigned to shipping
         /// </summary>
         AssignedToShipping = 10,

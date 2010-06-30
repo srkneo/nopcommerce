@@ -6727,3 +6727,14 @@ BEGIN
 	INSERT INTO [Nop_ActivityLogType] ([SystemKeyword], [Name], [Enabled]) VALUES (N'EditThirdPartyIntegration', N'Edit third-party integration', 1)
 END
 GO
+
+--new discount type
+IF NOT EXISTS (
+		SELECT 1
+		FROM [dbo].[Nop_DiscountType]
+		WHERE [DiscountTypeID] = 5)
+BEGIN
+	INSERT [dbo].[Nop_DiscountType] ([DiscountTypeID], [Name])
+	VALUES (5, N'Assigned to categories')
+END
+GO

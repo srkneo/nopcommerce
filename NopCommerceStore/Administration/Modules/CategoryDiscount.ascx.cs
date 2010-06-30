@@ -50,7 +50,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
 
             DiscountMappingControl.SelectedDiscountIds = _discountIds;
-            DiscountMappingControl.BindData(DiscountTypeEnum.AssignedToSKUs);
+            DiscountMappingControl.BindData(DiscountTypeEnum.AssignedToCategories);
         }
 
         protected void Page_Load(object sender, EventArgs e)

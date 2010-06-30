@@ -69,21 +69,18 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             var productCategories = CategoryManager.GetProductCategoriesByProductId(productVariant.ProductId);
             foreach (var _productCategory in productCategories)
             {
-                var category = _productCategory.Category;
-                if (category != null)
+                var _categoryDiscounts = DiscountManager.GetDiscountsByCategoryId(_productCategory.CategoryId);
+                foreach (var _discount in _categoryDiscounts)
                 {
-                    foreach (var _discount in category.Discounts)
+                    if (_discount.IsActive(customerCouponCode) &&
+                        _discount.DiscountType == DiscountTypeEnum.AssignedToCategories &&
+                        !allowedDiscounts.ContainsDiscount(_discount.Name))
                     {
-                        if (_discount.IsActive(customerCouponCode) &&
-                            _discount.DiscountType == DiscountTypeEnum.AssignedToSKUs &&
-                            !allowedDiscounts.ContainsDiscount(_discount.Name))
+                        //discount requirements
+                        if (_discount.CheckDiscountRequirements(customer)
+                            && _discount.CheckDiscountLimitations(customer))
                         {
-                            //discount requirements
-                            if (_discount.CheckDiscountRequirements(customer)
-                                && _discount.CheckDiscountLimitations(customer))
-                            {
-                                allowedDiscounts.Add(_discount);
-                            }
+                            allowedDiscounts.Add(_discount);
                         }
                     }
                 }
