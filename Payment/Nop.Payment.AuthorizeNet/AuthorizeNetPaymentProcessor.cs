@@ -179,7 +179,8 @@ namespace NopSolutions.NopCommerce.Payment.Methods.AuthorizeNET
             form.Add("x_zip", paymentInfo.BillingAddress.ZipPostalCode);
             if (paymentInfo.BillingAddress.Country != null)
                 form.Add("x_country", paymentInfo.BillingAddress.Country.TwoLetterIsoCode);
-            form.Add("x_invoice_num", orderGuid.ToString());
+            //20 chars maximum
+            form.Add("x_invoice_num", orderGuid.ToString().Substring(0,20));
             form.Add("x_customer_ip", HttpContext.Current.Request.UserHostAddress);
 
             string reply = null;
