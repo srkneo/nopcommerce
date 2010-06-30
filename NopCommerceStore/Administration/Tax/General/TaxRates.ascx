@@ -43,7 +43,7 @@
                         <asp:ButtonField ButtonType="Link" Text="Edit" HeaderText="Edit" HeaderStyle-HorizontalAlign="Center"
                             ItemStyle-Width="10%" ItemStyle-HorizontalAlign="Center" CausesValidation="false"
                             CommandName="Edit" />
-                        <asp:ButtonField ButtonType="Link" Text="Delete" HeaderText="Edit" HeaderStyle-HorizontalAlign="Center"
+                        <asp:ButtonField ButtonType="Link" Text="Delete" HeaderText="Delete" HeaderStyle-HorizontalAlign="Center"
                             ItemStyle-Width="10%" ItemStyle-HorizontalAlign="Center" CausesValidation="false"
                             CommandName="Delete" />
                     </Columns>
