@@ -326,7 +326,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     if (fileFavicon.HasFile)
                     {
                         HttpPostedFile postedFile = fileFavicon.PostedFile;
-                        if (!postedFile.ContentType.Equals("image/x-icon"))
+                        if (!postedFile.ContentType.Equals("image/x-icon") &&
+                            !postedFile.ContentType.Equals("image/icon"))
                         {
                             throw new NopException("Image format not recognized, allowed formats are: .ico");
                         }

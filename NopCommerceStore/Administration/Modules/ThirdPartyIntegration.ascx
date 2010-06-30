@@ -114,7 +114,7 @@
                                             &lt;AppID&gt;&lt;/AppID&gt;
                                             &lt;AppName&gt;nopCommerce QuickBooks connector&lt;/AppName&gt;
                                             &lt;AppDescription&gt;nopCommerce QuickBooks connector service&lt;/AppDescription&gt;
-                                            &lt;AppURL&gt;http://your_site/QBConnector.asmx&gt;
+                                            &lt;AppURL&gt;http://your_site/QBConnector.asmx&lt;/AppURL&gt; 
                                             &lt;AppSupport&gt;&lt;/AppSupport&gt;
                                             &lt;UserName&gt;qb_username&lt;/UserName&gt;
                                             &lt;OwnerID&gt;{67F3B9B1-86F1-4fcc-B1EE-566DE1813D20}&lt;/OwnerID&gt;

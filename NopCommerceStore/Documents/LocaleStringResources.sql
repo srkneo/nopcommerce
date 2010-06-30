@@ -524,6 +524,15 @@ set @resources='
   <LocaleResource Name="Admin.PromotionsHome.PromotionProviders.Description">
 	<Value>Manage various external promotion providers and sitemap settings for search engines.</Value>
   </LocaleResource>
+  <LocaleResource Name="Admin.ConfigurationHome.ThirdPartyIntegration.TitleDescription">
+	<Value>Configure third-party integrations</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ConfigurationHome.ThirdPartyIntegration.Title">
+	<Value>Third-party Integration</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.ConfigurationHome.ThirdPartyIntegration.Description">
+	<Value>Manage third-party integrations (e.g. QuickBooks) here</Value>
+  </LocaleResource>
 </Language>
 '
 

@@ -100,6 +100,17 @@
                     </p>
                 </div>
             </li>
+            <li>
+                <div class="title">
+                    <a href="settings.aspx" title="<%=GetLocaleResourceString("Admin.ConfigurationHome.ThirdPartyIntegration.TitleDescription")%>">
+                        <%=GetLocaleResourceString("Admin.ConfigurationHome.ThirdPartyIntegration.Title")%></a>
+                </div>
+                <div class="description">
+                    <p>
+                        <%=GetLocaleResourceString("Admin.ConfigurationHome.ThirdPartyIntegration.Description")%>
+                    </p>
+                </div>
+            </li>
         </ul>
     </div>
 </div>
