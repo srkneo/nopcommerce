@@ -434,8 +434,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
             var customer = GetCustomerById(customerId);
             if (customer != null)
             {
-                customer = SetDefaultShippingAddress(customer.CustomerId, 0);
-                customer = SetDefaultBillingAddress(customer.CustomerId, 0);
+                //customer = SetDefaultShippingAddress(customer.CustomerId, 0);
+                //customer = SetDefaultBillingAddress(customer.CustomerId, 0);
                 customer.LastShippingOption = null;
                 customer = SetLastPaymentMethodId(customer.CustomerId, 0);
                 customer.UseRewardPointsDuringCheckout = false;

@@ -314,6 +314,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     billingAddress.Address1, billingAddress.Address2,
                     billingAddress.City, billingAddress.StateProvinceId,
                     billingAddress.ZipPostalCode, billingAddress.CountryId, DateTime.UtcNow, DateTime.UtcNow);
+                customer = CustomerManager.SetDefaultBillingAddress(customer.CustomerId, billingAddress.AddressId);
             }
 
             //shipping address
@@ -343,6 +344,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     shippingAddress.Address1, shippingAddress.Address2,
                     shippingAddress.City, shippingAddress.StateProvinceId,
                     shippingAddress.ZipPostalCode, shippingAddress.CountryId, DateTime.UtcNow, DateTime.UtcNow);
+                customer = CustomerManager.SetDefaultShippingAddress(customer.CustomerId, shippingAddress.AddressId);
             }
         }
 
