@@ -54,6 +54,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                         item.Class = (language.LanguageId == customerLanguage.LanguageId ? "selected" : String.Empty);
                         item.ImageUrl = language.IconUrl;
                         item.LanguageID = language.LanguageId;
+                        item.Name = language.Name;
                         itemList.Add(item);
                     }
 
@@ -132,6 +133,12 @@ namespace NopSolutions.NopCommerce.Web.Modules
             }
 
             public int LanguageID
+            {
+                get;
+                set;
+            }
+
+            public string Name
             {
                 get;
                 set;
