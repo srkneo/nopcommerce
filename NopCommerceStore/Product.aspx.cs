@@ -76,7 +76,6 @@ namespace NopSolutions.NopCommerce.Web
             if (!Page.IsPostBack)
             {
                 ProductManager.AddProductToRecentlyViewedList(product.ProductId);
-                NopContext.Current.LastProductPageVisited = CommonHelper.GetThisPageUrl(true);
             }
         }
 

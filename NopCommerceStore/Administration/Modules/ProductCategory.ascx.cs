@@ -96,7 +96,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         }
        
         private List<ProductCategoryMappingHelperClass> GetProductCategoryMappings(int forParentCategoryId,
-            string prefix, List<ProductCategory> ExistingProductCategoryCollection)
+            string prefix, List<ProductCategory> existingProductCategoryCollection)
         {
             var categoryCollection = CategoryManager.GetAllCategories(forParentCategoryId);
             List<ProductCategoryMappingHelperClass> result = new List<ProductCategoryMappingHelperClass>();
@@ -104,8 +104,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             {
                 Category category = categoryCollection[i];
                 ProductCategory existingProductCategory = null;
-                if (ExistingProductCategoryCollection != null)
-                    existingProductCategory = ExistingProductCategoryCollection.FindProductCategory(this.ProductId, category.CategoryId);
+                if (existingProductCategoryCollection != null)
+                    existingProductCategory = existingProductCategoryCollection.FindProductCategory(this.ProductId, category.CategoryId);
                 ProductCategoryMappingHelperClass pcm = new ProductCategoryMappingHelperClass();
                 if (existingProductCategory != null)
                 {
@@ -125,7 +125,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
                 result.Add(pcm);
                 if (CategoryManager.GetAllCategories(category.CategoryId).Count > 0)
-                    result.AddRange(GetProductCategoryMappings(category.CategoryId, prefix + "--", ExistingProductCategoryCollection));
+                    result.AddRange(GetProductCategoryMappings(category.CategoryId, prefix + "--", existingProductCategoryCollection));
             }
 
             return result;

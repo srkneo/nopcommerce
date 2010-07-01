@@ -73,6 +73,11 @@ namespace NopSolutions.NopCommerce.Web
             SEOHelper.RenderTitle(this, title, true);
             SEOHelper.RenderMetaTag(this, "description", manufacturer.LocalizedMetaDescription, true);
             SEOHelper.RenderMetaTag(this, "keywords", manufacturer.LocalizedMetaKeywords, true);
+
+            if (!Page.IsPostBack)
+            {
+                NopContext.Current.LastContinueShoppingPage = CommonHelper.GetThisPageUrl(true);
+            }
         }
 
         public int ManufacturerId

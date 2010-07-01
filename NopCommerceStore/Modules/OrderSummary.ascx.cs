@@ -228,9 +228,9 @@ namespace NopSolutions.NopCommerce.Web.Modules
 
         protected void ContinueShopping()
         {
-            string lastProductPageVisited = NopContext.Current.LastProductPageVisited;
-            if (!String.IsNullOrEmpty(lastProductPageVisited))
-                Response.Redirect(lastProductPageVisited);
+            string returnUrl = NopContext.Current.LastContinueShoppingPage;
+            if (!String.IsNullOrEmpty(returnUrl))
+                Response.Redirect(returnUrl);
             else
                 Response.Redirect(CommonHelper.GetStoreLocation());
         }

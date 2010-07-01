@@ -476,15 +476,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic
         }
 
         /// <summary>
-        /// 
+        /// Gets the last page for "Continue shopping" button on shopping cart page
         /// </summary>
-        public string LastProductPageVisited
+        public string LastContinueShoppingPage
         {
             get
             {
-                if ((HttpContext.Current.Session != null) && (HttpContext.Current.Session["Nop.LastProductPageVisited"] != null))
+                if ((HttpContext.Current.Session != null) && (HttpContext.Current.Session["Nop.LastContinueShoppingPage"] != null))
                 {
-                    return HttpContext.Current.Session["Nop.LastProductPageVisited"].ToString();
+                    return HttpContext.Current.Session["Nop.LastContinueShoppingPage"].ToString();
                 }
                 return string.Empty;
             }
@@ -492,7 +492,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic
             {
                 if ((HttpContext.Current != null) && (HttpContext.Current.Session != null))
                 {
-                    HttpContext.Current.Session["Nop.LastProductPageVisited"] = value;
+                    HttpContext.Current.Session["Nop.LastContinueShoppingPage"] = value;
                 }
             }
         }

@@ -73,6 +73,11 @@ namespace NopSolutions.NopCommerce.Web
             SEOHelper.RenderTitle(this, title, true);
             SEOHelper.RenderMetaTag(this, "description", category.LocalizedMetaDescription, true);
             SEOHelper.RenderMetaTag(this, "keywords", category.LocalizedMetaKeywords, true);
+
+            if (!Page.IsPostBack)
+            {
+                NopContext.Current.LastContinueShoppingPage = CommonHelper.GetThisPageUrl(true);
+            }
         }
 
         public int CategoryId

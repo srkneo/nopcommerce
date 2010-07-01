@@ -100,10 +100,10 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             this.BindData();
         }
 
-        private List<ProductCategoryMappingHelperClass> GetProductCategoryMappings(List<ProductCategory> ExistingProductCategoryCollection)
+        private List<ProductCategoryMappingHelperClass> GetProductCategoryMappings(List<ProductCategory> existingProductCategoryCollection)
         {
             List<ProductCategoryMappingHelperClass> result = new List<ProductCategoryMappingHelperClass>();
-            foreach (ProductCategory pc in ExistingProductCategoryCollection)
+            foreach (ProductCategory pc in existingProductCategoryCollection)
             {
                 Product product = pc.Product;
                 if (product != null)
