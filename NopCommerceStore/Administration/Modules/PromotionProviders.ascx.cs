@@ -30,6 +30,7 @@ using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.Audit;
 using System.IO;
 using NopSolutions.NopCommerce.Froogle;
+using NopSolutions.NopCommerce.PriceGrabber;
 
 
 namespace NopSolutions.NopCommerce.Web.Administration.Modules
@@ -94,6 +95,27 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
                 string clickhereStr = string.Format("<a href=\"{0}files/froogle/{1}\" target=\"_blank\">{2}</a>", CommonHelper.GetStoreLocation(false), fileName, GetLocaleResourceString("Admin.Froogle.ClickHere"));
                 string result = string.Format(GetLocaleResourceString("Admin.PromotionProviders.Froogle.SuccessResult"), clickhereStr);
+                ShowMessage(result);
+            }
+            catch (Exception exc)
+            {
+                ProcessException(exc);
+            }
+        }
+
+        protected void btnPriceGrabberGenerate_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string fileName = string.Format("pricegrabber_{0}_{1}.csv", DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss"), CommonHelper.GenerateRandomDigitCode(4));
+                string filePath = string.Format("{0}files\\pricegrabber\\{1}", HttpContext.Current.Request.PhysicalApplicationPath, fileName);
+                using (FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.ReadWrite))
+                {
+                    PriceGrabberService.GenerateFeed(fs);
+                }
+
+                string clickhereStr = string.Format("<a href=\"{0}files/pricegrabber/{1}\" target=\"_blank\">{2}</a>", CommonHelper.GetStoreLocation(false), fileName, GetLocaleResourceString("Admin.Froogle.ClickHere"));
+                string result = string.Format(GetLocaleResourceString("Admin.PromotionProviders.PriceGrabber.SuccessResult"), clickhereStr);
                 ShowMessage(result);
             }
             catch (Exception exc)

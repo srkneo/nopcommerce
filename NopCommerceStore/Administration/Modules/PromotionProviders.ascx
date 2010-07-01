@@ -47,5 +47,18 @@
                 </table>
             </ContentTemplate>
         </ajaxToolkit:TabPanel>
+        <ajaxToolkit:TabPanel runat="server" ID="pnlPriceGrabber" HeaderText="<% $NopResources:Admin.PromotionProviders.PriceGrabber.Title %>">
+            <ContentTemplate>
+                <table class="adminContent">
+                    <tr>
+                        <td colspan="2">
+                            <asp:Button runat="server" Text="<% $NopResources:Admin.PromotionProviders.PriceGrabber.GenerateButton.Text %>"
+                                CssClass="adminButtonBlue" ID="btnPriceGrabberGenerate" CausesValidation="false" 
+                                OnClick="btnPriceGrabberGenerate_Click" ToolTip="<% $NopResources:Admin.PromotionProviders.PriceGrabber.GenerateButton.Tooltip %>" />
+                        </td>
+                    </tr>
+                </table>
+            </ContentTemplate>
+        </ajaxToolkit:TabPanel>
     </ajaxToolkit:TabContainer>
 </div>

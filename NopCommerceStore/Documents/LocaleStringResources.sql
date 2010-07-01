@@ -533,6 +533,18 @@ set @resources='
   <LocaleResource Name="Admin.ConfigurationHome.ThirdPartyIntegration.Description">
 	<Value>Manage third-party integrations (e.g. QuickBooks) here</Value>
   </LocaleResource>
+  <LocaleResource Name="Admin.PromotionProviders.PriceGrabber.Title">
+	<Value>PriceGrabber / Yahoo Shopping</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.PromotionProviders.PriceGrabber.GenerateButton.Text">
+	<Value>Generate Feed</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.PromotionProviders.PriceGrabber.GenerateButton.Tooltip">
+	<Value>Click to generate feed</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.PromotionProviders.PriceGrabber.SuccessResult">
+	<Value>PriceGrabber feed has been successfully generated. {0} to see generated feed</Value>
+  </LocaleResource>
 </Language>
 '
 

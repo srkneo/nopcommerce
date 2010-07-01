@@ -5348,6 +5348,10 @@
       <Project>{ADC07038-4AAC-45E4-B652-75A971A413A5}</Project>
       <Name>Nop.HttpModules.MembershipModule</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Libraries\Nop.PriceGrabber\Nop.PriceGrabber.csproj">
+      <Project>{2E7C1D59-84AF-4E2A-870A-9D627AD68F56}</Project>
+      <Name>Nop.PriceGrabber</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Libraries\UrlRewritingNet.UrlRewriter\UrlRewritingNet.UrlRewriter.csproj">
       <Project>{44697772-09C1-4B28-B3F5-C28B693B06F7}</Project>
       <Name>UrlRewritingNet.UrlRewriter</Name>
@@ -6817,6 +6821,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="files\pricegrabber\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
