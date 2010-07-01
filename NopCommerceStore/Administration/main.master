@@ -2,7 +2,7 @@
     CodeBehind="main.master.cs" %>
 
 <%@ Register TagPrefix="nopCommerce" TagName="AdminLanguageSelector" Src="Modules/AdminLanguageSelector.ascx" %>
-<%@ Register TagPrefix="nopCommerce" TagName="Menu" Src="~/Modules/MenuControl.ascx" %>
+<%@ Register TagPrefix="nopCommerce" TagName="Menu" Src="Modules/MenuControl.ascx" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">

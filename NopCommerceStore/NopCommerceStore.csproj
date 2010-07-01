@@ -3993,11 +3993,11 @@
     <Compile Include="Manufacturers.aspx.designer.cs">
       <DependentUpon>Manufacturers.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Modules\MenuControl.ascx.cs">
+    <Compile Include="Administration\Modules\MenuControl.ascx.cs">
       <DependentUpon>MenuControl.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Modules\MenuControl.ascx.designer.cs">
+    <Compile Include="Administration\Modules\MenuControl.ascx.designer.cs">
       <DependentUpon>MenuControl.ascx</DependentUpon>
     </Compile>
     <Compile Include="Modules\MiniShoppingCartBox.ascx.cs">
@@ -6714,7 +6714,7 @@
     <Content Include="files\Index.htm" />
     <Content Include="images\GoogleMaps.gif" />
     <Content Include="Manufacturers.aspx" />
-    <Content Include="Modules\MenuControl.ascx" />
+    <Content Include="Administration\Modules\MenuControl.ascx" />
     <Content Include="Modules\MiniShoppingCartBox.ascx" />
     <Content Include="Modules\NewsLetterSubscriptionActivationControl.ascx" />
     <Content Include="Modules\NewsLetterSubscriptionBoxControl.ascx" />

@@ -5,9 +5,9 @@ using System.Web.UI;
 using NopSolutions.NopCommerce.Common.Utils;
 using NopSolutions.NopCommerce.Common.Utils.Html;
 
-namespace NopSolutions.NopCommerce.Web.Modules
+namespace NopSolutions.NopCommerce.Web.Administration.Modules
 {
-    public partial class MenuControl : BaseNopUserControl
+    public partial class MenuControl : BaseNopAdministrationUserControl
     {
         #region Handlers
         protected override void OnPreRender(EventArgs e)

@@ -73,7 +73,7 @@ namespace NopSolutions.NopCommerce.Web.Administration {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::NopSolutions.NopCommerce.Web.Modules.MenuControl ctrlMenu;
+        protected global::NopSolutions.NopCommerce.Web.Administration.Modules.MenuControl ctrlMenu;
         
         /// <summary>
         /// lnkHelp control.
