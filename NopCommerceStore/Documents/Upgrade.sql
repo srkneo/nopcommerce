@@ -6738,3 +6738,14 @@ BEGIN
 	VALUES (5, N'Assigned to categories')
 END
 GO
+
+
+IF NOT EXISTS (
+		SELECT 1
+		FROM [dbo].[Nop_Setting]
+		WHERE [Name] = N'Features.SupportExcel')
+BEGIN
+	INSERT [dbo].[Nop_Setting] ([Name], [Value], [Description])
+	VALUES (N'Features.SupportExcel', N'true', N'')
+END
+GO

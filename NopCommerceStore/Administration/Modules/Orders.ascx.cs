@@ -40,6 +40,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
                 //buttons
                 btnPrintPdfPackagingSlips.Visible = SettingManager.GetSettingValueBoolean("Features.SupportPDF");
+                btnExportXLS.Visible = SettingManager.GetSettingValueBoolean("Features.SupportExcel");
             }
         }
 

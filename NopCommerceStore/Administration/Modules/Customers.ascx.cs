@@ -25,6 +25,7 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using NopSolutions.NopCommerce.BusinessLogic;
+using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.CustomerManagement;
 using NopSolutions.NopCommerce.BusinessLogic.ExportImport;
 using NopSolutions.NopCommerce.BusinessLogic.Profile;
@@ -41,6 +42,10 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 SetDefaultValues();
                 phUsername.Visible = CustomerManager.UsernamesEnabled;
                 gvCustomers.Columns[2].Visible = CustomerManager.UsernamesEnabled;
+
+                //buttons
+                btnExportXLS.Visible = SettingManager.GetSettingValueBoolean("Features.SupportExcel");
+                btnImportXLS.Visible = SettingManager.GetSettingValueBoolean("Features.SupportExcel");
             }
         }
 

@@ -52,6 +52,8 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
 
             //buttons
             btnPDFExport.Visible = SettingManager.GetSettingValueBoolean("Features.SupportPDF");
+            btnExportXLS.Visible = SettingManager.GetSettingValueBoolean("Features.SupportExcel");
+            btnImportXLS.Visible = SettingManager.GetSettingValueBoolean("Features.SupportExcel");
         }
 
         protected void gvProducts_PageIndexChanging(object sender, GridViewPageEventArgs e)
