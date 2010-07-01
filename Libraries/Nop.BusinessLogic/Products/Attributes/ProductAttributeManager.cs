@@ -302,15 +302,27 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
             if (productAttributeLocalized == null)
                 return null;
 
+            bool allFieldsAreEmpty = string.IsNullOrEmpty(name) &&
+                string.IsNullOrEmpty(description);
+
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(productAttributeLocalized))
                 context.ProductAttributeLocalized.Attach(productAttributeLocalized);
 
-            productAttributeLocalized.ProductAttributeId = productAttributeId;
-            productAttributeLocalized.LanguageId = languageId;
-            productAttributeLocalized.Name = name;
-            productAttributeLocalized.Description = description;
-            context.SaveChanges();
+            if (allFieldsAreEmpty)
+            {
+                //delete if all fields are empty
+                context.DeleteObject(productAttributeLocalized);
+                context.SaveChanges();
+            }
+            else
+            {
+                productAttributeLocalized.ProductAttributeId = productAttributeId;
+                productAttributeLocalized.LanguageId = languageId;
+                productAttributeLocalized.Name = name;
+                productAttributeLocalized.Description = description;
+                context.SaveChanges();
+            }
 
             if (ProductAttributeManager.CacheEnabled)
             {
@@ -764,14 +776,25 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
             if (productVariantAttributeValueLocalized == null)
                 return null;
 
+            bool allFieldsAreEmpty = string.IsNullOrEmpty(name);
+
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(productVariantAttributeValueLocalized))
                 context.ProductVariantAttributeValueLocalized.Attach(productVariantAttributeValueLocalized);
 
-            productVariantAttributeValueLocalized.ProductVariantAttributeValueId = productVariantAttributeValueId;
-            productVariantAttributeValueLocalized.LanguageId = languageId;
-            productVariantAttributeValueLocalized.Name = name;
-            context.SaveChanges();
+            if (allFieldsAreEmpty)
+            {
+                //delete if all fields are empty
+                context.DeleteObject(productVariantAttributeValueLocalized);
+                context.SaveChanges();
+            }
+            else
+            {
+                productVariantAttributeValueLocalized.ProductVariantAttributeValueId = productVariantAttributeValueId;
+                productVariantAttributeValueLocalized.LanguageId = languageId;
+                productVariantAttributeValueLocalized.Name = name;
+                context.SaveChanges();
+            }
 
             if (ProductAttributeManager.CacheEnabled)
             {

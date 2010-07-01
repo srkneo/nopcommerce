@@ -326,15 +326,27 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
             if (checkoutAttributeLocalized == null)
                 return null;
 
+            bool allFieldsAreEmpty = string.IsNullOrEmpty(name) &&
+                string.IsNullOrEmpty(textPrompt);
+
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(checkoutAttributeLocalized))
                 context.CheckoutAttributeLocalized.Attach(checkoutAttributeLocalized);
 
-            checkoutAttributeLocalized.CheckoutAttributeId = checkoutAttributeId;
-            checkoutAttributeLocalized.LanguageId = languageId;
-            checkoutAttributeLocalized.Name = name;
-            checkoutAttributeLocalized.TextPrompt = textPrompt;
-            context.SaveChanges();
+            if (allFieldsAreEmpty)
+            {
+                //delete if all fields are empty
+                context.DeleteObject(checkoutAttributeLocalized);
+                context.SaveChanges();
+            }
+            else
+            {
+                checkoutAttributeLocalized.CheckoutAttributeId = checkoutAttributeId;
+                checkoutAttributeLocalized.LanguageId = languageId;
+                checkoutAttributeLocalized.Name = name;
+                checkoutAttributeLocalized.TextPrompt = textPrompt;
+                context.SaveChanges();
+            }
 
             if (CheckoutAttributeManager.CacheEnabled)
             {
@@ -615,14 +627,25 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Attributes
             if (checkoutAttributeValueLocalized == null)
                 return null;
 
+            bool allFieldsAreEmpty = string.IsNullOrEmpty(name);
+
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(checkoutAttributeValueLocalized))
                 context.CheckoutAttributeValueLocalized.Attach(checkoutAttributeValueLocalized);
 
-            checkoutAttributeValueLocalized.CheckoutAttributeValueId = checkoutAttributeValueId;
-            checkoutAttributeValueLocalized.LanguageId = languageId;
-            checkoutAttributeValueLocalized.Name = name;
-            context.SaveChanges();
+            if (allFieldsAreEmpty)
+            {
+                //delete if all fields are empty
+                context.DeleteObject(checkoutAttributeValueLocalized);
+                context.SaveChanges();
+            }
+            else
+            {
+                checkoutAttributeValueLocalized.CheckoutAttributeValueId = checkoutAttributeValueId;
+                checkoutAttributeValueLocalized.LanguageId = languageId;
+                checkoutAttributeValueLocalized.Name = name;
+                context.SaveChanges();
+            }
 
             if (CheckoutAttributeManager.CacheEnabled)
             {

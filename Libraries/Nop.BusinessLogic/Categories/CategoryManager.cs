@@ -469,19 +469,35 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Categories
             if (categoryLocalized == null)
                 return null;
 
+            bool allFieldsAreEmpty = string.IsNullOrEmpty(name) && 
+                string.IsNullOrEmpty(description) &&
+                string.IsNullOrEmpty(metaKeywords) &&
+                string.IsNullOrEmpty(metaDescription) &&
+                string.IsNullOrEmpty(metaTitle) &&
+                string.IsNullOrEmpty(seName);
+
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(categoryLocalized))
                 context.CategoryLocalized.Attach(categoryLocalized);
 
-            categoryLocalized.CategoryId = categoryId;
-            categoryLocalized.LanguageId = languageId;
-            categoryLocalized.Name = name;
-            categoryLocalized.Description = description;
-            categoryLocalized.MetaKeywords = metaKeywords;
-            categoryLocalized.MetaDescription = metaDescription;
-            categoryLocalized.MetaTitle = metaTitle;
-            categoryLocalized.SEName = seName;
-            context.SaveChanges();
+            if (allFieldsAreEmpty)
+            {
+                //delete if all fields are empty
+                context.DeleteObject(categoryLocalized);
+                context.SaveChanges();
+            }
+            else
+            {
+                categoryLocalized.CategoryId = categoryId;
+                categoryLocalized.LanguageId = languageId;
+                categoryLocalized.Name = name;
+                categoryLocalized.Description = description;
+                categoryLocalized.MetaKeywords = metaKeywords;
+                categoryLocalized.MetaDescription = metaDescription;
+                categoryLocalized.MetaTitle = metaTitle;
+                categoryLocalized.SEName = seName;
+                context.SaveChanges();
+            }
 
             if (CategoryManager.CategoriesCacheEnabled)
             {

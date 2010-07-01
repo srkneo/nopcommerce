@@ -676,20 +676,37 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             if (productLocalized == null)
                 return null;
 
+            bool allFieldsAreEmpty = string.IsNullOrEmpty(name) &&
+               string.IsNullOrEmpty(shortDescription) &&
+               string.IsNullOrEmpty(fullDescription) &&
+               string.IsNullOrEmpty(metaKeywords) &&
+               string.IsNullOrEmpty(metaDescription) &&
+               string.IsNullOrEmpty(metaTitle) &&
+               string.IsNullOrEmpty(seName);
+
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(productLocalized))
                 context.ProductLocalized.Attach(productLocalized);
 
-            productLocalized.ProductId = productId;
-            productLocalized.LanguageId = languageId;
-            productLocalized.Name = name;
-            productLocalized.ShortDescription = shortDescription;
-            productLocalized.FullDescription = fullDescription;
-            productLocalized.MetaKeywords = metaKeywords;
-            productLocalized.MetaDescription = metaDescription;
-            productLocalized.MetaTitle = metaTitle;
-            productLocalized.SEName = seName;
-            context.SaveChanges();
+            if (allFieldsAreEmpty)
+            {
+                //delete if all fields are empty
+                context.DeleteObject(productLocalized);
+                context.SaveChanges();
+            }
+            else
+            {
+                productLocalized.ProductId = productId;
+                productLocalized.LanguageId = languageId;
+                productLocalized.Name = name;
+                productLocalized.ShortDescription = shortDescription;
+                productLocalized.FullDescription = fullDescription;
+                productLocalized.MetaKeywords = metaKeywords;
+                productLocalized.MetaDescription = metaDescription;
+                productLocalized.MetaTitle = metaTitle;
+                productLocalized.SEName = seName;
+                context.SaveChanges();
+            }
 
             if (ProductManager.CacheEnabled)
             {
@@ -1991,16 +2008,28 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
             var productVariantLocalized = GetProductVariantLocalizedById(productVariantLocalizedId);
             if (productVariantLocalized == null)
                 return null;
+            
+            bool allFieldsAreEmpty = string.IsNullOrEmpty(name) &&
+               string.IsNullOrEmpty(description);
 
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(productVariantLocalized))
                 context.ProductVariantLocalized.Attach(productVariantLocalized);
 
-            productVariantLocalized.ProductVariantId = productVariantId;
-            productVariantLocalized.LanguageId = languageId;
-            productVariantLocalized.Name = name;
-            productVariantLocalized.Description = description;
-            context.SaveChanges();
+            if (allFieldsAreEmpty)
+            {
+                //delete if all fields are empty
+                context.DeleteObject(productVariantLocalized);
+                context.SaveChanges();
+            }
+            else
+            {
+                productVariantLocalized.ProductVariantId = productVariantId;
+                productVariantLocalized.LanguageId = languageId;
+                productVariantLocalized.Name = name;
+                productVariantLocalized.Description = description;
+                context.SaveChanges();
+            }
 
             if (ProductManager.CacheEnabled)
             {

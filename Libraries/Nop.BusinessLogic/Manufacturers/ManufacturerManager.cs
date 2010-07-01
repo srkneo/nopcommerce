@@ -409,19 +409,35 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Manufacturers
             if (manufacturerLocalized == null)
                 return null;
 
+            bool allFieldsAreEmpty = string.IsNullOrEmpty(name) &&
+                string.IsNullOrEmpty(description) &&
+                string.IsNullOrEmpty(metaKeywords) &&
+                string.IsNullOrEmpty(metaDescription) &&
+                string.IsNullOrEmpty(metaTitle) &&
+                string.IsNullOrEmpty(seName);
+
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(manufacturerLocalized))
                 context.ManufacturerLocalized.Attach(manufacturerLocalized);
 
-            manufacturerLocalized.ManufacturerId = manufacturerId;
-            manufacturerLocalized.LanguageId = languageId;
-            manufacturerLocalized.Name = name;
-            manufacturerLocalized.Description = description;
-            manufacturerLocalized.MetaKeywords = metaKeywords;
-            manufacturerLocalized.MetaDescription = metaDescription;
-            manufacturerLocalized.MetaTitle = metaTitle;
-            manufacturerLocalized.SEName = seName;
-            context.SaveChanges();
+            if (allFieldsAreEmpty)
+            {
+                //delete if all fields are empty
+                context.DeleteObject(manufacturerLocalized);
+                context.SaveChanges();
+            }
+            else
+            {
+                manufacturerLocalized.ManufacturerId = manufacturerId;
+                manufacturerLocalized.LanguageId = languageId;
+                manufacturerLocalized.Name = name;
+                manufacturerLocalized.Description = description;
+                manufacturerLocalized.MetaKeywords = metaKeywords;
+                manufacturerLocalized.MetaDescription = metaDescription;
+                manufacturerLocalized.MetaTitle = metaTitle;
+                manufacturerLocalized.SEName = seName;
+                context.SaveChanges();
+            }
 
             if (ManufacturerManager.ManufacturersCacheEnabled)
             {

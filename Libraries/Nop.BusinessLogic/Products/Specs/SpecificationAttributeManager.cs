@@ -290,14 +290,25 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
             if (specificationAttributeLocalized == null)
                 return null;
 
+            bool allFieldsAreEmpty = string.IsNullOrEmpty(name);
+
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(specificationAttributeLocalized))
                 context.SpecificationAttributeLocalized.Attach(specificationAttributeLocalized);
 
-            specificationAttributeLocalized.SpecificationAttributeId = specificationAttributeId;
-            specificationAttributeLocalized.LanguageId = languageId;
-            specificationAttributeLocalized.Name = name;
-            context.SaveChanges();
+            if (allFieldsAreEmpty)
+            {
+                //delete if all fields are empty
+                context.DeleteObject(specificationAttributeLocalized);
+                context.SaveChanges();
+            }
+            else
+            {
+                specificationAttributeLocalized.SpecificationAttributeId = specificationAttributeId;
+                specificationAttributeLocalized.LanguageId = languageId;
+                specificationAttributeLocalized.Name = name;
+                context.SaveChanges();
+            }
 
             if (SpecificationAttributeManager.CacheEnabled)
             {
@@ -559,14 +570,25 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products.Specs
             if (specificationAttributeOptionLocalized == null)
                 return null;
 
+            bool allFieldsAreEmpty = string.IsNullOrEmpty(name);
+
             var context = ObjectContextHelper.CurrentObjectContext;
             if (!context.IsAttached(specificationAttributeOptionLocalized))
                 context.SpecificationAttributeOptionLocalized.Attach(specificationAttributeOptionLocalized);
 
-            specificationAttributeOptionLocalized.SpecificationAttributeOptionId = specificationAttributeOptionId;
-            specificationAttributeOptionLocalized.LanguageId = languageId;
-            specificationAttributeOptionLocalized.Name = name;
-            context.SaveChanges();
+            if (allFieldsAreEmpty)
+            {
+                //delete if all fields are empty
+                context.DeleteObject(specificationAttributeOptionLocalized);
+                context.SaveChanges();
+            }
+            else
+            {
+                specificationAttributeOptionLocalized.SpecificationAttributeOptionId = specificationAttributeOptionId;
+                specificationAttributeOptionLocalized.LanguageId = languageId;
+                specificationAttributeOptionLocalized.Name = name;
+                context.SaveChanges();
+            }
 
             if (SpecificationAttributeManager.CacheEnabled)
             {
