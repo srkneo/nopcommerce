@@ -135,6 +135,10 @@
     <Compile Include="Content\Forums\Forum.cs" />
     <Compile Include="Content\Polls\PollVotingRecord.cs" />
     <Compile Include="Customer\CustomerEventArgs.cs" />
+    <Compile Include="Directory\ExchangeRates\McExchangeRateProvider.cs" />
+    <Compile Include="Directory\ExchangeRates\EcbExchangeRateProvider.cs" />
+    <Compile Include="Directory\ExchangeRates\IExchangeRateProvider.cs" />
+    <Compile Include="Directory\ExchangeRates\ExchangeRate.cs" />
     <Compile Include="EventContext.cs" />
     <Compile Include="Customer\CustomerReportByLanguageLine.cs" />
     <Compile Include="Customer\CustomerReportByAttributeKeyLine.cs" />

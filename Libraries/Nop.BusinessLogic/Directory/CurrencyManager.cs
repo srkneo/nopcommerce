@@ -25,6 +25,7 @@ using System.Xml;
 using NopSolutions.NopCommerce.BusinessLogic.Caching;
 using NopSolutions.NopCommerce.BusinessLogic.Configuration.Settings;
 using NopSolutions.NopCommerce.BusinessLogic.Data;
+using NopSolutions.NopCommerce.BusinessLogic.Directory.ExchangeRates;
 using NopSolutions.NopCommerce.BusinessLogic.Profile;
 using NopSolutions.NopCommerce.Common;
 using NopSolutions.NopCommerce.Common.Utils;
@@ -48,35 +49,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         /// Gets currency live rates
         /// </summary>
         /// <param name="exchangeRateCurrencyCode">Exchange rate currency code</param>
-        /// <param name="updateDate">Update date</param>
         /// <param name="rates">Currency rates table</param>
-        public static void GetCurrencyLiveRates(string exchangeRateCurrencyCode,
-            out DateTime updateDate, out DataTable rates)
+        /// <returns>Exchange rates</returns>
+        public static List<ExchangeRate> GetCurrencyLiveRates(string exchangeRateCurrencyCode)
         {
-            if (String.IsNullOrEmpty(exchangeRateCurrencyCode) ||
-                exchangeRateCurrencyCode.ToLower() != "eur")
-                throw new NopException("You can use our \"CurrencyLiveRate\" service only when exchange rate currency code is set to EURO");
-
-            updateDate = DateTime.UtcNow;
-            rates = new DataTable();
-            rates.Columns.Add("CurrencyCode", typeof(string));
-            rates.Columns.Add("Rate", typeof(decimal));
-            HttpWebRequest request = WebRequest.Create("http://www.ecb.int/stats/eurofxref/eurofxref-daily.xml") as HttpWebRequest;
-            using (WebResponse response = request.GetResponse())
-            {
-                XmlDocument document = new XmlDocument();
-                document.Load(response.GetResponseStream());
-                XmlNamespaceManager nsmgr = new XmlNamespaceManager(document.NameTable);
-                nsmgr.AddNamespace("ns", "http://www.ecb.int/vocabulary/2002-08-01/eurofxref");
-                nsmgr.AddNamespace("gesmes", "http://www.gesmes.org/xml/2002-08-01");
-                XmlNode node = document.SelectSingleNode("gesmes:Envelope/ns:Cube/ns:Cube", nsmgr);
-                updateDate = DateTime.ParseExact(node.Attributes["time"].Value, "yyyy-MM-dd", null);
-                NumberFormatInfo provider = new NumberFormatInfo();
-                provider.NumberDecimalSeparator = ".";
-                provider.NumberGroupSeparator = "";
-                foreach (XmlNode node2 in node.ChildNodes)
-                    rates.Rows.Add(new object[] { node2.Attributes["currency"].Value, double.Parse(node2.Attributes["rate"].Value, provider) });
-            }
+            var exchangeRateProvider = new EcbExchangeRateProvider();
+            //uncomment the following string to use themoneyconverter.com exchange rate provider
+            //var exchangeRateProvider = new McExchangeRateProvider();
+            return exchangeRateProvider.GetCurrencyLiveRates(exchangeRateCurrencyCode);
         }
 
         /// <summary>
@@ -140,15 +120,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         {
             if (String.IsNullOrEmpty(currencyCode))
                 return null;
-            var currencies = GetAllCurrencies();
-            foreach (Currency currency in currencies)
-            {
-                if (currency.CurrencyCode.ToLowerInvariant() == currencyCode.ToLowerInvariant())
-                {
-                    return currency;
-                }
-            }
-            return null;
+            return GetAllCurrencies().FirstOrDefault(c => c.CurrencyCode.ToLower() == currencyCode.ToLower());
         }
 
         /// <summary>
@@ -158,6 +130,16 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Directory
         public static List<Currency> GetAllCurrencies()
         {
             bool showHidden = NopContext.Current.IsAdmin;
+            return GetAllCurrencies(showHidden);
+        }
+
+        /// <summary>
+        /// Gets all currencies
+        /// </summary>
+        /// <param name="showHidden">A value indicating whether to show hidden records</param>
+        /// <returns>Currency collection</returns>
+        public static List<Currency> GetAllCurrencies(bool showHidden)
+        {
             string key = string.Format(CURRENCIES_ALL_KEY, showHidden);
             object obj2 = NopStaticCache.Get(key);
             if (CurrencyManager.CacheEnabled && (obj2 != null))

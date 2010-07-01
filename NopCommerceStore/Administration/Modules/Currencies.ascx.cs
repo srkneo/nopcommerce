@@ -17,6 +17,7 @@ using System.Collections;
 using System.Configuration;
 using System.Data;
 using System.Globalization;
+using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Web;
@@ -51,10 +52,9 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
         protected void BindLiveRateGrid()
         {
             DataTable liveRates = null;
-            DateTime liveRatesUpdateDate = DateTime.UtcNow;
 
-            CurrencyManager.GetCurrencyLiveRates(CurrencyManager.PrimaryExchangeRateCurrency.CurrencyCode, out liveRatesUpdateDate, out liveRates);
-            gvLiveRates.DataSource = liveRates;
+            var exchangeRates = CurrencyManager.GetCurrencyLiveRates(CurrencyManager.PrimaryExchangeRateCurrency.CurrencyCode);
+            gvLiveRates.DataSource = exchangeRates;
             gvLiveRates.DataBind();
         }
         
@@ -108,11 +108,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                 Label lblCurrencyCode = row.FindControl("lblCurrencyCode") as Label;
                 DecimalTextBox txtRate = row.FindControl("txtRate") as DecimalTextBox;
 
-                Currency currency = null;
-                var currencies = CurrencyManager.GetAllCurrencies();
-                foreach (Currency currency2 in currencies)
-                    if (currency2.CurrencyCode.ToLower() == lblCurrencyCode.Text.ToLower())
-                        currency = currency2;
+                Currency currency = CurrencyManager.GetCurrencyByCode(lblCurrencyCode.Text);
                 if (currency != null)
                 {
                     CurrencyManager.UpdateCurrency(currency.CurrencyId, currency.Name, currency.CurrencyCode,
