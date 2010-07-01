@@ -5795,6 +5795,8 @@
     <Content Include="Default.aspx" />
     <Content Include="ErrorPage.htm" />
     <Content Include="FileNotFound.htm" />
+    <Content Include="files\pricegrabber\Index.htm" />
+    <Content Include="files\pricegrabber\placeholder.txt" />
     <Content Include="Global.asax" />
     <Content Include="GooglePostHandler.aspx" />
     <Content Include="Google\google_log.txt" />
@@ -6821,7 +6823,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="files\pricegrabber\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
