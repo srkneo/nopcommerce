@@ -5589,6 +5589,8 @@
           <Property Type="Int32" Name="CustomerActionId" Nullable="false" />
           <Property Type="Int32" Name="CustomerRoleId" Nullable="false" />
           <Property Type="Boolean" Name="Allow" Nullable="false" />
+          <NavigationProperty Name="NpCustomerAction" Relationship="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ACL_Nop_CustomerAction" FromRole="Nop_ACL" ToRole="CustomerAction" />
+          <NavigationProperty Name="NpCustomerRole" Relationship="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ACL_Nop_CustomerRole" FromRole="Nop_ACL" ToRole="CustomerRole" />
           </EntityType>
         <Association Name="FK_Nop_ACL_Nop_CustomerAction">
           <End Type="NopSolutions.NopCommerce.BusinessLogic.Data.CustomerAction" Role="CustomerAction" Multiplicity="1" />
@@ -9796,10 +9798,10 @@
           <ConnectorPoint PointX="44.355468125" PointY="8.8240382893880209" />
           <ConnectorPoint PointX="40.625" PointY="8.8240382893880209" />
         </AssociationConnector>
-        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ACL" Width="1.5" PointX="41.25" PointY="10.75" Height="1.5923063151041674" />
+        <EntityTypeShape EntityType="NopSolutions.NopCommerce.BusinessLogic.Data.ACL" Width="1.5" PointX="41.25" PointY="10.75" Height="1.9210009765624996" />
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ACL_Nop_CustomerAction" >
           <ConnectorPoint PointX="42" PointY="13.125" />
-          <ConnectorPoint PointX="42" PointY="12.342306315104167" />
+          <ConnectorPoint PointX="42" PointY="12.6710009765625" />
         </AssociationConnector>
         <AssociationConnector Association="NopSolutions.NopCommerce.BusinessLogic.Data.FK_Nop_ACL_Nop_CustomerRole" >
           <ConnectorPoint PointX="40.625" PointY="10.374695638020834" />

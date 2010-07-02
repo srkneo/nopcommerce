@@ -555,7 +555,7 @@ set @resources='
 	<Value>Click to generate feed</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.PromotionProviders.Become.SuccessResult">
-	<Value>Becom feed has been successfully generated. {0} to see generated feed</Value>
+	<Value>Become.com feed has been successfully generated. {0} to see generated feed</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.Froogle.ClickHere">
 	<Value></Value>

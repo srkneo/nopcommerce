@@ -5799,6 +5799,8 @@
     <Content Include="Default.aspx" />
     <Content Include="ErrorPage.htm" />
     <Content Include="FileNotFound.htm" />
+    <Content Include="files\become\Index.htm" />
+    <Content Include="files\become\placeholder.txt" />
     <Content Include="files\pricegrabber\Index.htm" />
     <Content Include="files\pricegrabber\placeholder.txt" />
     <Content Include="Global.asax" />
@@ -6827,7 +6829,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="files\become\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

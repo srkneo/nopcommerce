@@ -15,6 +15,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using NopSolutions.NopCommerce.BusinessLogic.CustomerManagement;
 
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Security
@@ -54,6 +55,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Security
         /// Gets or sets the value indicating whether action is allowed
         /// </summary>
         public bool Allow { get; set; }
+
+        #endregion
+
+        #region Navigation Properties
+
+        /// <summary>
+        /// Gets the customer action
+        /// </summary>
+        public virtual CustomerAction NpCustomerAction { get; set; }
+
+        /// <summary>
+        /// Gets the customer role
+        /// </summary>
+        public virtual CustomerRole NpCustomerRole { get; set; }
 
         #endregion
     }
