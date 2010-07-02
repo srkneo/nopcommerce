@@ -545,6 +545,30 @@ set @resources='
   <LocaleResource Name="Admin.PromotionProviders.PriceGrabber.SuccessResult">
 	<Value>PriceGrabber feed has been successfully generated. {0} to see generated feed</Value>
   </LocaleResource>
+  <LocaleResource Name="Admin.PromotionProviders.Become.Title">
+	<Value>Become.com</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.PromotionProviders.Become.GenerateButton.Text">
+	<Value>Generate Feed</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.PromotionProviders.Become.GenerateButton.Tooltip">
+	<Value>Click to generate feed</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.PromotionProviders.Become.SuccessResult">
+	<Value>Becom feed has been successfully generated. {0} to see generated feed</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Froogle.ClickHere">
+	<Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.PromotionProviders.PriceGrabber.ClickHere">
+	<Value>Click here</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.PromotionProviders.Become.ClickHere">
+	<Value>Click here</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.PromotionProviders.Froogle.ClickHere">
+	<Value>Click here</Value>
+  </LocaleResource>
 </Language>
 '
 

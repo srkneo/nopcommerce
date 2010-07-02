@@ -60,5 +60,18 @@
                 </table>
             </ContentTemplate>
         </ajaxToolkit:TabPanel>
+        <ajaxToolkit:TabPanel runat="server" ID="pnlBecome" HeaderText="<% $NopResources:Admin.PromotionProviders.Become.Title %>">
+            <ContentTemplate>
+                <table class="adminContent">
+                    <tr>
+                        <td colspan="2">
+                            <asp:Button runat="server" Text="<% $NopResources:Admin.PromotionProviders.Become.GenerateButton.Text %>"
+                                CssClass="adminButtonBlue" ID="btnBecomeGenerate" CausesValidation="false" 
+                                OnClick="btnBecomeGenerate_Click" ToolTip="<% $NopResources:Admin.PromotionProviders.Become.GenerateButton.Tooltip %>" />
+                        </td>
+                    </tr>
+                </table>
+            </ContentTemplate>
+        </ajaxToolkit:TabPanel>
     </ajaxToolkit:TabContainer>
 </div>

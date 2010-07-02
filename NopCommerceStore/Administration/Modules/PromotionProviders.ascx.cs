@@ -31,6 +31,7 @@ using NopSolutions.NopCommerce.BusinessLogic.Audit;
 using System.IO;
 using NopSolutions.NopCommerce.Froogle;
 using NopSolutions.NopCommerce.PriceGrabber;
+using NopSolutions.NopCommerce.Become;
 
 
 namespace NopSolutions.NopCommerce.Web.Administration.Modules
@@ -93,7 +94,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     FroogleService.GenerateFeed(fs);
                 }
 
-                string clickhereStr = string.Format("<a href=\"{0}files/froogle/{1}\" target=\"_blank\">{2}</a>", CommonHelper.GetStoreLocation(false), fileName, GetLocaleResourceString("Admin.Froogle.ClickHere"));
+                string clickhereStr = string.Format("<a href=\"{0}files/froogle/{1}\" target=\"_blank\">{2}</a>", CommonHelper.GetStoreLocation(false), fileName, GetLocaleResourceString("Admin.PromotionProviders.Froogle.ClickHere"));
                 string result = string.Format(GetLocaleResourceString("Admin.PromotionProviders.Froogle.SuccessResult"), clickhereStr);
                 ShowMessage(result);
             }
@@ -114,8 +115,29 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     PriceGrabberService.GenerateFeed(fs);
                 }
 
-                string clickhereStr = string.Format("<a href=\"{0}files/pricegrabber/{1}\" target=\"_blank\">{2}</a>", CommonHelper.GetStoreLocation(false), fileName, GetLocaleResourceString("Admin.Froogle.ClickHere"));
+                string clickhereStr = string.Format("<a href=\"{0}files/pricegrabber/{1}\" target=\"_blank\">{2}</a>", CommonHelper.GetStoreLocation(false), fileName, GetLocaleResourceString("Admin.PromotionProviders.PriceGrabber.ClickHere"));
                 string result = string.Format(GetLocaleResourceString("Admin.PromotionProviders.PriceGrabber.SuccessResult"), clickhereStr);
+                ShowMessage(result);
+            }
+            catch (Exception exc)
+            {
+                ProcessException(exc);
+            }
+        }
+
+        protected void btnBecomeGenerate_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string fileName = string.Format("become_{0}_{1}.csv", DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss"), CommonHelper.GenerateRandomDigitCode(4));
+                string filePath = string.Format("{0}files\\become\\{1}", HttpContext.Current.Request.PhysicalApplicationPath, fileName);
+                using (FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.ReadWrite))
+                {
+                    BecomeService.GenerateFeed(fs);
+                }
+
+                string clickhereStr = string.Format("<a href=\"{0}files/become/{1}\" target=\"_blank\">{2}</a>", CommonHelper.GetStoreLocation(false), fileName, GetLocaleResourceString("Admin.PromotionProviders.Become.ClickHere"));
+                string result = string.Format(GetLocaleResourceString("Admin.PromotionProviders.Become.SuccessResult"), clickhereStr);
                 ShowMessage(result);
             }
             catch (Exception exc)

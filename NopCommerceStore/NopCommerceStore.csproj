@@ -5324,6 +5324,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Libraries\Nop.Become\Nop.Become.csproj">
+      <Project>{B91A4CB2-D8AF-4784-BED3-CF166FA5B7AD}</Project>
+      <Name>Nop.Become</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Libraries\Nop.BusinessLogic\Nop.BusinessLogic.csproj">
       <Project>{EDF31192-A159-48DA-A737-9935A8A5BC18}</Project>
       <Name>Nop.BusinessLogic</Name>
@@ -6823,6 +6827,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="files\become\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
