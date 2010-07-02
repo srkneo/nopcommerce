@@ -26,6 +26,7 @@ using NopSolutions.NopCommerce.BusinessLogic.Payment;
 using NopSolutions.NopCommerce.BusinessLogic.Security;
 using NopSolutions.NopCommerce.Common;
 using NopSolutions.NopCommerce.Common.Utils;
+using System.Xml;
 
 namespace NopSolutions.NopCommerce.Payment.Methods.QuickPay
 {
@@ -34,6 +35,143 @@ namespace NopSolutions.NopCommerce.Payment.Methods.QuickPay
     /// </summary>
     public class QuickPayPaymentProcessor : IPaymentMethod
     {
+        #region Utilities
+
+        private string FormatOrderNumber(string ordernumber)
+        {
+            //order number must be at least 4 digits long.
+            if (ordernumber.Length < 4)
+            {
+                for (int i = 1; i < 4; i++)
+                {
+                    if (ordernumber.Length < 4)
+                    {
+                        ordernumber = "0" + ordernumber;
+                    }
+                }
+            }
+
+            return ordernumber;
+        }
+        //This only works when a payment have been authorized and not captured.
+        private void DoCancel(Order order, ref CancelPaymentResult cancelPaymentResult, bool alreadyTriedRefund)
+        {
+            string merchant = SettingManager.GetSettingValue(QuickPayConstants.SETTING_MERCHANTID);
+            string protocol = "3";
+            string capturePostUrl = "https://secure.quickpay.dk/api";
+            string msgtype = "cancel";
+            string transaction = order.AuthorizationTransactionId;
+            string md5secret = SettingManager.GetSettingValue(QuickPayConstants.SETTING_MD5SECRET);
+            string stringToMd5 = string.Concat(protocol, msgtype, merchant, transaction, md5secret);
+
+
+            string querystring = string.Empty;
+            string md5check = GetMD5(stringToMd5);
+
+            querystring += string.Format("protocol={0}&", protocol);
+            querystring += string.Format("msgtype={0}&", msgtype);
+            querystring += string.Format("merchant={0}&", merchant);
+            querystring += string.Format("transaction={0}&", transaction);
+            querystring += string.Format("md5check={0}", md5check);
+
+            string retval = HttpRequestsFunctions.HttpPost(capturePostUrl, querystring);
+
+
+            try
+            {
+                XmlDocument xmlDocument = new XmlDocument();
+                xmlDocument.LoadXml(retval);
+                XmlElement xmlElement = xmlDocument.DocumentElement;
+
+                string rep_qpstatmsg = xmlElement.SelectSingleNode("qpstatmsg").InnerText;
+                string rep_qpstat = xmlElement.SelectSingleNode("qpstat").InnerText;
+                string rep_transaction = xmlElement.SelectSingleNode("transaction").InnerText;
+
+                //refund successful
+                if (rep_qpstat == "000")
+                {
+                    cancelPaymentResult.PaymentStatus = PaymentStatusEnum.Refunded;
+                }
+                else if (rep_qpstat == "004" && (!alreadyTriedRefund))
+                {
+                    DoRefund(order, ref cancelPaymentResult, true);
+                }
+                else
+                {
+                    cancelPaymentResult.Error = "Quickpay Cancel did not succeed, qpstat is:" + rep_qpstat;
+                    cancelPaymentResult.FullError = "Quickpay Cancel did not succeed, qpstat is:" + rep_qpstat;
+                }
+
+            }
+            catch (Exception exception)
+            {
+                throw new NopException("XML response for Quickpay Capture was not successfull. Reasons could be that the host did not respond. Below is stacktrace:" + exception.Message + exception.StackTrace + exception.Source, exception.InnerException);
+            }
+
+        }
+
+        //This works only on refund to customer (refund what has already been captured...)
+        private void DoRefund(Order order, ref CancelPaymentResult cancelPaymentResult, bool alreadyTriedCancel)
+        {
+            string merchant = SettingManager.GetSettingValue(QuickPayConstants.SETTING_MERCHANTID);
+            string protocol = "3";
+            string capturePostUrl = "https://secure.quickpay.dk/api";
+            string msgtype = "refund";
+            string amount = (cancelPaymentResult.Amount * 100).ToString("0", CultureInfo.InvariantCulture); //NOTE: Primary store should be changed to DKK, if you do not have internatinal agreement with pbs and quickpay. Otherwise you need to do currency conversion here.
+            string transaction = order.AuthorizationTransactionId;
+            string md5secret = SettingManager.GetSettingValue(QuickPayConstants.SETTING_MD5SECRET);
+            string stringToMd5 = string.Concat(protocol, msgtype, merchant, amount, transaction, md5secret);
+
+
+            string querystring = string.Empty;
+            string md5check = GetMD5(stringToMd5);
+
+            querystring += string.Format("protocol={0}&", protocol);
+            querystring += string.Format("msgtype={0}&", msgtype);
+            querystring += string.Format("merchant={0}&", merchant);
+            querystring += string.Format("amount={0}&", amount);
+            querystring += string.Format("transaction={0}&", transaction);
+            querystring += string.Format("md5check={0}", md5check);
+
+            string retval = HttpRequestsFunctions.HttpPost(capturePostUrl, querystring);
+
+
+            try
+            {
+                XmlDocument xmlDocument = new XmlDocument();
+                xmlDocument.LoadXml(retval);
+                XmlElement xmlElement = xmlDocument.DocumentElement;
+
+                string rep_qpstatmsg = xmlElement.SelectSingleNode("qpstatmsg").InnerText;
+                string rep_qpstat = xmlElement.SelectSingleNode("qpstat").InnerText;
+                string rep_transaction = xmlElement.SelectSingleNode("transaction").InnerText;
+
+                //refund successful
+                if (rep_qpstat == "000")
+                {
+                    cancelPaymentResult.PaymentStatus = PaymentStatusEnum.Refunded;
+                }
+                //not allowed in current state. This probably means that it has not been caputered yet.
+                //we therefore try to just cancel, but not refund
+                else if (rep_qpstat == "004" && (!alreadyTriedCancel))
+                {
+                    DoCancel(order, ref cancelPaymentResult, true);
+                }
+                else
+                {
+                    cancelPaymentResult.Error = "Quickpay Caputure refund did not succeed, qpstat is:" + rep_qpstat;
+                    cancelPaymentResult.FullError = "Quickpay Caputure refund did not succeed, qpstat is:" + rep_qpstat;
+                }
+
+            }
+            catch (Exception exception)
+            {
+                throw new NopException("XML response for Quickpay Capture was not successfull. Reasons could be that the host did not respond. Below is stacktrace:" + exception.Message + exception.StackTrace + exception.Source, exception.InnerException);
+            }
+
+        }
+        #endregion
+        
         #region Methods
 
         public string GetMD5(string InputStr)
@@ -80,13 +218,13 @@ namespace NopSolutions.NopCommerce.Payment.Methods.QuickPay
         {
             CultureInfo cultureInfo = new CultureInfo(NopContext.Current.WorkingLanguage.LanguageCulture);
 
-            string language = cultureInfo.TwoLetterISOLanguageName;            
-            string amount = (order.OrderTotal * 100).ToString("0", CultureInfo.InvariantCulture);
+            string language = cultureInfo.TwoLetterISOLanguageName;
+            string amount = (order.OrderTotal * 100).ToString("0", CultureInfo.InvariantCulture); //NOTE: Primary store should be changed to DKK, if you do not have internatinal agreement with pbs and quickpay. Otherwise you need to do currency conversion here.
 
-            string currencyCode = CurrencyManager.PrimaryStoreCurrency.CurrencyCode;
+            string currencyCode = CurrencyManager.PrimaryStoreCurrency.CurrencyCode; //NOTE: Primary store should be changed to DKK, if you do not have internatinal agreement with pbs and quickpay. Otherwise you need to do currency conversion here.
             string protocol = "3";
             string autocapture = "0";
-            string cardtypelock = SettingManager.GetSettingValue(QuickPayConstants.SETTING_CREDITCARD_CODE_PROPERTY);
+            string cardtypelock = SettingManager.GetSettingValue(QuickPayConstants.SETTING_CREDITCARD_CODE_PROPERTY, "dankort");
             bool useSandBox = SettingManager.GetSettingValueBoolean(QuickPayConstants.SETTING_USE_SANDBOX);
             string testmode = (useSandBox) ? "1" : "0";
             string continueurl = CommonHelper.GetStoreLocation(false) + "CheckoutCompleted.aspx";
@@ -96,21 +234,12 @@ namespace NopSolutions.NopCommerce.Payment.Methods.QuickPay
             string ipaddress = System.Web.HttpContext.Current.Request.UserHostAddress;
             string msgtype = "authorize";
             string md5secret = SettingManager.GetSettingValue(QuickPayConstants.SETTING_MD5SECRET);
-            string ordernumber = order.OrderId.ToString();
+            string ordernumber = FormatOrderNumber(order.OrderId.ToString());
 
-            //order number must be at least 4 digits long.
-            if (ordernumber.Length < 4)
-            {
-                for (int i = 1; i < 4; i++)
-                {
-                    if (ordernumber.Length < 4)
-                    {
-                        ordernumber = "0" + ordernumber;
-                    }
-                }
-            }
-
-            string stringToMd5 = string.Concat(protocol, msgtype, merchant, language, ordernumber, amount, currencyCode, continueurl, cancelurl, callbackurl, autocapture, cardtypelock, ipaddress, testmode, md5secret);
+            string stringToMd5 = string.Concat(protocol, msgtype, merchant,
+                language, ordernumber, amount, currencyCode, continueurl, 
+                cancelurl, callbackurl, autocapture, cardtypelock, 
+                ipaddress, testmode, md5secret);
             string md5check = GetMD5(stringToMd5);
 
             RemotePost remotePostHelper = new RemotePost();
@@ -153,7 +282,69 @@ namespace NopSolutions.NopCommerce.Payment.Methods.QuickPay
         /// <param name="processPaymentResult">Process payment result</param>
         public void Capture(Order order, ref ProcessPaymentResult processPaymentResult)
         {
-            throw new NopException("Capture method not supported");
+            bool useSandBox = SettingManager.GetSettingValueBoolean(QuickPayConstants.SETTING_USE_SANDBOX);
+            string merchant = SettingManager.GetSettingValue(QuickPayConstants.SETTING_MERCHANTID);
+            string protocol = "3";
+            string testmode = (useSandBox) ? "1" : "0";
+            const string autocapture = "0"; //in initial phase while testing system, no autocapture!.
+            string capturePostUrl = "https://secure.quickpay.dk/api";
+            string msgtype = "capture";
+            string ordernumber = FormatOrderNumber(order.OrderId.ToString());
+            string currencyCode = CurrencyManager.PrimaryStoreCurrency.CurrencyCode; //NOTE: Primary store should be changed to DKK, if you do not have internatinal agreement with pbs and quickpay. Otherwise you need to do currency conversion here.
+            string amount = (order.OrderTotal * 100).ToString("0", CultureInfo.InvariantCulture); //NOTE: Primary store should be changed to DKK, if you do not have internatinal agreement with pbs and quickpay. Otherwise you need to do currency conversion here.
+            string transaction = order.AuthorizationTransactionId;
+            string md5secret = SettingManager.GetSettingValue(QuickPayConstants.SETTING_MD5SECRET);
+            string stringToMd5 = string.Concat(protocol, msgtype, merchant, amount, autocapture, transaction, md5secret);
+            
+            string querystring = string.Empty;
+            string md5check = GetMD5(stringToMd5);
+            querystring += string.Format("protocol={0}&", protocol);
+            querystring += string.Format("msgtype={0}&", msgtype);
+            querystring += string.Format("merchant={0}&", merchant);
+            querystring += string.Format("ordernumber={0}&", ordernumber);
+            querystring += string.Format("amount={0}&", amount);
+            querystring += string.Format("currency={0}&", currencyCode);
+            querystring += string.Format("autocapture={0}&", autocapture);
+            querystring += string.Format("transaction={0}&", transaction);
+            querystring += string.Format("md5check={0}", md5check);
+            querystring += string.Format("testmode={0}", testmode);
+            
+            string retval = HttpRequestsFunctions.HttpPost(capturePostUrl, querystring);
+
+            try
+            {
+                XmlDocument xmlDocument = new XmlDocument();
+                xmlDocument.LoadXml(retval);
+                XmlElement xmlElement = xmlDocument.DocumentElement;
+
+                string rep_qpstatmsg = xmlElement.SelectSingleNode("qpstatmsg").InnerText;
+                string rep_qpstat = xmlElement.SelectSingleNode("qpstat").InnerText;
+                string rep_transaction = xmlElement.SelectSingleNode("transaction").InnerText;
+
+                //caputre successful
+                if (rep_qpstat == "000")
+                {
+                    if (OrderManager.CanMarkOrderAsPaid(order))
+                    {
+                        OrderManager.MarkOrderAsPaid(order.OrderId);
+                        processPaymentResult.PaymentStatus = PaymentStatusEnum.Paid;
+                    }
+                    //OrderManager.SetCaptureResults(order.OrderId, rep_transaction, rep_qpstatmsg);
+                }
+                else
+                {
+                    processPaymentResult.Error = "Quickpay Caputure did not succeed, qpstat is:" + rep_qpstat;
+                    processPaymentResult.FullError = "Quickpay Caputure did not succeed, qpstat is:" + rep_qpstat;
+                }
+
+
+                processPaymentResult.CaptureTransactionId = rep_transaction;
+                processPaymentResult.CaptureTransactionResult = rep_qpstatmsg;
+            }
+            catch (Exception exception)
+            {
+                throw new NopException("XML response for Quickpay Capture was not successfull. Reasons could be that the host did not respond. Below is stacktrace:" + exception.Message + exception.StackTrace + exception.Source, exception.InnerException);
+            }
         }
 
         /// <summary>
@@ -163,7 +354,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.QuickPay
         /// <param name="cancelPaymentResult">Cancel payment result</param>        
         public void Refund(Order order, ref CancelPaymentResult cancelPaymentResult)
         {
-            throw new NopException("Refund method not supported");
+            DoRefund(order, ref cancelPaymentResult, false);
         }
 
         /// <summary>
@@ -207,7 +398,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.QuickPay
         {
             get
             {
-                return false;
+                return true;
             }
         }
 
@@ -218,7 +409,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.QuickPay
         {
             get
             {
-                return false;
+                return true;
             }
         }
 
