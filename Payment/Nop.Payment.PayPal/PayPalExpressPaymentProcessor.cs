@@ -274,32 +274,43 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal
             request.Version = this.APIVersion;
             DoExpressCheckoutPaymentRequestDetailsType details = new DoExpressCheckoutPaymentRequestDetailsType();
             request.DoExpressCheckoutPaymentRequestDetails = details;
-            PaymentDetailsType paymentDetails = new PaymentDetailsType();
-            details.PaymentDetails = paymentDetails;
             if (transactionMode == TransactMode.Authorize)
                 details.PaymentAction = PaymentActionCodeType.Authorization;
             else
                 details.PaymentAction = PaymentActionCodeType.Sale;
+            details.PaymentActionSpecified = true;
             details.Token = paymentInfo.PaypalToken;
             details.PayerID = paymentInfo.PaypalPayerId;
-            paymentDetails.OrderTotal = new BasicAmountType();
-            paymentDetails.OrderTotal.Value = paymentInfo.OrderTotal.ToString("N", new CultureInfo("en-us"));
-            paymentDetails.OrderTotal.currencyID = PaypalHelper.GetPaypalCurrency(CurrencyManager.PrimaryStoreCurrency);
-            paymentDetails.Custom = orderGuid.ToString();
-            paymentDetails.ButtonSource = "nopCommerceCart";
+            
+            details.PaymentDetails = new PaymentDetailsType[1];
+            PaymentDetailsType paymentDetails1 = new PaymentDetailsType();
+            details.PaymentDetails[0] = paymentDetails1;
+            paymentDetails1.OrderTotal = new BasicAmountType();
+            paymentDetails1.OrderTotal.Value = paymentInfo.OrderTotal.ToString("N", new CultureInfo("en-us"));
+            paymentDetails1.OrderTotal.currencyID = PaypalHelper.GetPaypalCurrency(CurrencyManager.PrimaryStoreCurrency);
+            paymentDetails1.Custom = orderGuid.ToString();
+            paymentDetails1.ButtonSource = "nopCommerceCart";
             
             DoExpressCheckoutPaymentResponseType response = service2.DoExpressCheckoutPayment(req);
             string error;
             if (!PaypalHelper.CheckSuccess(response, out error))
                 throw new NopException(error);
 
-            processPaymentResult.AuthorizationTransactionId =  response.DoExpressCheckoutPaymentResponseDetails.PaymentInfo.TransactionID;
-            processPaymentResult.AuthorizationTransactionResult = response.Ack.ToString();
-           
-            if (transactionMode == TransactMode.Authorize)
-                processPaymentResult.PaymentStatus = PaymentStatusEnum.Authorized;
+            if (response.DoExpressCheckoutPaymentResponseDetails.PaymentInfo != null &&
+                response.DoExpressCheckoutPaymentResponseDetails.PaymentInfo[0] != null)
+            {
+                processPaymentResult.AuthorizationTransactionId = response.DoExpressCheckoutPaymentResponseDetails.PaymentInfo[0].TransactionID;
+                processPaymentResult.AuthorizationTransactionResult = response.Ack.ToString();
+
+                if (transactionMode == TransactMode.Authorize)
+                    processPaymentResult.PaymentStatus = PaymentStatusEnum.Authorized;
+                else
+                    processPaymentResult.PaymentStatus = PaymentStatusEnum.Paid;
+            }
             else
-                processPaymentResult.PaymentStatus = PaymentStatusEnum.Paid;            
+            {
+                throw new NopException("response.DoExpressCheckoutPaymentResponseDetails.PaymentInfo is null");
+            }
         }
 
         /// <summary>
@@ -365,7 +376,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal
         {
             get
             {
-                return "2.0";
+                return "63";
             }
         }
 
@@ -414,7 +425,6 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal
             }
         }
         
-
         /// <summary>
         /// Gets a payment method type
         /// </summary>

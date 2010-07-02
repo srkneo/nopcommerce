@@ -137,6 +137,27 @@
     <None Include="Web References\PayPalSvc\BillUserResponseType.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
+    <None Include="Web References\PayPalSvc\BMButtonSearchResponseType1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\PayPalSvc\BMCreateButtonResponseType1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\PayPalSvc\BMGetButtonDetailsResponseType1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\PayPalSvc\BMGetInventoryResponseType1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\PayPalSvc\BMManageButtonStatusResponseType1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\PayPalSvc\BMSetInventoryResponseType1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\PayPalSvc\BMUpdateButtonResponseType1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
     <None Include="Web References\PayPalSvc\CoreComponentTypes.xsd" />
     <None Include="Web References\PayPalSvc\CreateBillingAgreementResponseType.datasource">
       <DependentUpon>Reference.map</DependentUpon>
@@ -181,6 +202,9 @@
       <DependentUpon>Reference.map</DependentUpon>
     </None>
     <None Include="Web References\PayPalSvc\eBLBaseComponents.xsd" />
+    <None Include="Web References\PayPalSvc\EnhancedDataTypes.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Web References\PayPalSvc\EnterBoardingResponseType.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
@@ -205,6 +229,9 @@
     <None Include="Web References\PayPalSvc\GetMobileStatusResponseType.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
+    <None Include="Web References\PayPalSvc\GetPalDetailsResponseType1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
     <None Include="Web References\PayPalSvc\GetRecurringPaymentsProfileDetailsResponseType.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
@@ -226,6 +253,9 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
     <None Include="Web References\PayPalSvc\RefundTransactionResponseType.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\PayPalSvc\ReverseTransactionResponseType1.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
     <None Include="Web References\PayPalSvc\SetAccessPermissionsResponseType.datasource">

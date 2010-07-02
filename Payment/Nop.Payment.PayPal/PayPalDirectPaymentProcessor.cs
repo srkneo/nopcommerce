@@ -439,7 +439,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal
 
             CreateRecurringPaymentsProfileReq req = new CreateRecurringPaymentsProfileReq();
             req.CreateRecurringPaymentsProfileRequest = new CreateRecurringPaymentsProfileRequestType();
-            req.CreateRecurringPaymentsProfileRequest.Version = "51";
+            req.CreateRecurringPaymentsProfileRequest.Version = this.APIVersion;
             CreateRecurringPaymentsProfileRequestDetailsType details = new CreateRecurringPaymentsProfileRequestDetailsType();
             req.CreateRecurringPaymentsProfileRequest.CreateRecurringPaymentsProfileRequestDetails = details;
             
@@ -543,7 +543,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal
         {
             get
             {
-                return "2.0";
+                return "63";
             }
         }
 

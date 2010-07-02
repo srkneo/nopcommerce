@@ -37,6 +37,20 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
         
         private System.Threading.SendOrPostCallback GetTransactionDetailsOperationCompleted;
         
+        private System.Threading.SendOrPostCallback BMCreateButtonOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback BMUpdateButtonOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback BMManageButtonStatusOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback BMGetButtonDetailsOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback BMSetInventoryOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback BMGetInventoryOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback BMButtonSearchOperationCompleted;
+        
         private System.Threading.SendOrPostCallback BillUserOperationCompleted;
         
         private System.Threading.SendOrPostCallback TransactionSearchOperationCompleted;
@@ -60,6 +74,8 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
         private System.Threading.SendOrPostCallback DoMobileCheckoutPaymentOperationCompleted;
         
         private System.Threading.SendOrPostCallback GetBalanceOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback GetPalDetailsOperationCompleted;
         
         private bool useDefaultCredentialsSetExplicitly;
         
@@ -115,6 +131,27 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
         public event GetTransactionDetailsCompletedEventHandler GetTransactionDetailsCompleted;
         
         /// <remarks/>
+        public event BMCreateButtonCompletedEventHandler BMCreateButtonCompleted;
+        
+        /// <remarks/>
+        public event BMUpdateButtonCompletedEventHandler BMUpdateButtonCompleted;
+        
+        /// <remarks/>
+        public event BMManageButtonStatusCompletedEventHandler BMManageButtonStatusCompleted;
+        
+        /// <remarks/>
+        public event BMGetButtonDetailsCompletedEventHandler BMGetButtonDetailsCompleted;
+        
+        /// <remarks/>
+        public event BMSetInventoryCompletedEventHandler BMSetInventoryCompleted;
+        
+        /// <remarks/>
+        public event BMGetInventoryCompletedEventHandler BMGetInventoryCompleted;
+        
+        /// <remarks/>
+        public event BMButtonSearchCompletedEventHandler BMButtonSearchCompleted;
+        
+        /// <remarks/>
         public event BillUserCompletedEventHandler BillUserCompleted;
         
         /// <remarks/>
@@ -149,6 +186,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
         
         /// <remarks/>
         public event GetBalanceCompletedEventHandler GetBalanceCompleted;
+        
+        /// <remarks/>
+        public event GetPalDetailsCompletedEventHandler GetPalDetailsCompleted;
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapHeaderAttribute("RequesterCredentials", Direction=System.Web.Services.Protocols.SoapHeaderDirection.InOut)]
@@ -209,6 +249,223 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
             if ((this.GetTransactionDetailsCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.GetTransactionDetailsCompleted(this, new GetTransactionDetailsCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapHeaderAttribute("RequesterCredentials", Direction=System.Web.Services.Protocols.SoapHeaderDirection.InOut)]
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Bare)]
+        [return: System.Xml.Serialization.XmlElementAttribute("BMCreateButtonResponse", Namespace="urn:ebay:api:PayPalAPI")]
+        public BMCreateButtonResponseType BMCreateButton([System.Xml.Serialization.XmlElementAttribute(Namespace="urn:ebay:api:PayPalAPI")] BMCreateButtonReq BMCreateButtonReq) {
+            object[] results = this.Invoke("BMCreateButton", new object[] {
+                        BMCreateButtonReq});
+            return ((BMCreateButtonResponseType)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void BMCreateButtonAsync(BMCreateButtonReq BMCreateButtonReq) {
+            this.BMCreateButtonAsync(BMCreateButtonReq, null);
+        }
+        
+        /// <remarks/>
+        public void BMCreateButtonAsync(BMCreateButtonReq BMCreateButtonReq, object userState) {
+            if ((this.BMCreateButtonOperationCompleted == null)) {
+                this.BMCreateButtonOperationCompleted = new System.Threading.SendOrPostCallback(this.OnBMCreateButtonOperationCompleted);
+            }
+            this.InvokeAsync("BMCreateButton", new object[] {
+                        BMCreateButtonReq}, this.BMCreateButtonOperationCompleted, userState);
+        }
+        
+        private void OnBMCreateButtonOperationCompleted(object arg) {
+            if ((this.BMCreateButtonCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.BMCreateButtonCompleted(this, new BMCreateButtonCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapHeaderAttribute("RequesterCredentials", Direction=System.Web.Services.Protocols.SoapHeaderDirection.InOut)]
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Bare)]
+        [return: System.Xml.Serialization.XmlElementAttribute("BMUpdateButtonResponse", Namespace="urn:ebay:api:PayPalAPI")]
+        public BMUpdateButtonResponseType BMUpdateButton([System.Xml.Serialization.XmlElementAttribute(Namespace="urn:ebay:api:PayPalAPI")] BMUpdateButtonReq BMUpdateButtonReq) {
+            object[] results = this.Invoke("BMUpdateButton", new object[] {
+                        BMUpdateButtonReq});
+            return ((BMUpdateButtonResponseType)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void BMUpdateButtonAsync(BMUpdateButtonReq BMUpdateButtonReq) {
+            this.BMUpdateButtonAsync(BMUpdateButtonReq, null);
+        }
+        
+        /// <remarks/>
+        public void BMUpdateButtonAsync(BMUpdateButtonReq BMUpdateButtonReq, object userState) {
+            if ((this.BMUpdateButtonOperationCompleted == null)) {
+                this.BMUpdateButtonOperationCompleted = new System.Threading.SendOrPostCallback(this.OnBMUpdateButtonOperationCompleted);
+            }
+            this.InvokeAsync("BMUpdateButton", new object[] {
+                        BMUpdateButtonReq}, this.BMUpdateButtonOperationCompleted, userState);
+        }
+        
+        private void OnBMUpdateButtonOperationCompleted(object arg) {
+            if ((this.BMUpdateButtonCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.BMUpdateButtonCompleted(this, new BMUpdateButtonCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapHeaderAttribute("RequesterCredentials", Direction=System.Web.Services.Protocols.SoapHeaderDirection.InOut)]
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Bare)]
+        [return: System.Xml.Serialization.XmlElementAttribute("BMManageButtonStatusResponse", Namespace="urn:ebay:api:PayPalAPI")]
+        public BMManageButtonStatusResponseType BMManageButtonStatus([System.Xml.Serialization.XmlElementAttribute(Namespace="urn:ebay:api:PayPalAPI")] BMManageButtonStatusReq BMManageButtonStatusReq) {
+            object[] results = this.Invoke("BMManageButtonStatus", new object[] {
+                        BMManageButtonStatusReq});
+            return ((BMManageButtonStatusResponseType)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void BMManageButtonStatusAsync(BMManageButtonStatusReq BMManageButtonStatusReq) {
+            this.BMManageButtonStatusAsync(BMManageButtonStatusReq, null);
+        }
+        
+        /// <remarks/>
+        public void BMManageButtonStatusAsync(BMManageButtonStatusReq BMManageButtonStatusReq, object userState) {
+            if ((this.BMManageButtonStatusOperationCompleted == null)) {
+                this.BMManageButtonStatusOperationCompleted = new System.Threading.SendOrPostCallback(this.OnBMManageButtonStatusOperationCompleted);
+            }
+            this.InvokeAsync("BMManageButtonStatus", new object[] {
+                        BMManageButtonStatusReq}, this.BMManageButtonStatusOperationCompleted, userState);
+        }
+        
+        private void OnBMManageButtonStatusOperationCompleted(object arg) {
+            if ((this.BMManageButtonStatusCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.BMManageButtonStatusCompleted(this, new BMManageButtonStatusCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapHeaderAttribute("RequesterCredentials", Direction=System.Web.Services.Protocols.SoapHeaderDirection.InOut)]
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Bare)]
+        [return: System.Xml.Serialization.XmlElementAttribute("BMGetButtonDetailsResponse", Namespace="urn:ebay:api:PayPalAPI")]
+        public BMGetButtonDetailsResponseType BMGetButtonDetails([System.Xml.Serialization.XmlElementAttribute(Namespace="urn:ebay:api:PayPalAPI")] BMGetButtonDetailsReq BMGetButtonDetailsReq) {
+            object[] results = this.Invoke("BMGetButtonDetails", new object[] {
+                        BMGetButtonDetailsReq});
+            return ((BMGetButtonDetailsResponseType)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void BMGetButtonDetailsAsync(BMGetButtonDetailsReq BMGetButtonDetailsReq) {
+            this.BMGetButtonDetailsAsync(BMGetButtonDetailsReq, null);
+        }
+        
+        /// <remarks/>
+        public void BMGetButtonDetailsAsync(BMGetButtonDetailsReq BMGetButtonDetailsReq, object userState) {
+            if ((this.BMGetButtonDetailsOperationCompleted == null)) {
+                this.BMGetButtonDetailsOperationCompleted = new System.Threading.SendOrPostCallback(this.OnBMGetButtonDetailsOperationCompleted);
+            }
+            this.InvokeAsync("BMGetButtonDetails", new object[] {
+                        BMGetButtonDetailsReq}, this.BMGetButtonDetailsOperationCompleted, userState);
+        }
+        
+        private void OnBMGetButtonDetailsOperationCompleted(object arg) {
+            if ((this.BMGetButtonDetailsCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.BMGetButtonDetailsCompleted(this, new BMGetButtonDetailsCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapHeaderAttribute("RequesterCredentials", Direction=System.Web.Services.Protocols.SoapHeaderDirection.InOut)]
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Bare)]
+        [return: System.Xml.Serialization.XmlElementAttribute("BMSetInventoryResponse", Namespace="urn:ebay:api:PayPalAPI")]
+        public BMSetInventoryResponseType BMSetInventory([System.Xml.Serialization.XmlElementAttribute(Namespace="urn:ebay:api:PayPalAPI")] BMSetInventoryReq BMSetInventoryReq) {
+            object[] results = this.Invoke("BMSetInventory", new object[] {
+                        BMSetInventoryReq});
+            return ((BMSetInventoryResponseType)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void BMSetInventoryAsync(BMSetInventoryReq BMSetInventoryReq) {
+            this.BMSetInventoryAsync(BMSetInventoryReq, null);
+        }
+        
+        /// <remarks/>
+        public void BMSetInventoryAsync(BMSetInventoryReq BMSetInventoryReq, object userState) {
+            if ((this.BMSetInventoryOperationCompleted == null)) {
+                this.BMSetInventoryOperationCompleted = new System.Threading.SendOrPostCallback(this.OnBMSetInventoryOperationCompleted);
+            }
+            this.InvokeAsync("BMSetInventory", new object[] {
+                        BMSetInventoryReq}, this.BMSetInventoryOperationCompleted, userState);
+        }
+        
+        private void OnBMSetInventoryOperationCompleted(object arg) {
+            if ((this.BMSetInventoryCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.BMSetInventoryCompleted(this, new BMSetInventoryCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapHeaderAttribute("RequesterCredentials", Direction=System.Web.Services.Protocols.SoapHeaderDirection.InOut)]
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Bare)]
+        [return: System.Xml.Serialization.XmlElementAttribute("BMGetInventoryResponse", Namespace="urn:ebay:api:PayPalAPI")]
+        public BMGetInventoryResponseType BMGetInventory([System.Xml.Serialization.XmlElementAttribute(Namespace="urn:ebay:api:PayPalAPI")] BMGetInventoryReq BMGetInventoryReq) {
+            object[] results = this.Invoke("BMGetInventory", new object[] {
+                        BMGetInventoryReq});
+            return ((BMGetInventoryResponseType)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void BMGetInventoryAsync(BMGetInventoryReq BMGetInventoryReq) {
+            this.BMGetInventoryAsync(BMGetInventoryReq, null);
+        }
+        
+        /// <remarks/>
+        public void BMGetInventoryAsync(BMGetInventoryReq BMGetInventoryReq, object userState) {
+            if ((this.BMGetInventoryOperationCompleted == null)) {
+                this.BMGetInventoryOperationCompleted = new System.Threading.SendOrPostCallback(this.OnBMGetInventoryOperationCompleted);
+            }
+            this.InvokeAsync("BMGetInventory", new object[] {
+                        BMGetInventoryReq}, this.BMGetInventoryOperationCompleted, userState);
+        }
+        
+        private void OnBMGetInventoryOperationCompleted(object arg) {
+            if ((this.BMGetInventoryCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.BMGetInventoryCompleted(this, new BMGetInventoryCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapHeaderAttribute("RequesterCredentials", Direction=System.Web.Services.Protocols.SoapHeaderDirection.InOut)]
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Bare)]
+        [return: System.Xml.Serialization.XmlElementAttribute("BMButtonSearchResponse", Namespace="urn:ebay:api:PayPalAPI")]
+        public BMButtonSearchResponseType BMButtonSearch([System.Xml.Serialization.XmlElementAttribute(Namespace="urn:ebay:api:PayPalAPI")] BMButtonSearchReq BMButtonSearchReq) {
+            object[] results = this.Invoke("BMButtonSearch", new object[] {
+                        BMButtonSearchReq});
+            return ((BMButtonSearchResponseType)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void BMButtonSearchAsync(BMButtonSearchReq BMButtonSearchReq) {
+            this.BMButtonSearchAsync(BMButtonSearchReq, null);
+        }
+        
+        /// <remarks/>
+        public void BMButtonSearchAsync(BMButtonSearchReq BMButtonSearchReq, object userState) {
+            if ((this.BMButtonSearchOperationCompleted == null)) {
+                this.BMButtonSearchOperationCompleted = new System.Threading.SendOrPostCallback(this.OnBMButtonSearchOperationCompleted);
+            }
+            this.InvokeAsync("BMButtonSearch", new object[] {
+                        BMButtonSearchReq}, this.BMButtonSearchOperationCompleted, userState);
+        }
+        
+        private void OnBMButtonSearchOperationCompleted(object arg) {
+            if ((this.BMButtonSearchCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.BMButtonSearchCompleted(this, new BMButtonSearchCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -585,6 +842,37 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
         }
         
         /// <remarks/>
+        [System.Web.Services.Protocols.SoapHeaderAttribute("RequesterCredentials", Direction=System.Web.Services.Protocols.SoapHeaderDirection.InOut)]
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Bare)]
+        [return: System.Xml.Serialization.XmlElementAttribute("GetPalDetailsResponse", Namespace="urn:ebay:api:PayPalAPI")]
+        public GetPalDetailsResponseType GetPalDetails([System.Xml.Serialization.XmlElementAttribute(Namespace="urn:ebay:api:PayPalAPI")] GetPalDetailsReq GetPalDetailsReq) {
+            object[] results = this.Invoke("GetPalDetails", new object[] {
+                        GetPalDetailsReq});
+            return ((GetPalDetailsResponseType)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void GetPalDetailsAsync(GetPalDetailsReq GetPalDetailsReq) {
+            this.GetPalDetailsAsync(GetPalDetailsReq, null);
+        }
+        
+        /// <remarks/>
+        public void GetPalDetailsAsync(GetPalDetailsReq GetPalDetailsReq, object userState) {
+            if ((this.GetPalDetailsOperationCompleted == null)) {
+                this.GetPalDetailsOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetPalDetailsOperationCompleted);
+            }
+            this.InvokeAsync("GetPalDetails", new object[] {
+                        GetPalDetailsReq}, this.GetPalDetailsOperationCompleted, userState);
+        }
+        
+        private void OnGetPalDetailsOperationCompleted(object arg) {
+            if ((this.GetPalDetailsCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GetPalDetailsCompleted(this, new GetPalDetailsCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
         public new void CancelAsync(object userState) {
             base.CancelAsync(userState);
         }
@@ -665,6 +953,8 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
         private System.Threading.SendOrPostCallback BillOutstandingAmountOperationCompleted;
         
         private System.Threading.SendOrPostCallback UpdateRecurringPaymentsProfileOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback ReverseTransactionOperationCompleted;
         
         private bool useDefaultCredentialsSetExplicitly;
         
@@ -790,6 +1080,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
         
         /// <remarks/>
         public event UpdateRecurringPaymentsProfileCompletedEventHandler UpdateRecurringPaymentsProfileCompleted;
+        
+        /// <remarks/>
+        public event ReverseTransactionCompletedEventHandler ReverseTransactionCompleted;
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapHeaderAttribute("RequesterCredentials", Direction=System.Web.Services.Protocols.SoapHeaderDirection.InOut)]
@@ -1598,6 +1891,37 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
         }
         
         /// <remarks/>
+        [System.Web.Services.Protocols.SoapHeaderAttribute("RequesterCredentials", Direction=System.Web.Services.Protocols.SoapHeaderDirection.InOut)]
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Bare)]
+        [return: System.Xml.Serialization.XmlElementAttribute("ReverseTransactionResponse", Namespace="urn:ebay:api:PayPalAPI")]
+        public ReverseTransactionResponseType ReverseTransaction([System.Xml.Serialization.XmlElementAttribute(Namespace="urn:ebay:api:PayPalAPI")] ReverseTransactionReq ReverseTransactionReq) {
+            object[] results = this.Invoke("ReverseTransaction", new object[] {
+                        ReverseTransactionReq});
+            return ((ReverseTransactionResponseType)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void ReverseTransactionAsync(ReverseTransactionReq ReverseTransactionReq) {
+            this.ReverseTransactionAsync(ReverseTransactionReq, null);
+        }
+        
+        /// <remarks/>
+        public void ReverseTransactionAsync(ReverseTransactionReq ReverseTransactionReq, object userState) {
+            if ((this.ReverseTransactionOperationCompleted == null)) {
+                this.ReverseTransactionOperationCompleted = new System.Threading.SendOrPostCallback(this.OnReverseTransactionOperationCompleted);
+            }
+            this.InvokeAsync("ReverseTransaction", new object[] {
+                        ReverseTransactionReq}, this.ReverseTransactionOperationCompleted, userState);
+        }
+        
+        private void OnReverseTransactionOperationCompleted(object arg) {
+            if ((this.ReverseTransactionCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.ReverseTransactionCompleted(this, new ReverseTransactionCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
         public new void CancelAsync(object userState) {
             base.CancelAsync(userState);
         }
@@ -1684,6 +2008,8 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
         
         private string subjectField;
         
+        private string authTokenField;
+        
         /// <remarks/>
         public string AppId {
             get {
@@ -1751,6 +2077,50 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
             }
             set {
                 this.subjectField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string AuthToken {
+            get {
+                return this.authTokenField;
+            }
+            set {
+                this.authTokenField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:apis:eBLBaseComponents")]
+    public partial class ReverseTransactionResponseDetailsType {
+        
+        private string reverseTransactionIDField;
+        
+        private string statusField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public string ReverseTransactionID {
+            get {
+                return this.reverseTransactionIDField;
+            }
+            set {
+                this.reverseTransactionIDField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Status {
+            get {
+                return this.statusField;
+            }
+            set {
+                this.statusField = value;
             }
         }
     }
@@ -3997,6 +4367,8 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
         
         private string issueNumberField;
         
+        private ThreeDSecureRequestType threeDSecureRequestField;
+        
         /// <remarks/>
         public CreditCardTypeType CreditCardType {
             get {
@@ -4141,6 +4513,16 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
                 this.issueNumberField = value;
             }
         }
+        
+        /// <remarks/>
+        public ThreeDSecureRequestType ThreeDSecureRequest {
+            get {
+                return this.threeDSecureRequestField;
+            }
+            set {
+                this.threeDSecureRequestField = value;
+            }
+        }
     }
     
     /// <remarks/>
@@ -4166,6 +4548,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
         
         /// <remarks/>
         Solo,
+        
+        /// <remarks/>
+        Maestro,
     }
     
     /// <remarks/>
@@ -4387,6 +4772,75 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:apis:eBLBaseComponents")]
+    public partial class ThreeDSecureRequestType {
+        
+        private string eci3dsField;
+        
+        private string cavvField;
+        
+        private string xidField;
+        
+        private string mpiVendor3dsField;
+        
+        private string authStatus3dsField;
+        
+        /// <remarks/>
+        public string Eci3ds {
+            get {
+                return this.eci3dsField;
+            }
+            set {
+                this.eci3dsField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Cavv {
+            get {
+                return this.cavvField;
+            }
+            set {
+                this.cavvField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Xid {
+            get {
+                return this.xidField;
+            }
+            set {
+                this.xidField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string MpiVendor3ds {
+            get {
+                return this.mpiVendor3dsField;
+            }
+            set {
+                this.mpiVendor3dsField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string AuthStatus3ds {
+            get {
+                return this.authStatus3dsField;
+            }
+            set {
+                this.authStatus3dsField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:apis:eBLBaseComponents")]
     public partial class CreateRecurringPaymentsProfileResponseDetailsType {
         
         private string profileIDField;
@@ -4394,6 +4848,12 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
         private RecurringPaymentsProfileStatusType profileStatusField;
         
         private bool profileStatusFieldSpecified;
+        
+        private string transactionIDField;
+        
+        private string dCCProcessorResponseField;
+        
+        private string dCCReturnCodeField;
         
         /// <remarks/>
         public string ProfileID {
@@ -4423,6 +4883,36 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
             }
             set {
                 this.profileStatusFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string TransactionID {
+            get {
+                return this.transactionIDField;
+            }
+            set {
+                this.transactionIDField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string DCCProcessorResponse {
+            get {
+                return this.dCCProcessorResponseField;
+            }
+            set {
+                this.dCCProcessorResponseField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string DCCReturnCode {
+            get {
+                return this.dCCReturnCodeField;
+            }
+            set {
+                this.dCCReturnCodeField = value;
             }
         }
     }
@@ -4551,6 +5041,8 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
         
         private string transactionIDField;
         
+        private string ebayTransactionIDField;
+        
         private string parentTransactionIDField;
         
         private string receiptIDField;
@@ -4560,6 +5052,8 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
         private PaymentCodeType paymentTypeField;
         
         private bool paymentTypeFieldSpecified;
+        
+        private System.DateTime expectedeCheckClearDateField;
         
         private System.DateTime paymentDateField;
         
@@ -4587,6 +5081,26 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
         
         private string protectionEligibilityField;
         
+        private string shipAmountField;
+        
+        private string shipHandleAmountField;
+        
+        private string shipDiscountField;
+        
+        private string insuranceAmountField;
+        
+        private string subjectField;
+        
+        private SellerDetailsType sellerDetailsField;
+        
+        private string paymentRequestIDField;
+        
+        private FMFDetailsType fMFDetailsField;
+        
+        private EnhancedPaymentInfoType enhancedPaymentInfoField;
+        
+        private ErrorType paymentErrorField;
+        
         /// <remarks/>
         public string TransactionID {
             get {
@@ -4594,6 +5108,16 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
             }
             set {
                 this.transactionIDField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string EbayTransactionID {
+            get {
+                return this.ebayTransactionIDField;
+            }
+            set {
+                this.ebayTransactionIDField = value;
             }
         }
         
@@ -4645,6 +5169,16 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
             }
             set {
                 this.paymentTypeFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        public System.DateTime ExpectedeCheckClearDate {
+            get {
+                return this.expectedeCheckClearDateField;
+            }
+            set {
+                this.expectedeCheckClearDateField = value;
             }
         }
         
@@ -4779,6 +5313,106 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
                 this.protectionEligibilityField = value;
             }
         }
+        
+        /// <remarks/>
+        public string ShipAmount {
+            get {
+                return this.shipAmountField;
+            }
+            set {
+                this.shipAmountField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string ShipHandleAmount {
+            get {
+                return this.shipHandleAmountField;
+            }
+            set {
+                this.shipHandleAmountField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string ShipDiscount {
+            get {
+                return this.shipDiscountField;
+            }
+            set {
+                this.shipDiscountField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string InsuranceAmount {
+            get {
+                return this.insuranceAmountField;
+            }
+            set {
+                this.insuranceAmountField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Subject {
+            get {
+                return this.subjectField;
+            }
+            set {
+                this.subjectField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public SellerDetailsType SellerDetails {
+            get {
+                return this.sellerDetailsField;
+            }
+            set {
+                this.sellerDetailsField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string PaymentRequestID {
+            get {
+                return this.paymentRequestIDField;
+            }
+            set {
+                this.paymentRequestIDField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public FMFDetailsType FMFDetails {
+            get {
+                return this.fMFDetailsField;
+            }
+            set {
+                this.fMFDetailsField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public EnhancedPaymentInfoType EnhancedPaymentInfo {
+            get {
+                return this.enhancedPaymentInfoField;
+            }
+            set {
+                this.enhancedPaymentInfoField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public ErrorType PaymentError {
+            get {
+                return this.paymentErrorField;
+            }
+            set {
+                this.paymentErrorField = value;
+            }
+        }
     }
     
     /// <remarks/>
@@ -4836,6 +5470,10 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
         /// <remarks/>
         [System.Xml.Serialization.XmlEnumAttribute("virtual-terminal")]
         virtualterminal,
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlEnumAttribute("integral-evolution")]
+        integralevolution,
         
         /// <remarks/>
         [System.Xml.Serialization.XmlEnumAttribute("express-checkout")]
@@ -4990,6 +5628,315 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:apis:eBLBaseComponents")]
+    public partial class SellerDetailsType {
+        
+        private string sellerIdField;
+        
+        private string sellerUserNameField;
+        
+        private System.DateTime sellerRegistrationDateField;
+        
+        private bool sellerRegistrationDateFieldSpecified;
+        
+        private string payPalAccountIDField;
+        
+        /// <remarks/>
+        public string SellerId {
+            get {
+                return this.sellerIdField;
+            }
+            set {
+                this.sellerIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string SellerUserName {
+            get {
+                return this.sellerUserNameField;
+            }
+            set {
+                this.sellerUserNameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public System.DateTime SellerRegistrationDate {
+            get {
+                return this.sellerRegistrationDateField;
+            }
+            set {
+                this.sellerRegistrationDateField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool SellerRegistrationDateSpecified {
+            get {
+                return this.sellerRegistrationDateFieldSpecified;
+            }
+            set {
+                this.sellerRegistrationDateFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string PayPalAccountID {
+            get {
+                return this.payPalAccountIDField;
+            }
+            set {
+                this.payPalAccountIDField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:apis:eBLBaseComponents")]
+    public partial class FMFDetailsType {
+        
+        private RiskFilterDetailsType[] acceptFiltersField;
+        
+        private RiskFilterDetailsType[] pendingFiltersField;
+        
+        private RiskFilterDetailsType[] denyFiltersField;
+        
+        private RiskFilterDetailsType[] reportFiltersField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayItemAttribute("Filters", IsNullable=false)]
+        public RiskFilterDetailsType[] AcceptFilters {
+            get {
+                return this.acceptFiltersField;
+            }
+            set {
+                this.acceptFiltersField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayItemAttribute("Filters", IsNullable=false)]
+        public RiskFilterDetailsType[] PendingFilters {
+            get {
+                return this.pendingFiltersField;
+            }
+            set {
+                this.pendingFiltersField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayItemAttribute("Filters", IsNullable=false)]
+        public RiskFilterDetailsType[] DenyFilters {
+            get {
+                return this.denyFiltersField;
+            }
+            set {
+                this.denyFiltersField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayItemAttribute("Filters", IsNullable=false)]
+        public RiskFilterDetailsType[] ReportFilters {
+            get {
+                return this.reportFiltersField;
+            }
+            set {
+                this.reportFiltersField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:apis:eBLBaseComponents")]
+    public partial class RiskFilterDetailsType {
+        
+        private int idField;
+        
+        private string nameField;
+        
+        private string descriptionField;
+        
+        /// <remarks/>
+        public int Id {
+            get {
+                return this.idField;
+            }
+            set {
+                this.idField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Name {
+            get {
+                return this.nameField;
+            }
+            set {
+                this.nameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Description {
+            get {
+                return this.descriptionField;
+            }
+            set {
+                this.descriptionField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:apis:EnhancedDataTypes")]
+    public partial class EnhancedPaymentInfoType {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:apis:eBLBaseComponents")]
+    public partial class ErrorType {
+        
+        private string shortMessageField;
+        
+        private string longMessageField;
+        
+        private string errorCodeField;
+        
+        private SeverityCodeType severityCodeField;
+        
+        private ErrorParameterType[] errorParametersField;
+        
+        /// <remarks/>
+        public string ShortMessage {
+            get {
+                return this.shortMessageField;
+            }
+            set {
+                this.shortMessageField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string LongMessage {
+            get {
+                return this.longMessageField;
+            }
+            set {
+                this.longMessageField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType="token")]
+        public string ErrorCode {
+            get {
+                return this.errorCodeField;
+            }
+            set {
+                this.errorCodeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public SeverityCodeType SeverityCode {
+            get {
+                return this.severityCodeField;
+            }
+            set {
+                this.severityCodeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("ErrorParameters")]
+        public ErrorParameterType[] ErrorParameters {
+            get {
+                return this.errorParametersField;
+            }
+            set {
+                this.errorParametersField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:apis:eBLBaseComponents")]
+    public enum SeverityCodeType {
+        
+        /// <remarks/>
+        Warning,
+        
+        /// <remarks/>
+        Error,
+        
+        /// <remarks/>
+        PartialSuccess,
+        
+        /// <remarks/>
+        CustomCode,
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:apis:eBLBaseComponents")]
+    public partial class ErrorParameterType {
+        
+        private string valueField;
+        
+        private string paramIDField;
+        
+        /// <remarks/>
+        public string Value {
+            get {
+                return this.valueField;
+            }
+            set {
+                this.valueField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string ParamID {
+            get {
+                return this.paramIDField;
+            }
+            set {
+                this.paramIDField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:apis:eBLBaseComponents")]
     public partial class GetBillingAgreementCustomerDetailsResponseDetailsType {
         
         private PayerInfoType payerInfoField;
@@ -5080,6 +6027,64 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:apis:eBLBaseComponents")]
+    public partial class AuthorizationInfoType {
+        
+        private PaymentStatusCodeType paymentStatusField;
+        
+        private PendingStatusCodeType pendingReasonField;
+        
+        private bool pendingReasonFieldSpecified;
+        
+        private string protectionEligibilityField;
+        
+        /// <remarks/>
+        public PaymentStatusCodeType PaymentStatus {
+            get {
+                return this.paymentStatusField;
+            }
+            set {
+                this.paymentStatusField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public PendingStatusCodeType PendingReason {
+            get {
+                return this.pendingReasonField;
+            }
+            set {
+                this.pendingReasonField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool PendingReasonSpecified {
+            get {
+                return this.pendingReasonFieldSpecified;
+            }
+            set {
+                this.pendingReasonFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string ProtectionEligibility {
+            get {
+                return this.protectionEligibilityField;
+            }
+            set {
+                this.protectionEligibilityField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:apis:eBLBaseComponents")]
     public partial class DoCaptureResponseDetailsType {
         
         private string authorizationIDField;
@@ -5117,13 +6122,17 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
         
         private string tokenField;
         
-        private PaymentInfoType paymentInfoField;
+        private PaymentInfoType[] paymentInfoField;
         
         private string billingAgreementIDField;
         
         private string redirectRequiredField;
         
         private string noteField;
+        
+        private string successPageRedirectRequestedField;
+        
+        private UserSelectedOptionType userSelectedOptionsField;
         
         /// <remarks/>
         public string Token {
@@ -5136,7 +6145,8 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
         }
         
         /// <remarks/>
-        public PaymentInfoType PaymentInfo {
+        [System.Xml.Serialization.XmlElementAttribute("PaymentInfo")]
+        public PaymentInfoType[] PaymentInfo {
             get {
                 return this.paymentInfoField;
             }
@@ -5174,6 +6184,95 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
                 this.noteField = value;
             }
         }
+        
+        /// <remarks/>
+        public string SuccessPageRedirectRequested {
+            get {
+                return this.successPageRedirectRequestedField;
+            }
+            set {
+                this.successPageRedirectRequestedField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public UserSelectedOptionType UserSelectedOptions {
+            get {
+                return this.userSelectedOptionsField;
+            }
+            set {
+                this.userSelectedOptionsField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:apis:eBLBaseComponents")]
+    public partial class UserSelectedOptionType {
+        
+        private string shippingCalculationModeField;
+        
+        private string insuranceOptionSelectedField;
+        
+        private string shippingOptionIsDefaultField;
+        
+        private BasicAmountType shippingOptionAmountField;
+        
+        private string shippingOptionNameField;
+        
+        /// <remarks/>
+        public string ShippingCalculationMode {
+            get {
+                return this.shippingCalculationModeField;
+            }
+            set {
+                this.shippingCalculationModeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string InsuranceOptionSelected {
+            get {
+                return this.insuranceOptionSelectedField;
+            }
+            set {
+                this.insuranceOptionSelectedField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string ShippingOptionIsDefault {
+            get {
+                return this.shippingOptionIsDefaultField;
+            }
+            set {
+                this.shippingOptionIsDefaultField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public BasicAmountType ShippingOptionAmount {
+            get {
+                return this.shippingOptionAmountField;
+            }
+            set {
+                this.shippingOptionAmountField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string ShippingOptionName {
+            get {
+                return this.shippingOptionNameField;
+            }
+            set {
+                this.shippingOptionNameField = value;
+            }
+        }
     }
     
     /// <remarks/>
@@ -5204,9 +6303,27 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
         
         private string noteField;
         
+        private string checkoutStatusField;
+        
         private BasicAmountType payPalAdjustmentField;
         
-        private PaymentDetailsType paymentDetailsField;
+        private PaymentDetailsType[] paymentDetailsField;
+        
+        private UserSelectedOptionType userSelectedOptionsField;
+        
+        private string giftMessageField;
+        
+        private string giftReceiptEnableField;
+        
+        private string giftWrapNameField;
+        
+        private BasicAmountType giftWrapAmountField;
+        
+        private string buyerMarketingEmailField;
+        
+        private string surveyQuestionField;
+        
+        private string[] surveyChoiceSelectedField;
         
         /// <remarks/>
         public string Token {
@@ -5310,6 +6427,16 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
         }
         
         /// <remarks/>
+        public string CheckoutStatus {
+            get {
+                return this.checkoutStatusField;
+            }
+            set {
+                this.checkoutStatusField = value;
+            }
+        }
+        
+        /// <remarks/>
         public BasicAmountType PayPalAdjustment {
             get {
                 return this.payPalAdjustmentField;
@@ -5320,12 +6447,94 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
         }
         
         /// <remarks/>
-        public PaymentDetailsType PaymentDetails {
+        [System.Xml.Serialization.XmlElementAttribute("PaymentDetails")]
+        public PaymentDetailsType[] PaymentDetails {
             get {
                 return this.paymentDetailsField;
             }
             set {
                 this.paymentDetailsField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public UserSelectedOptionType UserSelectedOptions {
+            get {
+                return this.userSelectedOptionsField;
+            }
+            set {
+                this.userSelectedOptionsField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string GiftMessage {
+            get {
+                return this.giftMessageField;
+            }
+            set {
+                this.giftMessageField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string GiftReceiptEnable {
+            get {
+                return this.giftReceiptEnableField;
+            }
+            set {
+                this.giftReceiptEnableField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string GiftWrapName {
+            get {
+                return this.giftWrapNameField;
+            }
+            set {
+                this.giftWrapNameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public BasicAmountType GiftWrapAmount {
+            get {
+                return this.giftWrapAmountField;
+            }
+            set {
+                this.giftWrapAmountField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string BuyerMarketingEmail {
+            get {
+                return this.buyerMarketingEmailField;
+            }
+            set {
+                this.buyerMarketingEmailField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string SurveyQuestion {
+            get {
+                return this.surveyQuestionField;
+            }
+            set {
+                this.surveyQuestionField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("SurveyChoiceSelected")]
+        public string[] SurveyChoiceSelected {
+            get {
+                return this.surveyChoiceSelectedField;
+            }
+            set {
+                this.surveyChoiceSelectedField = value;
             }
         }
     }
@@ -5373,6 +6582,30 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
         private BasicAmountType insuranceTotalField;
         
         private BasicAmountType shippingDiscountField;
+        
+        private string insuranceOptionOfferedField;
+        
+        private AllowedPaymentMethodType allowedPaymentMethodField;
+        
+        private bool allowedPaymentMethodFieldSpecified;
+        
+        private EnhancedPaymentDataType enhancedPaymentDataField;
+        
+        private SellerDetailsType sellerDetailsField;
+        
+        private string noteTextField;
+        
+        private string transactionIdField;
+        
+        private PaymentActionCodeType paymentActionField;
+        
+        private bool paymentActionFieldSpecified;
+        
+        private string paymentRequestIDField;
+        
+        private string orderURLField;
+        
+        private string softDescriptorField;
         
         /// <remarks/>
         public BasicAmountType OrderTotal {
@@ -5556,6 +6789,128 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
                 this.shippingDiscountField = value;
             }
         }
+        
+        /// <remarks/>
+        public string InsuranceOptionOffered {
+            get {
+                return this.insuranceOptionOfferedField;
+            }
+            set {
+                this.insuranceOptionOfferedField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public AllowedPaymentMethodType AllowedPaymentMethod {
+            get {
+                return this.allowedPaymentMethodField;
+            }
+            set {
+                this.allowedPaymentMethodField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool AllowedPaymentMethodSpecified {
+            get {
+                return this.allowedPaymentMethodFieldSpecified;
+            }
+            set {
+                this.allowedPaymentMethodFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        public EnhancedPaymentDataType EnhancedPaymentData {
+            get {
+                return this.enhancedPaymentDataField;
+            }
+            set {
+                this.enhancedPaymentDataField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public SellerDetailsType SellerDetails {
+            get {
+                return this.sellerDetailsField;
+            }
+            set {
+                this.sellerDetailsField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string NoteText {
+            get {
+                return this.noteTextField;
+            }
+            set {
+                this.noteTextField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string TransactionId {
+            get {
+                return this.transactionIdField;
+            }
+            set {
+                this.transactionIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public PaymentActionCodeType PaymentAction {
+            get {
+                return this.paymentActionField;
+            }
+            set {
+                this.paymentActionField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool PaymentActionSpecified {
+            get {
+                return this.paymentActionFieldSpecified;
+            }
+            set {
+                this.paymentActionFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string PaymentRequestID {
+            get {
+                return this.paymentRequestIDField;
+            }
+            set {
+                this.paymentRequestIDField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string OrderURL {
+            get {
+                return this.orderURLField;
+            }
+            set {
+                this.orderURLField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string SoftDescriptor {
+            get {
+                return this.softDescriptorField;
+            }
+            set {
+                this.softDescriptorField = value;
+            }
+        }
     }
     
     /// <remarks/>
@@ -5640,6 +6995,18 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
         private bool productCategoryFieldSpecified;
         
         private string descriptionField;
+        
+        private MeasureType itemWeightField;
+        
+        private MeasureType itemLengthField;
+        
+        private MeasureType itemWidthField;
+        
+        private MeasureType itemHeightField;
+        
+        private string itemURLField;
+        
+        private EnhancedItemDataType enhancedItemDataField;
         
         /// <remarks/>
         public string Name {
@@ -5742,6 +7109,66 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
                 this.descriptionField = value;
             }
         }
+        
+        /// <remarks/>
+        public MeasureType ItemWeight {
+            get {
+                return this.itemWeightField;
+            }
+            set {
+                this.itemWeightField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public MeasureType ItemLength {
+            get {
+                return this.itemLengthField;
+            }
+            set {
+                this.itemLengthField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public MeasureType ItemWidth {
+            get {
+                return this.itemWidthField;
+            }
+            set {
+                this.itemWidthField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public MeasureType ItemHeight {
+            get {
+                return this.itemHeightField;
+            }
+            set {
+                this.itemHeightField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string ItemURL {
+            get {
+                return this.itemURLField;
+            }
+            set {
+                this.itemURLField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public EnhancedItemDataType EnhancedItemData {
+            get {
+                return this.enhancedItemDataField;
+            }
+            set {
+                this.enhancedItemDataField = value;
+            }
+        }
     }
     
     /// <remarks/>
@@ -5757,6 +7184,8 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
         private string auctionTransactionIdField;
         
         private string orderIdField;
+        
+        private string cartIDField;
         
         /// <remarks/>
         public string ItemNumber {
@@ -5785,6 +7214,16 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
             }
             set {
                 this.orderIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string CartID {
+            get {
+                return this.cartIDField;
+            }
+            set {
+                this.cartIDField = value;
             }
         }
     }
@@ -5863,6 +7302,97 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
         
         /// <remarks/>
         Software,
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:apis:CoreComponentTypes")]
+    public partial class MeasureType {
+        
+        private string unitField;
+        
+        private double valueField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute(DataType="token")]
+        public string unit {
+            get {
+                return this.unitField;
+            }
+            set {
+                this.unitField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlTextAttribute()]
+        public double Value {
+            get {
+                return this.valueField;
+            }
+            set {
+                this.valueField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:apis:EnhancedDataTypes")]
+    public partial class EnhancedItemDataType {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:apis:eBLBaseComponents")]
+    public enum AllowedPaymentMethodType {
+        
+        /// <remarks/>
+        Default,
+        
+        /// <remarks/>
+        InstantPaymentOnly,
+        
+        /// <remarks/>
+        AnyFundingSource,
+        
+        /// <remarks/>
+        InstantFundingSource,
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:apis:EnhancedDataTypes")]
+    public partial class EnhancedPaymentDataType {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:apis:eBLBaseComponents")]
+    public enum PaymentActionCodeType {
+        
+        /// <remarks/>
+        None,
+        
+        /// <remarks/>
+        Authorization,
+        
+        /// <remarks/>
+        Sale,
+        
+        /// <remarks/>
+        Order,
     }
     
     /// <remarks/>
@@ -6348,6 +7878,8 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
         
         private BasicAmountType billingAgreementMaxField;
         
+        private AddressType billingAddressField;
+        
         /// <remarks/>
         public string BillingAgreementID {
             get {
@@ -6405,6 +7937,16 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
             }
             set {
                 this.billingAgreementMaxField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public AddressType BillingAddress {
+            get {
+                return this.billingAddressField;
+            }
+            set {
+                this.billingAddressField = value;
             }
         }
     }
@@ -6557,112 +8099,6 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:apis:eBLBaseComponents")]
-    public partial class RiskFilterDetailsType {
-        
-        private int idField;
-        
-        private string nameField;
-        
-        private string descriptionField;
-        
-        /// <remarks/>
-        public int Id {
-            get {
-                return this.idField;
-            }
-            set {
-                this.idField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Name {
-            get {
-                return this.nameField;
-            }
-            set {
-                this.nameField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Description {
-            get {
-                return this.descriptionField;
-            }
-            set {
-                this.descriptionField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:apis:eBLBaseComponents")]
-    public partial class FMFDetailsType {
-        
-        private RiskFilterDetailsType[] acceptFiltersField;
-        
-        private RiskFilterDetailsType[] pendingFiltersField;
-        
-        private RiskFilterDetailsType[] denyFiltersField;
-        
-        private RiskFilterDetailsType[] reportFiltersField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayItemAttribute("Filters", IsNullable=false)]
-        public RiskFilterDetailsType[] AcceptFilters {
-            get {
-                return this.acceptFiltersField;
-            }
-            set {
-                this.acceptFiltersField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayItemAttribute("Filters", IsNullable=false)]
-        public RiskFilterDetailsType[] PendingFilters {
-            get {
-                return this.pendingFiltersField;
-            }
-            set {
-                this.pendingFiltersField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayItemAttribute("Filters", IsNullable=false)]
-        public RiskFilterDetailsType[] DenyFilters {
-            get {
-                return this.denyFiltersField;
-            }
-            set {
-                this.denyFiltersField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayItemAttribute("Filters", IsNullable=false)]
-        public RiskFilterDetailsType[] ReportFilters {
-            get {
-                return this.reportFiltersField;
-            }
-            set {
-                this.reportFiltersField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:apis:eBLBaseComponents")]
     public partial class MerchantPullInfoType {
         
         private MerchantPullStatusCodeType mpStatusField;
@@ -6791,6 +8227,72 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
             }
             set {
                 this.merchantPullInfoField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:apis:eBLBaseComponents")]
+    public partial class ThreeDSecureResponseType {
+        
+        private string vpasField;
+        
+        private string eciSubmitted3DSField;
+        
+        /// <remarks/>
+        public string Vpas {
+            get {
+                return this.vpasField;
+            }
+            set {
+                this.vpasField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string EciSubmitted3DS {
+            get {
+                return this.eciSubmitted3DSField;
+            }
+            set {
+                this.eciSubmitted3DSField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:apis:eBLBaseComponents")]
+    public partial class ThreeDSecureInfoType {
+        
+        private ThreeDSecureRequestType threeDSecureRequestField;
+        
+        private ThreeDSecureResponseType threeDSecureResponseField;
+        
+        /// <remarks/>
+        public ThreeDSecureRequestType ThreeDSecureRequest {
+            get {
+                return this.threeDSecureRequestField;
+            }
+            set {
+                this.threeDSecureRequestField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public ThreeDSecureResponseType ThreeDSecureResponse {
+            get {
+                return this.threeDSecureResponseField;
+            }
+            set {
+                this.threeDSecureResponseField = value;
             }
         }
     }
@@ -7110,6 +8612,10 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
         
         private string salesTaxField;
         
+        private string shippingAmountField;
+        
+        private string handlingAmountField;
+        
         private BasicAmountType amountField;
         
         private OptionType[] optionsField;
@@ -7151,6 +8657,26 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
             }
             set {
                 this.salesTaxField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string ShippingAmount {
+            get {
+                return this.shippingAmountField;
+            }
+            set {
+                this.shippingAmountField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string HandlingAmount {
+            get {
+                return this.handlingAmountField;
+            }
+            set {
+                this.handlingAmountField = value;
             }
         }
         
@@ -7331,6 +8857,22 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
         
         private PaymentItemInfoType paymentItemInfoField;
         
+        private UserSelectedOptionType userSelectedOptionsField;
+        
+        private string giftMessageField;
+        
+        private string giftReceiptField;
+        
+        private string giftWrapNameField;
+        
+        private BasicAmountType giftWrapAmountField;
+        
+        private string buyerEmailOptInField;
+        
+        private string surveyQuestionField;
+        
+        private string[] surveyChoiceSelectedField;
+        
         /// <remarks/>
         public ReceiverInfoType ReceiverInfo {
             get {
@@ -7370,6 +8912,87 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
                 this.paymentItemInfoField = value;
             }
         }
+        
+        /// <remarks/>
+        public UserSelectedOptionType UserSelectedOptions {
+            get {
+                return this.userSelectedOptionsField;
+            }
+            set {
+                this.userSelectedOptionsField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string GiftMessage {
+            get {
+                return this.giftMessageField;
+            }
+            set {
+                this.giftMessageField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string GiftReceipt {
+            get {
+                return this.giftReceiptField;
+            }
+            set {
+                this.giftReceiptField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string GiftWrapName {
+            get {
+                return this.giftWrapNameField;
+            }
+            set {
+                this.giftWrapNameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public BasicAmountType GiftWrapAmount {
+            get {
+                return this.giftWrapAmountField;
+            }
+            set {
+                this.giftWrapAmountField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string BuyerEmailOptIn {
+            get {
+                return this.buyerEmailOptInField;
+            }
+            set {
+                this.buyerEmailOptInField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string SurveyQuestion {
+            get {
+                return this.surveyQuestionField;
+            }
+            set {
+                this.surveyQuestionField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("SurveyChoiceSelected")]
+        public string[] SurveyChoiceSelected {
+            get {
+                return this.surveyChoiceSelectedField;
+            }
+            set {
+                this.surveyChoiceSelectedField = value;
+            }
+        }
     }
     
     /// <remarks/>
@@ -7378,122 +9001,73 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:apis:eBLBaseComponents")]
-    public partial class ErrorParameterType {
+    public partial class ButtonSearchResultType {
         
-        private string valueField;
+        private string hostedButtonIDField;
         
-        private string paramIDField;
+        private string buttonTypeField;
+        
+        private string itemNameField;
+        
+        private System.DateTime modifyDateField;
+        
+        private bool modifyDateFieldSpecified;
         
         /// <remarks/>
-        public string Value {
+        public string HostedButtonID {
             get {
-                return this.valueField;
+                return this.hostedButtonIDField;
             }
             set {
-                this.valueField = value;
+                this.hostedButtonIDField = value;
             }
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string ParamID {
+        public string ButtonType {
             get {
-                return this.paramIDField;
+                return this.buttonTypeField;
             }
             set {
-                this.paramIDField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:apis:eBLBaseComponents")]
-    public partial class ErrorType {
-        
-        private string shortMessageField;
-        
-        private string longMessageField;
-        
-        private string errorCodeField;
-        
-        private SeverityCodeType severityCodeField;
-        
-        private ErrorParameterType[] errorParametersField;
-        
-        /// <remarks/>
-        public string ShortMessage {
-            get {
-                return this.shortMessageField;
-            }
-            set {
-                this.shortMessageField = value;
+                this.buttonTypeField = value;
             }
         }
         
         /// <remarks/>
-        public string LongMessage {
+        public string ItemName {
             get {
-                return this.longMessageField;
+                return this.itemNameField;
             }
             set {
-                this.longMessageField = value;
+                this.itemNameField = value;
             }
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(DataType="token")]
-        public string ErrorCode {
+        public System.DateTime ModifyDate {
             get {
-                return this.errorCodeField;
+                return this.modifyDateField;
             }
             set {
-                this.errorCodeField = value;
+                this.modifyDateField = value;
             }
         }
         
         /// <remarks/>
-        public SeverityCodeType SeverityCode {
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ModifyDateSpecified {
             get {
-                return this.severityCodeField;
+                return this.modifyDateFieldSpecified;
             }
             set {
-                this.severityCodeField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("ErrorParameters")]
-        public ErrorParameterType[] ErrorParameters {
-            get {
-                return this.errorParametersField;
-            }
-            set {
-                this.errorParametersField = value;
+                this.modifyDateFieldSpecified = value;
             }
         }
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:apis:eBLBaseComponents")]
-    public enum SeverityCodeType {
-        
-        /// <remarks/>
-        Warning,
-        
-        /// <remarks/>
-        Error,
-        
-        /// <remarks/>
-        CustomCode,
-    }
-    
-    /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ReverseTransactionResponseType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(GetPalDetailsResponseType))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(UpdateRecurringPaymentsProfileResponseType))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(BillOutstandingAmountResponseType))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(ManageRecurringPaymentsProfileStatusResponseType))]
@@ -7534,6 +9108,13 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(BillUserResponseType))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(GetTransactionDetailsResponseType))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(RefundTransactionResponseType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BMButtonSearchResponseType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BMGetInventoryResponseType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BMSetInventoryResponseType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BMGetButtonDetailsResponseType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BMManageButtonStatusResponseType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BMUpdateButtonResponseType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BMCreateButtonResponseType))]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -7663,7 +9244,65 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
         FailureWithWarning,
         
         /// <remarks/>
+        PartialSuccess,
+        
+        /// <remarks/>
         CustomCode,
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:api:PayPalAPI")]
+    public partial class ReverseTransactionResponseType : AbstractResponseType {
+        
+        private ReverseTransactionResponseDetailsType reverseTransactionResponseDetailsField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Namespace="urn:ebay:apis:eBLBaseComponents")]
+        public ReverseTransactionResponseDetailsType ReverseTransactionResponseDetails {
+            get {
+                return this.reverseTransactionResponseDetailsField;
+            }
+            set {
+                this.reverseTransactionResponseDetailsField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:api:PayPalAPI")]
+    public partial class GetPalDetailsResponseType : AbstractResponseType {
+        
+        private string palField;
+        
+        private string localeField;
+        
+        /// <remarks/>
+        public string Pal {
+            get {
+                return this.palField;
+            }
+            set {
+                this.palField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Locale {
+            get {
+                return this.localeField;
+            }
+            set {
+                this.localeField = value;
+            }
+        }
     }
     
     /// <remarks/>
@@ -8042,6 +9681,8 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
         
         private BasicAmountType amountField;
         
+        private AuthorizationInfoType authorizationInfoField;
+        
         /// <remarks/>
         public string TransactionID {
             get {
@@ -8059,6 +9700,17 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
             }
             set {
                 this.amountField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Namespace="urn:ebay:apis:eBLBaseComponents")]
+        public AuthorizationInfoType AuthorizationInfo {
+            get {
+                return this.authorizationInfoField;
+            }
+            set {
+                this.authorizationInfoField = value;
             }
         }
     }
@@ -8185,6 +9837,8 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
         
         private string authorizationIDField;
         
+        private AuthorizationInfoType authorizationInfoField;
+        
         /// <remarks/>
         public string AuthorizationID {
             get {
@@ -8192,6 +9846,17 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
             }
             set {
                 this.authorizationIDField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Namespace="urn:ebay:apis:eBLBaseComponents")]
+        public AuthorizationInfoType AuthorizationInfo {
+            get {
+                return this.authorizationInfoField;
+            }
+            set {
+                this.authorizationInfoField = value;
             }
         }
     }
@@ -8243,6 +9908,8 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
         private bool paymentStatusFieldSpecified;
         
         private FMFDetailsType fMFDetailsField;
+        
+        private ThreeDSecureResponseType threeDSecureResponseField;
         
         /// <remarks/>
         public BasicAmountType Amount {
@@ -8333,6 +10000,16 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
             }
             set {
                 this.fMFDetailsField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public ThreeDSecureResponseType ThreeDSecureResponse {
+            get {
+                return this.threeDSecureResponseField;
+            }
+            set {
+                this.threeDSecureResponseField = value;
             }
         }
     }
@@ -8828,6 +10505,8 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
         
         private PaymentTransactionType paymentTransactionDetailsField;
         
+        private ThreeDSecureInfoType threeDSecureDetailsField;
+        
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Namespace="urn:ebay:apis:eBLBaseComponents")]
         public PaymentTransactionType PaymentTransactionDetails {
@@ -8836,6 +10515,17 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
             }
             set {
                 this.paymentTransactionDetailsField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Namespace="urn:ebay:apis:eBLBaseComponents")]
+        public ThreeDSecureInfoType ThreeDSecureDetails {
+            get {
+                return this.threeDSecureDetailsField;
+            }
+            set {
+                this.threeDSecureDetailsField = value;
             }
         }
     }
@@ -8855,6 +10545,8 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
         private BasicAmountType feeRefundAmountField;
         
         private BasicAmountType grossRefundAmountField;
+        
+        private BasicAmountType totalRefundedAmountField;
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
@@ -8894,6 +10586,1117 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
             }
             set {
                 this.grossRefundAmountField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public BasicAmountType TotalRefundedAmount {
+            get {
+                return this.totalRefundedAmountField;
+            }
+            set {
+                this.totalRefundedAmountField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:api:PayPalAPI")]
+    public partial class BMButtonSearchResponseType : AbstractResponseType {
+        
+        private ButtonSearchResultType[] buttonSearchResultField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("ButtonSearchResult", Namespace="urn:ebay:apis:eBLBaseComponents")]
+        public ButtonSearchResultType[] ButtonSearchResult {
+            get {
+                return this.buttonSearchResultField;
+            }
+            set {
+                this.buttonSearchResultField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:api:PayPalAPI")]
+    public partial class BMGetInventoryResponseType : AbstractResponseType {
+        
+        private string hostedButtonIDField;
+        
+        private string trackInvField;
+        
+        private string trackPnlField;
+        
+        private ItemTrackingDetailsType itemTrackingDetailsField;
+        
+        private string optionIndexField;
+        
+        private string optionNameField;
+        
+        private OptionTrackingDetailsType[] optionTrackingDetailsField;
+        
+        private string soldoutURLField;
+        
+        private string[] digitalDownloadKeysField;
+        
+        /// <remarks/>
+        public string HostedButtonID {
+            get {
+                return this.hostedButtonIDField;
+            }
+            set {
+                this.hostedButtonIDField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string TrackInv {
+            get {
+                return this.trackInvField;
+            }
+            set {
+                this.trackInvField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string TrackPnl {
+            get {
+                return this.trackPnlField;
+            }
+            set {
+                this.trackPnlField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Namespace="urn:ebay:apis:eBLBaseComponents")]
+        public ItemTrackingDetailsType ItemTrackingDetails {
+            get {
+                return this.itemTrackingDetailsField;
+            }
+            set {
+                this.itemTrackingDetailsField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string OptionIndex {
+            get {
+                return this.optionIndexField;
+            }
+            set {
+                this.optionIndexField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string OptionName {
+            get {
+                return this.optionNameField;
+            }
+            set {
+                this.optionNameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("OptionTrackingDetails", Namespace="urn:ebay:apis:eBLBaseComponents")]
+        public OptionTrackingDetailsType[] OptionTrackingDetails {
+            get {
+                return this.optionTrackingDetailsField;
+            }
+            set {
+                this.optionTrackingDetailsField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string SoldoutURL {
+            get {
+                return this.soldoutURLField;
+            }
+            set {
+                this.soldoutURLField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("DigitalDownloadKeys")]
+        public string[] DigitalDownloadKeys {
+            get {
+                return this.digitalDownloadKeysField;
+            }
+            set {
+                this.digitalDownloadKeysField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:apis:eBLBaseComponents")]
+    public partial class ItemTrackingDetailsType {
+        
+        private string itemNumberField;
+        
+        private string itemQtyField;
+        
+        private string itemQtyDeltaField;
+        
+        private string itemAlertField;
+        
+        private string itemCostField;
+        
+        /// <remarks/>
+        public string ItemNumber {
+            get {
+                return this.itemNumberField;
+            }
+            set {
+                this.itemNumberField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string ItemQty {
+            get {
+                return this.itemQtyField;
+            }
+            set {
+                this.itemQtyField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string ItemQtyDelta {
+            get {
+                return this.itemQtyDeltaField;
+            }
+            set {
+                this.itemQtyDeltaField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string ItemAlert {
+            get {
+                return this.itemAlertField;
+            }
+            set {
+                this.itemAlertField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string ItemCost {
+            get {
+                return this.itemCostField;
+            }
+            set {
+                this.itemCostField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:apis:eBLBaseComponents")]
+    public partial class OptionTrackingDetailsType {
+        
+        private string optionNumberField;
+        
+        private string optionQtyField;
+        
+        private string optionSelectField;
+        
+        private string optionQtyDeltaField;
+        
+        private string optionAlertField;
+        
+        private string optionCostField;
+        
+        /// <remarks/>
+        public string OptionNumber {
+            get {
+                return this.optionNumberField;
+            }
+            set {
+                this.optionNumberField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string OptionQty {
+            get {
+                return this.optionQtyField;
+            }
+            set {
+                this.optionQtyField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string OptionSelect {
+            get {
+                return this.optionSelectField;
+            }
+            set {
+                this.optionSelectField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string OptionQtyDelta {
+            get {
+                return this.optionQtyDeltaField;
+            }
+            set {
+                this.optionQtyDeltaField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string OptionAlert {
+            get {
+                return this.optionAlertField;
+            }
+            set {
+                this.optionAlertField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string OptionCost {
+            get {
+                return this.optionCostField;
+            }
+            set {
+                this.optionCostField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:api:PayPalAPI")]
+    public partial class BMSetInventoryResponseType : AbstractResponseType {
+        
+        private string transactionIDField;
+        
+        /// <remarks/>
+        public string TransactionID {
+            get {
+                return this.transactionIDField;
+            }
+            set {
+                this.transactionIDField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:api:PayPalAPI")]
+    public partial class BMGetButtonDetailsResponseType : AbstractResponseType {
+        
+        private string websiteField;
+        
+        private string emailField;
+        
+        private string mobileField;
+        
+        private string hostedButtonIDField;
+        
+        private ButtonTypeType buttonTypeField;
+        
+        private bool buttonTypeFieldSpecified;
+        
+        private ButtonCodeType buttonCodeField;
+        
+        private bool buttonCodeFieldSpecified;
+        
+        private ButtonSubTypeType buttonSubTypeField;
+        
+        private bool buttonSubTypeFieldSpecified;
+        
+        private string[] buttonVarField;
+        
+        private OptionDetailsType[] optionDetailsField;
+        
+        private string[] textBoxField;
+        
+        private ButtonImageType buttonImageField;
+        
+        private bool buttonImageFieldSpecified;
+        
+        private string buttonImageURLField;
+        
+        private BuyNowTextType buyNowTextField;
+        
+        private bool buyNowTextFieldSpecified;
+        
+        private SubscribeTextType subscribeTextField;
+        
+        private bool subscribeTextFieldSpecified;
+        
+        private CountryCodeType buttonCountryField;
+        
+        private bool buttonCountryFieldSpecified;
+        
+        private string buttonLanguageField;
+        
+        /// <remarks/>
+        public string Website {
+            get {
+                return this.websiteField;
+            }
+            set {
+                this.websiteField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Email {
+            get {
+                return this.emailField;
+            }
+            set {
+                this.emailField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Mobile {
+            get {
+                return this.mobileField;
+            }
+            set {
+                this.mobileField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string HostedButtonID {
+            get {
+                return this.hostedButtonIDField;
+            }
+            set {
+                this.hostedButtonIDField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public ButtonTypeType ButtonType {
+            get {
+                return this.buttonTypeField;
+            }
+            set {
+                this.buttonTypeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ButtonTypeSpecified {
+            get {
+                return this.buttonTypeFieldSpecified;
+            }
+            set {
+                this.buttonTypeFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        public ButtonCodeType ButtonCode {
+            get {
+                return this.buttonCodeField;
+            }
+            set {
+                this.buttonCodeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ButtonCodeSpecified {
+            get {
+                return this.buttonCodeFieldSpecified;
+            }
+            set {
+                this.buttonCodeFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        public ButtonSubTypeType ButtonSubType {
+            get {
+                return this.buttonSubTypeField;
+            }
+            set {
+                this.buttonSubTypeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ButtonSubTypeSpecified {
+            get {
+                return this.buttonSubTypeFieldSpecified;
+            }
+            set {
+                this.buttonSubTypeFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("ButtonVar")]
+        public string[] ButtonVar {
+            get {
+                return this.buttonVarField;
+            }
+            set {
+                this.buttonVarField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("OptionDetails")]
+        public OptionDetailsType[] OptionDetails {
+            get {
+                return this.optionDetailsField;
+            }
+            set {
+                this.optionDetailsField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("TextBox")]
+        public string[] TextBox {
+            get {
+                return this.textBoxField;
+            }
+            set {
+                this.textBoxField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public ButtonImageType ButtonImage {
+            get {
+                return this.buttonImageField;
+            }
+            set {
+                this.buttonImageField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ButtonImageSpecified {
+            get {
+                return this.buttonImageFieldSpecified;
+            }
+            set {
+                this.buttonImageFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string ButtonImageURL {
+            get {
+                return this.buttonImageURLField;
+            }
+            set {
+                this.buttonImageURLField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public BuyNowTextType BuyNowText {
+            get {
+                return this.buyNowTextField;
+            }
+            set {
+                this.buyNowTextField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool BuyNowTextSpecified {
+            get {
+                return this.buyNowTextFieldSpecified;
+            }
+            set {
+                this.buyNowTextFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        public SubscribeTextType SubscribeText {
+            get {
+                return this.subscribeTextField;
+            }
+            set {
+                this.subscribeTextField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool SubscribeTextSpecified {
+            get {
+                return this.subscribeTextFieldSpecified;
+            }
+            set {
+                this.subscribeTextFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        public CountryCodeType ButtonCountry {
+            get {
+                return this.buttonCountryField;
+            }
+            set {
+                this.buttonCountryField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ButtonCountrySpecified {
+            get {
+                return this.buttonCountryFieldSpecified;
+            }
+            set {
+                this.buttonCountryFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string ButtonLanguage {
+            get {
+                return this.buttonLanguageField;
+            }
+            set {
+                this.buttonLanguageField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:apis:eBLBaseComponents")]
+    public enum ButtonTypeType {
+        
+        /// <remarks/>
+        BUYNOW,
+        
+        /// <remarks/>
+        CART,
+        
+        /// <remarks/>
+        GIFTCERTIFICATE,
+        
+        /// <remarks/>
+        SUBSCRIBE,
+        
+        /// <remarks/>
+        DONATE,
+        
+        /// <remarks/>
+        UNSUBSCRIBE,
+        
+        /// <remarks/>
+        VIEWCART,
+        
+        /// <remarks/>
+        PAYMENTPLAN,
+        
+        /// <remarks/>
+        AUTOBILLING,
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:apis:eBLBaseComponents")]
+    public enum ButtonCodeType {
+        
+        /// <remarks/>
+        HOSTED,
+        
+        /// <remarks/>
+        ENCRYPTED,
+        
+        /// <remarks/>
+        CLEARTEXT,
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:apis:eBLBaseComponents")]
+    public enum ButtonSubTypeType {
+        
+        /// <remarks/>
+        PRODUCTS,
+        
+        /// <remarks/>
+        SERVICES,
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:api:PayPalAPI")]
+    public partial class OptionDetailsType {
+        
+        private string optionNameField;
+        
+        private OptionSelectionDetailsType[] optionSelectionDetailsField;
+        
+        /// <remarks/>
+        public string OptionName {
+            get {
+                return this.optionNameField;
+            }
+            set {
+                this.optionNameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("OptionSelectionDetails")]
+        public OptionSelectionDetailsType[] OptionSelectionDetails {
+            get {
+                return this.optionSelectionDetailsField;
+            }
+            set {
+                this.optionSelectionDetailsField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:api:PayPalAPI")]
+    public partial class OptionSelectionDetailsType {
+        
+        private string optionSelectionField;
+        
+        private string priceField;
+        
+        private OptionTypeListType optionTypeField;
+        
+        private bool optionTypeFieldSpecified;
+        
+        private InstallmentDetailsType[] paymentPeriodField;
+        
+        /// <remarks/>
+        public string OptionSelection {
+            get {
+                return this.optionSelectionField;
+            }
+            set {
+                this.optionSelectionField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Price {
+            get {
+                return this.priceField;
+            }
+            set {
+                this.priceField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public OptionTypeListType OptionType {
+            get {
+                return this.optionTypeField;
+            }
+            set {
+                this.optionTypeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool OptionTypeSpecified {
+            get {
+                return this.optionTypeFieldSpecified;
+            }
+            set {
+                this.optionTypeFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("PaymentPeriod")]
+        public InstallmentDetailsType[] PaymentPeriod {
+            get {
+                return this.paymentPeriodField;
+            }
+            set {
+                this.paymentPeriodField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:apis:eBLBaseComponents")]
+    public enum OptionTypeListType {
+        
+        /// <remarks/>
+        NoOptionType,
+        
+        /// <remarks/>
+        FULL,
+        
+        /// <remarks/>
+        EMI,
+        
+        /// <remarks/>
+        VARIABLE,
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:api:PayPalAPI")]
+    public partial class InstallmentDetailsType {
+        
+        private BillingPeriodType billingPeriodField;
+        
+        private bool billingPeriodFieldSpecified;
+        
+        private int billingFrequencyField;
+        
+        private bool billingFrequencyFieldSpecified;
+        
+        private int totalBillingCyclesField;
+        
+        private bool totalBillingCyclesFieldSpecified;
+        
+        private string amountField;
+        
+        private string shippingAmountField;
+        
+        private string taxAmountField;
+        
+        /// <remarks/>
+        public BillingPeriodType BillingPeriod {
+            get {
+                return this.billingPeriodField;
+            }
+            set {
+                this.billingPeriodField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool BillingPeriodSpecified {
+            get {
+                return this.billingPeriodFieldSpecified;
+            }
+            set {
+                this.billingPeriodFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int BillingFrequency {
+            get {
+                return this.billingFrequencyField;
+            }
+            set {
+                this.billingFrequencyField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool BillingFrequencySpecified {
+            get {
+                return this.billingFrequencyFieldSpecified;
+            }
+            set {
+                this.billingFrequencyFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int TotalBillingCycles {
+            get {
+                return this.totalBillingCyclesField;
+            }
+            set {
+                this.totalBillingCyclesField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool TotalBillingCyclesSpecified {
+            get {
+                return this.totalBillingCyclesFieldSpecified;
+            }
+            set {
+                this.totalBillingCyclesFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Amount {
+            get {
+                return this.amountField;
+            }
+            set {
+                this.amountField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string ShippingAmount {
+            get {
+                return this.shippingAmountField;
+            }
+            set {
+                this.shippingAmountField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string TaxAmount {
+            get {
+                return this.taxAmountField;
+            }
+            set {
+                this.taxAmountField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:apis:eBLBaseComponents")]
+    public enum ButtonImageType {
+        
+        /// <remarks/>
+        REG,
+        
+        /// <remarks/>
+        SML,
+        
+        /// <remarks/>
+        CC,
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:apis:eBLBaseComponents")]
+    public enum BuyNowTextType {
+        
+        /// <remarks/>
+        BUYNOW,
+        
+        /// <remarks/>
+        PAYNOW,
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:apis:eBLBaseComponents")]
+    public enum SubscribeTextType {
+        
+        /// <remarks/>
+        BUYNOW,
+        
+        /// <remarks/>
+        SUBSCRIBE,
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:api:PayPalAPI")]
+    public partial class BMManageButtonStatusResponseType : AbstractResponseType {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:api:PayPalAPI")]
+    public partial class BMUpdateButtonResponseType : AbstractResponseType {
+        
+        private string websiteField;
+        
+        private string emailField;
+        
+        private string mobileField;
+        
+        private string hostedButtonIDField;
+        
+        /// <remarks/>
+        public string Website {
+            get {
+                return this.websiteField;
+            }
+            set {
+                this.websiteField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Email {
+            get {
+                return this.emailField;
+            }
+            set {
+                this.emailField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Mobile {
+            get {
+                return this.mobileField;
+            }
+            set {
+                this.mobileField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string HostedButtonID {
+            get {
+                return this.hostedButtonIDField;
+            }
+            set {
+                this.hostedButtonIDField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:api:PayPalAPI")]
+    public partial class BMCreateButtonResponseType : AbstractResponseType {
+        
+        private string websiteField;
+        
+        private string emailField;
+        
+        private string mobileField;
+        
+        private string hostedButtonIDField;
+        
+        /// <remarks/>
+        public string Website {
+            get {
+                return this.websiteField;
+            }
+            set {
+                this.websiteField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Email {
+            get {
+                return this.emailField;
+            }
+            set {
+                this.emailField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Mobile {
+            get {
+                return this.mobileField;
+            }
+            set {
+                this.mobileField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string HostedButtonID {
+            get {
+                return this.hostedButtonIDField;
+            }
+            set {
+                this.hostedButtonIDField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:apis:eBLBaseComponents")]
+    public partial class ReverseTransactionRequestDetailsType {
+        
+        private string transactionIDField;
+        
+        /// <remarks/>
+        public string TransactionID {
+            get {
+                return this.transactionIDField;
+            }
+            set {
+                this.transactionIDField = value;
             }
         }
     }
@@ -10054,25 +12857,6 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:apis:eBLBaseComponents")]
-    public enum PaymentActionCodeType {
-        
-        /// <remarks/>
-        None,
-        
-        /// <remarks/>
-        Authorization,
-        
-        /// <remarks/>
-        Sale,
-        
-        /// <remarks/>
-        Order,
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
-    [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:apis:eBLBaseComponents")]
     public enum MerchantPullPaymentCodeType {
         
         /// <remarks/>
@@ -10314,6 +13098,9 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
         
         /// <remarks/>
         RecurringPayments,
+        
+        /// <remarks/>
+        MerchantInitiatedBillingSingleAgreement,
     }
     
     /// <remarks/>
@@ -10930,7 +13717,7 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
         
         private string flightNumberField;
         
-        private string deparatureTimeField;
+        private string departureTimeField;
         
         private string arrivalTimeField;
         
@@ -11045,12 +13832,12 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
         }
         
         /// <remarks/>
-        public string DeparatureTime {
+        public string DepartureTime {
             get {
-                return this.deparatureTimeField;
+                return this.departureTimeField;
             }
             set {
-                this.deparatureTimeField = value;
+                this.departureTimeField = value;
             }
         }
         
@@ -11324,13 +14111,15 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
         
         private PaymentActionCodeType paymentActionField;
         
+        private bool paymentActionFieldSpecified;
+        
         private string tokenField;
         
         private string payerIDField;
         
         private string orderURLField;
         
-        private PaymentDetailsType paymentDetailsField;
+        private PaymentDetailsType[] paymentDetailsField;
         
         private string promoOverrideFlagField;
         
@@ -11340,6 +14129,28 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
         
         private string softDescriptorField;
         
+        private UserSelectedOptionType userSelectedOptionsField;
+        
+        private string giftMessageField;
+        
+        private string giftReceiptEnableField;
+        
+        private string giftWrapNameField;
+        
+        private BasicAmountType giftWrapAmountField;
+        
+        private string buyerMarketingEmailField;
+        
+        private string surveyQuestionField;
+        
+        private string[] surveyChoiceSelectedField;
+        
+        private string buttonSourceField;
+        
+        private bool skipBACreationField;
+        
+        private bool skipBACreationFieldSpecified;
+        
         /// <remarks/>
         public PaymentActionCodeType PaymentAction {
             get {
@@ -11347,6 +14158,17 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
             }
             set {
                 this.paymentActionField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool PaymentActionSpecified {
+            get {
+                return this.paymentActionFieldSpecified;
+            }
+            set {
+                this.paymentActionFieldSpecified = value;
             }
         }
         
@@ -11381,7 +14203,8 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
         }
         
         /// <remarks/>
-        public PaymentDetailsType PaymentDetails {
+        [System.Xml.Serialization.XmlElementAttribute("PaymentDetails")]
+        public PaymentDetailsType[] PaymentDetails {
             get {
                 return this.paymentDetailsField;
             }
@@ -11429,6 +14252,410 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
                 this.softDescriptorField = value;
             }
         }
+        
+        /// <remarks/>
+        public UserSelectedOptionType UserSelectedOptions {
+            get {
+                return this.userSelectedOptionsField;
+            }
+            set {
+                this.userSelectedOptionsField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string GiftMessage {
+            get {
+                return this.giftMessageField;
+            }
+            set {
+                this.giftMessageField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string GiftReceiptEnable {
+            get {
+                return this.giftReceiptEnableField;
+            }
+            set {
+                this.giftReceiptEnableField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string GiftWrapName {
+            get {
+                return this.giftWrapNameField;
+            }
+            set {
+                this.giftWrapNameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public BasicAmountType GiftWrapAmount {
+            get {
+                return this.giftWrapAmountField;
+            }
+            set {
+                this.giftWrapAmountField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string BuyerMarketingEmail {
+            get {
+                return this.buyerMarketingEmailField;
+            }
+            set {
+                this.buyerMarketingEmailField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string SurveyQuestion {
+            get {
+                return this.surveyQuestionField;
+            }
+            set {
+                this.surveyQuestionField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("SurveyChoiceSelected")]
+        public string[] SurveyChoiceSelected {
+            get {
+                return this.surveyChoiceSelectedField;
+            }
+            set {
+                this.surveyChoiceSelectedField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string ButtonSource {
+            get {
+                return this.buttonSourceField;
+            }
+            set {
+                this.buttonSourceField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public bool SkipBACreation {
+            get {
+                return this.skipBACreationField;
+            }
+            set {
+                this.skipBACreationField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool SkipBACreationSpecified {
+            get {
+                return this.skipBACreationFieldSpecified;
+            }
+            set {
+                this.skipBACreationFieldSpecified = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:apis:eBLBaseComponents")]
+    public partial class ShippingOptionType {
+        
+        private string shippingOptionIsDefaultField;
+        
+        private BasicAmountType shippingOptionAmountField;
+        
+        private string shippingOptionNameField;
+        
+        /// <remarks/>
+        public string ShippingOptionIsDefault {
+            get {
+                return this.shippingOptionIsDefaultField;
+            }
+            set {
+                this.shippingOptionIsDefaultField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public BasicAmountType ShippingOptionAmount {
+            get {
+                return this.shippingOptionAmountField;
+            }
+            set {
+                this.shippingOptionAmountField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string ShippingOptionName {
+            get {
+                return this.shippingOptionNameField;
+            }
+            set {
+                this.shippingOptionNameField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:apis:eBLBaseComponents")]
+    public partial class BuyerDetailsType {
+        
+        private string buyerIdField;
+        
+        private string buyerUserNameField;
+        
+        private System.DateTime buyerRegistrationDateField;
+        
+        private bool buyerRegistrationDateFieldSpecified;
+        
+        /// <remarks/>
+        public string BuyerId {
+            get {
+                return this.buyerIdField;
+            }
+            set {
+                this.buyerIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string BuyerUserName {
+            get {
+                return this.buyerUserNameField;
+            }
+            set {
+                this.buyerUserNameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public System.DateTime BuyerRegistrationDate {
+            get {
+                return this.buyerRegistrationDateField;
+            }
+            set {
+                this.buyerRegistrationDateField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool BuyerRegistrationDateSpecified {
+            get {
+                return this.buyerRegistrationDateFieldSpecified;
+            }
+            set {
+                this.buyerRegistrationDateFieldSpecified = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:apis:eBLBaseComponents")]
+    public partial class OtherPaymentMethodDetailsType {
+        
+        private string otherPaymentMethodIdField;
+        
+        private string otherPaymentMethodTypeField;
+        
+        private string otherPaymentMethodLabelField;
+        
+        private string otherPaymentMethodLabelDescriptionField;
+        
+        private string otherPaymentMethodLongDescriptionTitleField;
+        
+        private string otherPaymentMethodLongDescriptionField;
+        
+        private string otherPaymentMethodIconField;
+        
+        private bool otherPaymentMethodHideLabelField;
+        
+        private bool otherPaymentMethodHideLabelFieldSpecified;
+        
+        /// <remarks/>
+        public string OtherPaymentMethodId {
+            get {
+                return this.otherPaymentMethodIdField;
+            }
+            set {
+                this.otherPaymentMethodIdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string OtherPaymentMethodType {
+            get {
+                return this.otherPaymentMethodTypeField;
+            }
+            set {
+                this.otherPaymentMethodTypeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string OtherPaymentMethodLabel {
+            get {
+                return this.otherPaymentMethodLabelField;
+            }
+            set {
+                this.otherPaymentMethodLabelField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string OtherPaymentMethodLabelDescription {
+            get {
+                return this.otherPaymentMethodLabelDescriptionField;
+            }
+            set {
+                this.otherPaymentMethodLabelDescriptionField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string OtherPaymentMethodLongDescriptionTitle {
+            get {
+                return this.otherPaymentMethodLongDescriptionTitleField;
+            }
+            set {
+                this.otherPaymentMethodLongDescriptionTitleField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string OtherPaymentMethodLongDescription {
+            get {
+                return this.otherPaymentMethodLongDescriptionField;
+            }
+            set {
+                this.otherPaymentMethodLongDescriptionField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string OtherPaymentMethodIcon {
+            get {
+                return this.otherPaymentMethodIconField;
+            }
+            set {
+                this.otherPaymentMethodIconField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public bool OtherPaymentMethodHideLabel {
+            get {
+                return this.otherPaymentMethodHideLabelField;
+            }
+            set {
+                this.otherPaymentMethodHideLabelField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool OtherPaymentMethodHideLabelSpecified {
+            get {
+                return this.otherPaymentMethodHideLabelFieldSpecified;
+            }
+            set {
+                this.otherPaymentMethodHideLabelFieldSpecified = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:apis:EnhancedDataTypes")]
+    public partial class EnhancedCheckoutDataType {
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:apis:eBLBaseComponents")]
+    public partial class FundingSourceDetailsType {
+        
+        private string allowPushFundingField;
+        
+        private UserSelectedFundingSourceType userSelectedFundingSourceField;
+        
+        private bool userSelectedFundingSourceFieldSpecified;
+        
+        /// <remarks/>
+        public string AllowPushFunding {
+            get {
+                return this.allowPushFundingField;
+            }
+            set {
+                this.allowPushFundingField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public UserSelectedFundingSourceType UserSelectedFundingSource {
+            get {
+                return this.userSelectedFundingSourceField;
+            }
+            set {
+                this.userSelectedFundingSourceField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool UserSelectedFundingSourceSpecified {
+            get {
+                return this.userSelectedFundingSourceFieldSpecified;
+            }
+            set {
+                this.userSelectedFundingSourceFieldSpecified = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:apis:eBLBaseComponents")]
+    public enum UserSelectedFundingSourceType {
+        
+        /// <remarks/>
+        ELV,
+        
+        /// <remarks/>
+        CreditCard,
+        
+        /// <remarks/>
+        ChinaUnionPay,
     }
     
     /// <remarks/>
@@ -11465,6 +14692,8 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
         
         private string reqBillingAddressField;
         
+        private AddressType billingAddressField;
+        
         private string noShippingField;
         
         private string addressOverrideField;
@@ -11480,6 +14709,10 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
         private string cppheaderbackcolorField;
         
         private string cpppayflowcolorField;
+        
+        private string cppcartbordercolorField;
+        
+        private string cpplogoimageField;
         
         private AddressType addressField;
         
@@ -11521,9 +14754,45 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
         
         private string allowNoteField;
         
+        private FundingSourceDetailsType fundingSourceDetailsField;
+        
+        private string brandNameField;
+        
         private string callbackURLField;
         
-        private PaymentDetailsType paymentDetailsField;
+        private EnhancedCheckoutDataType enhancedCheckoutDataField;
+        
+        private OtherPaymentMethodDetailsType[] otherPaymentMethodsField;
+        
+        private BuyerDetailsType buyerDetailsField;
+        
+        private PaymentDetailsType[] paymentDetailsField;
+        
+        private ShippingOptionType[] flatRateShippingOptionsField;
+        
+        private string callbackTimeoutField;
+        
+        private string callbackVersionField;
+        
+        private string customerServiceNumberField;
+        
+        private string giftMessageEnableField;
+        
+        private string giftReceiptEnableField;
+        
+        private string giftWrapEnableField;
+        
+        private string giftWrapNameField;
+        
+        private BasicAmountType giftWrapAmountField;
+        
+        private string buyerEmailOptInEnableField;
+        
+        private string surveyEnableField;
+        
+        private string surveyQuestionField;
+        
+        private string[] surveyChoiceField;
         
         /// <remarks/>
         public BasicAmountType OrderTotal {
@@ -11656,6 +14925,16 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
         }
         
         /// <remarks/>
+        public AddressType BillingAddress {
+            get {
+                return this.billingAddressField;
+            }
+            set {
+                this.billingAddressField = value;
+            }
+        }
+        
+        /// <remarks/>
         public string NoShipping {
             get {
                 return this.noShippingField;
@@ -11736,6 +15015,28 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
             }
             set {
                 this.cpppayflowcolorField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("cpp-cart-border-color")]
+        public string cppcartbordercolor {
+            get {
+                return this.cppcartbordercolorField;
+            }
+            set {
+                this.cppcartbordercolorField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("cpp-logo-image")]
+        public string cpplogoimage {
+            get {
+                return this.cpplogoimageField;
+            }
+            set {
+                this.cpplogoimageField = value;
             }
         }
         
@@ -11949,6 +15250,26 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
         }
         
         /// <remarks/>
+        public FundingSourceDetailsType FundingSourceDetails {
+            get {
+                return this.fundingSourceDetailsField;
+            }
+            set {
+                this.fundingSourceDetailsField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string BrandName {
+            get {
+                return this.brandNameField;
+            }
+            set {
+                this.brandNameField = value;
+            }
+        }
+        
+        /// <remarks/>
         public string CallbackURL {
             get {
                 return this.callbackURLField;
@@ -11959,12 +15280,176 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
         }
         
         /// <remarks/>
-        public PaymentDetailsType PaymentDetails {
+        public EnhancedCheckoutDataType EnhancedCheckoutData {
+            get {
+                return this.enhancedCheckoutDataField;
+            }
+            set {
+                this.enhancedCheckoutDataField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("OtherPaymentMethods")]
+        public OtherPaymentMethodDetailsType[] OtherPaymentMethods {
+            get {
+                return this.otherPaymentMethodsField;
+            }
+            set {
+                this.otherPaymentMethodsField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public BuyerDetailsType BuyerDetails {
+            get {
+                return this.buyerDetailsField;
+            }
+            set {
+                this.buyerDetailsField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("PaymentDetails")]
+        public PaymentDetailsType[] PaymentDetails {
             get {
                 return this.paymentDetailsField;
             }
             set {
                 this.paymentDetailsField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("FlatRateShippingOptions")]
+        public ShippingOptionType[] FlatRateShippingOptions {
+            get {
+                return this.flatRateShippingOptionsField;
+            }
+            set {
+                this.flatRateShippingOptionsField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string CallbackTimeout {
+            get {
+                return this.callbackTimeoutField;
+            }
+            set {
+                this.callbackTimeoutField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string CallbackVersion {
+            get {
+                return this.callbackVersionField;
+            }
+            set {
+                this.callbackVersionField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string CustomerServiceNumber {
+            get {
+                return this.customerServiceNumberField;
+            }
+            set {
+                this.customerServiceNumberField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string GiftMessageEnable {
+            get {
+                return this.giftMessageEnableField;
+            }
+            set {
+                this.giftMessageEnableField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string GiftReceiptEnable {
+            get {
+                return this.giftReceiptEnableField;
+            }
+            set {
+                this.giftReceiptEnableField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string GiftWrapEnable {
+            get {
+                return this.giftWrapEnableField;
+            }
+            set {
+                this.giftWrapEnableField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string GiftWrapName {
+            get {
+                return this.giftWrapNameField;
+            }
+            set {
+                this.giftWrapNameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public BasicAmountType GiftWrapAmount {
+            get {
+                return this.giftWrapAmountField;
+            }
+            set {
+                this.giftWrapAmountField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string BuyerEmailOptInEnable {
+            get {
+                return this.buyerEmailOptInEnableField;
+            }
+            set {
+                this.buyerEmailOptInEnableField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string SurveyEnable {
+            get {
+                return this.surveyEnableField;
+            }
+            set {
+                this.surveyEnableField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string SurveyQuestion {
+            get {
+                return this.surveyQuestionField;
+            }
+            set {
+                this.surveyQuestionField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("SurveyChoice")]
+        public string[] SurveyChoice {
+            get {
+                return this.surveyChoiceField;
+            }
+            set {
+                this.surveyChoiceField = value;
             }
         }
     }
@@ -14695,6 +18180,8 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
     }
     
     /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(ReverseTransactionRequestType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(GetPalDetailsRequestType))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(UpdateRecurringPaymentsProfileRequestType))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(BillOutstandingAmountRequestType))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(ManageRecurringPaymentsProfileStatusRequestType))]
@@ -14735,6 +18222,13 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(BillUserRequestType))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(GetTransactionDetailsRequestType))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(RefundTransactionRequestType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BMButtonSearchRequestType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BMGetInventoryRequestType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BMSetInventoryRequestType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BMGetButtonDetailsRequestType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BMManageButtonStatusRequestType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BMUpdateButtonRequestType))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(BMCreateButtonRequestType))]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -14807,6 +18301,37 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
         
         /// <remarks/>
         ItemReturnAttributes,
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:api:PayPalAPI")]
+    public partial class ReverseTransactionRequestType : AbstractRequestType {
+        
+        private ReverseTransactionRequestDetailsType reverseTransactionRequestDetailsField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Namespace="urn:ebay:apis:eBLBaseComponents")]
+        public ReverseTransactionRequestDetailsType ReverseTransactionRequestDetails {
+            get {
+                return this.reverseTransactionRequestDetailsField;
+            }
+            set {
+                this.reverseTransactionRequestDetailsField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:api:PayPalAPI")]
+    public partial class GetPalDetailsRequestType : AbstractRequestType {
     }
     
     /// <remarks/>
@@ -15955,6 +19480,8 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
         
         private bool receiverTypeFieldSpecified;
         
+        private string buttonSourceField;
+        
         private MassPayRequestItemType[] massPayItemField;
         
         /// <remarks/>
@@ -15985,6 +19512,16 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
             }
             set {
                 this.receiverTypeFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string ButtonSource {
+            get {
+                return this.buttonSourceField;
+            }
+            set {
+                this.buttonSourceField = value;
             }
         }
         
@@ -16424,6 +19961,8 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
         
         private string transactionIDField;
         
+        private string invoiceIDField;
+        
         private RefundType refundTypeField;
         
         private bool refundTypeFieldSpecified;
@@ -16439,6 +19978,16 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
             }
             set {
                 this.transactionIDField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string InvoiceID {
+            get {
+                return this.invoiceIDField;
+            }
+            set {
+                this.invoiceIDField = value;
             }
         }
         
@@ -16498,6 +20047,804 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
         
         /// <remarks/>
         Partial,
+        
+        /// <remarks/>
+        ExternalDispute,
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:api:PayPalAPI")]
+    public partial class BMButtonSearchRequestType : AbstractRequestType {
+        
+        private System.DateTime startDateField;
+        
+        private bool startDateFieldSpecified;
+        
+        private System.DateTime endDateField;
+        
+        private bool endDateFieldSpecified;
+        
+        /// <remarks/>
+        public System.DateTime StartDate {
+            get {
+                return this.startDateField;
+            }
+            set {
+                this.startDateField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool StartDateSpecified {
+            get {
+                return this.startDateFieldSpecified;
+            }
+            set {
+                this.startDateFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        public System.DateTime EndDate {
+            get {
+                return this.endDateField;
+            }
+            set {
+                this.endDateField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool EndDateSpecified {
+            get {
+                return this.endDateFieldSpecified;
+            }
+            set {
+                this.endDateFieldSpecified = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:api:PayPalAPI")]
+    public partial class BMGetInventoryRequestType : AbstractRequestType {
+        
+        private string hostedButtonIDField;
+        
+        /// <remarks/>
+        public string HostedButtonID {
+            get {
+                return this.hostedButtonIDField;
+            }
+            set {
+                this.hostedButtonIDField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:api:PayPalAPI")]
+    public partial class BMSetInventoryRequestType : AbstractRequestType {
+        
+        private string hostedButtonIDField;
+        
+        private string trackInvField;
+        
+        private string trackPnlField;
+        
+        private ItemTrackingDetailsType itemTrackingDetailsField;
+        
+        private string optionIndexField;
+        
+        private OptionTrackingDetailsType[] optionTrackingDetailsField;
+        
+        private string soldoutURLField;
+        
+        private string reuseDigitalDownloadKeysField;
+        
+        private string appendDigitalDownloadKeysField;
+        
+        private string[] digitalDownloadKeysField;
+        
+        /// <remarks/>
+        public string HostedButtonID {
+            get {
+                return this.hostedButtonIDField;
+            }
+            set {
+                this.hostedButtonIDField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string TrackInv {
+            get {
+                return this.trackInvField;
+            }
+            set {
+                this.trackInvField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string TrackPnl {
+            get {
+                return this.trackPnlField;
+            }
+            set {
+                this.trackPnlField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Namespace="urn:ebay:apis:eBLBaseComponents")]
+        public ItemTrackingDetailsType ItemTrackingDetails {
+            get {
+                return this.itemTrackingDetailsField;
+            }
+            set {
+                this.itemTrackingDetailsField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string OptionIndex {
+            get {
+                return this.optionIndexField;
+            }
+            set {
+                this.optionIndexField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("OptionTrackingDetails", Namespace="urn:ebay:apis:eBLBaseComponents")]
+        public OptionTrackingDetailsType[] OptionTrackingDetails {
+            get {
+                return this.optionTrackingDetailsField;
+            }
+            set {
+                this.optionTrackingDetailsField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string SoldoutURL {
+            get {
+                return this.soldoutURLField;
+            }
+            set {
+                this.soldoutURLField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string ReuseDigitalDownloadKeys {
+            get {
+                return this.reuseDigitalDownloadKeysField;
+            }
+            set {
+                this.reuseDigitalDownloadKeysField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string AppendDigitalDownloadKeys {
+            get {
+                return this.appendDigitalDownloadKeysField;
+            }
+            set {
+                this.appendDigitalDownloadKeysField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("DigitalDownloadKeys")]
+        public string[] DigitalDownloadKeys {
+            get {
+                return this.digitalDownloadKeysField;
+            }
+            set {
+                this.digitalDownloadKeysField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:api:PayPalAPI")]
+    public partial class BMGetButtonDetailsRequestType : AbstractRequestType {
+        
+        private string hostedButtonIDField;
+        
+        /// <remarks/>
+        public string HostedButtonID {
+            get {
+                return this.hostedButtonIDField;
+            }
+            set {
+                this.hostedButtonIDField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:api:PayPalAPI")]
+    public partial class BMManageButtonStatusRequestType : AbstractRequestType {
+        
+        private string hostedButtonIDField;
+        
+        private ButtonStatusType buttonStatusField;
+        
+        private bool buttonStatusFieldSpecified;
+        
+        /// <remarks/>
+        public string HostedButtonID {
+            get {
+                return this.hostedButtonIDField;
+            }
+            set {
+                this.hostedButtonIDField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public ButtonStatusType ButtonStatus {
+            get {
+                return this.buttonStatusField;
+            }
+            set {
+                this.buttonStatusField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ButtonStatusSpecified {
+            get {
+                return this.buttonStatusFieldSpecified;
+            }
+            set {
+                this.buttonStatusFieldSpecified = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:apis:eBLBaseComponents")]
+    public enum ButtonStatusType {
+        
+        /// <remarks/>
+        DELETE,
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:api:PayPalAPI")]
+    public partial class BMUpdateButtonRequestType : AbstractRequestType {
+        
+        private string hostedButtonIDField;
+        
+        private ButtonTypeType buttonTypeField;
+        
+        private bool buttonTypeFieldSpecified;
+        
+        private ButtonCodeType buttonCodeField;
+        
+        private bool buttonCodeFieldSpecified;
+        
+        private ButtonSubTypeType buttonSubTypeField;
+        
+        private bool buttonSubTypeFieldSpecified;
+        
+        private string[] buttonVarField;
+        
+        private OptionDetailsType[] optionDetailsField;
+        
+        private string[] textBoxField;
+        
+        private ButtonImageType buttonImageField;
+        
+        private bool buttonImageFieldSpecified;
+        
+        private string buttonImageURLField;
+        
+        private BuyNowTextType buyNowTextField;
+        
+        private bool buyNowTextFieldSpecified;
+        
+        private SubscribeTextType subscribeTextField;
+        
+        private bool subscribeTextFieldSpecified;
+        
+        private CountryCodeType buttonCountryField;
+        
+        private bool buttonCountryFieldSpecified;
+        
+        private string buttonLanguageField;
+        
+        /// <remarks/>
+        public string HostedButtonID {
+            get {
+                return this.hostedButtonIDField;
+            }
+            set {
+                this.hostedButtonIDField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public ButtonTypeType ButtonType {
+            get {
+                return this.buttonTypeField;
+            }
+            set {
+                this.buttonTypeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ButtonTypeSpecified {
+            get {
+                return this.buttonTypeFieldSpecified;
+            }
+            set {
+                this.buttonTypeFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        public ButtonCodeType ButtonCode {
+            get {
+                return this.buttonCodeField;
+            }
+            set {
+                this.buttonCodeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ButtonCodeSpecified {
+            get {
+                return this.buttonCodeFieldSpecified;
+            }
+            set {
+                this.buttonCodeFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        public ButtonSubTypeType ButtonSubType {
+            get {
+                return this.buttonSubTypeField;
+            }
+            set {
+                this.buttonSubTypeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ButtonSubTypeSpecified {
+            get {
+                return this.buttonSubTypeFieldSpecified;
+            }
+            set {
+                this.buttonSubTypeFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("ButtonVar")]
+        public string[] ButtonVar {
+            get {
+                return this.buttonVarField;
+            }
+            set {
+                this.buttonVarField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("OptionDetails")]
+        public OptionDetailsType[] OptionDetails {
+            get {
+                return this.optionDetailsField;
+            }
+            set {
+                this.optionDetailsField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("TextBox")]
+        public string[] TextBox {
+            get {
+                return this.textBoxField;
+            }
+            set {
+                this.textBoxField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public ButtonImageType ButtonImage {
+            get {
+                return this.buttonImageField;
+            }
+            set {
+                this.buttonImageField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ButtonImageSpecified {
+            get {
+                return this.buttonImageFieldSpecified;
+            }
+            set {
+                this.buttonImageFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string ButtonImageURL {
+            get {
+                return this.buttonImageURLField;
+            }
+            set {
+                this.buttonImageURLField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public BuyNowTextType BuyNowText {
+            get {
+                return this.buyNowTextField;
+            }
+            set {
+                this.buyNowTextField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool BuyNowTextSpecified {
+            get {
+                return this.buyNowTextFieldSpecified;
+            }
+            set {
+                this.buyNowTextFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        public SubscribeTextType SubscribeText {
+            get {
+                return this.subscribeTextField;
+            }
+            set {
+                this.subscribeTextField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool SubscribeTextSpecified {
+            get {
+                return this.subscribeTextFieldSpecified;
+            }
+            set {
+                this.subscribeTextFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        public CountryCodeType ButtonCountry {
+            get {
+                return this.buttonCountryField;
+            }
+            set {
+                this.buttonCountryField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ButtonCountrySpecified {
+            get {
+                return this.buttonCountryFieldSpecified;
+            }
+            set {
+                this.buttonCountryFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string ButtonLanguage {
+            get {
+                return this.buttonLanguageField;
+            }
+            set {
+                this.buttonLanguageField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:ebay:api:PayPalAPI")]
+    public partial class BMCreateButtonRequestType : AbstractRequestType {
+        
+        private ButtonTypeType buttonTypeField;
+        
+        private bool buttonTypeFieldSpecified;
+        
+        private ButtonCodeType buttonCodeField;
+        
+        private bool buttonCodeFieldSpecified;
+        
+        private ButtonSubTypeType buttonSubTypeField;
+        
+        private bool buttonSubTypeFieldSpecified;
+        
+        private string[] buttonVarField;
+        
+        private OptionDetailsType[] optionDetailsField;
+        
+        private string[] textBoxField;
+        
+        private ButtonImageType buttonImageField;
+        
+        private bool buttonImageFieldSpecified;
+        
+        private string buttonImageURLField;
+        
+        private BuyNowTextType buyNowTextField;
+        
+        private bool buyNowTextFieldSpecified;
+        
+        private SubscribeTextType subscribeTextField;
+        
+        private bool subscribeTextFieldSpecified;
+        
+        private CountryCodeType buttonCountryField;
+        
+        private bool buttonCountryFieldSpecified;
+        
+        private string buttonLanguageField;
+        
+        /// <remarks/>
+        public ButtonTypeType ButtonType {
+            get {
+                return this.buttonTypeField;
+            }
+            set {
+                this.buttonTypeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ButtonTypeSpecified {
+            get {
+                return this.buttonTypeFieldSpecified;
+            }
+            set {
+                this.buttonTypeFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        public ButtonCodeType ButtonCode {
+            get {
+                return this.buttonCodeField;
+            }
+            set {
+                this.buttonCodeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ButtonCodeSpecified {
+            get {
+                return this.buttonCodeFieldSpecified;
+            }
+            set {
+                this.buttonCodeFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        public ButtonSubTypeType ButtonSubType {
+            get {
+                return this.buttonSubTypeField;
+            }
+            set {
+                this.buttonSubTypeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ButtonSubTypeSpecified {
+            get {
+                return this.buttonSubTypeFieldSpecified;
+            }
+            set {
+                this.buttonSubTypeFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("ButtonVar")]
+        public string[] ButtonVar {
+            get {
+                return this.buttonVarField;
+            }
+            set {
+                this.buttonVarField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("OptionDetails")]
+        public OptionDetailsType[] OptionDetails {
+            get {
+                return this.optionDetailsField;
+            }
+            set {
+                this.optionDetailsField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("TextBox")]
+        public string[] TextBox {
+            get {
+                return this.textBoxField;
+            }
+            set {
+                this.textBoxField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public ButtonImageType ButtonImage {
+            get {
+                return this.buttonImageField;
+            }
+            set {
+                this.buttonImageField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ButtonImageSpecified {
+            get {
+                return this.buttonImageFieldSpecified;
+            }
+            set {
+                this.buttonImageFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string ButtonImageURL {
+            get {
+                return this.buttonImageURLField;
+            }
+            set {
+                this.buttonImageURLField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public BuyNowTextType BuyNowText {
+            get {
+                return this.buyNowTextField;
+            }
+            set {
+                this.buyNowTextField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool BuyNowTextSpecified {
+            get {
+                return this.buyNowTextFieldSpecified;
+            }
+            set {
+                this.buyNowTextFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        public SubscribeTextType SubscribeText {
+            get {
+                return this.subscribeTextField;
+            }
+            set {
+                this.subscribeTextField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool SubscribeTextSpecified {
+            get {
+                return this.subscribeTextFieldSpecified;
+            }
+            set {
+                this.subscribeTextFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        public CountryCodeType ButtonCountry {
+            get {
+                return this.buttonCountryField;
+            }
+            set {
+                this.buttonCountryField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool ButtonCountrySpecified {
+            get {
+                return this.buttonCountryFieldSpecified;
+            }
+            set {
+                this.buttonCountryFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string ButtonLanguage {
+            get {
+                return this.buttonLanguageField;
+            }
+            set {
+                this.buttonLanguageField = value;
+            }
+        }
     }
     
     /// <remarks/>
@@ -16538,6 +20885,153 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
             }
             set {
                 this.getTransactionDetailsRequestField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="urn:ebay:api:PayPalAPI")]
+    public partial class BMCreateButtonReq {
+        
+        private BMCreateButtonRequestType bMCreateButtonRequestField;
+        
+        /// <remarks/>
+        public BMCreateButtonRequestType BMCreateButtonRequest {
+            get {
+                return this.bMCreateButtonRequestField;
+            }
+            set {
+                this.bMCreateButtonRequestField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="urn:ebay:api:PayPalAPI")]
+    public partial class BMUpdateButtonReq {
+        
+        private BMUpdateButtonRequestType bMUpdateButtonRequestField;
+        
+        /// <remarks/>
+        public BMUpdateButtonRequestType BMUpdateButtonRequest {
+            get {
+                return this.bMUpdateButtonRequestField;
+            }
+            set {
+                this.bMUpdateButtonRequestField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="urn:ebay:api:PayPalAPI")]
+    public partial class BMManageButtonStatusReq {
+        
+        private BMManageButtonStatusRequestType bMManageButtonStatusRequestField;
+        
+        /// <remarks/>
+        public BMManageButtonStatusRequestType BMManageButtonStatusRequest {
+            get {
+                return this.bMManageButtonStatusRequestField;
+            }
+            set {
+                this.bMManageButtonStatusRequestField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="urn:ebay:api:PayPalAPI")]
+    public partial class BMGetButtonDetailsReq {
+        
+        private BMGetButtonDetailsRequestType bMGetButtonDetailsRequestField;
+        
+        /// <remarks/>
+        public BMGetButtonDetailsRequestType BMGetButtonDetailsRequest {
+            get {
+                return this.bMGetButtonDetailsRequestField;
+            }
+            set {
+                this.bMGetButtonDetailsRequestField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="urn:ebay:api:PayPalAPI")]
+    public partial class BMSetInventoryReq {
+        
+        private BMSetInventoryRequestType bMSetInventoryRequestField;
+        
+        /// <remarks/>
+        public BMSetInventoryRequestType BMSetInventoryRequest {
+            get {
+                return this.bMSetInventoryRequestField;
+            }
+            set {
+                this.bMSetInventoryRequestField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="urn:ebay:api:PayPalAPI")]
+    public partial class BMGetInventoryReq {
+        
+        private BMGetInventoryRequestType bMGetInventoryRequestField;
+        
+        /// <remarks/>
+        public BMGetInventoryRequestType BMGetInventoryRequest {
+            get {
+                return this.bMGetInventoryRequestField;
+            }
+            set {
+                this.bMGetInventoryRequestField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="urn:ebay:api:PayPalAPI")]
+    public partial class BMButtonSearchReq {
+        
+        private BMButtonSearchRequestType bMButtonSearchRequestField;
+        
+        /// <remarks/>
+        public BMButtonSearchRequestType BMButtonSearchRequest {
+            get {
+                return this.bMButtonSearchRequestField;
+            }
+            set {
+                this.bMButtonSearchRequestField = value;
             }
         }
     }
@@ -16790,6 +21284,27 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
             }
             set {
                 this.getBalanceRequestField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="urn:ebay:api:PayPalAPI")]
+    public partial class GetPalDetailsReq {
+        
+        private GetPalDetailsRequestType getPalDetailsRequestField;
+        
+        /// <remarks/>
+        public GetPalDetailsRequestType GetPalDetailsRequest {
+            get {
+                return this.getPalDetailsRequestField;
+            }
+            set {
+                this.getPalDetailsRequestField = value;
             }
         }
     }
@@ -17341,6 +21856,27 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
     }
     
     /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.1")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="urn:ebay:api:PayPalAPI")]
+    public partial class ReverseTransactionReq {
+        
+        private ReverseTransactionRequestType reverseTransactionRequestField;
+        
+        /// <remarks/>
+        public ReverseTransactionRequestType ReverseTransactionRequest {
+            get {
+                return this.reverseTransactionRequestField;
+            }
+            set {
+                this.reverseTransactionRequestField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.0.30319.1")]
     public delegate void RefundTransactionCompletedEventHandler(object sender, RefundTransactionCompletedEventArgs e);
     
@@ -17388,6 +21924,188 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
             get {
                 this.RaiseExceptionIfNecessary();
                 return ((GetTransactionDetailsResponseType)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.0.30319.1")]
+    public delegate void BMCreateButtonCompletedEventHandler(object sender, BMCreateButtonCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.0.30319.1")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class BMCreateButtonCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal BMCreateButtonCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public BMCreateButtonResponseType Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((BMCreateButtonResponseType)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.0.30319.1")]
+    public delegate void BMUpdateButtonCompletedEventHandler(object sender, BMUpdateButtonCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.0.30319.1")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class BMUpdateButtonCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal BMUpdateButtonCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public BMUpdateButtonResponseType Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((BMUpdateButtonResponseType)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.0.30319.1")]
+    public delegate void BMManageButtonStatusCompletedEventHandler(object sender, BMManageButtonStatusCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.0.30319.1")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class BMManageButtonStatusCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal BMManageButtonStatusCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public BMManageButtonStatusResponseType Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((BMManageButtonStatusResponseType)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.0.30319.1")]
+    public delegate void BMGetButtonDetailsCompletedEventHandler(object sender, BMGetButtonDetailsCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.0.30319.1")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class BMGetButtonDetailsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal BMGetButtonDetailsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public BMGetButtonDetailsResponseType Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((BMGetButtonDetailsResponseType)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.0.30319.1")]
+    public delegate void BMSetInventoryCompletedEventHandler(object sender, BMSetInventoryCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.0.30319.1")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class BMSetInventoryCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal BMSetInventoryCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public BMSetInventoryResponseType Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((BMSetInventoryResponseType)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.0.30319.1")]
+    public delegate void BMGetInventoryCompletedEventHandler(object sender, BMGetInventoryCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.0.30319.1")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class BMGetInventoryCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal BMGetInventoryCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public BMGetInventoryResponseType Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((BMGetInventoryResponseType)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.0.30319.1")]
+    public delegate void BMButtonSearchCompletedEventHandler(object sender, BMButtonSearchCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.0.30319.1")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class BMButtonSearchCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal BMButtonSearchCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public BMButtonSearchResponseType Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((BMButtonSearchResponseType)(this.results[0]));
             }
         }
     }
@@ -17700,6 +22418,32 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
             get {
                 this.RaiseExceptionIfNecessary();
                 return ((GetBalanceResponseType)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.0.30319.1")]
+    public delegate void GetPalDetailsCompletedEventHandler(object sender, GetPalDetailsCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.0.30319.1")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class GetPalDetailsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal GetPalDetailsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public GetPalDetailsResponseType Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((GetPalDetailsResponseType)(this.results[0]));
             }
         }
     }
@@ -18376,6 +23120,32 @@ namespace NopSolutions.NopCommerce.Payment.Methods.PayPal.PayPalSvc {
             get {
                 this.RaiseExceptionIfNecessary();
                 return ((UpdateRecurringPaymentsProfileResponseType)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.0.30319.1")]
+    public delegate void ReverseTransactionCompletedEventHandler(object sender, ReverseTransactionCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.0.30319.1")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class ReverseTransactionCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal ReverseTransactionCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public ReverseTransactionResponseType Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((ReverseTransactionResponseType)(this.results[0]));
             }
         }
     }

@@ -1,10 +1,715 @@
 <?xml version="1.0" encoding="utf-8"?>
-<wsdl:definitions xmlns:ebl="urn:ebay:apis:eBLBaseComponents" xmlns:cc="urn:ebay:apis:CoreComponentTypes" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:ns="urn:ebay:api:PayPalAPI" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ns:version="54.0" targetNamespace="urn:ebay:api:PayPalAPI" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+<wsdl:definitions xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:ed="urn:ebay:apis:EnhancedDataTypes" xmlns:ebl="urn:ebay:apis:eBLBaseComponents" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:cc="urn:ebay:apis:CoreComponentTypes" xmlns:ns="urn:ebay:api:PayPalAPI" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ns:version="63.0" targetNamespace="urn:ebay:api:PayPalAPI" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsdl:types>
     <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="urn:ebay:api:PayPalAPI">
       <xsd:import schemaLocation="CoreComponentTypes.xsd" namespace="urn:ebay:apis:CoreComponentTypes" />
       <xsd:import schemaLocation="eBLBaseComponents.xsd" namespace="urn:ebay:apis:eBLBaseComponents" />
+      <xsd:import schemaLocation="EnhancedDataTypes.xsd" namespace="urn:ebay:apis:EnhancedDataTypes" />
       <xsd:element name="RequesterCredentials" type="ebl:CustomSecurityHeaderType" />
+      <xsd:complexType name="InstallmentDetailsType">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="1" name="BillingPeriod" type="ebl:BillingPeriodType">
+            <xsd:annotation>
+              <xsd:documentation>
+							Installment Period.
+								<br /><b>Optional</b><br /></xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element minOccurs="0" maxOccurs="1" name="BillingFrequency" type="xsd:int">
+            <xsd:annotation>
+              <xsd:documentation>
+							Installment Frequency.
+								<br /><b>Optional</b><br /></xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element minOccurs="0" maxOccurs="1" name="TotalBillingCycles" type="xsd:int">
+            <xsd:annotation>
+              <xsd:documentation>
+							Installment Cycles.
+								<br /><b>Optional</b><br /></xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element minOccurs="0" maxOccurs="1" name="Amount" type="xsd:string">
+            <xsd:annotation>
+              <xsd:documentation>
+							Installment Amount.
+								<br /><b>Optional</b><br /></xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element minOccurs="0" maxOccurs="1" name="ShippingAmount" type="xsd:string">
+            <xsd:annotation>
+              <xsd:documentation>
+							Installment Amount.
+								<br /><b>Optional</b><br /></xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element minOccurs="0" maxOccurs="1" name="TaxAmount" type="xsd:string">
+            <xsd:annotation>
+              <xsd:documentation>
+							Installment Amount.
+								<br /><b>Optional</b><br /></xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="OptionSelectionDetailsType">
+        <xsd:sequence>
+          <xsd:element minOccurs="1" maxOccurs="1" name="OptionSelection" type="xsd:string">
+            <xsd:annotation>
+              <xsd:documentation>
+								Option Selection.
+								<br /><b>Required</b><br />
+								Character length and limitations: 12 single-byte alphanumeric characters
+							</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element minOccurs="0" maxOccurs="1" name="Price" type="xsd:string">
+            <xsd:annotation>
+              <xsd:documentation>
+								Option Price.
+								<br /><b>Optional</b><br /></xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element minOccurs="0" maxOccurs="1" name="OptionType" type="ebl:OptionTypeListType">
+            <xsd:annotation>
+              <xsd:documentation>
+								Option Type
+								<br /><b>Optional</b><br /></xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element minOccurs="0" maxOccurs="10" name="PaymentPeriod" type="ns:InstallmentDetailsType" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="OptionDetailsType">
+        <xsd:sequence>
+          <xsd:element minOccurs="1" maxOccurs="1" name="OptionName" type="xsd:string">
+            <xsd:annotation>
+              <xsd:documentation>
+								Option Name.
+								<br /><b>Optional</b><br /></xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element minOccurs="0" maxOccurs="100" name="OptionSelectionDetails" type="ns:OptionSelectionDetailsType" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="BMCreateButtonRequest" type="ns:BMCreateButtonRequestType" />
+      <xsd:element name="BMCreateButtonResponse" type="ns:BMCreateButtonResponseType" />
+      <xsd:element name="BMCreateButtonReq">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element ref="ns:BMCreateButtonRequest" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="BMCreateButtonRequestType">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="ebl:AbstractRequestType">
+            <xsd:sequence>
+              <xsd:element minOccurs="0" maxOccurs="1" name="ButtonType" type="ebl:ButtonTypeType">
+                <xsd:annotation>
+                  <xsd:documentation>
+										Type of Button to create.
+										<br /><br /><b>Required</b><br /><br />
+						Must be one of the following: BUYNOW, CART, GIFTCERTIFICATE. SUBSCRIBE, PAYMENTPLAN, AUTOBILLING, DONATE, VIEWCART or UNSUBSCRIBE
+									</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element minOccurs="0" maxOccurs="1" name="ButtonCode" type="ebl:ButtonCodeType">
+                <xsd:annotation>
+                  <xsd:documentation>
+										button code.
+										<br /><br /><b>optional</b><br /><br />
+						Must be one of the following: hosted, encrypted or cleartext
+									</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element minOccurs="0" maxOccurs="1" name="ButtonSubType" type="ebl:ButtonSubTypeType">
+                <xsd:annotation>
+                  <xsd:documentation>
+										Button sub type.
+										<br /><br /><b>optional for button types buynow and cart only</b><br /><br />
+						Must Be either PRODUCTS or SERVICES
+									</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element minOccurs="0" maxOccurs="1000" name="ButtonVar" type="xsd:string">
+                <xsd:annotation>
+                  <xsd:documentation>
+										Button Variable information
+										<br /><br /><b>At least one required recurring</b><br /><br />
+						Character length and limitations: 63 single-byte alphanumeric characters
+									</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element minOccurs="0" maxOccurs="5" name="OptionDetails" type="ns:OptionDetailsType" />
+              <xsd:element minOccurs="0" maxOccurs="2" name="TextBox" type="xsd:string">
+                <xsd:annotation>
+                  <xsd:documentation>
+										Details of each option for the button.
+										<br /><br /><b>Optional</b><br /></xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element minOccurs="0" maxOccurs="1" name="ButtonImage" type="ebl:ButtonImageType">
+                <xsd:annotation>
+                  <xsd:documentation>
+										Button image to use.
+										<br /><br /><b>Optional</b><br /><br />
+						Must be one of: REG, SML, or CC
+									</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element minOccurs="0" maxOccurs="1" name="ButtonImageURL" type="xsd:string">
+                <xsd:annotation>
+                  <xsd:documentation>
+										Button URL for custom button image.
+										<br /><br /><b>Optional</b><br /><br />
+						Character length and limitations: 127 single-byte alphanumeric characters
+									</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element minOccurs="0" maxOccurs="1" name="BuyNowText" type="ebl:BuyNowTextType">
+                <xsd:annotation>
+                  <xsd:documentation>
+										Text to use on Buy Now Button.
+										<br /><br /><b>Optional</b><br /><br />
+						Must be either BUYNOW or PAYNOW
+									</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element minOccurs="0" maxOccurs="1" name="SubscribeText" type="ebl:SubscribeTextType">
+                <xsd:annotation>
+                  <xsd:documentation>
+										Text to use on Subscribe button.
+										<br /><br /><b>Optional</b><br /><br />
+						Must be either BUYNOW or SUBSCRIBE
+									</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element minOccurs="0" maxOccurs="1" name="ButtonCountry" type="ebl:CountryCodeType">
+                <xsd:annotation>
+                  <xsd:documentation>
+										Button Country.
+										<br /><br /><b>Optional</b><br /><br />
+						Must be valid ISO country code
+									</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element minOccurs="0" maxOccurs="1" name="ButtonLanguage" type="xsd:string">
+                <xsd:annotation>
+                  <xsd:documentation>
+										Button language code.
+										<br /><br /><b>Optional</b><br /><br />
+						Character length and limitations: 3 single-byte alphanumeric characters
+									</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="BMCreateButtonResponseType">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="ebl:AbstractResponseType">
+            <xsd:sequence>
+              <xsd:element minOccurs="1" maxOccurs="1" name="Website" type="xsd:string" />
+              <xsd:element minOccurs="0" maxOccurs="1" name="Email" type="xsd:string" />
+              <xsd:element minOccurs="0" maxOccurs="1" name="Mobile" type="xsd:string" />
+              <xsd:element minOccurs="0" maxOccurs="1" name="HostedButtonID" type="xsd:string" />
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:element name="BMUpdateButtonRequest" type="ns:BMUpdateButtonRequestType" />
+      <xsd:element name="BMUpdateButtonResponse" type="ns:BMUpdateButtonResponseType" />
+      <xsd:element name="BMUpdateButtonReq">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element ref="ns:BMUpdateButtonRequest" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="BMUpdateButtonRequestType">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="ebl:AbstractRequestType">
+            <xsd:sequence>
+              <xsd:element minOccurs="1" maxOccurs="1" name="HostedButtonID" type="xsd:string">
+                <xsd:annotation>
+                  <xsd:documentation>
+										Hosted Button id of the button to update.
+										<br /><br /><b>Required</b><br /><br />
+					Character length and limitations: 10 single-byte numeric characters
+									</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element minOccurs="0" maxOccurs="1" name="ButtonType" type="ebl:ButtonTypeType">
+                <xsd:annotation>
+                  <xsd:documentation>
+										Type of Button to create.
+										<br /><br /><b>Required</b><br /><br />
+						Must be one of the following: BUYNOW, CART, GIFTCERTIFICATE. SUBSCRIBE, PAYMENTPLAN, AUTOBILLING, DONATE, VIEWCART or UNSUBSCRIBE
+									</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element minOccurs="0" maxOccurs="1" name="ButtonCode" type="ebl:ButtonCodeType">
+                <xsd:annotation>
+                  <xsd:documentation>
+										button code.
+										<br /><br /><b>optional</b><br /><br />
+						Must be one of the following: hosted, encrypted or cleartext
+									</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element minOccurs="0" maxOccurs="1" name="ButtonSubType" type="ebl:ButtonSubTypeType">
+                <xsd:annotation>
+                  <xsd:documentation>
+										Button sub type.
+										<br /><br /><b>optional for button types buynow and cart only</b><br /><br />
+						Must Be either PRODUCTS or SERVICES
+									</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element minOccurs="0" maxOccurs="1000" name="ButtonVar" type="xsd:string">
+                <xsd:annotation>
+                  <xsd:documentation>
+										Button Variable information
+										<br /><br /><b>At least one required recurring</b><br /><br />
+						Character length and limitations: 63 single-byte alphanumeric characters
+									</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element minOccurs="0" maxOccurs="5" name="OptionDetails" type="ns:OptionDetailsType" />
+              <xsd:element minOccurs="0" maxOccurs="2" name="TextBox" type="xsd:string">
+                <xsd:annotation>
+                  <xsd:documentation>
+										Details of each option for the button.
+										<br /><br /><b>Optional</b><br /></xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element minOccurs="0" maxOccurs="1" name="ButtonImage" type="ebl:ButtonImageType">
+                <xsd:annotation>
+                  <xsd:documentation>
+										Button image to use.
+										<br /><br /><b>Optional</b><br /><br />
+						Must be one of: REG, SML, or CC
+									</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element minOccurs="0" maxOccurs="1" name="ButtonImageURL" type="xsd:string">
+                <xsd:annotation>
+                  <xsd:documentation>
+										Button URL for custom button image.
+										<br /><br /><b>Optional</b><br /><br />
+						Character length and limitations: 127 single-byte alphanumeric characters
+									</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element minOccurs="0" maxOccurs="1" name="BuyNowText" type="ebl:BuyNowTextType">
+                <xsd:annotation>
+                  <xsd:documentation>
+										Text to use on Buy Now Button.
+										<br /><br /><b>Optional</b><br /><br />
+						Must be either BUYNOW or PAYNOW
+									</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element minOccurs="0" maxOccurs="1" name="SubscribeText" type="ebl:SubscribeTextType">
+                <xsd:annotation>
+                  <xsd:documentation>
+										Text to use on Subscribe button.
+										<br /><br /><b>Optional</b><br /><br />
+						Must be either BUYNOW or SUBSCRIBE
+									</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element minOccurs="0" maxOccurs="1" name="ButtonCountry" type="ebl:CountryCodeType">
+                <xsd:annotation>
+                  <xsd:documentation>
+										Button Country.
+										<br /><br /><b>Optional</b><br /><br />
+						Must be valid ISO country code
+									</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element minOccurs="0" maxOccurs="1" name="ButtonLanguage" type="xsd:string">
+                <xsd:annotation>
+                  <xsd:documentation>
+										Button language code.
+										<br /><br /><b>Optional</b><br /><br />
+						Character length and limitations: 2 single-byte alphanumeric characters
+									</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="BMUpdateButtonResponseType">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="ebl:AbstractResponseType">
+            <xsd:sequence>
+              <xsd:element minOccurs="1" maxOccurs="1" name="Website" type="xsd:string" />
+              <xsd:element minOccurs="0" maxOccurs="1" name="Email" type="xsd:string" />
+              <xsd:element minOccurs="0" maxOccurs="1" name="Mobile" type="xsd:string" />
+              <xsd:element minOccurs="0" maxOccurs="1" name="HostedButtonID" type="xsd:string" />
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:element name="BMManageButtonStatusRequest" type="ns:BMManageButtonStatusRequestType" />
+      <xsd:element name="BMManageButtonStatusResponse" type="ns:BMManageButtonStatusResponseType" />
+      <xsd:element name="BMManageButtonStatusReq">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element ref="ns:BMManageButtonStatusRequest" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="BMManageButtonStatusRequestType">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="ebl:AbstractRequestType">
+            <xsd:sequence>
+              <xsd:element minOccurs="0" maxOccurs="1" name="HostedButtonID" type="xsd:string">
+                <xsd:annotation>
+                  <xsd:documentation>
+										Button ID of Hosted button.
+										<br /><br /><b>Required</b><br /><br />
+				Character length and limitations: 10 single-byte numeric characters
+									</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element minOccurs="0" maxOccurs="1" name="ButtonStatus" type="ebl:ButtonStatusType">
+                <xsd:annotation>
+                  <xsd:documentation>
+										Requested Status change for hosted button.
+										<br /><br /><b>Required</b><br /><br />
+				Character length and limitations: 1 single-byte alphanumeric characters
+									</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="BMManageButtonStatusResponseType">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="ebl:AbstractResponseType" />
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:element name="BMGetButtonDetailsRequest" type="ns:BMGetButtonDetailsRequestType" />
+      <xsd:element name="BMGetButtonDetailsResponse" type="ns:BMGetButtonDetailsResponseType" />
+      <xsd:element name="BMGetButtonDetailsReq">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element ref="ns:BMGetButtonDetailsRequest" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="BMGetButtonDetailsRequestType">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="ebl:AbstractRequestType">
+            <xsd:sequence>
+              <xsd:element minOccurs="1" maxOccurs="1" name="HostedButtonID" type="xsd:string">
+                <xsd:annotation>
+                  <xsd:documentation>
+										Button ID of button to return.
+										<br /><br /><b>Required</b><br /><br />
+				Character length and limitations: 10 single-byte numeric characters
+									</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="BMGetButtonDetailsResponseType">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="ebl:AbstractResponseType">
+            <xsd:sequence>
+              <xsd:element minOccurs="0" maxOccurs="1" name="Website" type="xsd:string" />
+              <xsd:element minOccurs="0" maxOccurs="1" name="Email" type="xsd:string" />
+              <xsd:element minOccurs="0" maxOccurs="1" name="Mobile" type="xsd:string" />
+              <xsd:element minOccurs="0" maxOccurs="1" name="HostedButtonID" type="xsd:string" />
+              <xsd:element minOccurs="0" maxOccurs="1" name="ButtonType" type="ebl:ButtonTypeType">
+                <xsd:annotation>
+                  <xsd:documentation>
+                                                                                Type of button.
+                                                                                <br /><br />
+                                                                                One of the following: BUYNOW, CART, GIFTCERTIFICATE. SUBSCRIBE, PAYMENTPLAN, AUTOBILLING, DONATE, VIEWCART or UNSUBSCRIBE
+                                                                        </xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element minOccurs="0" maxOccurs="1" name="ButtonCode" type="ebl:ButtonCodeType">
+                <xsd:annotation>
+                  <xsd:documentation>
+                                                                                Type of button code.
+                                                                                <br /><br />
+                                                                                One of the following: hosted, encrypted or cleartext
+                                                                        </xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element minOccurs="0" maxOccurs="1" name="ButtonSubType" type="ebl:ButtonSubTypeType">
+                <xsd:annotation>
+                  <xsd:documentation>
+                                                                                Button sub type.
+                                                                                <br /><br /><b>optional for button types buynow and cart only</b><br /><br />
+                                                                                Either PRODUCTS or SERVICES
+                                                                        </xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element minOccurs="0" maxOccurs="1000" name="ButtonVar" type="xsd:string">
+                <xsd:annotation>
+                  <xsd:documentation>
+                                                                                Button Variable information
+                                                                                <br /><br />
+                                                                                Character length and limitations: 63 single-byte alphanumeric characters
+                                                                        </xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element minOccurs="0" maxOccurs="5" name="OptionDetails" type="ns:OptionDetailsType" />
+              <xsd:element minOccurs="0" maxOccurs="2" name="TextBox" type="xsd:string">
+                <xsd:annotation>
+                  <xsd:documentation>
+                                                                                Text field
+                                                                                <br /><br /></xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element minOccurs="0" maxOccurs="1" name="ButtonImage" type="ebl:ButtonImageType">
+                <xsd:annotation>
+                  <xsd:documentation>
+                                                                                Button image to use.
+                                                                                <br /><br />
+                                                                                One of: REG, SML, or CC
+                                                                        </xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element minOccurs="0" maxOccurs="1" name="ButtonImageURL" type="xsd:string">
+                <xsd:annotation>
+                  <xsd:documentation>
+                                                                                Button URL for custom button image.
+                                                                                <br /><br /></xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element minOccurs="0" maxOccurs="1" name="BuyNowText" type="ebl:BuyNowTextType">
+                <xsd:annotation>
+                  <xsd:documentation>
+                                                                                Text to use on Buy Now Button.
+                                                                                <br /><br />
+                                                                                Either BUYNOW or PAYNOW
+                                                                        </xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element minOccurs="0" maxOccurs="1" name="SubscribeText" type="ebl:SubscribeTextType">
+                <xsd:annotation>
+                  <xsd:documentation>
+                                                                                Text to use on Subscribe button.
+                                                                                <br /><br />
+                                                                                Must be either BUYNOW or SUBSCRIBE
+                                                                        </xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element minOccurs="0" maxOccurs="1" name="ButtonCountry" type="ebl:CountryCodeType">
+                <xsd:annotation>
+                  <xsd:documentation>
+                                                                                Button Country.
+                                                                                <br /><br />
+                                                                                Valid ISO country code or 'International'
+                                                                        </xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element minOccurs="0" maxOccurs="1" name="ButtonLanguage" type="xsd:string">
+                <xsd:annotation>
+                  <xsd:documentation>
+                                                                                Button language code.
+                                                                                <br /><br />
+                                                                                Character length and limitations: 3 single-byte alphanumeric characters
+                                                                        </xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:element name="BMSetInventoryRequest" type="ns:BMSetInventoryRequestType" />
+      <xsd:element name="BMSetInventoryResponse" type="ns:BMSetInventoryResponseType" />
+      <xsd:element name="BMSetInventoryReq">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element ref="ns:BMSetInventoryRequest" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="BMSetInventoryRequestType">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="ebl:AbstractRequestType">
+            <xsd:sequence>
+              <xsd:element minOccurs="1" maxOccurs="1" name="HostedButtonID" type="xsd:string">
+                <xsd:annotation>
+                  <xsd:documentation>
+										Hosted Button ID of button you wish to change.
+										<br /><br /><b>Required</b><br /><br />
+				Character length and limitations: 10 single-byte numeric characters
+									</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element minOccurs="1" maxOccurs="1" name="TrackInv" type="xsd:string">
+                <xsd:annotation>
+                  <xsd:documentation>
+										Is Inventory tracked.
+										<br /><br /><b>Required</b><br /><br />
+				0 or 1
+									</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element minOccurs="1" maxOccurs="1" name="TrackPnl" type="xsd:string">
+                <xsd:annotation>
+                  <xsd:documentation>
+										Is PNL Tracked.
+										<br /><br /><b>Required</b><br /><br />
+				0 or 1
+									</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element minOccurs="0" maxOccurs="1" ref="ebl:ItemTrackingDetails" />
+              <xsd:element minOccurs="0" maxOccurs="1" name="OptionIndex" type="xsd:string">
+                <xsd:annotation>
+                  <xsd:documentation>
+										Option Index.
+										<br /><br /><b>Optional</b><br /><br />
+				Character length and limitations: 1 single-byte alphanumeric characters
+									</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element minOccurs="0" maxOccurs="10" ref="ebl:OptionTrackingDetails" />
+              <xsd:element minOccurs="0" maxOccurs="1" name="SoldoutURL" type="xsd:string">
+                <xsd:annotation>
+                  <xsd:documentation>
+										URL of page to display when an item is soldout.
+										<br /><br /><b>Optional</b><br /><br />
+				Character length and limitations: 127 single-byte alphanumeric characters
+									</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element minOccurs="0" maxOccurs="1" name="ReuseDigitalDownloadKeys" type="xsd:string">
+                <xsd:annotation>
+                  <xsd:documentation>
+										Whether to use the same digital download key repeatedly.
+										<br /><br /><b>Optional</b></xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element minOccurs="0" maxOccurs="1" name="AppendDigitalDownloadKeys" type="xsd:string">
+                <xsd:annotation>
+                  <xsd:documentation>
+										Whether to append these keys to the list or not (replace).
+										<br /><br /><b>Optional</b></xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element minOccurs="0" maxOccurs="1000" name="DigitalDownloadKeys" type="xsd:string">
+                <xsd:annotation>
+                  <xsd:documentation>
+										Zero or more digital download keys to distribute to customers after transaction is completed.
+										<br /><br /><b>Optional</b><br /><br />
+				Character length and limitations: 1000 single-byte alphanumeric characters
+									</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="BMSetInventoryResponseType">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="ebl:AbstractResponseType">
+            <xsd:sequence>
+              <xsd:element name="TransactionID" type="xsd:string" />
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:element name="BMGetInventoryRequest" type="ns:BMGetInventoryRequestType" />
+      <xsd:element name="BMGetInventoryResponse" type="ns:BMGetInventoryResponseType" />
+      <xsd:element name="BMGetInventoryReq">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element ref="ns:BMGetInventoryRequest" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="BMGetInventoryRequestType">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="ebl:AbstractRequestType">
+            <xsd:sequence>
+              <xsd:element minOccurs="1" maxOccurs="1" name="HostedButtonID" type="xsd:string">
+                <xsd:annotation>
+                  <xsd:documentation>
+										Hosted Button ID of the button to return inventory for.
+										<br /><br /><b>Required</b><br /><br />
+				Character length and limitations: 10 single-byte numeric characters
+									</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="BMGetInventoryResponseType">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="ebl:AbstractResponseType">
+            <xsd:sequence>
+              <xsd:element minOccurs="1" maxOccurs="1" name="HostedButtonID" type="xsd:string" />
+              <xsd:element minOccurs="1" maxOccurs="1" name="TrackInv" type="xsd:string" />
+              <xsd:element minOccurs="1" maxOccurs="1" name="TrackPnl" type="xsd:string" />
+              <xsd:element minOccurs="0" maxOccurs="1" ref="ebl:ItemTrackingDetails" />
+              <xsd:element minOccurs="0" maxOccurs="1" name="OptionIndex" type="xsd:string" />
+              <xsd:element minOccurs="0" maxOccurs="1" name="OptionName" type="xsd:string" />
+              <xsd:element minOccurs="0" maxOccurs="10" ref="ebl:OptionTrackingDetails" />
+              <xsd:element minOccurs="0" maxOccurs="1" name="SoldoutURL" type="xsd:string" />
+              <xsd:element minOccurs="0" maxOccurs="1000" name="DigitalDownloadKeys" type="xsd:string" />
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:element name="BMButtonSearchRequest" type="ns:BMButtonSearchRequestType" />
+      <xsd:element name="BMButtonSearchResponse" type="ns:BMButtonSearchResponseType" />
+      <xsd:element name="BMButtonSearchReq">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element ref="ns:BMButtonSearchRequest" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="BMButtonSearchRequestType">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="ebl:AbstractRequestType">
+            <xsd:sequence>
+              <xsd:element minOccurs="0" maxOccurs="1" name="StartDate" type="xsd:dateTime">
+                <xsd:annotation>
+                  <xsd:documentation>
+										The earliest transaction date at which to start the search. No wildcards are allowed. 
+										<br /><br /><b>Required</b></xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element minOccurs="0" maxOccurs="1" name="EndDate" type="xsd:dateTime">
+                <xsd:annotation>
+                  <xsd:documentation>
+										The latest transaction date to be included in the search 
+										<br /><br />
+										Optional
+									</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="BMButtonSearchResponseType">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="ebl:AbstractResponseType">
+            <xsd:sequence>
+              <xsd:element minOccurs="0" maxOccurs="100" ref="ebl:ButtonSearchResult" />
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
       <xsd:element name="RefundTransactionRequest" type="ns:RefundTransactionRequestType" />
       <xsd:element name="RefundTransactionResponse" type="ns:RefundTransactionResponseType" />
       <xsd:element name="RefundTransactionReq">
@@ -24,6 +729,12 @@
 <br /><br /><b>Required</b><br /><br />
 Character length and limitations: 17 single-byte alphanumeric characters 
 </xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
+              <xsd:element minOccurs="0" maxOccurs="1" name="InvoiceID" type="xsd:string">
+                <xsd:annotation>
+                  <xsd:documentation>Invoice number corresponding to transaction details for tracking the refund of a payment. This parameter is passed by the merchant or recipient while refunding the transaction. This parameter does not affect the business logic, it is persisted in the DB for transaction reference
+										<br /><b>Optional</b></xsd:documentation>
                 </xsd:annotation>
               </xsd:element>
               <xsd:element minOccurs="0" maxOccurs="1" name="RefundType" type="ebl:RefundType">
@@ -85,6 +796,11 @@ Character length and limitations:17 single-byte characters
                   <xsd:documentation>Amount of money refunded to original payer </xsd:documentation>
                 </xsd:annotation>
               </xsd:element>
+              <xsd:element minOccurs="0" maxOccurs="1" name="TotalRefundedAmount" type="cc:BasicAmountType">
+                <xsd:annotation>
+                  <xsd:documentation>Total of all previous refunds</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
             </xsd:sequence>
           </xsd:extension>
         </xsd:complexContent>
@@ -121,6 +837,7 @@ Character length and limitations: 17 single-byte alphanumeric characters
           <xsd:extension base="ebl:AbstractResponseType">
             <xsd:sequence>
               <xsd:element ref="ebl:PaymentTransactionDetails" />
+              <xsd:element ref="ebl:ThreeDSecureDetails" />
             </xsd:sequence>
           </xsd:extension>
         </xsd:complexContent>
@@ -399,6 +1116,16 @@ Character length and limitations: 255 single-byte alphanumeric characters
 </xsd:documentation>
                 </xsd:annotation>
               </xsd:element>
+              <xsd:element minOccurs="0" maxOccurs="1" name="ButtonSource" type="xsd:string">
+                <xsd:annotation>
+                  <xsd:documentation>Known as BN code, to track the partner referred merchant transactions. 
+<br /><br />
+Optional
+<br /><br />
+Character length and limitations: 32 single-byte alphanumeric characters
+</xsd:documentation>
+                </xsd:annotation>
+              </xsd:element>
               <xsd:element minOccurs="1" maxOccurs="250" name="MassPayItem" type="ns:MassPayRequestItemType">
                 <xsd:annotation>
                   <xsd:documentation>Details of each payment. A single MassPayRequest can include up to 250 MassPayItems. 
@@ -655,7 +1382,7 @@ Use this token with the GetBoarding Details API call.
 <br /><br />
 Character length and limitations: 64 alphanumeric characters. The token has the following format:
 <br /><br />
-OB-61characterString</xsd:documentation>
+OB-61characterstring</xsd:documentation>
                 </xsd:annotation>
               </xsd:element>
             </xsd:sequence>
@@ -682,7 +1409,7 @@ OB-61characterString</xsd:documentation>
 <br /><br /><b>Required</b><br /><br />
 Character length and limitations: 64 alphanumeric characters. The token has the following format:
 <br /><br />
-OB-61characterString</xsd:documentation>
+OB-61characterstring</xsd:documentation>
                 </xsd:annotation>
               </xsd:element>
             </xsd:sequence>
@@ -1084,12 +1811,21 @@ Character length and limitations: 20 single-byte characters
                 </xsd:annotation>
               </xsd:element>
               <xsd:element minOccurs="0" name="PendingReason" type="ebl:PendingStatusCodeType">
-                <xsd:annotation />
+                <xsd:annotation>
+                  <xsd:documentation>
+							The reason why a particular transaction went in pending.
+							</xsd:documentation>
+                </xsd:annotation>
               </xsd:element>
               <xsd:element minOccurs="0" name="PaymentStatus" type="ebl:PaymentStatusCodeType">
-                <xsd:annotation />
+                <xsd:annotation>
+                  <xsd:documentation>
+							This will identify the actual transaction status.
+							</xsd:documentation>
+                </xsd:annotation>
               </xsd:element>
               <xsd:element minOccurs="0" maxOccurs="1" name="FMFDetails" type="ebl:FMFDetailsType" />
+              <xsd:element minOccurs="0" maxOccurs="1" name="ThreeDSecureResponse" type="ebl:ThreeDSecureResponseType" />
             </xsd:sequence>
           </xsd:extension>
         </xsd:complexContent>
@@ -1226,6 +1962,7 @@ Limitations: Must not exceed $10,000 USD in any currency. No currency symbol. De
 </xsd:documentation>
                 </xsd:annotation>
               </xsd:element>
+              <xsd:element minOccurs="0" maxOccurs="1" ref="ebl:AuthorizationInfo" />
             </xsd:sequence>
           </xsd:extension>
         </xsd:complexContent>
@@ -1341,6 +2078,7 @@ Character length and limits: 19 single-byte characters
 </xsd:documentation>
                 </xsd:annotation>
               </xsd:element>
+              <xsd:element minOccurs="0" maxOccurs="1" ref="ebl:AuthorizationInfo" />
             </xsd:sequence>
           </xsd:extension>
         </xsd:complexContent>
@@ -1867,6 +2605,59 @@ Character length and limitations: 20 single-byte characters
           </xsd:extension>
         </xsd:complexContent>
       </xsd:complexType>
+      <xsd:element name="GetPalDetailsRequest" type="ns:GetPalDetailsRequestType" />
+      <xsd:element name="GetPalDetailsResponse" type="ns:GetPalDetailsResponseType" />
+      <xsd:element name="GetPalDetailsReq">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element ref="ns:GetPalDetailsRequest" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="GetPalDetailsRequestType">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="ebl:AbstractRequestType">
+            <xsd:sequence />
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="GetPalDetailsResponseType">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="ebl:AbstractResponseType">
+            <xsd:sequence>
+              <xsd:element minOccurs="1" maxOccurs="1" name="Pal" type="xsd:string" />
+              <xsd:element minOccurs="1" maxOccurs="1" name="Locale" type="xsd:string" />
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:element name="ReverseTransactionRequest" type="ns:ReverseTransactionRequestType" />
+      <xsd:element name="ReverseTransactionResponse" type="ns:ReverseTransactionResponseType" />
+      <xsd:element name="ReverseTransactionReq">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element ref="ns:ReverseTransactionRequest" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="ReverseTransactionRequestType">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="ebl:AbstractRequestType">
+            <xsd:sequence>
+              <xsd:element minOccurs="1" maxOccurs="1" ref="ebl:ReverseTransactionRequestDetails" />
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ReverseTransactionResponseType">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="ebl:AbstractResponseType">
+            <xsd:sequence>
+              <xsd:element minOccurs="1" maxOccurs="1" ref="ebl:ReverseTransactionResponseDetails" />
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="RequesterCredentials">
@@ -1883,6 +2674,48 @@ Character length and limitations: 20 single-byte characters
   </wsdl:message>
   <wsdl:message name="GetTransactionDetailsResponse">
     <wsdl:part name="GetTransactionDetailsResponse" element="ns:GetTransactionDetailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="BMCreateButtonRequest">
+    <wsdl:part name="BMCreateButtonRequest" element="ns:BMCreateButtonReq" />
+  </wsdl:message>
+  <wsdl:message name="BMCreateButtonResponse">
+    <wsdl:part name="BMCreateButtonResponse" element="ns:BMCreateButtonResponse" />
+  </wsdl:message>
+  <wsdl:message name="BMUpdateButtonRequest">
+    <wsdl:part name="BMUpdateButtonRequest" element="ns:BMUpdateButtonReq" />
+  </wsdl:message>
+  <wsdl:message name="BMUpdateButtonResponse">
+    <wsdl:part name="BMUpdateButtonResponse" element="ns:BMUpdateButtonResponse" />
+  </wsdl:message>
+  <wsdl:message name="BMManageButtonStatusRequest">
+    <wsdl:part name="BMManageButtonStatusRequest" element="ns:BMManageButtonStatusReq" />
+  </wsdl:message>
+  <wsdl:message name="BMManageButtonStatusResponse">
+    <wsdl:part name="BMManageButtonStatusResponse" element="ns:BMManageButtonStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="BMGetButtonDetailsRequest">
+    <wsdl:part name="BMGetButtonDetailsRequest" element="ns:BMGetButtonDetailsReq" />
+  </wsdl:message>
+  <wsdl:message name="BMGetButtonDetailsResponse">
+    <wsdl:part name="BMGetButtonDetailsResponse" element="ns:BMGetButtonDetailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="BMSetInventoryRequest">
+    <wsdl:part name="BMSetInventoryRequest" element="ns:BMSetInventoryReq" />
+  </wsdl:message>
+  <wsdl:message name="BMSetInventoryResponse">
+    <wsdl:part name="BMSetInventoryResponse" element="ns:BMSetInventoryResponse" />
+  </wsdl:message>
+  <wsdl:message name="BMGetInventoryRequest">
+    <wsdl:part name="BMGetInventoryRequest" element="ns:BMGetInventoryReq" />
+  </wsdl:message>
+  <wsdl:message name="BMGetInventoryResponse">
+    <wsdl:part name="BMGetInventoryResponse" element="ns:BMGetInventoryResponse" />
+  </wsdl:message>
+  <wsdl:message name="BMButtonSearchRequest">
+    <wsdl:part name="BMButtonSearchRequest" element="ns:BMButtonSearchReq" />
+  </wsdl:message>
+  <wsdl:message name="BMButtonSearchResponse">
+    <wsdl:part name="BMButtonSearchResponse" element="ns:BMButtonSearchResponse" />
   </wsdl:message>
   <wsdl:message name="BillUserRequest">
     <wsdl:part name="BillUserRequest" element="ns:BillUserReq" />
@@ -2082,6 +2915,12 @@ Character length and limitations: 20 single-byte characters
   <wsdl:message name="GetBalanceResponse">
     <wsdl:part name="GetBalanceResponse" element="ns:GetBalanceResponse" />
   </wsdl:message>
+  <wsdl:message name="GetPalDetailsRequest">
+    <wsdl:part name="GetPalDetailsRequest" element="ns:GetPalDetailsReq" />
+  </wsdl:message>
+  <wsdl:message name="GetPalDetailsResponse">
+    <wsdl:part name="GetPalDetailsResponse" element="ns:GetPalDetailsResponse" />
+  </wsdl:message>
   <wsdl:message name="CreateRecurringPaymentsProfileRequest">
     <wsdl:part name="CreateRecurringPaymentsProfileRequest" element="ns:CreateRecurringPaymentsProfileReq" />
   </wsdl:message>
@@ -2112,6 +2951,12 @@ Character length and limitations: 20 single-byte characters
   <wsdl:message name="UpdateRecurringPaymentsProfileResponse">
     <wsdl:part name="UpdateRecurringPaymentsProfileResponse" element="ns:UpdateRecurringPaymentsProfileResponse" />
   </wsdl:message>
+  <wsdl:message name="ReverseTransactionRequest">
+    <wsdl:part name="ReverseTransactionRequest" element="ns:ReverseTransactionReq" />
+  </wsdl:message>
+  <wsdl:message name="ReverseTransactionResponse">
+    <wsdl:part name="ReverseTransactionResponse" element="ns:ReverseTransactionResponse" />
+  </wsdl:message>
   <wsdl:portType name="PayPalAPIInterface">
     <wsdl:operation name="RefundTransaction">
       <wsdl:input message="ns:RefundTransactionRequest" />
@@ -2120,6 +2965,34 @@ Character length and limitations: 20 single-byte characters
     <wsdl:operation name="GetTransactionDetails">
       <wsdl:input message="ns:GetTransactionDetailsRequest" />
       <wsdl:output message="ns:GetTransactionDetailsResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="BMCreateButton">
+      <wsdl:input message="ns:BMCreateButtonRequest" />
+      <wsdl:output message="ns:BMCreateButtonResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="BMUpdateButton">
+      <wsdl:input message="ns:BMUpdateButtonRequest" />
+      <wsdl:output message="ns:BMUpdateButtonResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="BMManageButtonStatus">
+      <wsdl:input message="ns:BMManageButtonStatusRequest" />
+      <wsdl:output message="ns:BMManageButtonStatusResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="BMGetButtonDetails">
+      <wsdl:input message="ns:BMGetButtonDetailsRequest" />
+      <wsdl:output message="ns:BMGetButtonDetailsResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="BMSetInventory">
+      <wsdl:input message="ns:BMSetInventoryRequest" />
+      <wsdl:output message="ns:BMSetInventoryResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="BMGetInventory">
+      <wsdl:input message="ns:BMGetInventoryRequest" />
+      <wsdl:output message="ns:BMGetInventoryResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="BMButtonSearch">
+      <wsdl:input message="ns:BMButtonSearchRequest" />
+      <wsdl:output message="ns:BMButtonSearchResponse" />
     </wsdl:operation>
     <wsdl:operation name="BillUser">
       <wsdl:input message="ns:BillUserRequest" />
@@ -2168,6 +3041,10 @@ Character length and limitations: 20 single-byte characters
     <wsdl:operation name="GetBalance">
       <wsdl:input message="ns:GetBalanceRequest" />
       <wsdl:output message="ns:GetBalanceResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPalDetails">
+      <wsdl:input message="ns:GetPalDetailsRequest" />
+      <wsdl:output message="ns:GetPalDetailsResponse" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="PayPalAPIAAInterface">
@@ -2275,6 +3152,10 @@ Character length and limitations: 20 single-byte characters
       <wsdl:input message="ns:UpdateRecurringPaymentsProfileRequest" />
       <wsdl:output message="ns:UpdateRecurringPaymentsProfileResponse" />
     </wsdl:operation>
+    <wsdl:operation name="ReverseTransaction">
+      <wsdl:input message="ns:ReverseTransactionRequest" />
+      <wsdl:output message="ns:ReverseTransactionResponse" />
+    </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="PayPalAPISoapBinding" type="ns:PayPalAPIInterface">
     <wsdlsoap:binding transport="http://schemas.xmlsoap.org/soap/http" />
@@ -2290,6 +3171,83 @@ Character length and limitations: 20 single-byte characters
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="GetTransactionDetails">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input>
+        <wsdlsoap:header message="ns:RequesterCredentials" part="RequesterCredentials" use="literal" />
+        <wsdlsoap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsdlsoap:header message="ns:RequesterCredentials" part="RequesterCredentials" use="literal" />
+        <wsdlsoap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BMCreateButton">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input>
+        <wsdlsoap:header message="ns:RequesterCredentials" part="RequesterCredentials" use="literal" />
+        <wsdlsoap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsdlsoap:header message="ns:RequesterCredentials" part="RequesterCredentials" use="literal" />
+        <wsdlsoap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BMUpdateButton">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input>
+        <wsdlsoap:header message="ns:RequesterCredentials" part="RequesterCredentials" use="literal" />
+        <wsdlsoap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsdlsoap:header message="ns:RequesterCredentials" part="RequesterCredentials" use="literal" />
+        <wsdlsoap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BMSetInventory">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input>
+        <wsdlsoap:header message="ns:RequesterCredentials" part="RequesterCredentials" use="literal" />
+        <wsdlsoap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsdlsoap:header message="ns:RequesterCredentials" part="RequesterCredentials" use="literal" />
+        <wsdlsoap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BMGetButtonDetails">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input>
+        <wsdlsoap:header message="ns:RequesterCredentials" part="RequesterCredentials" use="literal" />
+        <wsdlsoap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsdlsoap:header message="ns:RequesterCredentials" part="RequesterCredentials" use="literal" />
+        <wsdlsoap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BMGetInventory">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input>
+        <wsdlsoap:header message="ns:RequesterCredentials" part="RequesterCredentials" use="literal" />
+        <wsdlsoap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsdlsoap:header message="ns:RequesterCredentials" part="RequesterCredentials" use="literal" />
+        <wsdlsoap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BMManageButtonStatus">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input>
+        <wsdlsoap:header message="ns:RequesterCredentials" part="RequesterCredentials" use="literal" />
+        <wsdlsoap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsdlsoap:header message="ns:RequesterCredentials" part="RequesterCredentials" use="literal" />
+        <wsdlsoap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BMButtonSearch">
       <wsdlsoap:operation soapAction="" />
       <wsdl:input>
         <wsdlsoap:header message="ns:RequesterCredentials" part="RequesterCredentials" use="literal" />
@@ -2422,6 +3380,17 @@ Character length and limitations: 20 single-byte characters
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="GetBalance">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input>
+        <wsdlsoap:header message="ns:RequesterCredentials" part="RequesterCredentials" use="literal" />
+        <wsdlsoap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsdlsoap:header message="ns:RequesterCredentials" part="RequesterCredentials" use="literal" />
+        <wsdlsoap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPalDetails">
       <wsdlsoap:operation soapAction="" />
       <wsdl:input>
         <wsdlsoap:header message="ns:RequesterCredentials" part="RequesterCredentials" use="literal" />
@@ -2711,6 +3680,17 @@ Character length and limitations: 20 single-byte characters
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="DoNonReferencedCredit">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input>
+        <wsdlsoap:header message="ns:RequesterCredentials" part="RequesterCredentials" use="literal" />
+        <wsdlsoap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsdlsoap:header message="ns:RequesterCredentials" part="RequesterCredentials" use="literal" />
+        <wsdlsoap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReverseTransaction">
       <wsdlsoap:operation soapAction="" />
       <wsdl:input>
         <wsdlsoap:header message="ns:RequesterCredentials" part="RequesterCredentials" use="literal" />
