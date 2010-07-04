@@ -69,7 +69,7 @@
         <asp:TemplateField HeaderText="<% $NopResources:Admin.SalesReport.Name %>" ItemStyle-Width="60%">
             <ItemTemplate>
                 <div style="padding-left: 10px; padding-right: 10px; text-align: left;">
-                    <a href='<%#GetProductVarianUrl(Convert.ToInt32(Eval("ProductVariantId")))%>' title="<%#GetLocaleResourceString("Admin.SalesReport.Name.Tooltip")%>">
+                    <a href='<%#GetProductVariantUrl(Convert.ToInt32(Eval("ProductVariantId")))%>' title="<%#GetLocaleResourceString("Admin.SalesReport.Name.Tooltip")%>">
                         <%#Server.HtmlEncode(GetProductVariantName(Convert.ToInt32(Eval("ProductVariantId"))))%></a>
                 </div>
             </ItemTemplate>

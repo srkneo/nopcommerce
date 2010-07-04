@@ -3,19 +3,19 @@ declare @resources xml
 set @resources='
 <Language LanguageID="7">
   <LocaleResource Name="Admin.GlobalSettings.GoogleAdsense.Title">
-    <Value>Google Adsense</Value>
+    <Value>Google AdSense</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.GlobalSettings.GoogleAdsense.Enabled">
     <Value>Enabled:</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.GlobalSettings.GoogleAdsense.Enabled.Tooltip">
-    <Value>Check if you want to enable Google Adsense.</Value>
+    <Value>Check if you want to enable Google AdSense.</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.GlobalSettings.GoogleAdsense.Code">
-    <Value>Google adsense code:</Value>
+    <Value>Google AdSense code:</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.GlobalSettings.GoogleAdsense.Code.Tooltip">
-    <Value>Place your google adsense code here.</Value>
+    <Value>Place your google AdSense code here.</Value>
   </LocaleResource>
   <LocaleResource Name="BlogRSS.Tooltip">
     <Value>Click here to receive automatic BLOG updates from our site</Value>
@@ -198,7 +198,7 @@ set @resources='
     <Value>Save changes</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.ThirdPartyIntegration.QuickBooks.Title">
-    <Value>QucikBooks</Value>
+    <Value>QuickBooks</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.ThirdPartyIntegration.QuickBooks.Enabled">
     <Value>Enabled</Value>
@@ -210,7 +210,7 @@ set @resources='
     <Value>Username</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.ThirdPartyIntegration.QuickBooks.Username.Tooltip">
-    <Value>Username wich will be used by QuickBooks Web Connector to connect to Web service</Value>
+    <Value>Username which will be used by QuickBooks Web Connector to connect to Web service</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.ThirdPartyIntegration.QuickBooks.Username.ErrorMessage">
     <Value>QuickBooks username is not specified</Value>
@@ -219,7 +219,7 @@ set @resources='
     <Value>Password</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.ThirdPartyIntegration.QuickBooks.Password.Tooltip">
-    <Value>Password wich will be used by QuickBooks Web Connector to connect to Web service</Value>
+    <Value>Password which will be used by QuickBooks Web Connector to connect to Web service</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.ThirdPartyIntegration.QuickBooks.Password.ErrorMessage">
     <Value>QuickBooks password is not specified</Value>
@@ -429,7 +429,7 @@ set @resources='
 	<Value></Value>
   </LocaleResource>
   <LocaleResource Name="Admin.Sitemap.PromotionProvidersTitle">
-	<Value>Pormotions Providers</Value>
+	<Value>Promotions Providers</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.Sitemap.PromotionProvidersDescription">
 	<Value>Manage your promotions providers</Value>

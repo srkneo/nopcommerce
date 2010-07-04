@@ -8,7 +8,7 @@
         <asp:TemplateField HeaderText="<% $NopResources:Admin.BestSellersStat.Product%>" ItemStyle-Width="65%">
             <ItemTemplate>
                 <div style="padding-left: 10px; padding-right: 10px; text-align: left;">
-                    <a href='<%#GetProductVarianUrl(Convert.ToInt32(Eval("ProductVariantId")))%>' title="View product variant details">
+                    <a href='<%#GetProductVariantUrl(Convert.ToInt32(Eval("ProductVariantId")))%>' title="View product variant details">
                         <%#Server.HtmlEncode(GetProductVariantName(Convert.ToInt32(Eval("ProductVariantId"))))%></a>
                 </div>
             </ItemTemplate>

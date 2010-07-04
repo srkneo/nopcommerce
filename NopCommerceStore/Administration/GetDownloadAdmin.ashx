@@ -66,7 +66,7 @@ public class GetDownloadAdmin : IHttpHandler
 
             context.Response.Clear();
             context.Response.ContentType = download.ContentType;
-            context.Response.AddHeader("Content-disposition", string.Format("attachment;filename={0}{1}", fileName, download.Extension));
+            context.Response.AddHeader("Content-disposition", string.Format("attachment;filename=\"{0}{1}\"", fileName, download.Extension));
 
             using (MemoryStream ms = new MemoryStream(download.DownloadBinary))
             {

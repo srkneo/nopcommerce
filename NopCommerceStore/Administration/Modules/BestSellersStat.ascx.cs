@@ -47,7 +47,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             gvBestSellers.DataBind();
         }
 
-        public string GetProductVarianUrl(int productVariantId)
+        public string GetProductVariantUrl(int productVariantId)
         {
             string result = string.Empty;
             ProductVariant productVariant = ProductManager.GetProductVariantById(productVariantId);
