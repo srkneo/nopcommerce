@@ -429,10 +429,10 @@ set @resources='
 	<Value></Value>
   </LocaleResource>
   <LocaleResource Name="Admin.Sitemap.PromotionProvidersTitle">
-	<Value>Promotions Providers</Value>
+	<Value>Promotion Providers</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.Sitemap.PromotionProvidersDescription">
-	<Value>Manage your promotions providers</Value>
+	<Value>Manage your promotion providers</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.Sitemap.FroogleTitle">
 	<Value></Value>
