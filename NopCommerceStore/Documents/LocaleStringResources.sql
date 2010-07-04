@@ -411,13 +411,13 @@ set @resources='
 	<Value>Check if you want to show poll on home page</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.PollInfo.StartDate">
-	<Value>Start Date</Value>
+	<Value>Start Date:</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.PollInfo.StartDate.Tooltip">
 	<Value>Set the poll start date or leave empty</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.PollInfo.EndDate">
-	<Value>End Date</Value>
+	<Value>End Date:</Value>
   </LocaleResource>
   <LocaleResource Name="Admin.PollInfo.EndDate.Tooltip">
 	<Value>Set the poll end date or leave empty</Value>
