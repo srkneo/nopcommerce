@@ -74,6 +74,8 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 if (order.OrderStatus == os)
                     return order;
 
+                OrderStatusEnum prevOrderStatus = order.OrderStatus;
+
                 var updatedOrder = UpdateOrder(order.OrderId, 
                     order.OrderGuid, 
                     order.CustomerId, 
@@ -158,7 +160,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                 //order notes, notifications
                 InsertOrderNote(orderId, string.Format("Order status has been changed to {0}", os.ToString()), false, DateTime.UtcNow);
 
-                if (order.OrderStatus != OrderStatusEnum.Complete &&
+                if (prevOrderStatus != OrderStatusEnum.Complete &&
                     os == OrderStatusEnum.Complete
                     && notifyCustomer)
                 {
@@ -169,7 +171,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Orders
                     }
                 }
 
-                if (order.OrderStatus != OrderStatusEnum.Cancelled &&
+                if (prevOrderStatus != OrderStatusEnum.Cancelled &&
                     os == OrderStatusEnum.Cancelled
                     && notifyCustomer)
                 {
