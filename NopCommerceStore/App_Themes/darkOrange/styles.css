@@ -2676,6 +2676,7 @@ ul.languagelist li .selected
 	padding: 4px 4px 4px 4px;
 	text-align: left;
 	vertical-align: middle;
+	white-space: nowrap;
 }
 
 .contact-form
