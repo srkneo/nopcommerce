@@ -303,7 +303,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     this.lblDeliveryDate.Text = GetLocaleResourceString("Admin.OrderDetails.DeliveryDate.NotYet");
                 }
 
-                this.lblOrderWeight.Text = string.Format("{0} [{1}]", order.OrderWeight, MeasureManager.BaseWeightIn.Name);
+                this.lblOrderWeight.Text = string.Format("{0:F2} [{1}]", order.OrderWeight, MeasureManager.BaseWeightIn.Name);
 
                 this.divShippingNotRequired.Visible = false;
                 this.divShippingAddress.Visible = true;

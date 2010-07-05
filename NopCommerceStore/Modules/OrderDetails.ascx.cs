@@ -84,7 +84,7 @@ namespace NopSolutions.NopCommerce.Web.Modules
                     pnlShippingCountry.Visible = false;
 
                 this.lblShippingMethod.Text = Server.HtmlEncode(order.ShippingMethod);
-                this.lblOrderWeight.Text = string.Format("{0} [{1}]", order.OrderWeight, MeasureManager.BaseWeightIn.Name);
+                this.lblOrderWeight.Text = string.Format("{0:F2} [{1}]", order.OrderWeight, MeasureManager.BaseWeightIn.Name);
 
                 if (order.ShippedDate.HasValue)
                     this.lblShippedDate.Text = DateTimeHelper.ConvertToUserTime(order.ShippedDate.Value, DateTimeKind.Utc).ToString("D");
