@@ -1256,16 +1256,23 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Products
                               combination.AllowOutOfStockOrders);
                     }
 
+                    // product variant tier prices
+                    foreach (var tierPrice in productVariant.TierPrices)
+                    {
+                        InsertTierPrice(productVariantCopy.ProductVariantId, tierPrice.Quantity, tierPrice.Price);
+                    }
+
                     // product variant <-> discounts mapping
                     foreach (var discount in productVariant.AllDiscounts)
                     {
                         DiscountManager.AddDiscountToProductVariant(productVariantCopy.ProductVariantId, discount.DiscountId);
                     }
 
-                    // product variant tier prices
-                    foreach (var tierPrice in productVariant.TierPrices)
+                    // prices by customer role
+                    foreach (var crpp in productVariant.CustomerRoleProductPrices)
                     {
-                        InsertTierPrice(productVariantCopy.ProductVariantId, tierPrice.Quantity, tierPrice.Price);
+                        ProductManager.InsertCustomerRoleProductPrice(crpp.CustomerRoleId,
+                            productVariantCopy.ProductVariantId, crpp.Price);
                     }
                 }
 
