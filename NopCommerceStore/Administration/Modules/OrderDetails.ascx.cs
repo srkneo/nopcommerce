@@ -1172,7 +1172,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
                     orderCollection.Add(order);
 
                     string fileName = String.Format("packagingslip_{0}_{1}.pdf", DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss"), CommonHelper.GenerateRandomDigitCode(4));
-                    string filePath = String.Format("{0}files\\{1}", HttpContext.Current.Request.PhysicalApplicationPath, fileName);
+                    string filePath = String.Format("{0}files\\exportimport\\{1}", HttpContext.Current.Request.PhysicalApplicationPath, fileName);
 
                     PDFHelper.PrintPackagingSlipsToPdf(orderCollection, filePath);
 
