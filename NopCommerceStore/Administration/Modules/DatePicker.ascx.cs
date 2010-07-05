@@ -31,7 +31,7 @@ namespace NopSolutions.NopCommerce.Web.Administration.Modules
             }
             set
             {
-                ajaxCalendar.SelectedDate = value;
+                txtDateTime.Text = value.HasValue ? value.Value.ToShortDateString() : String.Empty;
             }
         }
 
