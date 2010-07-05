@@ -54,6 +54,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.CustomerManagement
         /// </summary>
         public string Value { get; set; }
         #endregion 
+
+        #region Navigation Properties
+
+        /// <summary>
+        /// Gets the customer
+        /// </summary>
+        public virtual Customer NpCustomer { get; set; }
+
+        #endregion
     }
 
 }

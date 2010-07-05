@@ -76,6 +76,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
         }
 
         #endregion
+
+        #region Navigation Properties
+
+        /// <summary>
+        /// Gets the poll
+        /// </summary>
+        public virtual Poll NpPoll { get; set; }
+
+        #endregion
     }
 
 }

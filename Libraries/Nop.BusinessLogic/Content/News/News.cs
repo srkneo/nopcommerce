@@ -101,6 +101,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
             }
         }
         #endregion
+
+        #region Navigation Properties
+
+        /// <summary>
+        /// Gets the news comments
+        /// </summary>
+        public virtual ICollection<NewsComment> NpNewsComments { get; set; }
+
+        /// <summary>
+        /// Gets the language
+        /// </summary>
+        public virtual Language NpLanguage { get; set; }
+        
+        #endregion
     }
 
 }

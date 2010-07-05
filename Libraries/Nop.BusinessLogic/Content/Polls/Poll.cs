@@ -121,6 +121,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
         }
 
         #endregion
+
+        #region Navigation Properties
+
+        /// <summary>
+        /// Gets the poll answers
+        /// </summary>
+        public virtual ICollection<PollAnswer> NpPollAnswers { get; set; }
+        
+        #endregion
     }
 
 }

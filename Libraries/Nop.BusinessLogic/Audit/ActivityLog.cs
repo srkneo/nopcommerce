@@ -90,6 +90,11 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Audit
         /// Gets the activity log type
         /// </summary>
         public virtual ActivityLogType NpActivityLogType { get; set; }
+
+        /// <summary>
+        /// Gets the customer
+        /// </summary>
+        public virtual Customer NpCustomer { get; set; }
         
         #endregion
     }

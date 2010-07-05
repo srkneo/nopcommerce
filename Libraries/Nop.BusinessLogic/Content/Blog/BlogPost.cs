@@ -108,6 +108,25 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
             }
         }
         #endregion
+
+        #region Navigation Properties
+
+        /// <summary>
+        /// Gets the blog comments
+        /// </summary>
+        public virtual ICollection<BlogComment> NpBlogComments { get; set; }
+
+        /// <summary>
+        /// Gets the user who created the blog post
+        /// </summary>
+        public virtual Customer NpCreatedBy { get; set; }
+
+        /// <summary>
+        /// Gets the language
+        /// </summary>
+        public virtual Language NpLanguage { get; set; }
+        
+        #endregion
     }
 
 }

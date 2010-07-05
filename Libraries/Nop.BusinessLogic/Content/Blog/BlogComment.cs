@@ -65,7 +65,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
         /// </summary>
         public DateTime CreatedOn { get; set; }
 
-        #endregion 
+        #endregion
 
         #region Custom Properties
 
@@ -90,6 +90,15 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Blog
                 return BlogManager.GetBlogPostById(this.BlogPostId);
             }
         }
+        #endregion
+
+        #region Navigation Properties
+
+        /// <summary>
+        /// Gets the blog post
+        /// </summary>
+        public virtual BlogPost NpBlogPost { get; set; }
+
         #endregion
     }
 

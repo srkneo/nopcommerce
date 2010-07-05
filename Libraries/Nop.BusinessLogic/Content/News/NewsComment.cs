@@ -95,5 +95,14 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.NewsManagement
             }
         }
         #endregion
+
+        #region Navigation Properties
+
+        /// <summary>
+        /// Gets the news item
+        /// </summary>
+        public virtual News NpNews { get; set; }
+        
+        #endregion
     }
 }

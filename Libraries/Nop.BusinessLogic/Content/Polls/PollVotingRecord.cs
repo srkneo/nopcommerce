@@ -15,7 +15,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-
+using NopSolutions.NopCommerce.BusinessLogic.CustomerManagement;
 
 
 namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
@@ -49,6 +49,20 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Content.Polls
         /// Gets or sets the customer identifier
         /// </summary>
         public int CustomerId { get; set; }
+
+        #endregion
+
+        #region Navigation Properties
+
+        /// <summary>
+        /// Gets the poll answer
+        /// </summary>
+        public virtual PollAnswer NpPollAnswer { get; set; }
+
+        /// <summary>
+        /// Gets the customer
+        /// </summary>
+        public virtual Customer NpCustomer { get; set; }
 
         #endregion
     }
