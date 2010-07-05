@@ -952,7 +952,7 @@ INSERT [dbo].[Nop_StateProvince] ([StateProvinceID], [CountryID], [Name], [Abbre
 INSERT [dbo].[Nop_StateProvince] ([StateProvinceID], [CountryID], [Name], [Abbreviation], [DisplayOrder]) VALUES (95, 80, N'Cumbria', N'CBA', 15)
 INSERT [dbo].[Nop_StateProvince] ([StateProvinceID], [CountryID], [Name], [Abbreviation], [DisplayOrder]) VALUES (96, 80, N'Derbyshire', N'DYS', 16)
 INSERT [dbo].[Nop_StateProvince] ([StateProvinceID], [CountryID], [Name], [Abbreviation], [DisplayOrder]) VALUES (97, 80, N'Devon', N'DVN', 17)
-INSERT [dbo].[Nop_StateProvince] ([StateProvinceID], [CountryID], [Name], [Abbreviation], [DisplayOrder]) VALUES (98, 80, N'Dorse', N'DOR', 18)
+INSERT [dbo].[Nop_StateProvince] ([StateProvinceID], [CountryID], [Name], [Abbreviation], [DisplayOrder]) VALUES (98, 80, N'Dorset', N'DOR', 18)
 INSERT [dbo].[Nop_StateProvince] ([StateProvinceID], [CountryID], [Name], [Abbreviation], [DisplayOrder]) VALUES (99, 80, N'County Down', N'DWN', 19)
 INSERT [dbo].[Nop_StateProvince] ([StateProvinceID], [CountryID], [Name], [Abbreviation], [DisplayOrder]) VALUES (100, 80, N'Dumfries and Galloway', N'DGL', 20)
 INSERT [dbo].[Nop_StateProvince] ([StateProvinceID], [CountryID], [Name], [Abbreviation], [DisplayOrder]) VALUES (101, 80, N'County Durham', N'DHM', 21)
