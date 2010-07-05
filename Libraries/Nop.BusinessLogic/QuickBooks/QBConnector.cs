@@ -13,6 +13,7 @@ using NopSolutions.NopCommerce.BusinessLogic.Audit;
 using System.Text.RegularExpressions;
 using System.Text;
 using System.Xml;
+using NopSolutions.NopCommerce.BusinessLogic.Utils;
 
 namespace NopSolutions.NopCommerce.BusinessLogic.QuickBooks
 {
@@ -31,7 +32,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.QuickBooks
         /// </summary>
         public string serverVersion()
         {
-            return "1.60";
+            return SiteHelper.GetCurrentVersion();
         }
 
         [WebMethod]

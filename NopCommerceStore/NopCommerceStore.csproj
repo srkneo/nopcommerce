@@ -5829,6 +5829,10 @@
     <Content Include="images\sp.gif" />
     <Content Include="images\UpdateProgress.gif" />
     <Content Include="Install\install.aspx" />
+    <None Include="Install\Scripts\1.70\nopCommerce_upgrade.sql" />
+    <Content Include="Install\Scripts\nopCommerce_createData.sql" />
+    <Content Include="Install\Scripts\nopCommerce_createDatabase.sql" />
+    <Content Include="Install\Scripts\nopCommerce_createSampleData.sql" />
     <Content Include="QBConnector.asmx" />
     <Content Include="Scripts\slimbox2.js" />
     <Content Include="Login.aspx" />
@@ -6803,9 +6807,6 @@
     <Content Include="GetDownload.ashx" />
     <None Include="Install\Scripts\1.50\nopCommerce_upgrade.sql" />
     <None Include="Install\Scripts\1.60\nopCommerce_upgrade.sql" />
-    <None Include="Install\Scripts\nopCommerce_createData.sql" />
-    <None Include="Install\Scripts\nopCommerce_createSampleData.sql" />
-    <None Include="Install\Scripts\nopCommerce_createDatabase.sql" />
     <Content Include="MasterPages\ThreeColumn.master" />
     <Content Include="MasterPages\TwoColumn.master" />
     <Content Include="MasterPages\OneColumn.master" />
