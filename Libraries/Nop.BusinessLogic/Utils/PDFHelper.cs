@@ -29,6 +29,7 @@ using NopSolutions.NopCommerce.BusinessLogic.Measures;
 using NopSolutions.NopCommerce.BusinessLogic.Media;
 using NopSolutions.NopCommerce.BusinessLogic.Orders;
 using NopSolutions.NopCommerce.BusinessLogic.Products;
+using NopSolutions.NopCommerce.BusinessLogic.Profile;
 using NopSolutions.NopCommerce.BusinessLogic.Shipping;
 using NopSolutions.NopCommerce.BusinessLogic.Tax;
 using NopSolutions.NopCommerce.Common;
@@ -196,7 +197,7 @@ namespace NopSolutions.NopCommerce.BusinessLogic.Utils
             p1.Format.Font.Bold = true;
             p1.Format.Font.Color = Colors.Black;
             ordRow[rownum].AddParagraph(SettingManager.StoreUrl.Trim(new char[] { '/' })).AddHyperlink(SettingManager.StoreUrl, HyperlinkType.Url);
-            ordRow[rownum].AddParagraph(String.Format(LocalizationManager.GetLocaleResourceString("PDFInvoice.OrderDate", languageId), order.CreatedOn));
+            ordRow[rownum].AddParagraph(String.Format(LocalizationManager.GetLocaleResourceString("PDFInvoice.OrderDate", languageId), DateTimeHelper.ConvertToUserTime(order.CreatedOn, DateTimeKind.Utc).ToString("D")));
 
             if(File.Exists(PDFHelper.LogoFilePath))
             {
