@@ -91,7 +91,7 @@
                                         <li>Open your QB application </li>
                                         <li>Go to "Company->Lists->Chart of Accounts" </li>
                                         <li>"Right Click->New" </li>
-                                        <li>Follow to master to create new account </li>
+                                        <li>Follow the master to create new account </li>
                                     </ul>
                                 </li>
                                 <li>In "Shipping account reference" and "Sales tax account reference" fields enter the
