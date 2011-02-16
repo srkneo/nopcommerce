@@ -78,6 +78,8 @@
     <Compile Include="Configuration\InterfacePluginCollection.cs" />
     <Compile Include="Configuration\InterfacePluginElement.cs" />
     <Compile Include="Configuration\ISettings.cs" />
+    <Compile Include="Domain\Security\Permissions\DefaultPermissionRecord.cs" />
+    <Compile Include="Domain\Security\Permissions\PermissionRecord.cs" />
     <Compile Include="Configuration\LazyRemovableCollection.cs" />
     <Compile Include="Configuration\NamedElement.cs" />
     <Compile Include="Configuration\PluginInitializerCollection.cs" />
@@ -85,22 +87,18 @@
     <Compile Include="Configuration\SchedulerElement.cs" />
     <Compile Include="Configuration\SectionGroup.cs" />
     <Compile Include="Context.cs" />
-    <Compile Include="DependencyRegistar.cs" />
     <Compile Include="Infrastructure\AppDomainTypeFinder.cs" />
     <Compile Include="Infrastructure\AsyncWorker.cs" />
     <Compile Include="Infrastructure\AttributeInfo.cs" />
     <Compile Include="Infrastructure\AutoFac\AutoFacServiceContainer.cs" />
     <Compile Include="Infrastructure\ComponentRegistrationException.cs" />
-    <Compile Include="Infrastructure\ContainerBuilderEventArgs.cs" />
     <Compile Include="Infrastructure\ContainerConfigurer.cs" />
     <Compile Include="Infrastructure\EventBroker.cs" />
-    <Compile Include="Infrastructure\IDependencyRegistar.cs" />
     <Compile Include="Infrastructure\IEngine.cs" />
     <Compile Include="Infrastructure\IServiceContainer.cs" />
     <Compile Include="Infrastructure\ITypeFinder.cs" />
     <Compile Include="Infrastructure\IWorker.cs" />
     <Compile Include="Infrastructure\NopEngine.cs" />
-    <Compile Include="Infrastructure\NopStarter.cs" />
     <Compile Include="Domain\Common\Address.cs" />
     <Compile Include="Domain\Customers\CustomerAttribute.cs" />
     <Compile Include="Domain\Customers\CustomerSettings.cs" />
@@ -240,6 +238,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
