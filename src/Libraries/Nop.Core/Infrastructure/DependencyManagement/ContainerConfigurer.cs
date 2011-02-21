@@ -1,0 +1,111 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Nop.Core.Configuration;
+
+namespace Nop.Core.Infrastructure.DependencyManagement
+{
+    /// <summary>
+    /// Configures the inversion of control container with services used by Nop.
+    /// </summary>
+    public class ContainerConfigurer
+    {
+        /// <summary>
+        /// Known configuration keys used to configure services.
+        /// </summary>
+        public static class ConfigurationKeys
+        {
+            /// <summary>Key used to configure services intended for medium trust.</summary>
+            public const string MediumTrust = "MediumTrust";
+            /// <summary>Key used to configure services intended for full trust.</summary>
+            public const string FullTrust = "FullTrust";
+        }
+
+        public virtual void Configure(IEngine engine, ContainerManager containerManager, EventBroker broker, ConfigurationManagerWrapper configuration)
+        {
+            //register dependencies provided by other asemblies
+            containerManager.AddComponent<IWebHelper, WebHelper>("nop.webHelper");
+            containerManager.AddComponent<ITypeFinder, WebAppTypeFinder>("nop.typeFinder");
+            var typeFinder = containerManager.Resolve<ITypeFinder>();
+            containerManager.UpdateContainer(x =>
+            {
+                var drTypes = typeFinder.FindClassesOfType<IDependencyRegistar>();
+                foreach (var t in drTypes)
+                {
+                    dynamic dependencyRegistar = Activator.CreateInstance(t);
+                    dependencyRegistar.Register(x, typeFinder);
+                }
+            });
+
+            //other dependencies
+            configuration.Start();
+            containerManager.AddComponentInstance<ConfigurationManagerWrapper>(configuration, "nop.configuration");
+            containerManager.AddComponentInstance<IEngine>(engine, "nop.engine");
+            containerManager.AddComponentInstance<ContainerConfigurer>(this, "nop.containerConfigurer");
+
+            containerManager.AddComponentInstance(configuration.GetConnectionStringsSection());
+            containerManager.AddComponentInstance(configuration.Sections.Engine);
+            if (configuration.Sections.Engine != null)
+                RegisterConfiguredComponents(containerManager, configuration.Sections.Engine);
+
+            //event broker
+            containerManager.AddComponentInstance(broker);
+
+            //service registration
+            containerManager.AddComponent<ServiceRegistrator>("nop.serviceRegistrator");
+            var registrator = containerManager.Resolve<ServiceRegistrator>();
+            var services = registrator.FindServices();
+            var configurations = GetComponentConfigurations(configuration);
+            services = registrator.FilterServices(services, configurations);
+            registrator.RegisterServices(services);
+        }
+
+        protected virtual string[] GetComponentConfigurations(ConfigurationManagerWrapper configuration)
+        {
+            List<string> configurations = new List<string>();
+            string trustConfiguration = (CommonHelper.GetTrustLevel() > System.Web.AspNetHostingPermissionLevel.Medium)
+                ? ConfigurationKeys.FullTrust
+                : ConfigurationKeys.MediumTrust;
+            configurations.Add(trustConfiguration);
+            return configurations.ToArray();
+        }
+
+        private void AddComponentInstance(IEngine engine, object instance)
+        {
+            engine.ContainerManager.AddComponentInstance(instance.GetType(), instance, instance.GetType().FullName);
+        }
+
+        protected virtual void RegisterConfiguredComponents(ContainerManager container, EngineSection engineConfig)
+        {
+            foreach (ComponentElement component in engineConfig.Components)
+            {
+                Type implementation = Type.GetType(component.Implementation);
+                Type service = Type.GetType(component.Service);
+
+                if (implementation == null)
+                    throw new ComponentRegistrationException(component.Implementation);
+
+                if (service == null && !String.IsNullOrEmpty(component.Service))
+                    throw new ComponentRegistrationException(component.Service);
+
+                if (service == null)
+                    service = implementation;
+
+                string name = component.Key;
+                if (string.IsNullOrEmpty(name))
+                    name = implementation.FullName;
+
+                if (component.Parameters.Count == 0)
+                {
+                    container.AddComponent(service, implementation, name);
+                }
+                else
+                {
+                    container.AddComponentWithParameters(service, implementation,
+                                                         component.Parameters.ToDictionary(), name);
+                }
+            }
+        }
+    }
+}
