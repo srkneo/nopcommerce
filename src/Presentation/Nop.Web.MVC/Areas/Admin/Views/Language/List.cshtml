@@ -1,0 +1,35 @@
+﻿@model Telerik.Web.Mvc.GridModel<Nop.Web.MVC.Areas.Admin.Models.LanguageModel>
+@using Telerik.Web.Mvc.UI
+<div class="section-header">
+    <div class="title">
+        <img src="@Url.Content("~/Areas/Admin/Content/images/ico-configuration.png")" />
+        @T("Languages")
+    </div>
+    <div class="options">
+        <a href="@Url.Action("Create")" class="t-button">@T("Add new")</a>
+    </div>
+</div>
+<table class="adminContent">
+    <tr>
+        <td>
+            @(Html.Telerik().Grid<Nop.Web.MVC.Areas.Admin.Models.LanguageModel>()
+                    .Name("Grid")
+                    .BindTo(Model.Data)
+                    .Columns(columns =>
+                    {
+                        columns.Bound(x => x.Name);
+                        columns.Bound(x => x.Published).Template(x => x.Published.ToString().ToLower());
+                        columns.Bound(x => x.DisplayOrder);
+                        columns.Bound(x => x.Id)
+                            .Template(x => Html.ActionLink("Edit", "Edit", new { id = x.Id }))
+                            .ClientTemplate("<a href=\"<#= Id #>\">Edit</a>")
+                            .Width(50)
+                            .HtmlAttributes(new { align = "center" })
+                            .HeaderTemplate("Edit")
+                            .HeaderHtmlAttributes(new { align = "center" }).Filterable(false);
+                    })
+                    .DataBinding(dataBinding => dataBinding.Ajax().Select("List", "Language"))
+                    .EnableCustomBinding(true))
+        </td>
+    </tr>
+</table>
