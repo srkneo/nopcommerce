@@ -1,0 +1,15 @@
+﻿@using Nop.Web.Framework;
+@model Nop.Web.MVC.Areas.Admin.Models.CategoryModel
+@using (Html.BeginForm())
+{
+    <div class="section-header">
+        <div class="title">
+            <img src="@Url.Content("~/Areas/Admin/Content/images/ico-catalog.png")" />
+            @T("Add a new category") - @Html.ActionLink("(" + T("back to category list") + ")", "List")
+        </div>
+        <div class="options">
+            <input type="submit" value="@T("Save")" class="t-button" />
+        </div>
+    </div>
+    @Html.Partial("_CreateOrUpdate", Model)
+}
