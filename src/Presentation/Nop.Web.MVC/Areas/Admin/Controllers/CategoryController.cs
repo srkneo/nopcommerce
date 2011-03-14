@@ -363,6 +363,17 @@ namespace Nop.Web.MVC.Areas.Admin.Controllers
 
 		public ActionResult List()
 		{
+            var userSettings = EngineContext.Current.Resolve<Nop.Core.Domain.Security.UserSettings>();
+            //settings.HashedPasswordFormat = new Random().Next().ToString();
+            //EngineContext.Current.Resolve
+            //    <Nop.Core.Configuration.IConfigurationProvider<Nop.Core.Domain.Security.UserSettings>>().SaveSettings(settings);
+            //var settings2 = EngineContext.Current.Resolve<Nop.Core.Domain.Security.UserSettings>();
+            //settings2 = EngineContext.Current.Resolve<Nop.Core.Domain.Security.UserSettings>();
+		    var serviceSettings = EngineContext.Current.Resolve<ServiceWithSettings>();
+		    serviceSettings.ServiceSettingValue = new Random().Next().ToString();
+            EngineContext.Current.Resolve
+                <Nop.Core.Configuration.IConfigurationProvider<ServiceWithSettings>>().SaveSettings(serviceSettings);
+
 			if (!_permissionService.Authorize(CatalogPermissionProvider.ManageCategories))
 			{
 				//TODO redirect to access denied page

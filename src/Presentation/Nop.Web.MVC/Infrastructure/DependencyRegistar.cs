@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Database;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Web;
@@ -154,14 +155,55 @@ namespace Nop.Web.MVC.Infrastructure
             builder.RegisterType<DateTimeHelper>().As<IDateTimeHelper>().InstancePerHttpRequest();
 
             builder.RegisterType<TelerikLocalizationServiceFactory>().As<Telerik.Web.Mvc.Infrastructure.ILocalizationServiceFactory>().InstancePerHttpRequest();
+
+            builder.RegisterModule(new SettingsModule());
         }
     }
 
+    public class SettingsModule : Autofac.Module
+    {
+        static readonly MethodInfo UpdateMethod = typeof(SettingsModule).GetMethod(
+            "UpdateInstance",
+            BindingFlags.Static | BindingFlags.NonPublic);
+
+        protected override void AttachToComponentRegistration(IComponentRegistry componentRegistry, IComponentRegistration registration)
+        {
+            if (componentRegistry == null)
+                throw new ArgumentNullException("componentRegistry");
+
+            if (registration == null)
+                throw new ArgumentNullException("registration");
+
+            //if (registration.Services.Contains(new TypedService(typeof(ISettings))))
+            //{
+                registration.Activated += OnComponentActivated;
+            //}
+        }
+
+        void OnComponentActivated(object sender, ActivatedEventArgs<object> e)
+        {
+            if (e == null)
+                throw new ArgumentNullException("e");
+
+            var instanceType = e.Instance.GetType();
+
+            if (typeof(ISettings).IsAssignableFrom(e.Instance.GetType()))
+            {
+                var updateMethod = UpdateMethod.MakeGenericMethod(instanceType);
+                updateMethod.Invoke(null, new[]{e.Instance, e.Context});
+            }
+        }
+
+        static void UpdateInstance<TSettings>(TSettings settings, IComponentContext context) where TSettings : class, ISettings
+        {
+            context.Resolve<IConfigurationProvider<TSettings>>().LoadInto(settings);
+        }
+    }
 
     public class SettingsSource : IRegistrationSource
     {
-        static readonly MethodInfo BuildMethod = typeof(SettingsSource).GetMethod(
-            "BuildRegistration",
+        static readonly MethodInfo ResolveSettingsMethod = typeof(SettingsSource).GetMethod(
+            "ResolveSettings",
             BindingFlags.Static | BindingFlags.NonPublic);
 
         public IEnumerable<IComponentRegistration> RegistrationsFor(
@@ -169,17 +211,30 @@ namespace Nop.Web.MVC.Infrastructure
                 Func<Service, IEnumerable<IComponentRegistration>> registrations)
         {
             var ts = service as TypedService;
+            
             if (ts != null && typeof(ISettings).IsAssignableFrom(ts.ServiceType))
             {
-                var buildMethod = BuildMethod.MakeGenericMethod(ts.ServiceType);
-                yield return (IComponentRegistration)buildMethod.Invoke(null, null);
+                var regs = registrations.Invoke(service);
+                if (regs.Count() == 0)
+                {
+                    Debug.WriteLine(ts.ServiceType.Name +
+                                    " has no registrations, so lets create it via ContainerManager.ResolveResolveUnregistered");
+                    //then there are not registrations for this setting, so lets create it.
+                    var buildMethod = ResolveSettingsMethod.MakeGenericMethod(ts.ServiceType);
+                    yield return (IComponentRegistration)buildMethod.Invoke(null, null);
+                }
+                else
+                {
+                    Debug.WriteLine(ts.ServiceType.Name +
+                                    " has registrations, so lets let the container deal with it.");
+                }
             }
         }
 
-        static IComponentRegistration BuildRegistration<TSettings>() where TSettings : ISettings, new()
+        static IComponentRegistration ResolveSettings<TSettings>() where TSettings : class, ISettings
         {
             return RegistrationBuilder
-                .ForDelegate((c, p) => c.Resolve<IConfigurationProvider<TSettings>>().Settings)
+                .ForDelegate((c, p) => EngineContext.Current.ContainerManager.ResolveUnregistered<TSettings>())
                 .InstancePerHttpRequest()
                 .CreateRegistration();
         }

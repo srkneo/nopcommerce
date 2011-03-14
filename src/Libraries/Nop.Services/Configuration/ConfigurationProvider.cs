@@ -1,32 +1,57 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using Nop.Core;
 using Nop.Core.Configuration;
+using Nop.Core.Infrastructure;
 
 namespace Nop.Services.Configuration
 {
-    public class ConfigurationProvider<TSettings> : IConfigurationProvider<TSettings> where TSettings : ISettings, new()
+    public class ConfigurationProvider<TSettings> : IConfigurationProvider<TSettings> where TSettings : class, ISettings
     {
-        readonly ISettingService _settingService;
+        #region Fields (3)
 
-        public ConfigurationProvider(ISettingService settingService) 
+        private TSettings _settings;
+        readonly ISettingService _settingService;
+        private bool _setValues = false;
+
+        #endregion Fields
+
+        #region Constructors (1)
+
+        public ConfigurationProvider(ISettingService settingService)
         {
             this._settingService = settingService;
-            this.BuildConfiguration();
         }
-        
-        public TSettings Settings { get; private set; }
 
-        private void BuildConfiguration() 
+        #endregion Constructors
+
+        #region Properties (1)
+
+        public TSettings Settings
         {
-            Settings = Activator.CreateInstance<TSettings>();
+            get
+            {
+                SetValues();
+                return _settings;
+            }
+            private set
+            {
+                _settings = value;
+            }
+        }
 
-            // get properties we can write to
-            //TODO ensure that we can convert Enum (e.g., TaxSettings.TaxBasedOn)
-            //TODO support default values (set using attributes)
+        #endregion Properties
+
+        #region Methods (3)
+
+        // Public Methods (2) 
+
+        public void LoadInto(TSettings settings)
+        {
             var properties = from prop in typeof(TSettings).GetProperties()
                              where prop.CanWrite && prop.CanRead
                              let setting = _settingService.GetSettingByKey<string>(typeof(TSettings).Name + "." + prop.Name)
@@ -35,8 +60,8 @@ namespace Nop.Services.Configuration
                              let value = TypeDescriptor.GetConverter(prop.PropertyType).ConvertFromInvariantString(setting)
                              select new { prop, value };
 
-            // assign properties
-            properties.ToList().ForEach(p => p.prop.SetValue(Settings, p.value, null));
+            properties.ToList().ForEach(p => p.prop.SetValue(settings, p.value, null));
+            Debug.WriteLine("Loaded settings into " + settings.GetType().Name);
         }
 
         public void SaveSettings(TSettings settings)
@@ -56,8 +81,24 @@ namespace Nop.Services.Configuration
                     _settingService.SetSetting(key, "");
             }
 
-
-            this.Settings = settings;
+            Settings = settings;
         }
+
+        // Private Methods (1) 
+
+        private void SetValues()
+        {
+            if (_settings == null)
+            {
+                //Settings was not injected by the container, so lets create it.
+                _settings = EngineContext.Current.ContainerManager.ResolveUnregistered<TSettings>();
+            }
+            if (!_setValues)
+            {
+                LoadInto(_settings);
+            }
+        }
+
+        #endregion Methods
     }
 }
