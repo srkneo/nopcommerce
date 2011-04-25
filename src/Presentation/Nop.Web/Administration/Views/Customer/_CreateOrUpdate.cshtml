@@ -1,0 +1,413 @@
+﻿@model Nop.Admin.Models.CustomerModel
+@using Nop.Web.Framework;
+@using Telerik.Web.Mvc.UI;
+
+@Html.ValidationSummary(false)
+@Html.HiddenFor(model => model.Id)
+
+@Html.Telerik().TabStrip().Name("customer-edit").Items(x =>
+{
+    var tabInfo = x.Add().Text(T("Admin.Customers.Customers.Info").Text).Content(TabInfo().ToHtmlString());
+    var tabCustomerRoles = x.Add().Text(T("Admin.Customers.Customers.CustomerRoles").Text).Content(TabCustomerRoles().ToHtmlString());
+    TabStripItemBuilder tabRewardPoints = null;
+    if (Model.DisplayRewardPointsHistory)
+        tabRewardPoints = x.Add().Text(T("Admin.Customers.Customers.RewardPoints").Text).Content(TabRewardPoints().ToHtmlString());
+    TabStripItemBuilder tabAddresses = null;
+    if (Model.Id > 0)
+        tabAddresses = x.Add().Text(T("Admin.Customers.Customers.Addresses").Text).Content(TabAddresses().ToHtmlString());
+    TabStripItemBuilder tabUserAccount = null;
+    if (Model.Id > 0)
+        tabUserAccount = x.Add().Text(T("Admin.Customers.Customers.UserAccount").Text).Content(TabUserAccount().ToHtmlString());
+
+    var selectedTab = (string)ViewData["selectedTab"];
+    switch (selectedTab)
+    {
+        case "info":
+            tabInfo.Selected(true);
+            break;
+        case "customerroles":
+            tabCustomerRoles.Selected(true);
+            break;
+        case "rewardpoints":
+            tabRewardPoints.Selected(true);
+            break;
+        case "addresses":
+            tabAddresses.Selected(true);
+            break;
+        case "useraccount":
+            tabUserAccount.Selected(true);
+            break;
+        default:
+            tabInfo.Selected(true);
+            break;
+    }
+})
+
+@helper TabInfo()
+    { 
+<table class="adminContent">
+    @if (Model.GenderEnabled)
+    {
+    <tr>
+        <td class="adminTitle">
+            @Html.NopLabelFor(model => model.Gender):
+        </td>
+        <td class="adminData">
+            @Html.RadioButton("Gender", "M", (Model.Gender == "M"), new { id = "Gender_Male" })
+            <label class="forcheckbox" for="Gender_Male">@T("Admin.Customers.Customers.Fields.Gender.Male")</label>
+            
+            @Html.RadioButton("Gender", "F", (Model.Gender == "F"), new { id = "Gender_Female" })
+            <label class="forcheckbox" for="Gender_Female">@T("Admin.Customers.Customers.Fields.Gender.Female")</label>
+        </td>
+    </tr>
+    }
+    <tr>
+        <td class="adminTitle">
+            @Html.NopLabelFor(model => model.FirstName):
+        </td>
+        <td class="adminData">
+            @Html.EditorFor(model => model.FirstName)
+            @Html.ValidationMessageFor(model => model.FirstName)
+        </td>
+    </tr>
+    <tr>
+        <td class="adminTitle">
+            @Html.NopLabelFor(model => model.LastName):
+        </td>
+        <td class="adminData">
+            @Html.EditorFor(model => model.LastName)
+            @Html.ValidationMessageFor(model => model.LastName)
+        </td>
+    </tr>
+    @if (Model.DateOfBirthEnabled)
+    {
+    <tr>
+        <td class="adminTitle">
+            @Html.NopLabelFor(model => model.DateOfBirth):
+        </td>
+        <td class="adminData">
+            @Html.EditorFor(model => model.DateOfBirth)
+            @Html.ValidationMessageFor(model => model.DateOfBirth)
+        </td>
+    </tr>
+    }
+    @if (Model.CompanyEnabled)
+    {
+    <tr>
+        <td class="adminTitle">
+            @Html.NopLabelFor(model => model.Company):
+        </td>
+        <td class="adminData">
+            @Html.EditorFor(model => model.Company)
+            @Html.ValidationMessageFor(model => model.Company)
+        </td>
+    </tr>
+    }
+    <tr>
+        <td class="adminTitle">
+            @Html.NopLabelFor(model => model.AdminComment):
+        </td>
+        <td class="adminData">
+            @Html.EditorFor(model => model.AdminComment)
+            @Html.ValidationMessageFor(model => model.AdminComment)
+        </td>
+    </tr>
+    <tr>
+        <td class="adminTitle">
+            @Html.NopLabelFor(model => model.IsTaxExempt):
+        </td>
+        <td class="adminData">
+            @Html.EditorFor(model => model.IsTaxExempt)
+            @Html.ValidationMessageFor(model => model.IsTaxExempt)
+        </td>
+    </tr>
+    @if (Model.AllowCustomersToSetTimeZone)
+    {
+    <tr>
+        <td class="adminTitle">
+            @Html.NopLabelFor(model => model.TimeZoneId):
+        </td>
+        <td class="adminData">
+            @Html.DropDownList("TimeZoneId", Model.AvailableTimeZones)
+            @Html.ValidationMessageFor(model => model.TimeZoneId)
+        </td>
+    </tr>
+    }
+    @if (Model.DisplayVatNumber)
+    {
+    <tr>
+        <td class="adminTitle">
+            @Html.NopLabelFor(model => model.VatNumber):
+        </td>
+        <td class="adminData">
+            @Html.EditorFor(model => model.VatNumber) 
+            (@string.Format(T("Admin.Customers.Customers.Fields.VatNumberStatus").Text, Model.VatNumberStatusNote)) 
+            <button type="submit" name="markVatNumberAsValid" value="markVatNumberAsValid" class="t-button">@T("Admin.Customers.Customers.Fields.VatNumber.MarkAsValid")</button>
+            <button type="submit" name="markVatNumberAsInvalid" value="markVatNumberAsInvalid" class="t-button">@T("Admin.Customers.Customers.Fields.VatNumber.MarkAsInvalid")</button>
+            @Html.ValidationMessageFor(model => model.VatNumber)
+        </td>
+    </tr>
+    }
+    <tr>
+        <td class="adminTitle">
+            @Html.NopLabelFor(model => model.Active):
+        </td>
+        <td class="adminData">
+            @Html.EditorFor(model => model.Active)
+            @Html.ValidationMessageFor(model => model.Active)
+        </td>
+    </tr>
+    @if (!String.IsNullOrEmpty(Model.CreatedOnStr))
+    {
+    <tr>
+        <td class="adminTitle">
+            @Html.NopLabelFor(model => model.CreatedOnStr):
+        </td>
+        <td class="adminData">
+            @Model.CreatedOnStr
+        </td>
+    </tr>
+    }
+</table>
+    }
+@helper TabCustomerRoles()
+    {
+        if (Model.AvailableCustomerRoles != null && Model.AvailableCustomerRoles.Count > 0)
+        {
+            foreach (var customerRole in Model.AvailableCustomerRoles)
+            {
+            <input type="checkbox" name="SelectedCustomerRoleIds" value="@customerRole.Id"
+            @if (Model.SelectedCustomerRoleIds != null && Model.SelectedCustomerRoleIds.Contains(customerRole.Id))
+            {
+                <text>checked="checked"</text>
+            }
+            />@customerRole.Name
+            <br />
+            }
+        }
+        else
+        {
+            @T("Admin.Customers.Customers.Fields.CustomerRoles.NoRoles")
+        }
+}
+@helper TabRewardPoints()
+    {
+    @(Html.Telerik().Grid<Nop.Admin.Models.CustomerModel.RewardPointsHistoryModel>().Name("customer-rewardpoints-grid")
+    .DataKeys(keys =>
+    {
+        keys.Add(x => x.Id).RouteKey("rewardPointsHistoryId");
+    })
+    .DataBinding(binding =>
+    {
+        binding.Ajax().Select("RewardPointsHistorySelect", "Customer", new { customerId = Model.Id })
+            .Insert("RewardPointsHistoryAdd", "Customer", new { customerId = Model.Id });
+    })
+    .Columns(columns =>
+    {
+        columns.Bound(x => x.Points);
+        columns.Bound(x => x.PointsBalance).ReadOnly();
+        columns.Bound(x => x.Message);
+        columns.Bound(x => x.CreatedOnStr).ReadOnly();
+    }))
+    <div class="clear">
+    </div>
+    
+    <p>
+        <strong>
+            @T("Admin.Customers.Customers.RewardPoints.AddTitle")
+        </strong>
+    </p>
+    <table class="adminContent">
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.AddRewardPointsValue)
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.AddRewardPointsValue)
+                @Html.ValidationMessageFor(model => model.AddRewardPointsValue)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.AddRewardPointsMessage)
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.AddRewardPointsMessage)
+                @Html.ValidationMessageFor(model => model.AddRewardPointsMessage)
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="left">
+                <button type="button" name="addRewardPoints" id="addRewardPoints" class="t-button">
+                    @T("Admin.Customers.Customers.RewardPoints.AddButton")</button>
+            </td>
+        </tr>
+    </table>
+    
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#addRewardPoints').click(function () {
+                var rewardPointsValue = $("#@Html.FieldIdFor(model => model.AddRewardPointsValue)").val();
+                var rewardPointsMessage = $("#@Html.FieldIdFor(model => model.AddRewardPointsMessage)").val();
+                $('#addRewardPoints').attr('disabled', true);
+                $.ajax({
+                    type: "POST",
+                    url: "@(Url.Action("RewardPointsHistoryAdd", "Customer"))",
+                    data: "addRewardPointsValue=" + rewardPointsValue + "&addRewardPointsMessage=" + rewardPointsMessage + "&customerId=" + @Model.Id,
+                    success: function (data) {
+                         alert('Reward points are added')
+                         var rewardPointsGrid = $("#customer-rewardpoints-grid");
+                         rewardPointsGrid.data('tGrid').ajaxRequest();
+                         $('#addRewardPoints').attr('disabled', false);
+                    },
+                    error:function (xhr, ajaxOptions, thrownError){
+                        alert('Failed to add reward points.')
+                        $('#addRewardPoints').attr('disabled', false);
+                    }  
+                });
+            });
+        });
+    </script>
+}
+@helper TabAddresses()
+    {
+    @(Html.Telerik().Grid<Nop.Admin.Models.AddressModel>().Name("customer-addresses-grid")
+    .DataKeys(keys =>
+    {
+        keys.Add(x => x.Id).RouteKey("addressId");
+    })
+    .DataBinding(binding =>
+    {
+        binding.Ajax()
+            .Select("AddressesSelect", "Customer", new { customerId = Model.Id })
+            .Delete("AddressDelete", "Customer", new { customerId = Model.Id });
+    })
+    .Columns(columns =>
+    {
+        columns.Bound(x => x.FirstName);
+        columns.Bound(x => x.LastName);
+        columns.Bound(x => x.Email);
+        columns.Bound(x => x.PhoneNumber);
+        columns.Bound(x => x.FaxNumber);
+        columns.Bound(x => x.Id)
+            .ClientTemplate("<div>"
+                    + "<#= Company #><br />"
+                    + "<#= Address1 #><br />"
+                    + "<#= Address2 #><br />"
+                    + "<#= City #>, <#= StateProvinceName #>, <#= ZipPostalCode #><br />"
+                    + "<#= CountryName #><br />"
+                    + "</div>")
+            .Title("Address");
+        columns.Bound(x => x.Id)
+            .ClientTemplate("<a href=\"/Admin/Customer/AddressEdit?customerId=" + @Model.Id + "&addressid=<#= Id #>\">" + T("Admin.Common.Edit").Text + "</a>")
+            .Title("Edit");
+        columns.Command(commands =>
+        {
+            commands.Delete();
+        })
+            .Title("Delete");
+    }))
+    <div class="clear">
+    </div>
+    <p>
+        <strong>
+            <input type="button" class="t-button" onclick="location.href='@Url.Action("AddressCreate", new { customerId = Model.Id })'" value='@T("Admin.Customers.Customers.Addresses.AddButton")' />
+        </strong>
+    </p>
+}
+
+@helper TabUserAccount()
+    {
+    
+    <div>
+        <table class="adminContent">
+            <tr>
+                <td class="adminTitle">
+                    @Html.NopLabelFor(model => model.AssociatedUserEmail):
+                </td>
+                <td class="adminData">
+                @if (Model.AssociatedUserId.HasValue)
+                {
+                    @Model.AssociatedUserEmail  @:- <a href="@Url.Action("Edit", "User", new { Id = @Model.AssociatedUserId.Value })">@T("Admin.Common.View")</a>
+                    <button type="submit" name="detach-associated-user" value="detach-associated-user" class="t-button">@T("Admin.Customers.Customers.UserAccount.DetachUser")</button>
+                }
+                else
+                {
+                    @T("Admin.Customers.Customers.UserAccount.NoAssociatedUser")
+                }
+                </td>
+            </tr>
+        </table>
+    </div>
+    <hr />
+    <p>
+       <b>@T("Admin.Customers.Customers.UserAccount.AssociateTitle")</b>
+    </p>
+    <div class="clear"></div>
+    <div>
+       <label for="userEmailStartsWith"><strong>Email</strong> contains:</label>
+        @Html.TextBoxFor(model => model.UserEmailStartsWith)
+        <button type="submit" name="search-users" value="searchUsers" class="t-button">Search</button>
+    </div>
+    <div class="clear"></div>
+        <script type="text/javascript">
+            function associateUser(userId) {
+                //if(confirm('Are you sure?')) {
+                    $.ajax({
+                        type: "POST",
+                        url: "@(Url.Action("AssociateNewUserAccount", "Customer"))",
+                        data: "userId=" + userId + "&customerId=" + @Model.Id,
+                        success: function (data) {
+                             alert('Successfully associated. Refresh the page to see the changes')
+                             //TODO reload page (stay on 'User account' page
+                        },
+                        error:function (xhr, ajaxOptions, thrownError){
+                            alert('Failed to associate user.')
+                        }  
+                    });
+                //}
+            };
+        </script>
+    @(Html.Telerik().Grid<Nop.Admin.Models.CustomerModel.UserAccountModel>()
+        .Name("customer-useraccounts-grid")
+        .Columns(columns =>
+        {
+            columns.Bound(x => x.Id)
+                .ClientTemplate("<button type='button' name='associateUserAccount' id='associateUserAccount' onclick='associateUser(<#= Id #>)' class='t-button'>Associate</button>")
+                .Title("Associate")
+                .Width(50)
+                .Centered();
+            columns.Bound(x => x.Id)
+                .Filterable(false)
+                .Width(50);
+            columns.Bound(x => x.Email)
+                .Filterable(false)
+                .Width(200);
+            columns.Bound(x => x.IsLockedOut)
+                .Filterable(false)
+                .Width(100)
+                .Template(x => x.IsLockedOut.ToString().ToLower())
+                .Centered();
+            columns.Bound(x => x.IsApproved)
+                .Filterable(false)
+                .Width(100)
+                .Template(x => x.IsApproved.ToString().ToLower())
+                .Centered();
+            columns.Bound(x => x.CreatedOnStr)
+                .Filterable(false)
+                .Width(100);
+        })
+        .Pageable(settings => settings.PageSize(10))
+        .Filterable(filtering => filtering.Filters(filters =>
+        {
+            if (!String.IsNullOrEmpty(ViewData["userEmailStartsWith"] as string))
+            {
+                filters.Add(x => x.Email).Contains((string)ViewData["userEmailStartsWith"]);
+            }
+        }))
+        .DataBinding(binding =>
+        {
+            binding.Ajax().Select("UserSelect", "Customer");
+        })
+        .EnableCustomBinding(true))
+}

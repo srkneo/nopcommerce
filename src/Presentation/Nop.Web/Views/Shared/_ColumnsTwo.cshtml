@@ -1,0 +1,19 @@
+﻿@{
+    Layout = "~/Views/Shared/_Root.cshtml";
+}
+<div class="master-wrapper-side-2">
+    @if (IsSectionDefined("left"))
+    {
+        @RenderSection("left")
+    }
+    else
+    {
+        <div>
+            Default content</div>
+    }
+</div>
+<div class="master-wrapper-center-2">
+    <div class="master-wrapper-cph-2">
+        @RenderBody()
+    </div>
+</div>
