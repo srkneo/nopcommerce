@@ -25,7 +25,7 @@ namespace Nop.Services.Messages
         /// Inserts a queued email
         /// </summary>
         /// <param name="queuedEmail">Queued email</param>        
-        public virtual void InsertQueuedEmail(QueuedEmail queuedEmail)
+        public void InsertQueuedEmail(QueuedEmail queuedEmail)
         {
             if (queuedEmail == null)
                 throw new ArgumentNullException("queuedEmail");
@@ -37,7 +37,7 @@ namespace Nop.Services.Messages
         /// Updates a queued email
         /// </summary>
         /// <param name="queuedEmail">Queued email</param>
-        public virtual void UpdateQueuedEmail(QueuedEmail queuedEmail)
+        public void UpdateQueuedEmail(QueuedEmail queuedEmail)
         {
             if (queuedEmail == null)
                 throw new ArgumentNullException("queuedEmail");
@@ -49,7 +49,7 @@ namespace Nop.Services.Messages
         /// Deleted a queued email
         /// </summary>
         /// <param name="queuedEmail">Queued email</param>
-        public virtual void DeleteQueuedEmail(QueuedEmail queuedEmail)
+        public void DeleteQueuedEmail(QueuedEmail queuedEmail)
         {
             if (queuedEmail == null)
                 throw new ArgumentNullException("queuedEmail");
@@ -62,7 +62,7 @@ namespace Nop.Services.Messages
         /// </summary>
         /// <param name="queuedEmailId">Queued email identifier</param>
         /// <returns>Queued email</returns>
-        public virtual QueuedEmail GetQueuedEmailById(int queuedEmailId)
+        public QueuedEmail GetQueuedEmailById(int queuedEmailId)
         {
             if (queuedEmailId == 0)
                 return null;
@@ -75,40 +75,17 @@ namespace Nop.Services.Messages
         /// <summary>
         /// Gets all queued emails
         /// </summary>
-        /// <param name="queuedEmailCount">Email item count. 0 if you want to get all items</param>
-        /// <param name="loadNotSentItemsOnly">A value indicating whether to load only not sent emails</param>
-        /// <param name="maxSendTries">Maximum send tries</param>
-        /// <returns>Queued email list</returns>
-        public virtual IList<QueuedEmail> GetAllQueuedEmails(int queuedEmailCount, bool loadNotSentItemsOnly, int maxSendTries)
-        {
-            var query = _queuedEmailRepository.Table;
-
-            if (loadNotSentItemsOnly)
-                query = query.Where(qe => qe.SentOnUtc.HasValue);
-            query = query.Where(qe => qe.SentTries < maxSendTries);
-            if (queuedEmailCount > 0)
-                query = query.Take(queuedEmailCount);
-
-            var queuedEmails = query.ToList();
-            return queuedEmails;
-        }
-
-        /// <summary>
-        /// Gets all queued emails
-        /// </summary>
         /// <param name="fromEmail">From Email</param>
         /// <param name="toEmail">To Email</param>
         /// <param name="startTime">The start time</param>
         /// <param name="endTime">The end time</param>
-        /// <param name="queuedEmailCount">Email item count. 0 if you want to get all items</param>
         /// <param name="loadNotSentItemsOnly">A value indicating whether to load only not sent emails</param>
         /// <param name="maxSendTries">Maximum send tries</param>
         /// <param name="pageIndex">Page index</param>
         /// <param name="pageSize">Page size</param>
         /// <returns>Email item list</returns>
-        public virtual IPagedList<QueuedEmail> SearchEmails(string fromEmail, string toEmail, DateTime? startTime, DateTime? endTime, 
-            int queuedEmailCount, bool loadNotSentItemsOnly, int maxSendTries,
-            int pageIndex, int pageSize)
+        public IPagedList<QueuedEmail> SearchEmails(string fromEmail, string toEmail, DateTime? startTime, DateTime? endTime, 
+            bool loadNotSentItemsOnly, int maxSendTries, int pageIndex, int pageSize)
         {
             fromEmail = (fromEmail ?? String.Empty).Trim();
             toEmail = (toEmail ?? String.Empty).Trim();
@@ -123,11 +100,9 @@ namespace Nop.Services.Messages
             if (endTime.HasValue)
                 query = query.Where(qe => qe.CreatedOnUtc <= endTime);
             if (loadNotSentItemsOnly)
-                query = query.Where(qe => qe.SentOnUtc.HasValue);
+                query = query.Where(qe => !qe.SentOnUtc.HasValue);
             query = query.Where(qe => qe.SentTries < maxSendTries);
-            if (queuedEmailCount > 0)
-                query = query.Take(queuedEmailCount);
-            query = query.OrderByDescending(qe => qe.Priority).ThenBy(qe => qe.CreatedOnUtc);
+            query = query.OrderByDescending(qe => qe.Priority).ThenByDescending(qe => qe.CreatedOnUtc);
 
             var queuedEmails = new PagedList<QueuedEmail>(query, pageIndex, pageSize);
             return queuedEmails;

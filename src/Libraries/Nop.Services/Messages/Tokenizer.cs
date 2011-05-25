@@ -25,7 +25,7 @@ namespace Nop.Services.Messages
         /// <param name="template">The template with token keys inside</param>
         /// <param name="tokens">The sequence of tokens to use</param>
         /// <returns>Text with all token keys replaces by token value</returns>
-        public virtual string Replace(string template, IEnumerable<Token> tokens)
+        public string Replace(string template, IEnumerable<Token> tokens)
         {
             if (string.IsNullOrWhiteSpace(template))
                 throw new ArgumentNullException("template");
@@ -34,9 +34,7 @@ namespace Nop.Services.Messages
                 throw new ArgumentNullException("tokens");
 
             foreach (var token in tokens)
-            {
-                template = Replace(template, String.Format(@"%{0}%", token.Key),  HttpUtility.HtmlEncode(token.Value));
-            }
+                template = Replace(template, String.Format(@"%{0}%", token.Key),  token.Value);
             return template;
 
         }

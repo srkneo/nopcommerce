@@ -10,11 +10,6 @@ namespace Nop.Core.Domain.Logging
         private ICollection<ActivityLog> _activityLog;
         #region Properties
         /// <summary>
-        /// Gets or sets the activity log type identifier
-        /// </summary>
-        public virtual int ActivityLogTypeId { get; set; }
-
-        /// <summary>
         /// Gets or sets the system keyword
         /// </summary>
         public virtual string SystemKeyword { get; set; }
