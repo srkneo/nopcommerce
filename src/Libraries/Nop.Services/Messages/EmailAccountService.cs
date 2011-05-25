@@ -28,7 +28,7 @@ namespace Nop.Services.Messages
         /// Inserts an email account
         /// </summary>
         /// <param name="emailAccount">Email account</param>
-        public virtual void InsertEmailAccount(EmailAccount emailAccount)
+        public void InsertEmailAccount(EmailAccount emailAccount)
         {
             if (emailAccount == null)
                 throw new ArgumentNullException("emailAccount");
@@ -58,7 +58,7 @@ namespace Nop.Services.Messages
         /// Updates an email account
         /// </summary>
         /// <param name="emailAccount">Email account</param>
-        public virtual void UpdateEmailAccount(EmailAccount emailAccount)
+        public void UpdateEmailAccount(EmailAccount emailAccount)
         {
             if (emailAccount == null)
                 throw new ArgumentNullException("emailAccount");
@@ -88,7 +88,7 @@ namespace Nop.Services.Messages
         /// Deletes an email account
         /// </summary>
         /// <param name="emailAccount">Email account</param>
-        public virtual void DeleteEmailAccount(EmailAccount emailAccount)
+        public void DeleteEmailAccount(EmailAccount emailAccount)
         {
             if (emailAccount == null)
                 throw new ArgumentNullException("emailAccount");
@@ -104,7 +104,7 @@ namespace Nop.Services.Messages
         /// </summary>
         /// <param name="emailAccountId">The email account identifier</param>
         /// <returns>Email account</returns>
-        public virtual EmailAccount GetEmailAccountById(int emailAccountId)
+        public EmailAccount GetEmailAccountById(int emailAccountId)
         {
             if (emailAccountId == 0)
                 return null;
@@ -117,7 +117,7 @@ namespace Nop.Services.Messages
         /// Gets all email accounts
         /// </summary>
         /// <returns>Email accounts list</returns>
-        public virtual IList<EmailAccount> GetAllEmailAccounts()
+        public IList<EmailAccount> GetAllEmailAccounts()
         {
             var query = from ea in _emailAccountRepository.Table
                         orderby ea.Id
@@ -125,27 +125,5 @@ namespace Nop.Services.Messages
             var emailAccounts = query.ToList();
             return emailAccounts;
         }
-
-        /// <summary>
-        /// Gets or sets a store default email account
-        /// </summary>
-        public virtual EmailAccount DefaultEmailAccount
-        {
-            get
-            {
-                int defaultEmailAccountId = _emailAccountSettings.DefaultEmailAccountId;
-                var emailAccount = GetEmailAccountById(defaultEmailAccountId);
-                if (emailAccount == null)
-                    emailAccount = GetAllEmailAccounts().FirstOrDefault();
-
-                return emailAccount;
-            }
-            set
-            {
-                if (value != null)
-                    _emailAccountSettings.DefaultEmailAccountId = value.Id;
-            }
-        }
-
     }
 }

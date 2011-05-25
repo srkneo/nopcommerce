@@ -8,6 +8,7 @@ using Nop.Core;
 using Nop.Core.Domain.Customers;
 using Nop.Core.Domain.Directory;
 using Nop.Core.Domain.Forums;
+using Nop.Core.Domain.Localization;
 using Nop.Core.Domain.Media;
 using Nop.Core.Domain.Orders;
 using Nop.Core.Domain.Security;
@@ -19,6 +20,7 @@ using Nop.Services.Customers;
 using Nop.Services.Directory;
 using Nop.Services.Helpers;
 using Nop.Services.Localization;
+using Nop.Services.Messages;
 using Nop.Services.Orders;
 using Nop.Services.Security;
 using Nop.Services.Tax;
@@ -61,6 +63,8 @@ namespace Nop.Web.Controllers
         private readonly IPriceFormatter _priceFormatter;
         private readonly IPictureService _pictureService;
         private readonly MediaSettings _mediaSettings;
+        private readonly IWorkflowMessageService _workflowMessageService;
+        private readonly LocalizationSettings _localizationSettings;
 
         #endregion
 
@@ -78,7 +82,8 @@ namespace Nop.Web.Controllers
             IOrderTotalCalculationService orderTotalCalculationService,
             IOrderProcessingService orderProcessingService, IOrderService orderService,
             ICurrencyService currencyService, IPriceFormatter priceFormatter,
-            IPictureService pictureService, MediaSettings mediaSettings)
+            IPictureService pictureService, MediaSettings mediaSettings,
+            IWorkflowMessageService workflowMessageService, LocalizationSettings localizationSettings)
         {
             this._authenticationService = authenticationService;
             this._userService = userService;
@@ -105,7 +110,8 @@ namespace Nop.Web.Controllers
             this._priceFormatter = priceFormatter;
             this._pictureService = pictureService;
             this._mediaSettings = mediaSettings;
-
+            this._workflowMessageService = workflowMessageService;
+            this._localizationSettings = localizationSettings;
         }
 
         #endregion
@@ -221,7 +227,7 @@ namespace Nop.Web.Controllers
 
                     var customer = _workContext.CurrentCustomer;
                     //now register 'Customer' entity
-                    customer = _customerService.RegisterCustomer(customer.Id);
+                    _customerService.RegisterCustomer(customer);
                     //associate it with this user
                     customer.AssociatedUserId = registrationResult.User.Id;
                     //properties
@@ -231,10 +237,14 @@ namespace Nop.Web.Controllers
                     if (_taxSettings.EuVatEnabled)
                     {
                         customer.VatNumber = model.VatNumber;
-                        customer.VatNumberStatus = _taxService.GetVatNumberStatus(customer.VatNumber);
-                        //TODO send VAT number admin notification
-                        //if (!String.IsNullOrEmpty(customer.VatNumber) && _taxSettings.EuVatEmailAdminWhenNewVatSubmitted)
-                        //    _messageWorkflowService.SendNewVATSubmittedStoreOwnerNotification(customer, vatName, vatAddress, _localizationService.DefaultAdminLanguage.LanguageId);
+                        
+                        string vatName = string.Empty;
+                        string vatAddress = string.Empty;
+                        customer.VatNumberStatus = _taxService.GetVatNumberStatus(customer.VatNumber, out vatName, out vatAddress);
+                        //send VAT number admin notification
+                        if (!String.IsNullOrEmpty(customer.VatNumber) && _taxSettings.EuVatEmailAdminWhenNewVatSubmitted)
+                            _workflowMessageService.SendNewVatSubmittedStoreOwnerNotification(customer, registrationResult.User, customer.VatNumber, vatAddress, _localizationSettings.DefaultAdminLanguageId);
+
                     }
                     //save
                     _customerService.UpdateCustomer(customer);
@@ -256,10 +266,18 @@ namespace Nop.Web.Controllers
                     if (isApproved)
                         _authenticationService.SignIn(registrationResult.User, true);
 
-                    //UNDONE notification
-                    //if (_customerService.NotifyNewCustomerRegistration)
-                    //    _messageWorkflowService.SendNewCustomerNotificationMessage(customer, _localizationService.DefaultAdminLanguage.LanguageId);
-
+                    //notifications
+                    if (_customerSettings.NotifyNewCustomerRegistration)
+                        _workflowMessageService.SendCustomerRegisteredNotificationMessage(customer, registrationResult.User, _localizationSettings.DefaultAdminLanguageId);
+                    if (_userSettings.UserRegistrationType == UserRegistrationType.EmailValidation)
+                    {
+                        _customerService.SaveCustomerAttribute(customer, SystemCustomerAttributeNames.AccountActivationToken, Guid.NewGuid().ToString());
+                        _workflowMessageService.SendCustomerEmailValidationMessage(customer, registrationResult.User, _workContext.WorkingLanguage.Id);
+                    }
+                    else
+                    {
+                        _workflowMessageService.SendCustomerWelcomeMessage(customer, registrationResult.User, _workContext.WorkingLanguage.Id);
+                    }
                     switch (_userSettings.UserRegistrationType)
                     {
                         case UserRegistrationType.EmailValidation:
@@ -410,10 +428,12 @@ namespace Nop.Web.Controllers
                     customer.VatNumber = model.VatNumber;
                     if (prevVatNumber != model.VatNumber)
                     {
-                        customer.VatNumberStatus = _taxService.GetVatNumberStatus(customer.VatNumber);
-                        //TODO send VAT number admin notification
-                        //if (!String.IsNullOrEmpty(customer.VatNumber) && _taxSettings.EuVatEmailAdminWhenNewVatSubmitted)
-                        //    _messageWorkflowService.SendNewVATSubmittedStoreOwnerNotification(customer, vatName, vatAddress, _localizationService.DefaultAdminLanguage.LanguageId);
+                        string vatName = string.Empty;
+                        string vatAddress = string.Empty;
+                        customer.VatNumberStatus = _taxService.GetVatNumberStatus(customer.VatNumber, out vatName, out vatAddress);
+                        //send VAT number admin notification
+                        if (!String.IsNullOrEmpty(customer.VatNumber) && _taxSettings.EuVatEmailAdminWhenNewVatSubmitted)
+                            _workflowMessageService.SendNewVatSubmittedStoreOwnerNotification(customer, user, customer.VatNumber, vatAddress, _localizationSettings.DefaultAdminLanguageId);
                     }
                 }
                 //save

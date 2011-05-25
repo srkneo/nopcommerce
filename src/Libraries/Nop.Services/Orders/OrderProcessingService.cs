@@ -55,6 +55,7 @@ namespace Nop.Services.Orders
         private readonly IDiscountService _discountService;
         private readonly IEncryptionService _encryptionService;
         private readonly IWorkContext _workContext;
+        private readonly IWorkflowMessageService _workflowMessageService;
 
         private readonly RewardPointsSettings _rewardPointsSettings;
         private readonly OrderSettings _orderSettings;
@@ -89,6 +90,7 @@ namespace Nop.Services.Orders
         /// <param name="discountService">Discount service</param>
         /// <param name="encryptionService">Encryption service</param>
         /// <param name="workContext">Work context</param>
+        /// <param name="workflowMessageService">Workflow message service</param>
         /// <param name="rewardPointsSettings">Reward points settings</param>
         /// <param name="orderSettings">Order settings</param>
         /// <param name="taxSettings">Tax settings</param>
@@ -114,6 +116,7 @@ namespace Nop.Services.Orders
             IDiscountService discountService,
             IEncryptionService encryptionService,
             IWorkContext workContext,
+            IWorkflowMessageService workflowMessageService,
             RewardPointsSettings rewardPointsSettings,
             OrderSettings orderSettings,
             TaxSettings taxSettings,
@@ -135,6 +138,7 @@ namespace Nop.Services.Orders
             this._shoppingCartService = shoppingCartService;
             this._checkoutAttributeFormatter = checkoutAttributeFormatter;
             this._workContext = workContext;
+            this._workflowMessageService = workflowMessageService;
             this._shippingService = shippingService;
             this._taxService = taxService;
             this._customerService = customerService;
@@ -184,36 +188,36 @@ namespace Nop.Services.Orders
                 os == OrderStatus.Complete
                 && notifyCustomer)
             {
-                //TODO implement notification
-                //int orderCompletedCustomerNotificationQueuedEmailId = _messageService.SendOrderCompletedCustomerNotification(order, order.CustomerLanguageId);
-                //if (orderCompletedCustomerNotificationQueuedEmailId > 0)
-                //{
-                //    order.OrderNotes.Add(new OrderNote()
-                //    {
-                //        Note = string.Format("\"Order completed\" email (to customer) has been queued. Queued email identifier: {0}.", orderCompletedCustomerNotificationQueuedEmailId),
-                //        DisplayToCustomer = false,
-                //        CreatedOnUtc = DateTime.UtcNow
-                //    });
-                //    _orderService.UpdateOrder(order);
-                //}
+                //notification
+                int orderCompletedCustomerNotificationQueuedEmailId = _workflowMessageService.SendOrderCompletedCustomerNotification(order, order.CustomerLanguageId);
+                if (orderCompletedCustomerNotificationQueuedEmailId > 0)
+                {
+                    order.OrderNotes.Add(new OrderNote()
+                    {
+                        Note = string.Format("\"Order completed\" email (to customer) has been queued. Queued email identifier: {0}.", orderCompletedCustomerNotificationQueuedEmailId),
+                        DisplayToCustomer = false,
+                        CreatedOnUtc = DateTime.UtcNow
+                    });
+                    _orderService.UpdateOrder(order);
+                }
             }
 
             if (prevOrderStatus != OrderStatus.Cancelled &&
                 os == OrderStatus.Cancelled
                 && notifyCustomer)
             {
-                //TODO implement notification
-                //int orderCancelledCustomerNotificationQueuedEmailId = _messageService.SendOrderCancelledCustomerNotification(order, order.CustomerLanguageId);
-                //if (orderCancelledCustomerNotificationQueuedEmailId > 0)
-                //{
-                //    order.OrderNotes.Add(new OrderNote()
-                //    {
-                //        Note = string.Format("\"Order cancelled\" email (to customer) has been queued. Queued email identifier: {0}.", orderCancelledCustomerNotificationQueuedEmailId),
-                //        DisplayToCustomer = false,
-                //        CreatedOnUtc = DateTime.UtcNow
-                //    });
-                //    _orderService.UpdateOrder(order);
-                //}
+                //notification
+                int orderCancelledCustomerNotificationQueuedEmailId = _workflowMessageService.SendOrderCancelledCustomerNotification(order, order.CustomerLanguageId);
+                if (orderCancelledCustomerNotificationQueuedEmailId > 0)
+                {
+                    order.OrderNotes.Add(new OrderNote()
+                    {
+                        Note = string.Format("\"Order cancelled\" email (to customer) has been queued. Queued email identifier: {0}.", orderCancelledCustomerNotificationQueuedEmailId),
+                        DisplayToCustomer = false,
+                        CreatedOnUtc = DateTime.UtcNow
+                    });
+                    _orderService.UpdateOrder(order);
+                }
             }
 
             //reward points
@@ -358,7 +362,7 @@ namespace Nop.Services.Orders
         /// </summary>
         /// <param name="processPaymentRequest">Process payment request</param>
         /// <returns>Place order result</returns>
-        public virtual PlaceOrderResult PlaceOrder(ProcessPaymentRequest processPaymentRequest)
+        public PlaceOrderResult PlaceOrder(ProcessPaymentRequest processPaymentRequest)
         {
             //think about moving functionality of processing recurring orders (after the initial order was placed) to ProcessNextRecurringPayment() method
             if (processPaymentRequest == null)
@@ -1140,30 +1144,30 @@ namespace Nop.Services.Orders
                             });
                         _orderService.UpdateOrder(order);
 
-                        //UNDONE send email notifications
-                        //int orderPlacedStoreOwnerNotificationQueuedEmailId = _messageService.SendOrderPlacedStoreOwnerNotification(order, _localizationSettings.DefaultAdminLanguageId);
-                        //if (orderPlacedStoreOwnerNotificationQueuedEmailId > 0)
-                        //{
-                        //    order.OrderNotes.Add(new OrderNote()
-                        //    {
-                        //        Note = string.Format("\"Order placed\" email (to store owner) has been queued. Queued email identifier: {0}.", orderPlacedStoreOwnerNotificationQueuedEmailId),
-                        //        DisplayToCustomer = false,
-                        //        CreatedOnUtc = DateTime.UtcNow
-                        //    });
-                        //    _orderService.UpdateOrder(order);
-                        //}
+                        //send email notifications
+                        int orderPlacedStoreOwnerNotificationQueuedEmailId = _workflowMessageService.SendOrderPlacedStoreOwnerNotification(order, _localizationSettings.DefaultAdminLanguageId);
+                        if (orderPlacedStoreOwnerNotificationQueuedEmailId > 0)
+                        {
+                            order.OrderNotes.Add(new OrderNote()
+                            {
+                                Note = string.Format("\"Order placed\" email (to store owner) has been queued. Queued email identifier: {0}.", orderPlacedStoreOwnerNotificationQueuedEmailId),
+                                DisplayToCustomer = false,
+                                CreatedOnUtc = DateTime.UtcNow
+                            });
+                            _orderService.UpdateOrder(order);
+                        }
 
-                        //int orderPlacedCustomerNotificationQueuedEmailId = messageService.SendOrderPlacedCustomerNotification(order, order.CustomerLanguageId);
-                        //if (orderPlacedCustomerNotificationQueuedEmailId > 0)
-                        //{
-                        //    order.OrderNotes.Add(new OrderNote()
-                        //    {
-                        //        Note = string.Format("\"Order placed\" email (to customer) has been queued. Queued email identifier: {0}.", orderPlacedCustomerNotificationQueuedEmailId),
-                        //        DisplayToCustomer = false,
-                        //        CreatedOnUtc = DateTime.UtcNow
-                        //    });
-                        //    _orderService.UpdateOrder(order);
-                        //}
+                        int orderPlacedCustomerNotificationQueuedEmailId = _workflowMessageService.SendOrderPlacedCustomerNotification(order, order.CustomerLanguageId);
+                        if (orderPlacedCustomerNotificationQueuedEmailId > 0)
+                        {
+                            order.OrderNotes.Add(new OrderNote()
+                            {
+                                Note = string.Format("\"Order placed\" email (to customer) has been queued. Queued email identifier: {0}.", orderPlacedCustomerNotificationQueuedEmailId),
+                                DisplayToCustomer = false,
+                                CreatedOnUtc = DateTime.UtcNow
+                            });
+                            _orderService.UpdateOrder(order);
+                        }
 
                         //UNDONE send SMS
                         //_smsService.SendOrderPlacedNotification(order);
@@ -1233,7 +1237,7 @@ namespace Nop.Services.Orders
         /// Process next recurring psayment
         /// </summary>
         /// <param name="recurringPayment">Recurring payment</param>
-        public virtual void ProcessNextRecurringPayment(RecurringPayment recurringPayment)
+        public void ProcessNextRecurringPayment(RecurringPayment recurringPayment)
         {
             if (recurringPayment == null)
                 throw new ArgumentNullException("recurringPayment");
@@ -1305,7 +1309,7 @@ namespace Nop.Services.Orders
         /// Cancels a recurring payment
         /// </summary>
         /// <param name="recurringPayment">Recurring payment</param>
-        public virtual IList<string> CancelRecurringPayment(RecurringPayment recurringPayment)
+        public IList<string> CancelRecurringPayment(RecurringPayment recurringPayment)
         {
             if (recurringPayment == null)
                 throw new ArgumentNullException("recurringPayment");
@@ -1378,7 +1382,7 @@ namespace Nop.Services.Orders
         /// <param name="customerToValidate">Customer</param>
         /// <param name="recurringPayment">Recurring Payment</param>
         /// <returns>value indicating whether a customer can cancel recurring payment</returns>
-        public virtual bool CanCancelRecurringPayment(Customer customerToValidate, RecurringPayment recurringPayment)
+        public bool CanCancelRecurringPayment(Customer customerToValidate, RecurringPayment recurringPayment)
         {
             if (recurringPayment == null)
                 return false;
@@ -1416,7 +1420,7 @@ namespace Nop.Services.Orders
         /// </summary>
         /// <param name="order">Order</param>
         /// <returns>A value indicating whether shipping is allowed</returns>
-        public virtual bool CanShip(Order order)
+        public bool CanShip(Order order)
         {
             if (order == null)
                 throw new ArgumentNullException("order");
@@ -1435,7 +1439,7 @@ namespace Nop.Services.Orders
         /// </summary>
         /// <param name="order">Order</param>
         /// <param name="notifyCustomer">True to notify customer</param>
-        public virtual void Ship(Order order, bool notifyCustomer)
+        public void Ship(Order order, bool notifyCustomer)
         {
             if (order == null)
                 throw new ArgumentNullException("order");
@@ -1458,18 +1462,18 @@ namespace Nop.Services.Orders
 
             if (notifyCustomer)
             {
-                //TODO notify customer
-                //int orderShippedCustomerNotificationQueuedEmailId = _messageService.SendOrderShippedCustomerNotification(order, order.CustomerLanguageId);
-                //if (orderShippedCustomerNotificationQueuedEmailId > 0)
-                //{
-                //    order.OrderNotes.Add(new OrderNote()
-                //    {
-                //        Note = string.Format("\"Shipped\" email (to customer) has been queued. Queued email identifier: {0}.", orderShippedCustomerNotificationQueuedEmailId),
-                //        DisplayToCustomer = false,
-                //        CreatedOnUtc = DateTime.UtcNow
-                //    });
-                //    _orderService.UpdateOrder(order);
-                //}
+                //otify customer
+                int orderShippedCustomerNotificationQueuedEmailId = _workflowMessageService.SendOrderShippedCustomerNotification(order, order.CustomerLanguageId);
+                if (orderShippedCustomerNotificationQueuedEmailId > 0)
+                {
+                    order.OrderNotes.Add(new OrderNote()
+                    {
+                        Note = string.Format("\"Shipped\" email (to customer) has been queued. Queued email identifier: {0}.", orderShippedCustomerNotificationQueuedEmailId),
+                        DisplayToCustomer = false,
+                        CreatedOnUtc = DateTime.UtcNow
+                    });
+                    _orderService.UpdateOrder(order);
+                }
             }
 
             //check order status
@@ -1481,7 +1485,7 @@ namespace Nop.Services.Orders
         /// </summary>
         /// <param name="order">Order</param>
         /// <returns>A value indicating whether shipping is delivered</returns>
-        public virtual bool CanDeliver(Order order)
+        public bool CanDeliver(Order order)
         {
             if (order == null)
                 throw new ArgumentNullException("order");
@@ -1500,7 +1504,7 @@ namespace Nop.Services.Orders
         /// </summary>
         /// <param name="order">Order</param>
         /// <param name="notifyCustomer">True to notify customer</param>
-        public virtual void Deliver(Order order, bool notifyCustomer)
+        public void Deliver(Order order, bool notifyCustomer)
         {
             if (order == null)
                 throw new ArgumentNullException("order");
@@ -1523,18 +1527,18 @@ namespace Nop.Services.Orders
 
             if (notifyCustomer)
             {
-                //TODO send email notification
-                //int orderDeliveredCustomerNotificationQueuedEmailId = _messageService.SendOrderDeliveredCustomerNotification(order, order.CustomerLanguageId);
-                //if (orderDeliveredCustomerNotificationQueuedEmailId > 0)
-                //{
-                //    order.OrderNotes.Add(new OrderNote()
-                //    {
-                //        Note = string.Format("\"Delivered\" email (to customer) has been queued. Queued email identifier: {0}.", orderDeliveredCustomerNotificationQueuedEmailId),
-                //        DisplayToCustomer = false,
-                //        CreatedOnUtc = DateTime.UtcNow
-                //    });
-                //    _orderService.UpdateOrder(order);
-                //}
+                //send email notification
+                int orderDeliveredCustomerNotificationQueuedEmailId = _workflowMessageService.SendOrderDeliveredCustomerNotification(order, order.CustomerLanguageId);
+                if (orderDeliveredCustomerNotificationQueuedEmailId > 0)
+                {
+                    order.OrderNotes.Add(new OrderNote()
+                    {
+                        Note = string.Format("\"Delivered\" email (to customer) has been queued. Queued email identifier: {0}.", orderDeliveredCustomerNotificationQueuedEmailId),
+                        DisplayToCustomer = false,
+                        CreatedOnUtc = DateTime.UtcNow
+                    });
+                    _orderService.UpdateOrder(order);
+                }
             }
 
             //check order status
@@ -1548,7 +1552,7 @@ namespace Nop.Services.Orders
         /// </summary>
         /// <param name="order">Order</param>
         /// <returns>A value indicating whether cancel is allowed</returns>
-        public virtual bool CanCancelOrder(Order order)
+        public bool CanCancelOrder(Order order)
         {
             if (order == null)
                 throw new ArgumentNullException("order");
@@ -1564,7 +1568,7 @@ namespace Nop.Services.Orders
         /// </summary>
         /// <param name="order">Order</param>
         /// <param name="notifyCustomer">True to notify customer</param>
-        public virtual void CancelOrder(Order order, bool notifyCustomer)
+        public void CancelOrder(Order order, bool notifyCustomer)
         {
             if (order == null)
                 throw new ArgumentNullException("order");
@@ -1603,7 +1607,7 @@ namespace Nop.Services.Orders
         /// </summary>
         /// <param name="order">Order</param>
         /// <returns>A value indicating whether order can be marked as authorized</returns>
-        public virtual bool CanMarkOrderAsAuthorized(Order order)
+        public bool CanMarkOrderAsAuthorized(Order order)
         {
             if (order == null)
                 throw new ArgumentNullException("order");
@@ -1621,7 +1625,7 @@ namespace Nop.Services.Orders
         /// Marks order as authorized
         /// </summary>
         /// <param name="order">Order</param>
-        public virtual void MarkAsAuthorized(Order order)
+        public void MarkAsAuthorized(Order order)
         {
             if (order == null)
                 throw new ArgumentNullException("order");
@@ -1649,7 +1653,7 @@ namespace Nop.Services.Orders
         /// </summary>
         /// <param name="order">Order</param>
         /// <returns>A value indicating whether capture from admin panel is allowed</returns>
-        public virtual bool CanCapture(Order order)
+        public bool CanCapture(Order order)
         {
             if (order == null)
                 throw new ArgumentNullException("order");
@@ -1670,7 +1674,7 @@ namespace Nop.Services.Orders
         /// </summary>
         /// <param name="order">Order</param>
         /// <returns>A list of errors; empty list if no errors</returns>
-        public virtual IList<string> Capture(Order order)
+        public IList<string> Capture(Order order)
         {
             if (order == null)
                 throw new ArgumentNullException("order");
@@ -1756,7 +1760,7 @@ namespace Nop.Services.Orders
         /// </summary>
         /// <param name="order">Order</param>
         /// <returns>A value indicating whether order can be marked as paid</returns>
-        public virtual bool CanMarkOrderAsPaid(Order order)
+        public bool CanMarkOrderAsPaid(Order order)
         {
             if (order == null)
                 throw new ArgumentNullException("order");
@@ -1814,7 +1818,7 @@ namespace Nop.Services.Orders
         /// </summary>
         /// <param name="order">Order</param>
         /// <returns>A value indicating whether refund from admin panel is allowed</returns>
-        public virtual bool CanRefund(Order order)
+        public bool CanRefund(Order order)
         {
             if (order == null)
                 throw new ArgumentNullException("order");
@@ -1837,7 +1841,7 @@ namespace Nop.Services.Orders
         /// </summary>
         /// <param name="order">Order</param>
         /// <returns>A list of errors; empty list if no errors</returns>
-        public virtual IList<string> Refund(Order order)
+        public IList<string> Refund(Order order)
         {
             if (order == null)
                 throw new ArgumentNullException("order");
@@ -1915,7 +1919,7 @@ namespace Nop.Services.Orders
         /// </summary>
         /// <param name="order">Order</param>
         /// <returns>A value indicating whether order can be marked as refunded</returns>
-        public virtual bool CanRefundOffline(Order order)
+        public bool CanRefundOffline(Order order)
         {
             if (order == null)
                 throw new ArgumentNullException("order");
@@ -1936,7 +1940,7 @@ namespace Nop.Services.Orders
         /// Refunds an order (offline)
         /// </summary>
         /// <param name="order">Order</param>
-        public virtual void RefundOffline(Order order)
+        public void RefundOffline(Order order)
         {
             if (order == null)
                 throw new ArgumentNullException("order");
@@ -1974,7 +1978,7 @@ namespace Nop.Services.Orders
         /// <param name="order">Order</param>
         /// <param name="amountToRefund">Amount to refund</param>
         /// <returns>A value indicating whether refund from admin panel is allowed</returns>
-        public virtual bool CanPartiallyRefund(Order order, decimal amountToRefund)
+        public bool CanPartiallyRefund(Order order, decimal amountToRefund)
         {
             if (order == null)
                 throw new ArgumentNullException("order");
@@ -2006,7 +2010,7 @@ namespace Nop.Services.Orders
         /// <param name="order">Order</param>
         /// <param name="amountToRefund">Amount to refund</param>
         /// <returns>A list of errors; empty list if no errors</returns>
-        public virtual IList<string> PartiallyRefund(Order order, decimal amountToRefund)
+        public IList<string> PartiallyRefund(Order order, decimal amountToRefund)
         {
             if (order == null)
                 throw new ArgumentNullException("order");

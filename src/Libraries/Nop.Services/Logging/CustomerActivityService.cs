@@ -64,7 +64,7 @@ namespace Nop.Services.Logging
         /// Inserts an activity log type item
         /// </summary>
         /// <param name="activityLogType">Activity log type item</param>
-        public virtual void InsertActivityType(ActivityLogType activityLogType)
+        public void InsertActivityType(ActivityLogType activityLogType)
         {
             if (activityLogType == null)
                 throw new ArgumentNullException("activityLogType");
@@ -77,7 +77,7 @@ namespace Nop.Services.Logging
         /// Updates an activity log type item
         /// </summary>
         /// <param name="activityLogType">Activity log type item</param>
-        public virtual void UpdateActivityType(ActivityLogType activityLogType)
+        public void UpdateActivityType(ActivityLogType activityLogType)
         {
             if (activityLogType == null)
                 throw new ArgumentNullException("activityLogType");
@@ -90,7 +90,7 @@ namespace Nop.Services.Logging
         /// Deletes an activity log type item
         /// </summary>
         /// <param name="activityLogTypeId">Activity log type identifier</param>
-        public virtual void DeleteActivityType(int activityLogTypeId)
+        public void DeleteActivityType(int activityLogTypeId)
         {
             ActivityLogType activityLogType = _activityLogTypeRepository.GetById(activityLogTypeId);
             if (activityLogType == null)
@@ -104,7 +104,7 @@ namespace Nop.Services.Logging
         /// Gets all activity log type items
         /// </summary>
         /// <returns>Activity log type collection</returns>
-        public virtual List<ActivityLogType> GetAllActivityTypes()
+        public List<ActivityLogType> GetAllActivityTypes()
         {
             string key = ACTIVITYTYPE_PATTERN_KEY;
             return _cacheManager.Get(key, () =>
@@ -122,7 +122,7 @@ namespace Nop.Services.Logging
         /// </summary>
         /// <param name="activityLogTypeId">Activity log type identifier</param>
         /// <returns>Activity log type item</returns>
-        public virtual ActivityLogType GetActivityTypeById(int activityLogTypeId)
+        public ActivityLogType GetActivityTypeById(int activityLogTypeId)
         {
             if (activityLogTypeId == 0)
                 return null;
@@ -140,7 +140,7 @@ namespace Nop.Services.Logging
         /// <param name="systemKeyword">The system keyword</param>
         /// <param name="comment">The activity comment</param>
         /// <returns>Activity log item</returns>
-        public virtual ActivityLog InsertActivity(string systemKeyword, string comment)
+        public ActivityLog InsertActivity(string systemKeyword, string comment)
         {
             return InsertActivity(systemKeyword, comment, new object[0]);
         }
@@ -152,7 +152,7 @@ namespace Nop.Services.Logging
         /// <param name="comment">The activity comment</param>
         /// <param name="commentParams">The activity comment parameters for string.Format() function.</param>
         /// <returns>Activity log item</returns>
-        public virtual ActivityLog InsertActivity(string systemKeyword, 
+        public ActivityLog InsertActivity(string systemKeyword, 
             string comment, params object[] commentParams)
         {
             if (_workContext.CurrentCustomer== null ||
@@ -171,7 +171,7 @@ namespace Nop.Services.Logging
             
 
             var activity = new ActivityLog();
-            activity.ActivityLogTypeId = activityType.ActivityLogTypeId;
+            activity.ActivityLogTypeId = activityType.Id;
             activity.Customer = _workContext.CurrentCustomer;
             activity.Comment = comment;
             activity.CreatedOn = DateTime.UtcNow;
@@ -185,7 +185,7 @@ namespace Nop.Services.Logging
         /// Deletes an activity log item
         /// </summary>
         /// <param name="activityLogId">Activity log type identifier</param>
-        public virtual void DeleteActivity(int activityLogId)
+        public void DeleteActivity(int activityLogId)
         {
             ActivityLog activityLogType = _activityLogRepository.GetById(activityLogId);
             if (activityLogType == null)
@@ -205,7 +205,7 @@ namespace Nop.Services.Logging
         /// <param name="pageIndex">Page index</param>
         /// <param name="pageSize">Page size</param>
         /// <returns>Activity log collection</returns>
-        public virtual PagedList<ActivityLog> GetAllActivities(DateTime? createdOnFrom,
+        public PagedList<ActivityLog> GetAllActivities(DateTime? createdOnFrom,
             DateTime? createdOnTo, string email, string username, int activityLogTypeId,
             int pageIndex, int pageSize)
         {
@@ -228,14 +228,14 @@ namespace Nop.Services.Logging
         /// </summary>
         /// <param name="activityLogId">Activity log identifier</param>
         /// <returns>Activity log item</returns>
-        public virtual ActivityLog GetActivityById(int activityLogId)
+        public ActivityLog GetActivityById(int activityLogId)
         {
             if (activityLogId == 0)
                 return null;
 
             
             var query = from al in _activityLogRepository.Table
-                        where al.ActivityLogId == activityLogId
+                        where al.Id == activityLogId
                         select al;
             var activityLog = query.SingleOrDefault();
             return activityLog;
@@ -244,7 +244,7 @@ namespace Nop.Services.Logging
         /// <summary>
         /// Clears activity log
         /// </summary>
-        public virtual void ClearAllActivities()
+        public void ClearAllActivities()
         {
             
             var activityLog = _activityLogRepository.Table.ToList();

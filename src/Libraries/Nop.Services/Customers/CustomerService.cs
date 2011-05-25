@@ -76,7 +76,7 @@ namespace Nop.Services.Customers
         /// <param name="pageIndex">Page index</param>
         /// <param name="pageSize">Page size</param>
         /// <returns>Customer collection</returns>
-        public virtual PagedList<Customer> GetAllCustomers(DateTime? registrationFrom,
+        public PagedList<Customer> GetAllCustomers(DateTime? registrationFrom,
             DateTime? registrationTo, int[] customerRoleIds, int pageIndex, int pageSize)
         {
             var query = _customerRepository.Table;
@@ -102,7 +102,7 @@ namespace Nop.Services.Customers
         /// <param name="customerRoleId">Customer role identifier</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Customer collection</returns>
-        public virtual IList<Customer> GetCustomersByCustomerRoleId(int customerRoleId, bool showHidden = false)
+        public IList<Customer> GetCustomersByCustomerRoleId(int customerRoleId, bool showHidden = false)
         {
             var query = from c in _customerRepository.Table
                         from cr in c.CustomerRoles
@@ -135,7 +135,7 @@ namespace Nop.Services.Customers
         /// Delete a customer
         /// </summary>
         /// <param name="customer">Customer</param>
-        public virtual void DeleteCustomer(Customer customer)
+        public void DeleteCustomer(Customer customer)
         {
             if (customer == null)
                 throw new ArgumentNullException("customer");
@@ -149,7 +149,7 @@ namespace Nop.Services.Customers
         /// </summary>
         /// <param name="customerId">Customer identifier</param>
         /// <returns>A customer</returns>
-        public virtual Customer GetCustomerById(int customerId)
+        public Customer GetCustomerById(int customerId)
         {
             if (customerId == 0)
                 return null;
@@ -163,7 +163,7 @@ namespace Nop.Services.Customers
         /// </summary>
         /// <param name="customerGuid">Customer GUID</param>
         /// <returns>A customer</returns>
-        public virtual Customer GetCustomerByGuid(Guid customerGuid)
+        public Customer GetCustomerByGuid(Guid customerGuid)
         {
             if (customerGuid == Guid.Empty)
                 return null;
@@ -181,7 +181,7 @@ namespace Nop.Services.Customers
         /// </summary>
         /// <param name="associatedUserId">User identifier</param>
         /// <returns>A customer</returns>
-        public virtual Customer GetCustomerByAssociatedUserId(int associatedUserId)
+        public Customer GetCustomerByAssociatedUserId(int associatedUserId)
         {
             if (associatedUserId == 0)
                 return null;
@@ -198,7 +198,7 @@ namespace Nop.Services.Customers
         /// Insert a guest customer
         /// </summary>
         /// <returns>Customer</returns>
-        public virtual Customer InsertGuestCustomer()
+        public Customer InsertGuestCustomer()
         {
             //TODO save current language, currency, tax display type, etc
             var customer = new Customer()
@@ -212,7 +212,7 @@ namespace Nop.Services.Customers
             var guestRole = GetCustomerRoleBySystemName(SystemCustomerRoleNames.Guests);
             if (guestRole == null)
                 throw new NopException("'Guests' role could not be loaded");
-            customer.CustomerRoles.Add(guestRole);
+            customer.CustomerRoles = new List<CustomerRole> { guestRole };
 
             _customerRepository.Insert(customer);
 
@@ -222,18 +222,15 @@ namespace Nop.Services.Customers
         /// <summary>
         /// Register customer
         /// </summary>
-        /// <param name="customerId">Customer identifier</param>
+        /// <param name="customer">Customer</param>
         /// <returns>Customer</returns>
-        public virtual Customer RegisterCustomer(int customerId)
+        public void RegisterCustomer(Customer customer)
         {
-            var customer = GetCustomerById(customerId);
-
             if (customer == null)
-                throw new NopException(string.Format("Customer {0} could not be loaded", customerId));
+                throw new ArgumentNullException("customer");
 
             //TODO pass and save customer attributes as argument
-            //TODO check CustomerRegistrationType (Disabled, EmailValidation, AdminApproval, etc)
-            
+
             //add to 'Registered' role
             var registeredRole = GetCustomerRoleBySystemName(SystemCustomerRoleNames.Registered);
             if (registeredRole == null)
@@ -248,27 +245,16 @@ namespace Nop.Services.Customers
             if (_rewardPointsSettings.Enabled &&
                 _rewardPointsSettings.PointsForRegistration > 0 &&
                 !customer.IsGuest())
-            {
-                //UNDONE uncomment code below to localize note 
-                //Currently we can't inject _localizationService due to curricular dependencies
-                //string note = _localizationService.GetResource("RewardPoints.Message.EarnedForRegistration");
-                string note = "Registered as customer";
-                customer.AddRewardPointsHistoryEntry(_rewardPointsSettings.PointsForRegistration, note);
-            }
+                customer.AddRewardPointsHistoryEntry(_rewardPointsSettings.PointsForRegistration, "Registered as customer");
 
             _customerRepository.Update(customer);
-
-            //TODO Send welcome message / email validation message
-            bool notify = _customerSettings.NotifyNewCustomerRegistration;
-
-            return customer;
         }
 
         /// <summary>
         /// Insert a customer
         /// </summary>
         /// <param name="customer">Customer</param>
-        public virtual void InsertCustomer(Customer customer)
+        public void InsertCustomer(Customer customer)
         {
             if (customer == null)
                 throw new ArgumentNullException("customer");
@@ -282,7 +268,7 @@ namespace Nop.Services.Customers
         /// Updates the customer
         /// </summary>
         /// <param name="customer">Customer</param>
-        public virtual void UpdateCustomer(Customer customer)
+        public void UpdateCustomer(Customer customer)
         {
             if (customer == null)
                 throw new ArgumentNullException("customer");
@@ -304,7 +290,7 @@ namespace Nop.Services.Customers
         /// </summary>
         /// <param name="customer">Customer</param>
         /// <param name="clearCouponCodes">A value indicating whether to clear coupon code</param>
-        public virtual void ResetCheckoutData(Customer customer, bool clearCouponCodes = false)
+        public void ResetCheckoutData(Customer customer, bool clearCouponCodes = false)
         {
             if (customer == null)
                 throw new ArgumentNullException();
@@ -334,7 +320,7 @@ namespace Nop.Services.Customers
         /// Delete a customer role
         /// </summary>
         /// <param name="customerRole">Customer role</param>
-        public virtual void DeleteCustomerRole(CustomerRole customerRole)
+        public void DeleteCustomerRole(CustomerRole customerRole)
         {
             if (customerRole == null)
                 throw new ArgumentNullException("customerRole");
@@ -356,7 +342,7 @@ namespace Nop.Services.Customers
         /// </summary>
         /// <param name="customerRoleId">Customer role identifier</param>
         /// <returns>Customer role</returns>
-        public virtual CustomerRole GetCustomerRoleById(int customerRoleId)
+        public CustomerRole GetCustomerRoleById(int customerRoleId)
         {
             if (customerRoleId == 0)
                 return null;
@@ -374,7 +360,7 @@ namespace Nop.Services.Customers
         /// </summary>
         /// <param name="systemName">Customer role system name</param>
         /// <returns>Customer role</returns>
-        public virtual CustomerRole GetCustomerRoleBySystemName(string systemName)
+        public CustomerRole GetCustomerRoleBySystemName(string systemName)
         {
             if (String.IsNullOrWhiteSpace(systemName))
                 return null;
@@ -396,7 +382,7 @@ namespace Nop.Services.Customers
         /// </summary>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Customer role collection</returns>
-        public virtual IList<CustomerRole> GetAllCustomerRoles(bool showHidden = false)
+        public IList<CustomerRole> GetAllCustomerRoles(bool showHidden = false)
         {
             string key = string.Format(CUSTOMERROLES_ALL_KEY, showHidden);
             return _cacheManager.Get(key, () =>
@@ -416,7 +402,7 @@ namespace Nop.Services.Customers
         /// <param name="customerId">Customer identifier</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Customer role collection</returns>
-        public virtual IList<CustomerRole> GetCustomerRolesByCustomerId(int customerId, bool showHidden = false)
+        public IList<CustomerRole> GetCustomerRolesByCustomerId(int customerId, bool showHidden = false)
         {
             if (customerId == 0)
                 return new List<CustomerRole>();
@@ -436,7 +422,7 @@ namespace Nop.Services.Customers
         /// Inserts a customer role
         /// </summary>
         /// <param name="customerRole">Customer role</param>
-        public virtual void InsertCustomerRole(CustomerRole customerRole)
+        public void InsertCustomerRole(CustomerRole customerRole)
         {
             if (customerRole == null)
                 throw new ArgumentNullException("customerRole");
@@ -450,7 +436,7 @@ namespace Nop.Services.Customers
         /// Updates the customer role
         /// </summary>
         /// <param name="customerRole">Customer role</param>
-        public virtual void UpdateCustomerRole(CustomerRole customerRole)
+        public void UpdateCustomerRole(CustomerRole customerRole)
         {
             if (customerRole == null)
                 throw new ArgumentNullException("customerRole");
@@ -468,7 +454,7 @@ namespace Nop.Services.Customers
         /// Deletes a customer attribute
         /// </summary>
         /// <param name="customerAttribute">Customer attribute</param>
-        public virtual void DeleteCustomerAttribute(CustomerAttribute customerAttribute)
+        public void DeleteCustomerAttribute(CustomerAttribute customerAttribute)
         {
             if (customerAttribute == null)
                 throw new ArgumentNullException("customerAttribute");
@@ -481,7 +467,7 @@ namespace Nop.Services.Customers
         /// </summary>
         /// <param name="customerAttributeId">Customer attribute identifier</param>
         /// <returns>A customer attribute</returns>
-        public virtual CustomerAttribute GetCustomerAttributeById(int customerAttributeId)
+        public CustomerAttribute GetCustomerAttributeById(int customerAttributeId)
         {
             if (customerAttributeId == 0)
                 return null;
@@ -494,7 +480,7 @@ namespace Nop.Services.Customers
         /// Inserts a customer attribute
         /// </summary>
         /// <param name="customerAttribute">Customer attribute</param>
-        public virtual void InsertCustomerAttribute(CustomerAttribute customerAttribute)
+        public void InsertCustomerAttribute(CustomerAttribute customerAttribute)
         {
             if (customerAttribute == null)
                 throw new ArgumentNullException("customerAttribute");
@@ -506,7 +492,7 @@ namespace Nop.Services.Customers
         /// Updates the customer attribute
         /// </summary>
         /// <param name="customerAttribute">Customer attribute</param>
-        public virtual void UpdateCustomerAttribute(CustomerAttribute customerAttribute)
+        public void UpdateCustomerAttribute(CustomerAttribute customerAttribute)
         {
             if (customerAttribute == null)
                 throw new ArgumentNullException("customerAttribute");
@@ -522,7 +508,7 @@ namespace Nop.Services.Customers
         /// <param name="key">Key</param>
         /// <param name="value">Value</param>
         /// <returns>Customer attribute</returns>
-        public virtual CustomerAttribute SaveCustomerAttribute<T>(Customer customer,
+        public CustomerAttribute SaveCustomerAttribute<T>(Customer customer,
             string key, T value)
         {
             if (customer == null)
@@ -540,6 +526,8 @@ namespace Nop.Services.Customers
             //    valueStr = (T)xmlS.Deserialize(tr);
             //}
             
+            if (customer.CustomerAttributes == null)
+                customer.CustomerAttributes = new List<CustomerAttribute>();
             var customerAttribute = customer.CustomerAttributes.FirstOrDefault(ca => ca.Key.Equals(key, StringComparison.InvariantCultureIgnoreCase));
             if (customerAttribute != null)
             {
