@@ -1,0 +1,53 @@
+
+using System.Collections.Generic;
+using Nop.Core.Domain.Common;
+
+namespace Nop.Core.Domain.Directory
+{
+    /// <summary>
+    /// Represents a state/province
+    /// </summary>
+    public partial class StateProvince : BaseEntity
+    {
+        public StateProvince() 
+        {
+            this.Addresses = new List<Address>();
+        }
+
+        /// <summary>
+        /// Gets or sets the country identifier
+        /// </summary>
+        public int CountryId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the abbreviation
+        /// </summary>
+        public string Abbreviation { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the entity is published
+        /// </summary>
+        public bool Published { get; set; }
+
+        /// <summary>
+        /// Gets or sets the display order
+        /// </summary>
+        public int DisplayOrder { get; set; }
+
+        /// <summary>
+        /// Gets or sets the country
+        /// </summary>
+        public virtual Country Country { get; set; }
+
+        /// <summary>
+        /// Gets or sets the addresses
+        /// </summary>
+        public virtual ICollection<Address> Addresses { get; set; }
+    }
+
+}
