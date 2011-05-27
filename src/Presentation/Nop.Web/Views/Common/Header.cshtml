@@ -1,0 +1,26 @@
+﻿@model Nop.Web.Models.Common.HeaderModel
+<div class="header-links">
+    <ul>
+        @if (Model.IsAuthenticated)
+        {
+            <li><a href="@Url.Action("myaccount", "customer")" class="account">@Model.CustomerEmailUsername</a></li>
+            <li><a href="@Url.RouteUrl("Logout")" class="account">@T("Account.Logout")</a></li>
+        }
+        else
+        {
+            <li><a href="@Url.RouteUrl("Register")" class="ico-register">@T("Account.Register")</a></li>
+            <li><a href="@Url.RouteUrl("Login")" class="ico-login">@T("Account.Login")</a></li>
+        }
+        <li><a href="@Url.RouteUrl("ShoppingCart")" class="ico-cart">@T("ShoppingCart")</a>
+            <a href="@Url.RouteUrl("ShoppingCart")">(@Model.ShoppingCartItems)</a> </li>
+        @if (Model.WishlistEnabled)
+        {
+            <li><a href="@Url.RouteUrl("Wishlist")" class="ico-wishlist">@T("Wishlist")</a>
+                <a href="@Url.RouteUrl("Wishlist")">(@Model.WishlistItems)</a> </li>
+        }
+        @if (Model.DisplayAdminLink)
+        {
+            <li><a href="/admin/" class="ico-admin">@T("Account.Administration")</a> </li>
+        }
+    </ul>
+</div>

@@ -1,0 +1,84 @@
+﻿@using Nop.Core.Infrastructure.DependencyManagement
+@using Nop.Core.Infrastructure
+@{
+    var storeLocation = Nop.Core.Infrastructure.EngineContext.Current.Resolve<Nop.Core.IWebHelper>().GetStoreLocation();
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>NopCommerce public store. @ViewBag.Title</title>@*jquery and other base scripts*@
+    <script src="@Url.Content("~/Scripts/jquery-1.4.4.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery-ui.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/public.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/slimbox2.js")" type="text/javascript"></script>
+    @*jquery ajax scripts*@
+    <script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")" type="text/javascript"></script>
+    @*ajax scripts used by asp.net mvc*@
+    <script src="@Url.Content("~/Scripts/MicrosoftAjax.debug.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/MicrosoftMvcAjax.debug.js")" type="text/javascript"></script>
+    @*jquery validation*@
+    <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+    @*This is used so that themes can inject content into the header*@
+    @Html.Partial("Head")
+</head>
+<body>
+    <div class="master-wrapper-page">
+        <div class="master-wrapper-content">
+            <div class="header">
+                <div class="header-logo">
+                    <a href="@storeLocation" class="logo">&nbsp; </a>
+                </div>
+                <div class="header-links-wrapper">
+                    @Html.Action("Header", "Common")
+                </div>
+                <div class="header-selectors-wrapper">
+                    <div class="header-taxDisplayTypeSelector">
+                        @Html.Action("TaxTypeSelector", "Common")
+                    </div>
+                    <div class="header-currencyselector">
+                        @Html.Action("CurrencySelector", "Common")
+                    </div>
+                    <div class="header-languageselector">
+                        @Html.Action("LanguageSelector", "Common")
+                    </div>
+                </div>
+            </div>
+            <div class="headermenu">
+                <div class="searchbox">
+                    <!-- UNDONE add focus js (nopCommerce 1.90) -->
+                    <div class="searchbox">
+                        <ul>
+                            <li>
+                                <input type="text" onkeydown="if(event.which || event.keyCode){if ((event.which == 13) || (event.keyCode == 13)) {document.getElementById('btnSearch').click();return false;}} else {return true}; "
+                                    onfocus="if(this.value=='Search store')this.value=''" class="searchboxtext" id="txtSearchTerms"
+                                    value="Search store" name="txtSearchTerms" />&nbsp; </li>
+                            <li>
+                                <input type="submit" class="searchboxbutton" id="btnSearch" value="Search" name="btnSearch" />
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                @Html.Action("Menu", "Common")
+            </div>
+            @RenderBody()
+            <div class="clear">
+            </div>
+        </div>
+        <div class="footer">
+            <div class="footer-poweredby">
+                Powered by <a href="http://www.nopcommerce.com/">nopCommerce</a>
+                <!--Would you like
+                to remove the "Powered by nopCommerce" link in the bottom of the footer? Find more
+                info here http://www.nopcommerce.com/copyrightremoval.aspx -->
+            </div>
+            <div class="footer-disclaimer">
+                @T("Content.CopyrightNotice", DateTime.Now.Year.ToString(), "Store name here")
+            </div>
+            <div class="footer-storetheme">
+                <!--UNDONE store theme selector -->
+            </div>
+        </div>
+    </div>
+</body>
+</html>
