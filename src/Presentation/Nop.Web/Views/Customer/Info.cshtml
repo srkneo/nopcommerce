@@ -1,0 +1,256 @@
+﻿@model Nop.Web.Models.Customer.CustomerInfoModel
+@using Nop.Web.Framework;
+@{
+    Layout = "~/Views/Shared/_ColumnsTwo.cshtml";
+
+    //title
+    Html.AddTitleParts(T("PageTitle.Account").Text);
+}
+@section left
+{
+    @Html.Partial("~/Views/Customer/MyAccountNavigation.cshtml", Model.NavigationModel, new ViewDataDictionary())
+}
+<div class="account-page">
+    <div class="page-title">
+        <h1>@T("Account.MyAccount") - @T("Account.CustomerInfo")</h1>
+    </div>
+    <div class="clear">
+    </div>
+    <div class="body">
+        <div class="section-body">
+            @using (Html.BeginForm())
+            {
+                <div class="customer-info-box">
+                    <div class="message-error">
+                        @Html.ValidationSummary(true)
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="section-title">
+                        @T("Account.YourPersonalDetails")
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <div class="section-body">
+                        <table class="table-container">
+                            <tbody>
+                                @if (Model.GenderEnabled)
+                                {
+                                    <tr class="row">
+                                        <td class="item-name">
+                                            @Html.LabelFor(model => model.Gender):
+                                        </td>
+                                        <td class="item-value">
+                                            @Html.RadioButton("Gender", "M", (Model.Gender == "M"), new { id = "Gender_Male" })
+                                            <label class="forcheckbox" for="Gender_Male">@T("Account.Fields.Gender.Male")</label>
+                                            @Html.RadioButton("Gender", "F", (Model.Gender == "F"), new { id = "Gender_Female" })
+                                            <label class="forcheckbox" for="Gender_Female">@T("Account.Fields.Gender.Female")</label>
+                                        </td>
+                                    </tr>
+                                }
+                                <tr class="row">
+                                    <td class="item-name">
+                                        @Html.LabelFor(model => model.FirstName):
+                                    </td>
+                                    <td class="item-value">
+                                        @Html.EditorFor(model => model.FirstName)
+                                        @Html.ValidationMessageFor(model => model.FirstName)
+                                    </td>
+                                </tr>
+                                <tr class="row">
+                                    <td class="item-name">
+                                        @Html.LabelFor(model => model.LastName):
+                                    </td>
+                                    <td class="item-value">
+                                        @Html.EditorFor(model => model.LastName)
+                                        @Html.ValidationMessageFor(model => model.LastName)
+                                    </td>
+                                </tr>
+                                @if (Model.DateOfBirthEnabled)
+                                {
+                                <tr class="row">
+                                    <td class="item-name">
+                                        @Html.LabelFor(model => model.DateOfBirthDay):
+                                    </td>
+                                    <td class="item-value">
+                                        @Html.DatePickerDropDowns(Html.FieldNameFor(x => x.DateOfBirthDay), 
+                                        Html.FieldNameFor(x => x.DateOfBirthMonth), 
+                                        Html.FieldNameFor(x => x.DateOfBirthYear), 
+                                        DateTime.Now.Year - 110, 
+                                        DateTime.Now.Year, 
+                                        Model.DateOfBirthDay, 
+                                        Model.DateOfBirthMonth, 
+                                        Model.DateOfBirthYear)
+                                        @Html.ValidationMessageFor(model => model.DateOfBirthDay)
+                                        @Html.ValidationMessageFor(model => model.DateOfBirthMonth)
+                                        @Html.ValidationMessageFor(model => model.DateOfBirthYear)
+                                    </td>
+                                </tr>
+                                }
+                                <tr class="row">
+                                    <td class="item-name">
+                                        @Html.LabelFor(model => model.Email):
+                                    </td>
+                                    <td class="item-value">
+                                        @Html.EditorFor(model => model.Email)
+                                        @Html.ValidationMessageFor(model => model.Email)
+                                    </td>
+                                </tr>
+                                @if (Model.UsernamesEnabled)
+                                {
+                                    if (Model.AllowUsersToChangeUsernames)
+                                    {
+                                    <tr class="row">
+                                        <td class="item-name">
+                                            @Html.LabelFor(model => model.Username):
+                                        </td>
+                                        <td class="item-value">
+                                            @Html.EditorFor(model => model.Username)
+                                            @Html.ValidationMessageFor(model => model.Username)
+                                        </td>
+                                    </tr>
+                                    }
+                                    else
+                                    {
+                                    <tr class="row">
+                                        <td class="item-name">
+                                            @Html.LabelFor(model => model.Username):
+                                        </td>
+                                        <td class="item-value">
+                                            @Model.Username
+                                        </td>
+                                    </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    @if (Model.CompanyEnabled || Model.DisplayVatNumber)
+                    {
+                        <div class="section-title">
+                            @T("Account.CompanyDetails")
+                        </div>
+                        <div class="clear">
+                        </div>
+                        <div class="section-body">
+                            <table class="table-container">
+                                <tbody>
+                                    @if (Model.CompanyEnabled)
+                                    {
+                                        <tr class="row">
+                                            <td class="item-name">
+                                                @Html.LabelFor(model => model.Company):
+                                            </td>
+                                            <td class="item-value">
+                                                @Html.EditorFor(model => model.Company)
+                                                @Html.ValidationMessageFor(model => model.Company)
+                                            </td>
+                                        </tr>
+                                    }
+                                    @if (Model.DisplayVatNumber)
+                                    {
+                                        <tr class="row">
+                                            <td class="item-name">
+                                                @Html.LabelFor(model => model.VatNumber):
+                                            </td>
+                                            <td class="item-value">
+                                                @Html.EditorFor(model => model.VatNumber)&nbsp;&nbsp;&nbsp;@Model.VatNumberStatusNote
+                                            </td>
+                                        </tr>
+                                        <tr class="row">
+                                            <td colspan="2">
+                                                <i>@T("Account.Fields.VatNumber.Note")</i>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="clear">
+                        </div>
+                    }
+                    @if (Model.NewsletterEnabled)
+                    {
+                        <div class="section-title">
+                            @T("Account.Options")
+                        </div>
+                        <div class="clear">
+                        </div>
+                        <div class="section-body">
+                            <table class="table-container">
+                                <tbody>
+                                    <tr class="row">
+                                        <td class="item-name">
+                                            @Html.LabelFor(model => model.Newsletter):
+                                        </td>
+                                        <td class="item-value">
+                                            @Html.EditorFor(model => model.Newsletter)
+                                            @Html.ValidationMessageFor(model => model.Newsletter)
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="clear">
+                        </div>
+                    }
+                    @if (Model.AllowCustomersToSetTimeZone || Model.SignatureEnabled || Model.LocationEnabled)
+                    {
+                        <div class="section-title">
+                            @T("Account.Preferences")
+                        </div>
+                        <div class="clear">
+                        </div>
+                        <div class="section-body">
+                            <table class="table-container">
+                                <tbody>
+                                    @if (Model.AllowCustomersToSetTimeZone)
+                                    {
+                                        <tr class="row">
+                                            <td class="item-name">
+                                                @Html.LabelFor(model => model.TimeZoneId):
+                                            </td>
+                                            <td class="item-value">
+                                                @Html.DropDownList("TimeZoneId", Model.AvailableTimeZones)
+                                                @Html.ValidationMessageFor(model => model.TimeZoneId)
+                                            </td>
+                                        </tr>
+                                    }
+                                    @if (Model.LocationEnabled)
+                                    {
+                                        <tr class="row">
+                                            <td class="item-name">
+                                                @Html.LabelFor(model => model.LocationCountryId):
+                                            </td>
+                                            <td class="item-value">
+                                                @Html.DropDownList("LocationCountryId", Model.AvailableLocations)
+                                            </td>
+                                        </tr>
+                                    }
+                                    @if (Model.SignatureEnabled)
+                                    {                                    
+                                        <tr class="row">
+                                            <td class="item-name">
+                                                @Html.LabelFor(model => model.Signature):
+                                            </td>
+                                            <td class="item-value">
+                                                @Html.TextAreaFor(model => model.Signature, new { @class = "accountsignaturetext" })
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="clear">
+                        </div>
+                    }
+                    <div class="button">
+                        <input type="submit" id="save-info-button" value="@T("Common.Save")" name="save-info-button" class="savecustomerinfobutton" />
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
