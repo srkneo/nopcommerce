@@ -1,0 +1,8 @@
+@model System.Decimal
+@using Telerik.Web.Mvc.UI
+
+@(Html.Telerik().NumericTextBox<decimal>()
+        .Name(ViewData.TemplateInfo.GetFullHtmlFieldName(string.Empty))
+        .Value(Model)
+)
+

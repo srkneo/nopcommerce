@@ -1,0 +1,170 @@
+﻿@model CustomerListModel
+@using Telerik.Web.Mvc.UI
+
+@using (Html.BeginForm())
+{
+    <div class="section-header">
+        <div class="title">
+            <img src="@Url.Content("~/Administration/Content/images/ico-customers.png")" />
+            @T("Admin.Customers.Customers")
+        </div>
+        <div class="options">
+            <a href="@Url.Action("Create")" class="t-button">@T("Admin.Common.AddNew")</a>
+            <a href="@Url.Action("ExportXml")" class="t-button">@T("Admin.Common.ExportToXml")</a>
+            <a href="@Url.Action("ExportExcel")" class="t-button">@T("Admin.Common.ExportToExcel")</a>
+        </div>
+    </div>
+    <table width="100%">
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.SearchCustomerRoleIds):
+            </td>
+            <td class="adminData">
+                @foreach (var customerRole in Model.AvailableCustomerRoles) {
+                    <input type="checkbox" name="SearchCustomerRoleIds" value="@customerRole.Id"
+                @if (Model.SearchCustomerRoleIds != null && Model.SearchCustomerRoleIds.Contains(customerRole.Id))
+                {
+                    <text>checked="checked"</text>
+                }
+                />@customerRole.Name
+                    <br />
+                }
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.SearchEmail):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => Model.SearchEmail)
+            </td>
+        </tr>
+        @if (Model.UsernamesEnabled)
+        {
+            <tr>
+                <td class="adminTitle">
+                    @Html.NopLabelFor(model => model.SearchUsername):
+                </td>
+                <td class="adminData">
+                    @Html.EditorFor(model => Model.SearchUsername)
+                </td>
+            </tr>
+        }
+        <tr>
+            <td colspan="2">
+                <button type="submit" name="search-customers" value="search-customers" class="t-button">@T("Admin.Common.Search")</button>
+            </td>
+        </tr>
+    </table>
+    <p>
+    </p>
+    <table class="adminContent">
+        <tr>
+            <td>
+                @(Html.Telerik().Grid<CustomerModel>(Model.Customers.Data)
+                    .Name("customers-grid")
+                    .Columns(columns =>
+                    {
+                        columns.Bound(x => x.Id)
+                            .Width(50)
+                            .Filterable(false);
+                        columns.Bound(x => x.Email)
+                            .Width(150)
+                            .Filterable(false);
+                        //Weird!!! We can't pass Model.UsernamesEnabled to Hidden method
+                        var usernameColumn = columns.Bound(x => x.Username)
+                            .Width(150)
+                            .Filterable(false);
+                        if (!Model.UsernamesEnabled)
+                            usernameColumn.Hidden(true);
+                        columns.Bound(x => x.FullName)
+                            .Width(200)
+                            .Filterable(false);
+                        columns.Bound(x => x.CustomerRoleNames)
+                            .Width(200)
+                            .Filterable(false);
+                        //hidden column used for filtering
+                        columns.Bound(x => x.SearchCustomerRoleIds)
+                            .Width(5)
+                            .Filterable(false)
+                            .Hidden(true);
+                        columns.Bound(x => x.SearchCustomerEmail)
+                            .Width(5)
+                            .Filterable(false)
+                            .Hidden(true);
+                        columns.Bound(x => x.SearchCustomerUsername)
+                            .Width(5)
+                            .Filterable(false)
+                            .Hidden(true);
+                        columns.Bound(x => x.Active)
+                             .Width(100)
+                             .Template(x => x.Active.ToString().ToLower())
+                             .Centered()
+                             .Filterable(false);
+                        columns.Bound(x => x.CreatedOn)
+                            .Width(100)
+                            .Filterable(false);
+                        columns.Bound(x => x.LastActivityDate)
+                            .Width(100)
+                            .Filterable(false);
+                        columns.Bound(x => x.Id)
+                            .Width(50)
+                            .Centered()
+                            .Template(x => Html.ActionLink(T("Admin.Common.Edit").Text, "Edit", new { id = x.Id }))
+                            .ClientTemplate("<a href=\"Edit/<#= Id #>\">" + T("Admin.Common.Edit").Text + "</a>")
+                            .Title(T("Admin.Common.Edit").Text)
+                            .Filterable(false);
+                    })
+                    .Pageable(settings => settings.Total(Model.Customers.Total).PageSize(10).Position(GridPagerPosition.Both))
+                    .DataBinding(dataBinding => dataBinding.Ajax().Select("CustomerList", "Customer"))
+                    .Filterable(filtering => filtering.Filters(filters =>
+                    {
+                        //customer role ids
+                        if (!String.IsNullOrEmpty(ViewData["searchCustomerRoleIds"] as string))
+                        {
+                            filters.Add(x => x.SearchCustomerRoleIds).Contains((string)ViewData["searchCustomerRoleIds"]);
+                        }
+                        //customer email
+                        if (!String.IsNullOrEmpty(ViewData["searchCustomerEmail"] as string))
+                        {
+                            filters.Add(x => x.SearchCustomerEmail).Contains((string)ViewData["searchCustomerEmail"]);
+                        }
+                        //customer username
+                        if (!String.IsNullOrEmpty(ViewData["searchCustomerUsername"] as string))
+                        {
+                            filters.Add(x => x.SearchCustomerUsername).Contains((string)ViewData["searchCustomerUsername"]);
+                        }
+                    }))
+                    .EnableCustomBinding(true))
+            </td>
+        </tr>
+    </table>
+    
+    @*<script type="text/javascript">
+        $(document).ready(function () {
+            $('#search-customers').click(function () {
+                var grid = $('#customers-grid').data('tGrid');
+                grid.ajaxRequest();
+                return false;
+            });
+        });
+
+        function onDataBinding(e) {
+            //We need to use $.ajax({ data:{}, traditional:true });
+            //See the following forum topic to get more info: http://forum.jquery.com/topic/jquery-1-4-breaks-asp-net-mvc-parameter-posting
+            //But we don't have access to 'traditional' property passed by Telerik.
+
+            if ($('[name=SearchCustomerRoleIds]:checked').size() > 0) {
+                var customerRoleIds = [];
+            }
+            $('[name=SearchCustomerRoleIds]:checked').each(function () {
+                customerRoleIds.push($(this).val());
+            });
+
+            var searchModel = {
+                SearchCustomerRoleIds: customerRoleIds
+            };
+            e.data = searchModel;
+        }
+   </script>*@
+}
