@@ -1,0 +1,34 @@
+﻿using System.Xml;
+
+namespace Nop.Web.Framework.Themes
+{
+    public class ThemeConfiguration
+    {
+        public ThemeConfiguration(string themeName, string path, XmlDocument doc)
+        {
+            ThemeName = themeName;
+            Path = path;
+            var node = doc.SelectSingleNode("Theme");
+            if (node != null)
+            {
+                var attribute = node.Attributes["title"];
+                ThemeTitle = attribute == null ? string.Empty : attribute.Value;
+                attribute = node.Attributes["previewImageUrl"];
+                PreviewImageUrl = attribute == null ? string.Empty : attribute.Value;
+                attribute = node.Attributes["previewText"];
+                PreviewText = attribute == null ? string.Empty : attribute.Value;
+            }
+        }
+
+        public string Path { get; protected set; }
+
+        public string PreviewImageUrl { get; protected set; }
+
+        public string PreviewText { get; protected set; }
+
+        public string ThemeName { get; protected set; }
+
+        public string ThemeTitle { get; protected set; }
+
+    }
+}

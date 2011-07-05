@@ -1,0 +1,246 @@
+﻿@model GeneralCommonSettingsModel
+@using Telerik.Web.Mvc.UI;
+@using Nop.Core.Domain.Customers;
+@using Nop.Core.Domain.Security;
+@using (Html.BeginForm())
+{
+    <div class="section-header">
+        <div class="title">
+            <img src="@Url.Content("~/Administration/Content/images/ico-configuration.png")" alt="" />
+            @T("Admin.Configuration.Settings.GeneralCommon")
+        </div>
+        <div class="options">
+            <button type="submit" name="save" value="save" class="t-button">@T("Admin.Common.Save")</button>
+        </div>
+    </div>
+        
+    @Html.ValidationSummary(false)
+
+    
+    @Html.Telerik().TabStrip().Name("generalsettings-edit").Items(x =>
+{
+    x.Add().Text(T("Admin.Configuration.Settings.GeneralCommon.StoreInformationSettings").Text).Content(TabStoreInformationSettings().ToHtmlString()).Selected(true);
+    x.Add().Text(T("Admin.Configuration.Settings.GeneralCommon.SEOSettings").Text).Content(TabSEOSettings().ToHtmlString());
+    x.Add().Text(T("Admin.Configuration.Settings.GeneralCommon.GoogleAnalytics").Text).Content(TabGoogleAnalyticsSettings().ToHtmlString());
+    x.Add().Text(T("Admin.Configuration.Settings.GeneralCommon.SecuritySettings").Text).Content(TabSecuritySettings().ToHtmlString());
+    x.Add().Text(T("Admin.Configuration.Settings.GeneralCommon.PdfSettings").Text).Content(TabPdfSettings().ToHtmlString());
+    x.Add().Text(T("Admin.Configuration.Settings.GeneralCommon.LocalizationSettings").Text).Content(TabLocalizationSettings().ToHtmlString());
+
+})
+}
+@helper TabStoreInformationSettings()
+    {
+    <table class="adminContent">
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.StoreInformationSettings.StoreName):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.StoreInformationSettings.StoreName)
+                @Html.ValidationMessageFor(model => model.StoreInformationSettings.StoreName)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.StoreInformationSettings.StoreUrl):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.StoreInformationSettings.StoreUrl)
+                @Html.ValidationMessageFor(model => model.StoreInformationSettings.StoreUrl)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.StoreInformationSettings.DefaultStoreTheme):
+            </td>
+            <td class="adminData">
+                @Html.DropDownListFor(model => model.StoreInformationSettings.DefaultStoreTheme, Model.StoreInformationSettings.AvailableStoreThemes)
+                @Html.ValidationMessageFor(model => model.StoreInformationSettings.DefaultStoreTheme)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.StoreInformationSettings.AllowCustomerToSelectTheme):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.StoreInformationSettings.AllowCustomerToSelectTheme)
+                @Html.ValidationMessageFor(model => model.StoreInformationSettings.AllowCustomerToSelectTheme)
+            </td>
+        </tr>
+    </table>
+}
+@helper TabSEOSettings()
+    {
+    
+    <table class="adminContent">
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.SeoSettings.PageTitleSeparator):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.SeoSettings.PageTitleSeparator)
+                @Html.ValidationMessageFor(model => model.SeoSettings.PageTitleSeparator)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.SeoSettings.DefaultTitle):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.SeoSettings.DefaultTitle)
+                @Html.ValidationMessageFor(model => model.SeoSettings.DefaultTitle)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.SeoSettings.DefaultMetaKeywords):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.SeoSettings.DefaultMetaKeywords)
+                @Html.ValidationMessageFor(model => model.SeoSettings.DefaultMetaKeywords)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.SeoSettings.DefaultMetaDescription):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.SeoSettings.DefaultMetaDescription)
+                @Html.ValidationMessageFor(model => model.SeoSettings.DefaultMetaDescription)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.SeoSettings.ConvertNonWesternChars):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.SeoSettings.ConvertNonWesternChars)
+                @Html.ValidationMessageFor(model => model.SeoSettings.ConvertNonWesternChars)
+            </td>
+        </tr>
+    </table>
+}
+@helper TabGoogleAnalyticsSettings()
+    {    
+    <table class="adminContent">
+        <tr>
+            <td class="adminTitle" colspan="2">
+                Google Analytics is a free website stats tool from Google. It keeps track of statistics
+                about the visitors and ecommerce conversion on your website.
+                <br />
+                <br />
+                Follow the next steps to enable Google Analytics integration:
+                <ul>
+                    <li><a href="http://www.google.com/analytics/" target="_blank">Create a Google Analytics
+                        account</a> and follow the wizard to add your website</li>
+                    <li>Copy the Google Analytics ID into the 'ID' box below</li>
+                    <li>Copy the tracking code from Google Analytics into the 'Tracking Code' box below</li>
+                    <li>Click the 'Save' button below and Google Analytics will be integrated into your
+                        store</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.GoogleAnalyticsSettings.Enabled):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.GoogleAnalyticsSettings.Enabled)
+                @Html.ValidationMessageFor(model => model.GoogleAnalyticsSettings.Enabled)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.GoogleAnalyticsSettings.GoogleId):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.GoogleAnalyticsSettings.GoogleId)
+                @Html.ValidationMessageFor(model => model.GoogleAnalyticsSettings.GoogleId)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.GoogleAnalyticsSettings.JavaScript):
+            </td>
+            <td class="adminData">
+                @Html.TextAreaFor(model => model.GoogleAnalyticsSettings.JavaScript, new { style = "Width: 300px; Height: 100px;" })
+                @Html.ValidationMessageFor(model => model.GoogleAnalyticsSettings.JavaScript)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.GoogleAnalyticsSettings.Placement):
+            </td>
+            <td class="adminData">
+                @{
+                var gaPlacementList = new List<SelectListItem>();
+                gaPlacementList.Add(new SelectListItem()
+                {
+                    Text = T("Admin.Configuration.Settings.GeneralCommon.GoogleAnalyticsPlacement.BeforeHead").Text,
+                    Value ="head"
+                });
+                gaPlacementList.Add(new SelectListItem()
+                {
+                    Text = T("Admin.Configuration.Settings.GeneralCommon.GoogleAnalyticsPlacement.BeforeBody").Text,
+                    Value ="body"
+                });
+                    @Html.DropDownListFor(model => model.GoogleAnalyticsSettings.Placement, gaPlacementList)
+                    
+                }
+                @Html.ValidationMessageFor(model => model.GoogleAnalyticsSettings.Placement)
+            </td>
+        </tr>
+    </table>
+}
+@helper TabSecuritySettings()
+    {
+    <table class="adminContent">
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.SecuritySettings.EncryptionKey):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.SecuritySettings.EncryptionKey)
+                @Html.ValidationMessageFor(model => model.SecuritySettings.EncryptionKey)
+                <input type="submit" name="changeencryptionkey" value="@T("Admin.Common.Change")" id="changeencryptionkey" class="adminButton" />
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.SecuritySettings.AdminAreaAllowedIpAddresses):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.SecuritySettings.AdminAreaAllowedIpAddresses)
+                @Html.ValidationMessageFor(model => model.SecuritySettings.AdminAreaAllowedIpAddresses)
+            </td>
+        </tr>
+    </table>
+}
+@helper TabPdfSettings()
+    {
+    <table class="adminContent">
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.PdfSettings.Enabled):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.PdfSettings.Enabled)
+                @Html.ValidationMessageFor(model => model.PdfSettings.Enabled)
+            </td>
+        </tr>
+    </table>
+}
+@helper TabLocalizationSettings()
+    {
+    <table class="adminContent">
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.LocalizationSettings.UseImagesForLanguageSelection):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.LocalizationSettings.UseImagesForLanguageSelection)
+                @Html.ValidationMessageFor(model => model.LocalizationSettings.UseImagesForLanguageSelection)
+            </td>
+        </tr>
+    </table>
+}
