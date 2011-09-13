@@ -85,6 +85,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CompressFilter.cs" />
+    <Compile Include="StaticFileHandler.cs" />
     <Compile Include="RemotePost.cs" />
     <Compile Include="Controllers\BaseNopPaymentController.cs" />
     <Compile Include="Controllers\FormValueRequiredAttribute.cs" />
