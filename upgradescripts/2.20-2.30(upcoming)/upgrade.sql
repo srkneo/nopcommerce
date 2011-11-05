@@ -281,6 +281,27 @@ set @resources='
     <LocaleResource Name="Admin.Configuration.Settings.GeneralCommon.StoreClosedAllowForAdmins.Hint">
         <Value>Check to allow a user with admin access to view the store while it is set to closed.</Value>
     </LocaleResource>
+    <LocaleResource Name="Admin.Customers.Customers.List.SearchDateOfBirth">
+        <Value>Date of birth</Value>
+    </LocaleResource>
+    <LocaleResource Name="Admin.Customers.Customers.List.SearchDateOfBirth.Hint">
+        <Value>Filter by date of birth. Don''t select any value to load all records.</Value>
+    </LocaleResource>
+    <LocaleResource Name="Admin.Customers.Customers.List.SearchDateOfBirth.Day">
+        <Value>Day</Value>
+    </LocaleResource>
+    <LocaleResource Name="Admin.Customers.Customers.List.SearchDateOfBirth.Month">
+        <Value>Month</Value>
+    </LocaleResource>
+    <LocaleResource Name="Account.Fields.Password.LengthValidation">
+        <Value>The password should have at least {0} characters.</Value>
+    </LocaleResource>
+    <LocaleResource Name="Account.ChangePassword.Fields.NewPassword.LengthValidation">
+        <Value>The password should have at least {0} characters.</Value>
+    </LocaleResource>
+    <LocaleResource Name="Account.PasswordRecovery.NewPassword.LengthValidation">
+        <Value>The password should have at least {0} characters.</Value>
+    </LocaleResource>
 </Language>
 '
 
@@ -977,5 +998,14 @@ BEGIN
 	END
 	CLOSE cur_customerrole
 	DEALLOCATE cur_customerrole
+END
+GO
+
+
+--min password length
+IF NOT EXISTS (SELECT 1 FROM [Setting] WHERE [name] = N'customersettings.passwordminlength')
+BEGIN
+	INSERT [Setting] ([Name], [Value])
+	VALUES (N'customersettings.passwordminlength', N'6')
 END
 GO
