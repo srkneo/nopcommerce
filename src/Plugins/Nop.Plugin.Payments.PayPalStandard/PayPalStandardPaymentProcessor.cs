@@ -36,7 +36,7 @@ namespace Nop.Plugin.Payments.PayPalStandard
         private readonly IWebHelper _webHelper;
         private readonly ICheckoutAttributeParser _checkoutAttributeParser;
         private readonly ITaxService _taxService;
-
+        private readonly HttpContextBase _httpContext;
         #endregion
 
         #region Ctor
@@ -44,7 +44,8 @@ namespace Nop.Plugin.Payments.PayPalStandard
         public PayPalStandardPaymentProcessor(PayPalStandardPaymentSettings paypalStandardPaymentSettings,
             ISettingService settingService, ICurrencyService currencyService,
             CurrencySettings currencySettings, IWebHelper webHelper,
-            ICheckoutAttributeParser checkoutAttributeParser, ITaxService taxService)
+            ICheckoutAttributeParser checkoutAttributeParser, ITaxService taxService,
+            HttpContextBase httpContext)
         {
             this._paypalStandardPaymentSettings = paypalStandardPaymentSettings;
             this._settingService = settingService;
@@ -53,6 +54,7 @@ namespace Nop.Plugin.Payments.PayPalStandard
             this._webHelper = webHelper;
             this._checkoutAttributeParser = checkoutAttributeParser;
             this._taxService = taxService;
+            this._httpContext = httpContext;
         }
 
         #endregion
@@ -301,7 +303,7 @@ namespace Nop.Plugin.Payments.PayPalStandard
             string cancelReturnUrl = _webHelper.GetStoreLocation(false) + "Plugins/PaymentPayPalStandard/CancelOrder";
             builder.AppendFormat("&return={0}&cancel_return={1}", HttpUtility.UrlEncode(returnUrl), HttpUtility.UrlEncode(cancelReturnUrl));
             
-            //Instant Payment Notification (server to serveur message)
+            //Instant Payment Notification (server to server message)
             if (_paypalStandardPaymentSettings.EnableIpn)
             {
                 string ipnUrl;
@@ -341,7 +343,7 @@ namespace Nop.Plugin.Payments.PayPalStandard
                 builder.AppendFormat("&country={0}", "");
             builder.AppendFormat("&zip={0}", HttpUtility.UrlEncode(postProcessPaymentRequest.Order.BillingAddress.ZipPostalCode));
             builder.AppendFormat("&email={0}", HttpUtility.UrlEncode(postProcessPaymentRequest.Order.BillingAddress.Email));
-            HttpContext.Current.Response.Redirect(builder.ToString());
+            _httpContext.Response.Redirect(builder.ToString());
         }
 
         /// <summary>
@@ -476,6 +478,7 @@ namespace Nop.Plugin.Payments.PayPalStandard
                 BusinessEmail = "test@test.com",
                 PdtToken= "Your PDT token here...",
                 PdtValidateOrderTotal = true,
+                EnableIpn = true,
             };
             _settingService.SaveSetting(settings);
 

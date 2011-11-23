@@ -692,6 +692,7 @@ namespace Nop.Admin.Controllers
                     if (i != _securitySettings.AdminAreaAllowedIpAddresses.Count - 1)
                         model.SecuritySettings.AdminAreaAllowedIpAddresses += ",";
                 }
+            model.SecuritySettings.HideAdminMenuItemsBasedOnPermissions = _securitySettings.HideAdminMenuItemsBasedOnPermissions;
             model.SecuritySettings.CaptchaEnabled = _captchaSettings.Enabled;
             model.SecuritySettings.ReCaptchaPublicKey = _captchaSettings.ReCaptchaPublicKey;
             model.SecuritySettings.ReCaptchaPrivateKey = _captchaSettings.ReCaptchaPrivateKey;
@@ -705,6 +706,7 @@ namespace Nop.Admin.Controllers
 
             //PDF settings
             model.PdfSettings.Enabled = _pdfSettings.Enabled;
+            model.PdfSettings.LetterPageSizeEnabled = _pdfSettings.LetterPageSizeEnabled;
             model.PdfSettings.LogoPictureId = _pdfSettings.LogoPictureId;
 
             //lcoalization
@@ -755,6 +757,7 @@ namespace Nop.Admin.Controllers
                 foreach (string s in model.SecuritySettings.AdminAreaAllowedIpAddresses.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
                     if (!String.IsNullOrWhiteSpace(s))
                         _securitySettings.AdminAreaAllowedIpAddresses.Add(s.Trim());
+            _securitySettings.HideAdminMenuItemsBasedOnPermissions = model.SecuritySettings.HideAdminMenuItemsBasedOnPermissions;
             _settingService.SaveSetting(_securitySettings);
             _captchaSettings.Enabled = model.SecuritySettings.CaptchaEnabled;
             _captchaSettings.ReCaptchaPublicKey = model.SecuritySettings.ReCaptchaPublicKey;
@@ -812,6 +815,7 @@ namespace Nop.Admin.Controllers
 
             //PDF settings
             _pdfSettings.Enabled = model.PdfSettings.Enabled;
+            _pdfSettings.LetterPageSizeEnabled = model.PdfSettings.LetterPageSizeEnabled;
             _pdfSettings.LogoPictureId = model.PdfSettings.LogoPictureId;
             _settingService.SaveSetting(_pdfSettings);
 
@@ -890,7 +894,7 @@ namespace Nop.Admin.Controllers
                 //update user information
                 //TODO optimization - load only users with PasswordFormat.Encrypted (don't filter them here)
                 var customers = _customerService.GetAllCustomers(null, null, null,
-                    null, null, null, null, false, null, 0, int.MaxValue)
+                    null, null, null, null, 0, 0, false, null, 0, int.MaxValue)
                     .Where(u => u.PasswordFormat == PasswordFormat.Encrypted);
                 foreach (var customer in customers)
                 {

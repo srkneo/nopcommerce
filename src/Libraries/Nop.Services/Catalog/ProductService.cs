@@ -731,6 +731,8 @@ namespace Nop.Services.Catalog
             if (productVariant == null)
                 throw new ArgumentNullException("productVariant");
 
+            var prevStockQuantity = productVariant.StockQuantity;
+
             switch (productVariant.ManageInventoryMethod)
             {
                 case ManageInventoryMethod.DontManageStock:
@@ -748,6 +750,7 @@ namespace Nop.Services.Catalog
 
                         bool newPublished = productVariant.Published;
                         bool newDisableBuyButton = productVariant.DisableBuyButton;
+                        bool newDisableWishlistButton = productVariant.DisableWishlistButton;
 
                         //check if minimum quantity is reached
                         if (decrease)
@@ -758,6 +761,7 @@ namespace Nop.Services.Catalog
                                 {
                                     case LowStockActivity.DisableBuyButton:
                                         newDisableBuyButton = true;
+                                        newDisableWishlistButton = true;
                                         break;
                                     case LowStockActivity.Unpublish:
                                         newPublished = false;
@@ -770,6 +774,7 @@ namespace Nop.Services.Catalog
 
                         productVariant.StockQuantity = newStockQuantity;
                         productVariant.DisableBuyButton = newDisableBuyButton;
+                        productVariant.DisableWishlistButton = newDisableWishlistButton;
                         productVariant.Published = newPublished;
                         UpdateProductVariant(productVariant);
 
@@ -817,6 +822,18 @@ namespace Nop.Services.Catalog
                 default:
                     break;
             }
+
+            //TODO send back in stock notifications?
+            //if (productVariant.ManageInventoryMethod == ManageInventoryMethod.ManageStock &&
+            //    productVariant.BackorderMode == BackorderMode.NoBackorders &&
+            //    productVariant.AllowBackInStockSubscriptions &&
+            //    productVariant.StockQuantity > 0 &&
+            //    prevStockQuantity <= 0 &&
+            //    productVariant.Published &&
+            //    !productVariant.Deleted)
+            //{
+            //    //_backInStockSubscriptionService.SendNotificationsToSubscribers(productVariant);
+            //}
         }
 
         /// <summary>

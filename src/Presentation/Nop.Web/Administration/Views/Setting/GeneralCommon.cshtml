@@ -19,9 +19,11 @@
     $(document).ready(function () {
 
         $("#@Html.FieldIdFor(model => model.StoreInformationSettings.StoreClosed)").click(toggleStoreClosed);
+        $("#@Html.FieldIdFor(model => model.SecuritySettings.CaptchaEnabled)").click(toggleReCaptcha);
         $("#@Html.FieldIdFor(model => model.SecuritySettings.UseSsl)").click(toggleSSL);
 
         toggleStoreClosed();
+        toggleReCaptcha();
         toggleSSL();
     });
 
@@ -31,6 +33,17 @@
         }
         else {
             $('#pnlStoreClosedAllowForAdmins').hide();
+        }
+    }
+
+    function toggleReCaptcha() {
+        if (getE('@Html.FieldIdFor(model => model.SecuritySettings.CaptchaEnabled)').checked) {
+            $('#ssReCaptchaPublicKeypnl').show();
+            $('#ssReCaptchaPrivateKeypnl').show();
+        }
+        else {
+            $('#ssReCaptchaPublicKeypnl').hide();
+            $('#ssReCaptchaPrivateKeypnl').hide();
         }
     }
 
@@ -201,6 +214,15 @@
             </td>
         </tr>
         <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.SecuritySettings.HideAdminMenuItemsBasedOnPermissions):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.SecuritySettings.HideAdminMenuItemsBasedOnPermissions)
+                @Html.ValidationMessageFor(model => model.SecuritySettings.HideAdminMenuItemsBasedOnPermissions)
+            </td>
+        </tr>
+        <tr>
             <td colspan="2">
                 <hr />
                 <br />
@@ -216,7 +238,7 @@
                 @Html.ValidationMessageFor(model => model.SecuritySettings.CaptchaEnabled)
             </td>
         </tr>
-        <tr>
+        <tr id="ssReCaptchaPublicKeypnl">
             <td class="adminTitle">
                 @Html.NopLabelFor(model => model.SecuritySettings.ReCaptchaPublicKey):
             </td>
@@ -225,7 +247,7 @@
                 @Html.ValidationMessageFor(model => model.SecuritySettings.ReCaptchaPublicKey)
             </td>
         </tr>
-        <tr>
+        <tr id="ssReCaptchaPrivateKeypnl">
             <td class="adminTitle">
                 @Html.NopLabelFor(model => model.SecuritySettings.ReCaptchaPrivateKey):
             </td>
@@ -284,6 +306,15 @@
                 @Html.ValidationMessageFor(model => model.PdfSettings.Enabled)
             </td>
         </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.PdfSettings.LetterPageSizeEnabled):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.PdfSettings.LetterPageSizeEnabled)
+                @Html.ValidationMessageFor(model => model.PdfSettings.LetterPageSizeEnabled)
+            </td>
+        </tr>        
         <tr>
             <td class="adminTitle">
                 @Html.NopLabelFor(model => model.PdfSettings.LogoPictureId):

@@ -88,6 +88,9 @@ namespace Nop.Admin.Models.Settings
             [AllowHtml]
             public string AdminAreaAllowedIpAddresses { get; set; }
 
+            [NopResourceDisplayName("Admin.Configuration.Settings.GeneralCommon.HideAdminMenuItemsBasedOnPermissions")]
+            public bool HideAdminMenuItemsBasedOnPermissions { get; set; }
+
             [NopResourceDisplayName("Admin.Configuration.Settings.GeneralCommon.CaptchaEnabled")]
             public bool CaptchaEnabled { get; set; }
 
@@ -115,6 +118,9 @@ namespace Nop.Admin.Models.Settings
         {
             [NopResourceDisplayName("Admin.Configuration.Settings.GeneralCommon.PdfEnabled")]
             public bool Enabled { get; set; }
+
+            [NopResourceDisplayName("Admin.Configuration.Settings.GeneralCommon.PdfLetterPageSizeEnabled")]
+            public bool LetterPageSizeEnabled { get; set; }
 
             [NopResourceDisplayName("Admin.Configuration.Settings.GeneralCommon.PdfLogo")]
             [UIHint("Picture")]
