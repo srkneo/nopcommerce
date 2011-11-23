@@ -1,12 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Web;
 using System.Web.Routing;
 using System.Xml;
 using Nop.Core;
 using Nop.Core.Domain;
+using Nop.Core.Domain.Catalog;
 using Nop.Core.Domain.Directory;
 using Nop.Core.Domain.Media;
 using Nop.Core.Plugins;
@@ -15,12 +18,10 @@ using Nop.Plugin.Feed.Froogle.Services;
 using Nop.Services.Catalog;
 using Nop.Services.Configuration;
 using Nop.Services.Directory;
+using Nop.Services.Localization;
 using Nop.Services.Media;
 using Nop.Services.PromotionFeed;
 using Nop.Services.Seo;
-using Nop.Core.Domain.Catalog;
-using System.Web;
-using System.Collections.Generic;
 
 namespace Nop.Plugin.Feed.Froogle
 {
@@ -279,6 +280,15 @@ namespace Nop.Plugin.Feed.Froogle
                          * You need to submit at least two attributes of 'brand', 'gtin' and 'mpn', but we recommend that you submit all three if available. For media (such as books, movies, music and video games), you must submit the 'gtin' attribute, but we recommend that you include 'brand' and 'mpn' if available.
                         */
 
+                        //GTIN [gtin] - GTIN
+                        var gtin = productVariant.Gtin;
+                        if (!String.IsNullOrEmpty(gtin))
+                        {
+                            writer.WriteStartElement("g", "gtin", googleBaseNamespace);
+                            writer.WriteCData(gtin);
+                            writer.WriteFullEndElement(); // g:gtin
+                        }
+
                         //brand [brand] - Brand of the item
                         var defaultManufacturer =
                             _manufacturerService.GetProductManufacturersByProductId((product.Id)).FirstOrDefault();
@@ -291,13 +301,13 @@ namespace Nop.Plugin.Feed.Froogle
 
 
                         //mpn [mpn] - Manufacturer Part Number (MPN) of the item
-                        writer.WriteStartElement("g", "mpn", googleBaseNamespace);
                         var mpn = productVariant.ManufacturerPartNumber;
-                        //at least two are required for Unique product identifiers. So let's set it to a product variant name
-                        //if (String.IsNullOrEmpty((mpn)))
-                        //    mpn = productVariant.FullProductName;
-                        writer.WriteCData(mpn);
-                        writer.WriteFullEndElement(); // g:brand
+                        if (!String.IsNullOrEmpty(mpn))
+                        {
+                            writer.WriteStartElement("g", "mpn", googleBaseNamespace);
+                            writer.WriteCData(mpn);
+                            writer.WriteFullEndElement(); // g:mpn
+                        }
 
                         #endregion
                         
@@ -340,9 +350,32 @@ namespace Nop.Plugin.Feed.Froogle
                 FtpHostname = "ftp://uploads.google.com"
             };
             _settingService.SaveSetting(settings);
-
-
+            
             _objectContext.Install();
+
+            this.AddOrUpdatePluginLocaleResource("Plugins.Feed.Froogle.ClickHere", "Click here");
+            this.AddOrUpdatePluginLocaleResource("Plugins.Feed.Froogle.Currency", "Currency");
+            this.AddOrUpdatePluginLocaleResource("Plugins.Feed.Froogle.Currency.Hint", "Select the default currency that will be used to generate the feed.");
+            this.AddOrUpdatePluginLocaleResource("Plugins.Feed.Froogle.DefaultGoogleCategory", "Default Google category");
+            this.AddOrUpdatePluginLocaleResource("Plugins.Feed.Froogle.DefaultGoogleCategory.Hint", "The default Google category will be useds if other one is not specified.");
+            this.AddOrUpdatePluginLocaleResource("Plugins.Feed.Froogle.FtpHostname", "FTP Hostname");
+            this.AddOrUpdatePluginLocaleResource("Plugins.Feed.Froogle.FtpHostname.Hint", "Google FTP server hostname.");
+            this.AddOrUpdatePluginLocaleResource("Plugins.Feed.Froogle.FtpFilename", "FTP File name");
+            this.AddOrUpdatePluginLocaleResource("Plugins.Feed.Froogle.FtpFilename.Hint", "Feed file name.");
+            this.AddOrUpdatePluginLocaleResource("Plugins.Feed.Froogle.FtpUsername", "FTP Username");
+            this.AddOrUpdatePluginLocaleResource("Plugins.Feed.Froogle.FtpUsername.Hint", "Google FTP account username.");
+            this.AddOrUpdatePluginLocaleResource("Plugins.Feed.Froogle.FtpPassword", "FTP Password");
+            this.AddOrUpdatePluginLocaleResource("Plugins.Feed.Froogle.FtpPassword.Hint", "Google FTP account password.");
+            this.AddOrUpdatePluginLocaleResource("Plugins.Feed.Froogle.FtpUploadStatus", "Froogle feed upload status: {0}");
+            this.AddOrUpdatePluginLocaleResource("Plugins.Feed.Froogle.General", "General");
+            this.AddOrUpdatePluginLocaleResource("Plugins.Feed.Froogle.Generate", "Generate feed");
+            this.AddOrUpdatePluginLocaleResource("Plugins.Feed.Froogle.Override", "Override product settings");
+            this.AddOrUpdatePluginLocaleResource("Plugins.Feed.Froogle.ProductPictureSize", "Product thumbnail image size");
+            this.AddOrUpdatePluginLocaleResource("Plugins.Feed.Froogle.ProductPictureSize.Hint", "The default size (pixels) for product thumbnail images.");
+            this.AddOrUpdatePluginLocaleResource("Plugins.Feed.Froogle.Products.ProductName", "Product");
+            this.AddOrUpdatePluginLocaleResource("Plugins.Feed.Froogle.Products.GoogleCategory", "Google Category");
+            this.AddOrUpdatePluginLocaleResource("Plugins.Feed.Froogle.SuccessResult", "Froogle feed has been successfully generated. {0} to see generated feed");
+            this.AddOrUpdatePluginLocaleResource("Plugins.Feed.Froogle.Upload", "Upload feed to Google FTP server");
 
             base.Install();
         }

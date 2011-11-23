@@ -176,13 +176,13 @@ set @resources='
     <LocaleResource Name="Admin.Catalog.BulkEdit.List.SearchCategory">
         <Value>Category</Value>
     </LocaleResource>
-    <LocaleResource Name="Admin.Catalog.BulkEdit.List.SearchProductName.Hint">
+    <LocaleResource Name="Admin.Catalog.BulkEdit.List.SearchCategory.Hint">
         <Value>Search by a specific category.</Value>
     </LocaleResource>
     <LocaleResource Name="Admin.Catalog.BulkEdit.List.SearchManufacturer">
         <Value>Manufacturer</Value>
     </LocaleResource>
-    <LocaleResource Name="Admin.Catalog.BulkEdit.List.SearchProductName.Hint">
+    <LocaleResource Name="Admin.Catalog.BulkEdit.List.SearchManufacturer.Hint">
         <Value>Search by a specific manufacturer.</Value>
     </LocaleResource>
     <LocaleResource Name="Admin.Configuration.Settings.GeneralCommon.UseSSL">
@@ -231,7 +231,7 @@ set @resources='
         <Value>You are not currently subscribed to any Back In Stock notification lists</Value>
     </LocaleResource>
     <LocaleResource Name="Account.BackInStockSubscriptions.Description">
-        <Value>This list of customer have requested to be notified when a particular product is back in stock. Notifications are sent out automatically once the appropriate quantity is updated.</Value>
+        <Value>You will receive an e-mail when a particular product is back in stock.</Value>
     </LocaleResource>
     <LocaleResource Name="ForumSubscriptions.NoSubscriptions">
         <Value>You are not currently subscribed to any forums</Value>
@@ -252,7 +252,7 @@ set @resources='
         <Value>You cannot subscribe. Maximum number of allowed subscriptions is {0}</Value>
     </LocaleResource>
     <LocaleResource Name="BackInStockSubscriptions.Tooltip">
-        <Value>You''ll receive a one time email this product is available for ordering again. We will not send you any other e-mails or add you to our newsletter, you will only be e-mailed about this product!</Value>
+        <Value>You''ll receive a one time e-mail when this product is available for ordering again. We will not send you any other e-mails or add you to our newsletter, you will only be e-mailed about this product!</Value>
     </LocaleResource>
     <LocaleResource Name="BackInStockSubscriptions.Unsubscribe">
         <Value>Unsubscribe</Value>
@@ -280,6 +280,69 @@ set @resources='
     </LocaleResource>
     <LocaleResource Name="Admin.Configuration.Settings.GeneralCommon.StoreClosedAllowForAdmins.Hint">
         <Value>Check to allow a user with admin access to view the store while it is set to closed.</Value>
+    </LocaleResource>
+    <LocaleResource Name="Admin.Customers.Customers.List.SearchDateOfBirth">
+        <Value>Date of birth</Value>
+    </LocaleResource>
+    <LocaleResource Name="Admin.Customers.Customers.List.SearchDateOfBirth.Hint">
+        <Value>Filter by date of birth. Don''t select any value to load all records.</Value>
+    </LocaleResource>
+    <LocaleResource Name="Admin.Customers.Customers.List.SearchDateOfBirth.Day">
+        <Value>Day</Value>
+    </LocaleResource>
+    <LocaleResource Name="Admin.Customers.Customers.List.SearchDateOfBirth.Month">
+        <Value>Month</Value>
+    </LocaleResource>
+    <LocaleResource Name="Account.Fields.Password.LengthValidation">
+        <Value>The password should have at least {0} characters.</Value>
+    </LocaleResource>
+    <LocaleResource Name="Account.ChangePassword.Fields.NewPassword.LengthValidation">
+        <Value>The password should have at least {0} characters.</Value>
+    </LocaleResource>
+    <LocaleResource Name="Account.PasswordRecovery.NewPassword.LengthValidation">
+        <Value>The password should have at least {0} characters.</Value>
+    </LocaleResource>
+    <LocaleResource Name="Admin.Configuration.Settings.GeneralCommon.HideAdminMenuItemsBasedOnPermissions">
+        <Value>Hide admin menu items based on permissions</Value>
+    </LocaleResource>
+    <LocaleResource Name="Admin.Configuration.Settings.GeneralCommon.HideAdminMenuItemsBasedOnPermissions.Hint">
+        <Value>Hide admin menu items when access to them is denied according to access control list (permissions).</Value>
+    </LocaleResource>
+    <LocaleResource Name="Admin.Promotions.Discounts.Requirements.Saved">
+        <Value>Discount requirement saved</Value>
+    </LocaleResource>
+    <LocaleResource Name="ShoppingCart.DiscountCouponCode.CurrentCode">
+        <Value>Entered coupon code - {0}</Value>
+    </LocaleResource>
+    <LocaleResource Name="Products.Availability.Backordering">
+        <Value>Out of Stock - on backorder and will be dispatched once in stock.</Value>
+    </LocaleResource>    
+    <LocaleResource Name="Admin.Configuration.Settings.GeneralCommon.PdfLetterPageSizeEnabled">
+        <Value>Use Letter page size</Value>
+    </LocaleResource>
+    <LocaleResource Name="Admin.Configuration.Settings.GeneralCommon.PdfLetterPageSizeEnabled.Hint">
+        <Value>If checked, uses Letter page size for PDF documents. Uses A4 page size if unchecked.</Value>
+    </LocaleResource>
+    <LocaleResource Name="Admin.Catalog.Products.Variants.Fields.GTIN">
+        <Value>GTIN (global trade item number)</Value>
+    </LocaleResource>
+    <LocaleResource Name="Admin.Catalog.Products.Variants.Fields.GTIN.Hint">
+        <Value>Enter global trade item number (GTIN). These identifiers include UPC (in North America), EAN (in Europe), JAN (in Japan), and ISBN (for books).</Value>
+    </LocaleResource>
+    <LocaleResource Name="Admin.Configuration.EmailAccounts.Fields.SendTestEmailTo.Hint">
+        <Value>Send test email to ensure that everything is properly configured.</Value>
+    </LocaleResource>
+    <LocaleResource Name="Checkout.NewAddress">
+        <Value>New Address</Value>
+    </LocaleResource>
+    <LocaleResource Name="Admin.Configuration.Settings.Catalog.ShowGtin">
+        <Value>Show GTIN</Value>
+    </LocaleResource>
+    <LocaleResource Name="Admin.Configuration.Settings.Catalog.ShowGtin.Hint">
+        <Value>Check to show GTIN in public store.</Value>
+    </LocaleResource>
+    <LocaleResource Name="Products.GTIN">
+        <Value>GTIN</Value>
     </LocaleResource>
 </Language>
 '
@@ -977,5 +1040,72 @@ BEGIN
 	END
 	CLOSE cur_customerrole
 	DEALLOCATE cur_customerrole
+END
+GO
+
+
+--min password length
+IF NOT EXISTS (SELECT 1 FROM [Setting] WHERE [name] = N'customersettings.passwordminlength')
+BEGIN
+	INSERT [Setting] ([Name], [Value])
+	VALUES (N'customersettings.passwordminlength', N'6')
+END
+GO
+
+
+--new PayPal setting
+IF NOT EXISTS (SELECT 1 FROM [Setting] WHERE [name] = N'paypalstandardpaymentsettings.enableipn')
+BEGIN
+	INSERT [Setting] ([Name], [Value])
+	VALUES (N'paypalstandardpaymentsettings.enableipn', N'true')
+END
+GO
+
+
+--new setting indicating we should store last visited page URL for each customer
+IF NOT EXISTS (SELECT 1 FROM [Setting] WHERE [name] = N'customersettings.storelastvisitedpage')
+BEGIN
+	INSERT [Setting] ([Name], [Value])
+	VALUES (N'customersettings.storelastvisitedpage', N'true')
+END
+GO
+
+--new PDF setting enables PDF documents to use Letter page size if true, else A4 page size
+IF NOT EXISTS (SELECT 1 FROM [Setting] WHERE [name] = N'pdfsettings.letterpagesizeenabled')
+BEGIN
+	INSERT [Setting] ([Name], [Value])
+	VALUES (N'pdfsettings.letterpagesizeenabled', N'false')
+END
+GO
+
+--new GTIN property of product variants
+IF NOT EXISTS (SELECT 1 FROM syscolumns WHERE id=object_id('[dbo].[ProductVariant]') and NAME='Gtin')
+BEGIN
+	ALTER TABLE [dbo].[ProductVariant]
+	ADD [Gtin] nvarchar(400) NULL
+END
+GO
+
+--new setting
+IF NOT EXISTS (SELECT 1 FROM [Setting] WHERE [name] = N'ordersettings.onepagecheckoutdisplayordertotalsonpaymentinfotab')
+BEGIN
+	INSERT [Setting] ([Name], [Value])
+	VALUES (N'ordersettings.onepagecheckoutdisplayordertotalsonpaymentinfotab', N'false')
+END
+GO
+
+--new setting (PDF font path)
+IF NOT EXISTS (SELECT 1 FROM [Setting] WHERE [name] = N'pdfsettings.fontfilename')
+BEGIN
+	INSERT [Setting] ([Name], [Value])
+	VALUES (N'pdfsettings.fontfilename', N'FreeSerif.ttf')
+END
+GO
+
+--new setting (display GTIN)
+IF NOT EXISTS (SELECT 1 FROM [Setting] WHERE [name] = N'catalogsettings.showgtin')
+BEGIN
+	INSERT [Setting] ([Name], [Value])
+	VALUES (N'catalogsettings.showgtin', N'false')
 END
 GO

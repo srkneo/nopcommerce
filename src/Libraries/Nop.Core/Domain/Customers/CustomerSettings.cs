@@ -26,6 +26,11 @@ namespace Nop.Core.Domain.Customers
         public string HashedPasswordFormat { get; set; }
 
         /// <summary>
+        /// Gets or sets a minimum password length
+        /// </summary>
+        public int PasswordMinLength { get; set; }
+
+        /// <summary>
         /// User registration type
         /// </summary>
         public UserRegistrationType UserRegistrationType { get; set; }
@@ -154,5 +159,10 @@ namespace Nop.Core.Domain.Customers
         /// Gets or sets a value indicating the number of minutes for 'online customers' module
         /// </summary>
         public int OnlineCustomerMinutes { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating we should store last visited page URL for each customer
+        /// </summary>
+        public bool StoreLastVisitedPage { get; set; }
     }
 }

@@ -72,7 +72,7 @@
 						<Value>You are not currently subscribed to any Back In Stock notification lists</Value>
 					</LocaleResource>
 					<LocaleResource Name="Description">
-						<Value>This list of customer have requested to be notified when a particular product is back in stock. Notifications are sent out automatically once the appropriate quantity is updated.</Value>
+						<Value>You will receive an e-mail when a particular product is back in stock.</Value>
 					</LocaleResource>
 				</Children>
 			</LocaleResource>
@@ -97,6 +97,9 @@
 								<Children>
 									<LocaleResource Name="EnteredPasswordsDoNotMatch">
 										<Value>The new password and confirmation password do not match.</Value>
+									</LocaleResource>
+									<LocaleResource Name="LengthValidation">
+										<Value>The password should have at least {0} characters.</Value>
 									</LocaleResource>
 									<LocaleResource Name="Required">
 										<Value>New password is required.</Value>
@@ -304,6 +307,9 @@
 							<LocaleResource Name="EnteredPasswordsDoNotMatch">
 								<Value>The password and confirmation password do not match.</Value>
 							</LocaleResource>
+							<LocaleResource Name="LengthValidation">
+								<Value>The password should have at least {0} characters.</Value>
+							</LocaleResource>
 							<LocaleResource Name="Required">
 								<Value>Password is required.</Value>
 							</LocaleResource>
@@ -464,6 +470,9 @@
 						<Children>
 							<LocaleResource Name="EnteredPasswordsDoNotMatch">
 								<Value>The new password and confirmation password do not match.</Value>
+							</LocaleResource>
+							<LocaleResource Name="LengthValidation">
+								<Value>The password should have at least {0} characters.</Value>
 							</LocaleResource>
 							<LocaleResource Name="Required">
 								<Value>New password is required.</Value>
@@ -790,7 +799,7 @@
 				<Value>You cannot subscribe. Maximum number of allowed subscriptions is {0}</Value>
 			</LocaleResource>
 			<LocaleResource Name="Tooltip">
-				<Value>You'll receive a one time email this product is available for ordering again. We will not send you any other e-mails or add you to our newsletter, you will only be e-mailed about this product!</Value>
+				<Value>You'll receive a one time e-mail when this product is available for ordering again. We will not send you any other e-mails or add you to our newsletter, you will only be e-mailed about this product!</Value>
 			</LocaleResource>
 			<LocaleResource Name="Unsubscribe">
 				<Value>Unsubscribe</Value>
@@ -931,6 +940,9 @@
 			</LocaleResource>
 			<LocaleResource Name="MinOrderTotalAmount">
 				<Value>Minimum order total amount is {0}</Value>
+			</LocaleResource>
+			<LocaleResource Name="NewAddress">
+				<Value>New Address</Value>
 			</LocaleResource>
 			<LocaleResource Name="NextButton">
 				<Value>Next</Value>
@@ -2088,6 +2100,9 @@
 					<LocaleResource Name="Product(s)">
 						<Value>Product(s)</Value>
 						<Children>
+							<LocaleResource Name="Download">
+								<Value>Download</Value>
+							</LocaleResource>
 							<LocaleResource Name="SKU">
 								<Value>SKU: {0}</Value>
 							</LocaleResource>
@@ -2839,7 +2854,7 @@
 				<Value>Availability</Value>
 				<Children>
 					<LocaleResource Name="Backordering">
-						<Value>Out of Stock - on backorder and will be despatched once in stock.</Value>
+						<Value>Out of Stock - on backorder and will be dispatched once in stock.</Value>
 					</LocaleResource>
 					<LocaleResource Name="InStock">
 						<Value>In stock</Value>
@@ -2956,6 +2971,9 @@
 						<Value>Your Name</Value>
 					</LocaleResource>
 				</Children>
+			</LocaleResource>
+			<LocaleResource Name="GTIN">
+				<Value>GTIN</Value>
 			</LocaleResource>
 			<LocaleResource Name="InclTaxSuffix">
 				<Value>{0} incl tax</Value>
@@ -3353,6 +3371,9 @@
 					</LocaleResource>
 					<LocaleResource Name="WrongDiscount">
 						<Value>The coupon code you entered couldn't be applied to your order</Value>
+					</LocaleResource>
+					<LocaleResource Name="CurrentCode">
+						<Value>Entered coupon code - {0}</Value>
 					</LocaleResource>
 				</Children>
 			</LocaleResource>

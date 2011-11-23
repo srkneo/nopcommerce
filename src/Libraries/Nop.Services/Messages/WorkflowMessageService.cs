@@ -63,8 +63,8 @@ namespace Nop.Services.Messages
             var body = messageTemplate.GetLocalized((mt) => mt.Body, languageId);
 
             //Replace subject and body tokens 
-            var subjectReplaced = _tokenizer.Replace(subject, tokens);
-            var bodyReplaced = _tokenizer.Replace(body, tokens);
+            var subjectReplaced = _tokenizer.Replace(subject, tokens, false);
+            var bodyReplaced = _tokenizer.Replace(body, tokens, true);
             
             var email = new QueuedEmail()
             {
@@ -191,12 +191,14 @@ namespace Nop.Services.Messages
             return tokens;            
         }
 
-        private IList<Token> GenerateTokens(ForumPost forumPost)
+        private IList<Token> GenerateTokens(ForumPost forumPost, int friendlyForumTopicPageIndex,
+            int appendPostIdentifier)
         {
             var tokens = new List<Token>();
             _messageTokenProvider.AddStoreTokens(tokens);
             _messageTokenProvider.AddForumPostTokens(tokens, forumPost);
-            _messageTokenProvider.AddForumTopicTokens(tokens, forumPost.ForumTopic);
+            _messageTokenProvider.AddForumTopicTokens(tokens, forumPost.ForumTopic,
+                friendlyForumTopicPageIndex, appendPostIdentifier);
             _messageTokenProvider.AddForumTokens(tokens, forumPost.ForumTopic.Forum);
 
             return tokens;
@@ -631,7 +633,7 @@ namespace Nop.Services.Messages
                 return 0;
 
             var customerProductTokens = GenerateTokens(customer, product);
-            customerProductTokens.Add(new Token("EmailAFriend.PersonalMessage", personalMessage));
+            customerProductTokens.Add(new Token("EmailAFriend.PersonalMessage", personalMessage, true));
             customerProductTokens.Add(new Token("EmailAFriend.Email", customerEmail));
 
             var emailAccount = GetEmailAccountOfMessageTemplate(messageTemplate, languageId);
@@ -664,9 +666,7 @@ namespace Nop.Services.Messages
                 return 0;
 
             var customerTokens = GenerateTokens(customer);
-            //TODO add a method for getting URL (use routing because it handles all SEO friendly URLs)
-            customerTokens.Add(new Token("Wishlist.URLForCustomer", string.Format("{0}wishlist/{1}", _webHelper.GetStoreLocation(false), customer.CustomerGuid)));
-            customerTokens.Add(new Token("Wishlist.PersonalMessage", personalMessage));
+            customerTokens.Add(new Token("Wishlist.PersonalMessage", personalMessage, true));
             customerTokens.Add(new Token("Wishlist.Email", customerEmail));
 
             var emailAccount = GetEmailAccountOfMessageTemplate(messageTemplate, languageId);
@@ -777,11 +777,12 @@ namespace Nop.Services.Messages
         /// <param name="forumPost">Forum post</param>
         /// <param name="forumTopic">Forum Topic</param>
         /// <param name="forum">Forum</param>
+        /// <param name="friendlyForumTopicPageIndex">Friendly (starts with 1) forum topic page to use for URL generation</param>/// <param name="appendPostIdentifierAnchor">Indicatew whether post identifier anchor to a generated forum topic</param>
         /// <param name="languageId">Message language identifier</param>
         /// <returns>Queued email identifier</returns>
         public int SendNewForumPostMessage(Customer customer,
             ForumPost forumPost, ForumTopic forumTopic,
-            Forum forum, int languageId)
+            Forum forum, int friendlyForumTopicPageIndex, int languageId)
         {
             if (customer == null)
             {
@@ -794,7 +795,7 @@ namespace Nop.Services.Messages
                 return 0;
             }
 
-            var tokens = GenerateTokens(forumPost);
+            var tokens = GenerateTokens(forumPost, friendlyForumTopicPageIndex, forumPost.Id);
 
             var emailAccount = GetEmailAccountOfMessageTemplate(messageTemplate, languageId);            
             var toEmail = customer.Email;

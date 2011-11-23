@@ -1800,6 +1800,14 @@
 													</LocaleResource>
 												</Children>
 											</LocaleResource>
+											<LocaleResource Name="GTIN">
+												<Value>GTIN (global trade item number)</Value>
+												<Children>
+													<LocaleResource Name="Hint">
+														<Value>Enter global trade item number (GTIN). These identifiers include UPC (in North America), EAN (in Europe), JAN (in Japan), and ISBN (for books).</Value>
+													</LocaleResource>
+												</Children>
+											</LocaleResource>
 											<LocaleResource Name="HasSampleDownload">
 												<Value>Has sample download file</Value>
 												<Children>
@@ -2831,6 +2839,9 @@
 											<LocaleResource Name="Button">
 												<Value>The email address to which you want to send your test email.</Value>
 											</LocaleResource>
+											<LocaleResource Name="Hint">
+												<Value>Send test email to ensure that everything is properly configured.</Value>
+											</LocaleResource>
 										</Children>
 									</LocaleResource>
 								</Children>
@@ -3303,6 +3314,14 @@
 											</LocaleResource>
 										</Children>
 									</LocaleResource>
+									<LocaleResource Name="ShowGtin">
+										<Value>Show GTIN</Value>
+										<Children>
+											<LocaleResource Name="Hint">
+												<Value>Check to show GTIN in public store.</Value>
+											</LocaleResource>
+										</Children>
+									</LocaleResource>
 									<LocaleResource Name="AllowProductSorting">
 										<Value>Allow product sorting</Value>
 										<Children>
@@ -3523,7 +3542,7 @@
 										<Value>Ignore discounts (sitewide)</Value>
 										<Children>
 											<LocaleResource Name="Hint">
-												<Value>Check to ignore tier prices (sitewide). It can significantly improve performance.</Value>
+												<Value>Check to ignore discounts (sitewide). It can significantly improve performance.</Value>
 											</LocaleResource>
 										</Children>
 									</LocaleResource>
@@ -3531,7 +3550,7 @@
 										<Value>Ignore featured products (sitewide)</Value>
 										<Children>
 											<LocaleResource Name="Hint">
-												<Value>Check to ignore tier prices (sitewide). It can significantly improve performance.</Value>
+												<Value>Check to ignore featured products (sitewide). It can significantly improve performance.</Value>
 											</LocaleResource>
 										</Children>
 									</LocaleResource>
@@ -4030,6 +4049,14 @@
 											</LocaleResource>
 										</Children>
 									</LocaleResource>
+									<LocaleResource Name="PdfLetterPageSizeEnabled">
+										<Value>Use Letter page size</Value>
+										<Children>
+											<LocaleResource Name="Hint">
+												<Value>If checked, uses Letter page size for PDF documents. Uses A4 page size if unchecked.</Value>
+											</LocaleResource>
+										</Children>
+									</LocaleResource>
 									<LocaleResource Name="PdfLogo">
 										<Value>PDF logo</Value>
 										<Children>
@@ -4102,6 +4129,14 @@
 											</LocaleResource>
 										</Children>
 									</LocaleResource>
+									<LocaleResource Name="HideAdminMenuItemsBasedOnPermissions">
+										<Value>Hide admin menu items based on permissions</Value>
+										<Children>
+											<LocaleResource Name="Hint">
+												<Value>Hide admin menu items when access to them is denied according to access control list (permissions).</Value>
+											</LocaleResource>
+										</Children>
+									</LocaleResource>
 									<LocaleResource Name="UseImagesForLanguageSelection">
 										<Value>Use images for language selection</Value>
 										<Children>
@@ -4150,7 +4185,7 @@
 											</LocaleResource>
 										</Children>
 									</LocaleResource>
-									<LocaleResource Name="reCaptchaPrivateKey">
+									<LocaleResource Name="SharedSSLUrl">
 										<Value>Shared SSL URL</Value>
 										<Children>
 											<LocaleResource Name="Hint">
@@ -6247,6 +6282,20 @@
 											</LocaleResource>
 										</Children>
 									</LocaleResource>
+									<LocaleResource Name="SearchDateOfBirth">
+										<Value>Date of birth</Value>
+										<Children>
+											<LocaleResource Name="Hint">
+												<Value>Filter by date of birth. Don't select any value to load all records.</Value>
+											</LocaleResource>
+											<LocaleResource Name="Day">
+												<Value>Day</Value>
+											</LocaleResource>
+											<LocaleResource Name="Month">
+												<Value>Month</Value>
+											</LocaleResource>
+										</Children>
+									</LocaleResource>
 								</Children>
 							</LocaleResource>
 							<LocaleResource Name="Orders">
@@ -7660,6 +7709,9 @@
 									</LocaleResource>
 									<LocaleResource Name="SaveBeforeEdit">
 										<Value>You need to save the discount before you can add requirements for this discount page.</Value>
+									</LocaleResource>
+									<LocaleResource Name="Saved">
+										<Value>Discount requirement saved</Value>
 									</LocaleResource>
 								</Children>
 							</LocaleResource>

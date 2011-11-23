@@ -75,6 +75,7 @@ namespace Nop.Services.Installation
         private readonly IRepository<ManufacturerTemplate> _manufacturerTemplateRepository;
         private readonly IRepository<ScheduleTask> _scheduleTaskRepository;
         private readonly ICustomerService _customerService;
+        private readonly HttpContextBase _httpContext;
 
         #endregion
 
@@ -111,7 +112,8 @@ namespace Nop.Services.Installation
             IRepository<CategoryTemplate> categoryTemplateRepository,
             IRepository<ManufacturerTemplate> manufacturerTemplateRepository,
             IRepository<ScheduleTask> scheduleTaskRepository,
-            ICustomerService customerService)
+            ICustomerService customerService,
+            HttpContextBase httpContext)
         {
             this._measureDimensionRepository = measureDimensionRepository;
             this._measureWeightRepository = measureWeightRepository;
@@ -145,6 +147,7 @@ namespace Nop.Services.Installation
             this._manufacturerTemplateRepository = manufacturerTemplateRepository;
             this._scheduleTaskRepository = scheduleTaskRepository;
             this._customerService = customerService;
+            this._httpContext = httpContext;
         }
 
         #endregion
@@ -4447,7 +4450,9 @@ namespace Nop.Services.Installation
                 .SaveSettings(new PdfSettings()
                 {
                     Enabled = true,
+                    LetterPageSizeEnabled = false,
                     RenderOrderNotes = true,
+                    FontFileName = "FreeSerif.ttf",
                 });
 
             EngineContext.Current.Resolve<IConfigurationProvider<CommonSettings>>()
@@ -4534,9 +4539,10 @@ namespace Nop.Services.Installation
                 .SaveSettings(new CustomerSettings()
                 {
                     UsernamesEnabled = false,
-                    AllowUsersToChangeUsernames = false,
                     CheckUsernameAvailabilityEnabled = false,
+                    AllowUsersToChangeUsernames = false,
                     HashedPasswordFormat = "SHA1",
+                    PasswordMinLength = 6,
                     UserRegistrationType = UserRegistrationType.Standard,
                     AllowCustomersToUploadAvatars = false,
                     AvatarMaximumSizeBytes = 20000,
@@ -4563,6 +4569,7 @@ namespace Nop.Services.Installation
                     NewsletterEnabled = true,
                     HideNewsletterBlock = false,
                     OnlineCustomerMinutes = 20,
+                    StoreLastVisitedPage = true,
                 });
 
             EngineContext.Current.Resolve<IConfigurationProvider<MediaSettings>>()
@@ -4929,7 +4936,7 @@ namespace Nop.Services.Installation
         {
             //pictures
             var pictureService = EngineContext.Current.Resolve<IPictureService>();
-            var sampleImagesPath = string.Format("{0}content\\samples\\", HttpContext.Current.Request.PhysicalApplicationPath);
+            var sampleImagesPath = string.Format("{0}content\\samples\\", _httpContext.Request.PhysicalApplicationPath);
 
 
 
@@ -5293,11 +5300,11 @@ namespace Nop.Services.Installation
             
             //pictures
             var pictureService = EngineContext.Current.Resolve<IPictureService>();
-            var sampleImagesPath = string.Format("{0}content\\samples\\", HttpContext.Current.Request.PhysicalApplicationPath);
+            var sampleImagesPath = string.Format("{0}content\\samples\\", _httpContext.Request.PhysicalApplicationPath);
 
             //downloads
             var downloadService = EngineContext.Current.Resolve<IDownloadService>();
-            var sampleDownloadsPath = string.Format("{0}content\\samples\\", HttpContext.Current.Request.PhysicalApplicationPath);
+            var sampleDownloadsPath = string.Format("{0}content\\samples\\", _httpContext.Request.PhysicalApplicationPath);
 
 
             //products
