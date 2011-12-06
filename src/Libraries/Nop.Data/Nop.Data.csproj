@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="BaseEfDataProvider.cs" />
     <Compile Include="DataReaderExtensions.cs" />
+    <Compile Include="DbContextExtensions.cs" />
     <Compile Include="Initializers\CreateCeDatabaseIfNotExists.cs" />
     <Compile Include="Initializers\DropCreateCeDatabaseAlways.cs" />
     <Compile Include="Initializers\DropCreateCeDatabaseIfModelChanges.cs" />
