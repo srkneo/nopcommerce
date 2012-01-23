@@ -1,0 +1,41 @@
+﻿@model Nop.Web.Models.Common.ContactUsModel
+@using Nop.Web.Framework.UI.Captcha;
+@{
+    Layout = "~/Views/Shared/_MobileRoot.cshtml";
+
+    //title
+    Html.AddTitleParts(T("PageTitle.ContactUs").Text);
+}
+<div class="contact-form">
+    @Html.Action("TopicBlock", "Topic", new { systemName = "ContactUs" })
+    <div class="clear">
+    </div>
+    @if (Model.SuccessfullySent)
+    {
+        <div class="result">
+            <strong>@Model.Result</strong>
+        </div>   
+    }
+    else
+    {
+        using (Html.BeginForm())
+        {
+        <div class="send-email">
+            @Html.ValidationSummary(false)
+            @Html.LabelFor(model => model.FullName)
+            @Html.TextBoxFor(model => model.FullName)
+            @Html.LabelFor(model => model.Email)
+            @Html.TextBoxFor(model => model.Email)
+            @Html.LabelFor(model => model.Enquiry)
+            @Html.TextAreaFor(model => model.Enquiry)
+            @if (Model.DisplayCaptcha)
+            {
+                <div>
+                    @Html.Raw(Html.GenerateCaptcha())
+                </div>
+            }
+            <input type="submit" id="send-email" name="send-email" value="@T("ContactUs.Button")" />
+        </div>
+        }
+    }
+</div>
