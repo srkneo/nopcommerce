@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web.Configuration;
 using System.Web.Mvc;
@@ -37,7 +38,6 @@ using Nop.Web.Framework.Localization;
 using Nop.Web.Framework.Themes;
 using Nop.Web.Framework.UI.Captcha;
 using Telerik.Web.Mvc;
-using System.Configuration;
 
 namespace Nop.Admin.Controllers
 {
@@ -871,7 +871,7 @@ namespace Nop.Admin.Controllers
             {
                 //MobileDevicesSupported setting has been changed
                 //restart application
-                _webHelper.RestartAppDomain("~/Admin/Setting/GeneralCommon");
+                _webHelper.RestartAppDomain();
             }
 
             SuccessNotification(_localizationService.GetResource("Admin.Configuration.Updated"));
@@ -1023,7 +1023,9 @@ namespace Nop.Admin.Controllers
 
             if (!ModelState.IsValid)
             {
-                return RedirectToAction("AllSettings");
+                //display the first model error
+                var modelStateErrors = this.ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage);
+                return Content(modelStateErrors.FirstOrDefault());
             }
 
             var setting = _settingService.GetSettingById(model.Id);
@@ -1050,7 +1052,9 @@ namespace Nop.Admin.Controllers
 
             if (!ModelState.IsValid)
             {
-                return new JsonResult { Data = "error" };
+                //display the first model error
+                var modelStateErrors = this.ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage);
+                return Content(modelStateErrors.FirstOrDefault());
             }
 
             _settingService.SetSetting(model.Name, model.Value);
@@ -1067,6 +1071,8 @@ namespace Nop.Admin.Controllers
                 return AccessDeniedView();
 
             var setting = _settingService.GetSettingById(id);
+            if (setting == null)
+                throw new ArgumentException("No setting found with the specified id");
             _settingService.DeleteSetting(setting);
 
             //activity log

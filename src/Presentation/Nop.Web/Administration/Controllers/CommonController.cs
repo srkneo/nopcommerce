@@ -14,9 +14,9 @@ using Nop.Services.Directory;
 using Nop.Services.Helpers;
 using Nop.Services.Localization;
 using Nop.Services.Payments;
+using Nop.Services.Security;
 using Nop.Services.Shipping;
 using Nop.Web.Framework.Controllers;
-using Nop.Services.Security;
 
 namespace Nop.Admin.Controllers
 {
@@ -356,8 +356,7 @@ namespace Nop.Admin.Controllers
                 return AccessDeniedView();
 
             //restart application
-            _webHelper.RestartAppDomain("~/Admin/");
-
+            _webHelper.RestartAppDomain();
             return RedirectToAction("Index", "Home");
         }
         #endregion

@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Nop.Admin.Models.Messages;
 using Nop.Core.Domain.Messages;
 using Nop.Services.Helpers;
 using Nop.Services.Localization;
 using Nop.Services.Messages;
+using Nop.Services.Security;
 using Nop.Web.Framework.Controllers;
 using Telerik.Web.Mvc;
-using Nop.Services.Security;
 
 namespace Nop.Admin.Controllers
 {
@@ -184,27 +183,23 @@ namespace Nop.Admin.Controllers
 			return RedirectToAction("List");
 		}
 
-        //TODO: currently, only records within current page are passed, 
-        //need to somehow pass all of the records
-        [HttpPost, ActionName("List")]
-        [FormValueRequired("delete-selected")]
-        public ActionResult DeleteSelected(QueuedEmailListModel model, ICollection<int> checkedRecords)
+        [HttpPost]
+        public ActionResult DeleteSelected(ICollection<int> selectedIds)
         {
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageMessageQueue))
                 return AccessDeniedView();
 
-            if (checkedRecords != null)
+            if (selectedIds != null)
             {
-                foreach (var queuedEmailId in checkedRecords)
+                foreach (var queuedEmailId in selectedIds)
                 {
                     var queuedEmail = _queuedEmailService.GetQueuedEmailById(queuedEmailId);
-                    _queuedEmailService.DeleteQueuedEmail(queuedEmail);
+                    if (queuedEmail!= null)
+                        _queuedEmailService.DeleteQueuedEmail(queuedEmail);
                 }
             }
 
-            //return View(model);
-            //refresh page 
-            return List();
+            return Json(new { Result = true });
         }
 	}
 }

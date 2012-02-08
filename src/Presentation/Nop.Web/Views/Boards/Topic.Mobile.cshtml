@@ -6,7 +6,7 @@
 @using Nop.Web.Models.Boards;
 @using Nop.Web.Models.Common;
 @{
-    Layout = "~/Views/Shared/_MobileRoot.cshtml";
+    Layout = "~/Views/Shared/_Root.cshtml";
 
     Html.AddTitleParts(Model.Subject);
 }
@@ -74,9 +74,11 @@
                             type: 'POST',
                             url: '@Url.RouteUrl("TopicWatch", new { id = @Model.Id })',
                             dataType: 'json',
-                            complete: function (data) {
+                            success: function (data) {
                                 $('#watchtopic').val(data.Text);
                                 $('#watchtopic').button("refresh");
+                            },
+                            complete: function (data) {
                                 //hide progress
                                 $.mobile.hidePageLoadingMsg();
                             }

@@ -2,24 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Web;
 using System.Web.Mvc;
 using Nop.Admin.Models.Catalog;
 using Nop.Core;
 using Nop.Core.Domain.Catalog;
+using Nop.Core.Domain.Common;
 using Nop.Services.Catalog;
 using Nop.Services.Common;
 using Nop.Services.ExportImport;
 using Nop.Services.Localization;
 using Nop.Services.Logging;
 using Nop.Services.Media;
+using Nop.Services.Security;
 using Nop.Services.Tax;
 using Nop.Web.Framework;
 using Nop.Web.Framework.Controllers;
 using Nop.Web.Framework.Mvc;
 using Telerik.Web.Mvc;
-using Nop.Services.Security;
-using Nop.Core.Domain.Common;
 
 namespace Nop.Admin.Controllers
 {
@@ -1225,11 +1224,6 @@ namespace Nop.Admin.Controllers
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageCatalog))
                 return AccessDeniedView();
 
-            if (!ModelState.IsValid)
-            {
-                return new JsonResult { Data = "error" };
-            }
-
             var productPicture = _productService.GetProductPictureById(model.Id);
             if (productPicture == null)
                 throw new ArgumentException("No product picture found with the specified id");
@@ -1325,11 +1319,6 @@ namespace Nop.Admin.Controllers
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageCatalog))
                 return AccessDeniedView();
 
-            if (!ModelState.IsValid)
-            {
-                return new JsonResult { Data = "error" };
-            }
-
             var psa = _specificationAttributeService.GetProductSpecificationAttributeById(psaId);
             psa.AllowFiltering = model.AllowFiltering;
             psa.ShowOnProductPage = model.ShowOnProductPage;
@@ -1346,6 +1335,9 @@ namespace Nop.Admin.Controllers
                 return AccessDeniedView();
 
             var psa = _specificationAttributeService.GetProductSpecificationAttributeById(psaId);
+            if (psa == null)
+                throw new ArgumentException("No specification attribute found with the specified id");
+
             var productId = psa.ProductId;
             _specificationAttributeService.DeleteProductSpecificationAttribute(psa);
 
@@ -1414,6 +1406,8 @@ namespace Nop.Admin.Controllers
                 return AccessDeniedView();
 
             var tag = _productTagService.GetProductById(id);
+            if (tag == null)
+                throw new ArgumentException("No product tag found with the specified id");
             _productTagService.DeleteProductTag(tag);
 
             return ProductTags(command);
@@ -1446,7 +1440,7 @@ namespace Nop.Admin.Controllers
             }
         }
 
-        public ActionResult ExportXml()
+        public ActionResult ExportXmlAll()
         {
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageCatalog))
                 return AccessDeniedView();
@@ -1468,7 +1462,30 @@ namespace Nop.Admin.Controllers
             }
         }
 
-        public ActionResult ExportExcel()
+        public ActionResult ExportXmlSelected(string selectedIds)
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManageCatalog))
+                return AccessDeniedView();
+
+            var products = new List<Product>();
+            if (selectedIds != null)
+            {
+                foreach (var id in selectedIds
+                    .Split(new char[] {','}, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(x => Convert.ToInt32(x)))
+                {
+                    var product = _productService.GetProductById(id);
+                    if (product != null)
+                        products.Add(product);
+                }
+            }
+
+            var fileName = string.Format("products_{0}.xml", DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss"));
+            var xml = _exportManager.ExportProductsToXml(products);
+            return new XmlDownloadResult(xml, fileName);
+        }
+
+        public ActionResult ExportExcelAll()
         {
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageCatalog))
                 return AccessDeniedView();
@@ -1492,6 +1509,33 @@ namespace Nop.Admin.Controllers
                 ErrorNotification(exc);
                 return RedirectToAction("List");
             }
+        }
+
+        public ActionResult ExportExcelSelected(string selectedIds)
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManageCatalog))
+                return AccessDeniedView();
+
+            var products = new List<Product>();
+            if (selectedIds != null)
+            {
+                foreach (var id in selectedIds
+                    .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(x => Convert.ToInt32(x)))
+                {
+                    var product = _productService.GetProductById(id);
+                    if (product != null)
+                        products.Add(product);
+                }
+            }
+
+            string fileName = string.Format("products_{0}_{1}.xlsx", DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss"), CommonHelper.GenerateRandomDigitCode(4));
+            string filePath = string.Format("{0}content\\files\\ExportImport\\{1}", Request.PhysicalApplicationPath, fileName);
+
+            _exportManager.ExportProductsToXlsx(filePath, products);
+
+            var bytes = System.IO.File.ReadAllBytes(filePath);
+            return File(bytes, "text/xls", fileName);
         }
 
         [HttpPost]

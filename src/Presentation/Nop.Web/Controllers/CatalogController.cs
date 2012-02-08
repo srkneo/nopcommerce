@@ -11,7 +11,6 @@ using Nop.Core.Domain.Customers;
 using Nop.Core.Domain.Localization;
 using Nop.Core.Domain.Media;
 using Nop.Core.Domain.Orders;
-using Nop.Core.Infrastructure;
 using Nop.Services.Catalog;
 using Nop.Services.Customers;
 using Nop.Services.Directory;
@@ -143,7 +142,7 @@ namespace Nop.Web.Controllers
         #region Utilities
 
         [NonAction]
-        private ProductVariant GetMinimalPriceProductVariant(IList<ProductVariant> variants)
+        protected ProductVariant GetMinimalPriceProductVariant(IList<ProductVariant> variants)
         {
             if (variants == null)
                 throw new ArgumentNullException("variants");
@@ -157,7 +156,7 @@ namespace Nop.Web.Controllers
         }
 
         [NonAction]
-        private IList<Category> GetCategoryBreadCrumb(Category category)
+        protected IList<Category> GetCategoryBreadCrumb(Category category)
         {
             if (category == null)
                 throw new ArgumentNullException("category");
@@ -176,7 +175,7 @@ namespace Nop.Web.Controllers
         }
 
         [NonAction]
-        private ProductModel.ProductPriceModel PrepareProductPriceModel(Product product)
+        protected ProductModel.ProductPriceModel PrepareProductPriceModel(Product product)
         {
             if (product == null)
                 throw new ArgumentNullException("product");
@@ -305,7 +304,7 @@ namespace Nop.Web.Controllers
         }
 
         [NonAction]
-        private ProductModel PrepareProductOverviewModel(Product product, bool preparePriceModel = true, bool preparePictureModel = true, int? productThumbPictureSize = null)
+        protected ProductModel PrepareProductOverviewModel(Product product, bool preparePriceModel = true, bool preparePictureModel = true, int? productThumbPictureSize = null)
         {
             if (product == null)
                 throw new ArgumentNullException("product");
@@ -339,7 +338,7 @@ namespace Nop.Web.Controllers
         }
 
         [NonAction]
-        private int GetNumberOfProducts(Category category, bool includeSubCategories)
+        protected int GetNumberOfProducts(Category category, bool includeSubCategories)
         {
             var products = _productService.SearchProducts(category.Id,
                         0, null, null, null, 0, string.Empty, false, 0, null,
@@ -357,7 +356,7 @@ namespace Nop.Web.Controllers
         }
 
         [NonAction]
-        private IList<CategoryNavigationModel> GetChildCategoryNavigationModel(IList<Category> breadCrumb, int rootCategoryId, Category currentCategory, int level)
+        protected IList<CategoryNavigationModel> GetChildCategoryNavigationModel(IList<Category> breadCrumb, int rootCategoryId, Category currentCategory, int level)
         {
             var result = new List<CategoryNavigationModel>();
             foreach (var category in _categoryService.GetAllCategoriesByParentCategoryId(rootCategoryId))
@@ -387,7 +386,7 @@ namespace Nop.Web.Controllers
         }
         
         [NonAction]
-        private ProductModel PrepareProductDetailsPageModel(Product product)
+        protected ProductModel PrepareProductDetailsPageModel(Product product)
         {
             if (product == null)
                 throw new ArgumentNullException("product");
@@ -452,7 +451,7 @@ namespace Nop.Web.Controllers
         }
 
         [NonAction]
-        private void PrepareProductReviewsModel(ProductReviewsModel model, Product product)
+        protected void PrepareProductReviewsModel(ProductReviewsModel model, Product product)
         {
             if (product == null)
                 throw new ArgumentNullException("product");
@@ -490,7 +489,7 @@ namespace Nop.Web.Controllers
         }
         
         [NonAction]
-        private ProductModel.ProductVariantModel PrepareProductVariantModel(ProductModel.ProductVariantModel model, ProductVariant productVariant)
+        protected ProductModel.ProductVariantModel PrepareProductVariantModel(ProductModel.ProductVariantModel model, ProductVariant productVariant)
         {
             if (productVariant == null)
                 throw new ArgumentNullException("productVariant");
@@ -596,6 +595,7 @@ namespace Nop.Web.Controllers
                 model.AddToCart.DisableWishlistButton = true;
             }
 
+            //customer entered price
             model.AddToCart.CustomerEntersPrice = productVariant.CustomerEntersPrice;
             if (model.AddToCart.CustomerEntersPrice)
             {
@@ -1231,13 +1231,13 @@ namespace Nop.Web.Controllers
                 return RedirectToAction("Index", "Home");
 
             #region Customer entered price
+            decimal customerEnteredPrice = decimal.Zero;
             decimal customerEnteredPriceConverted = decimal.Zero;
             if (productVariant.CustomerEntersPrice)
             {
                 foreach (string formKey in form.AllKeys)
                     if (formKey.Equals(string.Format("price_{0}.CustomerEnteredPrice", productVariantId), StringComparison.InvariantCultureIgnoreCase))
                     {
-                        decimal customerEnteredPrice = decimal.Zero;
                         if (decimal.TryParse(form[formKey], out customerEnteredPrice))
                             customerEnteredPriceConverted = _currencyService.ConvertToPrimaryStoreCurrency(customerEnteredPrice, _workContext.WorkingCurrency);
                         break;
@@ -1330,13 +1330,13 @@ namespace Nop.Web.Controllers
                         break;
                     case AttributeControlType.Datepicker:
                         {
-                            var date = form[controlId + "_day"];
+                            var day = form[controlId + "_day"];
                             var month = form[controlId + "_month"];
                             var year = form[controlId + "_year"];
                             DateTime? selectedDate = null;
                             try
                             {
-                                selectedDate = new DateTime(Int32.Parse(year), Int32.Parse(month), Int32.Parse(date));
+                                selectedDate = new DateTime(Int32.Parse(year), Int32.Parse(month), Int32.Parse(day));
                             }
                             catch {}
                             if (selectedDate.HasValue)
@@ -1356,13 +1356,13 @@ namespace Nop.Web.Controllers
 
             #region Gift cards
 
+            string recipientName = "";
+            string recipientEmail = "";
+            string senderName = "";
+            string senderEmail = "";
+            string giftCardMessage = "";
             if (productVariant.IsGiftCard)
             {
-                string recipientName = "";
-                string recipientEmail = "";
-                string senderName = "";
-                string senderEmail = "";
-                string giftCardMessage = "";
                 foreach (string formKey in form.AllKeys)
                 {
                     if (formKey.Equals(string.Format("giftcard_{0}.RecipientName", productVariantId), StringComparison.InvariantCultureIgnoreCase))
@@ -1401,6 +1401,180 @@ namespace Nop.Web.Controllers
             //save item
             var addToCartWarnings = _shoppingCartService.AddToCart(_workContext.CurrentCustomer,
                 productVariant, cartType, attributes, customerEnteredPriceConverted, quantity, true);
+
+            #region Set already entered values
+
+            //set already entered values (quantity, customer entered price, gift card attributes, product attributes
+            //we do it manually because views do not use HTML helpers for rendering controls
+            
+            Action<ProductModel> setEnteredValues = (productModel) =>
+                {
+                    //find product variant model
+                    var productVariantModel = productModel
+                        .ProductVariantModels
+                        .Where(x => x.Id == productVariant.Id)
+                        .FirstOrDefault();
+                    if (productVariantModel == null)
+                        return;
+
+                    #region 'Add to cart' model
+
+                    //entered quantity
+                    productVariantModel.AddToCart.EnteredQuantity = quantity;
+                    //customer entered price
+                    if (productVariantModel.AddToCart.CustomerEntersPrice)
+                    {
+                        productVariantModel.AddToCart.CustomerEnteredPrice = customerEnteredPrice;
+                    }
+
+                    #endregion
+
+                    #region Gift card attributes
+
+                    if (productVariant.IsGiftCard)
+                    {
+                        productVariantModel.GiftCard.RecipientName = recipientName;
+                        productVariantModel.GiftCard.RecipientEmail = recipientEmail;
+                        productVariantModel.GiftCard.SenderName = senderName;
+                        productVariantModel.GiftCard.SenderEmail = senderEmail;
+                        productVariantModel.GiftCard.Message = giftCardMessage;
+                    }
+
+                    #endregion
+
+                    #region Product attributes
+                    //clear pre-defined values)
+                    foreach (var pvaModel in productVariantModel.ProductVariantAttributes)
+                    {
+                        foreach (var pvavModel in pvaModel.Values)
+                            pvavModel.IsPreSelected = false;
+                    }
+                    //select the previously entered ones
+                    foreach (var attribute in productVariantAttributes)
+                    {
+                        string controlId = string.Format("product_attribute_{0}_{1}_{2}", attribute.ProductVariantId, attribute.ProductAttributeId, attribute.Id);
+                        switch (attribute.AttributeControlType)
+                        {
+                            case AttributeControlType.DropdownList:
+                                {
+                                    var ddlAttributes = form[controlId];
+                                    if (!String.IsNullOrEmpty(ddlAttributes))
+                                    {
+                                        int selectedAttributeId = int.Parse(ddlAttributes);
+                                        if (selectedAttributeId > 0)
+                                        {
+                                            var pvavModel = productVariantModel.ProductVariantAttributes
+                                                .SelectMany(x => x.Values)
+                                                .Where(y => y.Id == selectedAttributeId)
+                                                .FirstOrDefault();
+                                            if (pvavModel != null)
+                                                pvavModel.IsPreSelected = true;
+                                        }
+                                    }
+                                }
+                                break;
+                            case AttributeControlType.RadioList:
+                                {
+                                    var rblAttributes = form[controlId];
+                                    if (!String.IsNullOrEmpty(rblAttributes))
+                                    {
+                                        int selectedAttributeId = int.Parse(rblAttributes);
+                                        if (selectedAttributeId > 0)
+                                        {
+                                            var pvavModel = productVariantModel.ProductVariantAttributes
+                                                .SelectMany(x => x.Values)
+                                                .Where(y => y.Id == selectedAttributeId)
+                                                .FirstOrDefault();
+                                            if (pvavModel != null)
+                                                pvavModel.IsPreSelected = true;
+                                        }
+                                    }
+                                }
+                                break;
+                            case AttributeControlType.Checkboxes:
+                                {
+                                    var cblAttributes = form[controlId];
+                                    if (!String.IsNullOrEmpty(cblAttributes))
+                                    {
+                                        foreach (var item in cblAttributes.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                                        {
+                                            int selectedAttributeId = int.Parse(item);
+                                            if (selectedAttributeId > 0)
+                                            {
+                                                var pvavModel = productVariantModel.ProductVariantAttributes
+                                                   .SelectMany(x => x.Values)
+                                                   .Where(y => y.Id == selectedAttributeId)
+                                                   .FirstOrDefault();
+                                                if (pvavModel != null)
+                                                    pvavModel.IsPreSelected = true;
+                                            }
+                                        }
+                                    }
+                                }
+                                break;
+                            case AttributeControlType.TextBox:
+                                {
+                                    var txtAttribute = form[controlId];
+                                    if (!String.IsNullOrEmpty(txtAttribute))
+                                    {
+                                        var pvaModel = productVariantModel
+                                            .ProductVariantAttributes
+                                            .Select(x => x)
+                                            .Where(y => y.Id == attribute.Id)
+                                            .FirstOrDefault();
+                                        
+                                        if (pvaModel != null)
+                                            pvaModel.TextValue = txtAttribute;
+                                    }
+                                }
+                                break;
+                            case AttributeControlType.MultilineTextbox:
+                                {
+                                    var txtAttribute = form[controlId];
+                                    if (!String.IsNullOrEmpty(txtAttribute))
+                                    {
+                                        var pvaModel = productVariantModel
+                                            .ProductVariantAttributes
+                                            .Select(x => x)
+                                            .Where(y => y.Id == attribute.Id)
+                                            .FirstOrDefault();
+
+                                        if (pvaModel != null)
+                                            pvaModel.TextValue = txtAttribute;
+                                    }
+                                }
+                                break;
+                            case AttributeControlType.Datepicker:
+                                {
+                                    var pvaModel = productVariantModel
+                                        .ProductVariantAttributes
+                                        .Select(x => x)
+                                        .Where(y => y.Id == attribute.Id)
+                                        .FirstOrDefault();
+                                    if (pvaModel != null)
+                                    {
+                                        int day, month, year;
+                                        if (int.TryParse(form[controlId + "_day"], out day))
+                                            pvaModel.SelectedDay = day;
+                                        if (int.TryParse(form[controlId + "_month"], out month))
+                                            pvaModel.SelectedMonth = month;
+                                        if (int.TryParse(form[controlId + "_year"], out year))
+                                            pvaModel.SelectedYear = year;
+                                    }
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+
+                    #endregion
+                };
+
+            #endregion
+
+            #region Return the view
+
             if (addToCartWarnings.Count == 0)
             {
                 switch (cartType)
@@ -1422,9 +1596,10 @@ namespace Nop.Web.Controllers
                             {
                                 //redisplay the page with "Product has been added to the cart notification message
 
-                                //TODO set already entered values (quantity, customer entered price, gift card attributes, product attributes
                                 var model = PrepareProductDetailsPageModel(product);
                                 model.DisplayProductAddedMessage = true;
+                                //set already entered values (quantity, customer entered price, gift card attributes, product attributes
+                                setEnteredValues(model);
                                 return View(model.ProductTemplateViewPath, model);
                             }
                         }
@@ -1437,10 +1612,13 @@ namespace Nop.Web.Controllers
                     ModelState.AddModelError("", error);
 
                 //If we got this far, something failed, redisplay form
-                //TODO set already entered values (quantity, customer entered price, gift card attributes, product attributes
                 var model = PrepareProductDetailsPageModel(product);
+                //set already entered values (quantity, customer entered price, gift card attributes, product attributes
+                setEnteredValues(model);
                 return View(model.ProductTemplateViewPath, model);
             }
+
+            #endregion
         }
 
         [ChildActionOnly]
@@ -1568,8 +1746,11 @@ namespace Nop.Web.Controllers
             if (variant == null)
                 throw new ArgumentException("No product variant found with the specified id");
 
-            var model = _productService.GetTierPricesByProductVariantId(productVariantId)
+            var model = variant.TierPrices
+                .OrderBy(x => x.Quantity)
+                .ToList()
                 .FilterForCustomer(_workContext.CurrentCustomer)
+                .RemoveDuplicatedQuantities()
                 .Select(tierPrice =>
                             {
                                 var m = new ProductModel.ProductVariantModel.TierPriceModel()
@@ -1577,10 +1758,10 @@ namespace Nop.Web.Controllers
                                     Quantity = tierPrice.Quantity,
                                 };
                                 decimal taxRate = decimal.Zero;
-                                decimal priceBase = _taxService.GetProductPrice(variant, tierPrice.Price, out taxRate);
-                                decimal price = _currencyService.ConvertFromPrimaryStoreCurrency(priceBase,_workContext.WorkingCurrency);
+                                decimal priceBase = _taxService.GetProductPrice(variant, _priceCalculationService.GetFinalPrice(variant, _workContext.CurrentCustomer, decimal.Zero, _catalogSettings.DisplayTierPricesWithDiscounts, tierPrice.Quantity), out taxRate);
+                                    //_taxService.GetProductPrice(variant, tierPrice.Price, out taxRate);
+                                decimal price = _currencyService.ConvertFromPrimaryStoreCurrency(priceBase, _workContext.WorkingCurrency);
                                 m.Price = _priceFormatter.FormatPrice(price, false, false);
-
                                 return m;
                             })
                 .ToList();

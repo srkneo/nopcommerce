@@ -10,7 +10,6 @@ using Nop.Services.Authentication;
 using Nop.Services.Customers;
 using Nop.Services.Directory;
 using Nop.Services.Localization;
-using Nop.Services.Security;
 using Nop.Web.Framework.Localization;
 
 namespace Nop.Web.Framework
@@ -79,9 +78,6 @@ namespace Nop.Web.Framework
                 //impersonate user if required (currently used for 'phone order' support)
                 if (customer != null && !customer.Deleted && customer.Active)
                 {
-                    //TODO validate that the current user has an appropriate permission
-                    //if (_permissionService.Authorize(StandardPermissionProvider.AllowCustomerImpersonation))
-                    //{
                         int? impersonatedCustomerId = customer.GetAttribute<int?>(SystemCustomerAttributeNames.ImpersonatedCustomerId);
                         if (impersonatedCustomerId.HasValue && impersonatedCustomerId.Value > 0)
                         {
@@ -93,7 +89,6 @@ namespace Nop.Web.Framework
                                 customer = impersonatedCustomer;
                             }
                         }
-                    //}
                 }
 
                 //load guest customer

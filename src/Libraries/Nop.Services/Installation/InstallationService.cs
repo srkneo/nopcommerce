@@ -4094,8 +4094,8 @@ namespace Nop.Services.Installation
 
         protected virtual void HashDefaultCustomerPassword(string defaultUserEmail, string defaultUserPassword)
         {
-            var customerService = EngineContext.Current.Resolve<ICustomerService>();
-            customerService.ChangePassword(new ChangePasswordRequest(defaultUserEmail, false,
+            var customerRegistrationService = EngineContext.Current.Resolve<ICustomerRegistrationService>();
+            customerRegistrationService.ChangePassword(new ChangePasswordRequest(defaultUserEmail, false,
                  PasswordFormat.Hashed, defaultUserPassword));
         }
 
@@ -4520,6 +4520,7 @@ namespace Nop.Services.Installation
                     ProductsByTagPageSize = 4,
                     UseSmallProductBoxOnHomePage =  true,
                     IncludeFeaturedProductsInNormalLists = false,
+                    DisplayTierPricesWithDiscounts = true,
                     IgnoreTierPrices = false,
                     IgnoreDiscounts = false,
                     IgnoreFeaturedProducts = false,
@@ -4691,6 +4692,9 @@ namespace Nop.Services.Installation
                 .SaveSettings(new ShippingSettings()
                 {
                     ActiveShippingRateComputationMethodSystemNames = new List<string>() { "Shipping.FixedRate" },
+                    FreeShippingOverXEnabled = false,
+                    FreeShippingOverXValue = decimal.Zero,
+                    FreeShippingOverXIncludingTax = false,
                     EstimateShippingEnabled = true,
                 });
 
@@ -6891,7 +6895,6 @@ namespace Nop.Services.Installation
 
 
 
-            //TODO add attribute combinations for 'etnies Men's Digit Sneaker' and set 'ManageInventoryMethod.ManageStockByAttributes' (as it was in 1.X versions)
             var productEtnies = new Product()
             {
                 Name = "etnies Men's Digit Sneaker",
@@ -9326,6 +9329,14 @@ namespace Nop.Services.Installation
                     Name = "Send emails",
                     Seconds = 60,
                     Type = "Nop.Services.Messages.QueuedMessagesSendTask, Nop.Services",
+                    Enabled = true,
+                    StopOnError = false,
+                },
+                new ScheduleTask()
+                {
+                    Name = "Keep alive",
+                    Seconds = 300,
+                    Type = "Nop.Services.Common.KeepAliveTask, Nop.Services",
                     Enabled = true,
                     StopOnError = false,
                 },

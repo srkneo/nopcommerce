@@ -96,54 +96,18 @@ namespace Nop.Services.Customers
         Customer GetCustomerByUsername(string username);
 
         /// <summary>
-        /// Get customers by language identifer
+        /// Get customers by language identifier
         /// </summary>
-        /// <param name="languageId">Language identifer</param>
+        /// <param name="languageId">Language identifier</param>
         /// <returns>Customers</returns>
         IList<Customer> GetCustomersByLanguageId(int languageId);
 
         /// <summary>
-        /// Get customers by currency identifer
+        /// Get customers by currency identifier
         /// </summary>
-        /// <param name="currencyId">Currency identifer</param>
+        /// <param name="currencyId">Currency identifier</param>
         /// <returns>Customers</returns>
         IList<Customer> GetCustomersByCurrencyId(int currencyId);
-
-        /// <summary>
-        /// Validate customer
-        /// </summary>
-        /// <param name="usernameOrEmail">Username or email</param>
-        /// <param name="password">Password</param>
-        /// <returns>Result</returns>
-        bool ValidateCustomer(string usernameOrEmail, string password);
-
-        /// <summary>
-        /// Register customer
-        /// </summary>
-        /// <param name="request">Request</param>
-        /// <returns>Result</returns>
-        CustomerRegistrationResult RegisterCustomer(CustomerRegistrationRequest request);
-
-        /// <summary>
-        /// Change password
-        /// </summary>
-        /// <param name="request">Request</param>
-        /// <returns>Result</returns>
-        PasswordChangeResult ChangePassword(ChangePasswordRequest request);
-
-        /// <summary>
-        /// Sets a user email
-        /// </summary>
-        /// <param name="customer">Customer</param>
-        /// <param name="newEmail">New email</param>
-        void SetEmail(Customer customer, string newEmail);
-
-        /// <summary>
-        /// Sets a customer username
-        /// </summary>
-        /// <param name="customer">Customer</param>
-        /// <param name="newUsername">New Username</param>
-        void SetUsername(Customer customer, string newUsername);
 
         /// <summary>
         /// Insert a guest customer

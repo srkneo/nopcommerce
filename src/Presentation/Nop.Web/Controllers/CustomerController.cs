@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Nop.Core;
+using Nop.Core.Domain.Common;
 using Nop.Core.Domain.Customers;
 using Nop.Core.Domain.Directory;
 using Nop.Core.Domain.Forums;
@@ -30,7 +31,6 @@ using Nop.Web.Extensions;
 using Nop.Web.Framework.Controllers;
 using Nop.Web.Framework.Security;
 using Nop.Web.Framework.UI.Captcha;
-using Nop.Web.Models;
 using Nop.Web.Models.Common;
 using Nop.Web.Models.Customer;
 
@@ -46,6 +46,7 @@ namespace Nop.Web.Controllers
         private readonly ILocalizationService _localizationService;
         private readonly IWorkContext _workContext;
         private readonly ICustomerService _customerService;
+        private readonly ICustomerRegistrationService _customerRegistrationService;
         private readonly ITaxService _taxService;
         private readonly RewardPointsSettings _rewardPointsSettings;
         private readonly CustomerSettings _customerSettings;
@@ -65,6 +66,7 @@ namespace Nop.Web.Controllers
         private readonly IShoppingCartService _shoppingCartService;
         private readonly IOpenAuthenticationService _openAuthenticationService;
         private readonly IBackInStockSubscriptionService _backInStockSubscriptionService;
+        private readonly IDownloadService _downloadService;
 
         private readonly MediaSettings _mediaSettings;
         private readonly IWorkflowMessageService _workflowMessageService;
@@ -81,6 +83,7 @@ namespace Nop.Web.Controllers
             DateTimeSettings dateTimeSettings, TaxSettings taxSettings,
             ILocalizationService localizationService,
             IWorkContext workContext, ICustomerService customerService,
+            ICustomerRegistrationService customerRegistrationService,
             ITaxService taxService, RewardPointsSettings rewardPointsSettings,
             CustomerSettings customerSettings, ForumSettings forumSettings,
             OrderSettings orderSettings, IAddressService addressService,
@@ -91,7 +94,8 @@ namespace Nop.Web.Controllers
             IPictureService pictureService, INewsLetterSubscriptionService newsLetterSubscriptionService,
             IForumService forumService, IShoppingCartService shoppingCartService,
             IOpenAuthenticationService openAuthenticationService, 
-            IBackInStockSubscriptionService backInStockSubscriptionService, MediaSettings mediaSettings,
+            IBackInStockSubscriptionService backInStockSubscriptionService, 
+            IDownloadService downloadService, MediaSettings mediaSettings,
             IWorkflowMessageService workflowMessageService, LocalizationSettings localizationSettings,
             CaptchaSettings captchaSettings, ExternalAuthenticationSettings externalAuthenticationSettings)
         {
@@ -102,6 +106,7 @@ namespace Nop.Web.Controllers
             this._localizationService = localizationService;
             this._workContext = workContext;
             this._customerService = customerService;
+            this._customerRegistrationService = customerRegistrationService;
             this._taxService = taxService;
             this._rewardPointsSettings = rewardPointsSettings;
             this._customerSettings = customerSettings;
@@ -121,6 +126,7 @@ namespace Nop.Web.Controllers
             this._shoppingCartService = shoppingCartService;
             this._openAuthenticationService = openAuthenticationService;
             this._backInStockSubscriptionService = backInStockSubscriptionService;
+            this._downloadService = downloadService;
 
             this._mediaSettings = mediaSettings;
             this._workflowMessageService = workflowMessageService;
@@ -134,13 +140,13 @@ namespace Nop.Web.Controllers
         #region Utilities
 
         [NonAction]
-        private bool IsCurrentUserRegistered()
+        protected bool IsCurrentUserRegistered()
         {
             return _workContext.CurrentCustomer.IsRegistered();
         }
 
         [NonAction]
-        private CustomerNavigationModel GetCustomerNavigationModel(Customer customer)
+        protected CustomerNavigationModel GetCustomerNavigationModel(Customer customer)
         {
             var model = new CustomerNavigationModel();
             model.HideAvatar = !_customerSettings.AllowCustomersToUploadAvatars;
@@ -153,7 +159,7 @@ namespace Nop.Web.Controllers
         }
 
         [NonAction]
-        private void TryAssociateAccountWithExternalAccount(Customer customer)
+        protected void TryAssociateAccountWithExternalAccount(Customer customer)
         {
             var parameters = ExternalAuthorizerHelper.RetrieveParametersFromRoundTrip(true);
             if (parameters == null)
@@ -188,7 +194,7 @@ namespace Nop.Web.Controllers
                     model.Username = model.Username.Trim();
                 }
 
-                if (_customerService.ValidateCustomer(_customerSettings.UsernamesEnabled ? model.Username : model.Email, model.Password))
+                if (_customerRegistrationService.ValidateCustomer(_customerSettings.UsernamesEnabled ? model.Username : model.Email, model.Password))
                 {
                     var customer = _customerSettings.UsernamesEnabled ? _customerService.GetCustomerByUsername(model.Username) : _customerService.GetCustomerByEmail(model.Email);
 
@@ -304,7 +310,7 @@ namespace Nop.Web.Controllers
                 bool isApproved = _customerSettings.UserRegistrationType == UserRegistrationType.Standard;
                 var registrationRequest = new CustomerRegistrationRequest(customer, model.Email,
                     _customerSettings.UsernamesEnabled ? model.Username : model.Email, model.Password, PasswordFormat.Hashed, isApproved);
-                var registrationResult = _customerService.RegisterCustomer(registrationRequest);
+                var registrationResult = _customerRegistrationService.RegisterCustomer(registrationRequest);
                 if (registrationResult.Success)
                 {
                     //properties
@@ -397,6 +403,38 @@ namespace Nop.Web.Controllers
                     //associated with external account (if possible)
                     TryAssociateAccountWithExternalAccount(customer);
                     
+                    //insert default address (if possible)
+                    var defaultAddress = new Address()
+                    {
+                        FirstName = customer.GetAttribute<string>(SystemCustomerAttributeNames.FirstName),
+                        LastName = customer.GetAttribute<string>(SystemCustomerAttributeNames.LastName),
+                        Email = customer.Email,
+                        Company = customer.GetAttribute<string>(SystemCustomerAttributeNames.Company),
+                        CountryId = customer.GetAttribute<int>(SystemCustomerAttributeNames.CountryId) > 0 ? 
+                            (int?)customer.GetAttribute<int>(SystemCustomerAttributeNames.CountryId) : null,
+                        StateProvinceId = customer.GetAttribute<int>(SystemCustomerAttributeNames.StateProvinceId) > 0 ?
+                            (int?)customer.GetAttribute<int>(SystemCustomerAttributeNames.StateProvinceId) : null,
+                        City = customer.GetAttribute<string>(SystemCustomerAttributeNames.City),
+                        Address1 = customer.GetAttribute<string>(SystemCustomerAttributeNames.StreetAddress),
+                        Address2 = customer.GetAttribute<string>(SystemCustomerAttributeNames.StreetAddress2),
+                        ZipPostalCode = customer.GetAttribute<string>(SystemCustomerAttributeNames.ZipPostalCode),
+                        PhoneNumber = customer.GetAttribute<string>(SystemCustomerAttributeNames.Phone),
+                        FaxNumber = customer.GetAttribute<string>(SystemCustomerAttributeNames.Fax),
+                        CreatedOnUtc = customer.CreatedOnUtc
+                    };
+                    if (this._addressService.IsAddressValid(defaultAddress))
+                    {
+                        //some validation
+                        if (defaultAddress.CountryId == 0)
+                            defaultAddress.CountryId = null;
+                        if (defaultAddress.StateProvinceId == 0)
+                            defaultAddress.StateProvinceId = null;
+                        //set default address
+                        customer.AddAddress(defaultAddress);
+                        customer.SetBillingAddress(defaultAddress);
+                        customer.SetShippingAddress(defaultAddress);
+                        _customerService.UpdateCustomer(customer);
+                    }
 
                     //notifications
                     if (_customerSettings.NotifyNewCustomerRegistration)
@@ -674,7 +712,7 @@ namespace Nop.Web.Controllers
                         if (!customer.Username.Equals(model.Username.Trim(), StringComparison.InvariantCultureIgnoreCase))
                         {
                             //change username
-                            _customerService.SetUsername(customer, model.Username.Trim());
+                            _customerRegistrationService.SetUsername(customer, model.Username.Trim());
                             //re-authenticate
                             _authenticationService.SignIn(customer, true);
                         }
@@ -683,7 +721,7 @@ namespace Nop.Web.Controllers
                     if (!customer.Email.Equals(model.Email.Trim(), StringComparison.InvariantCultureIgnoreCase))
                     {
                         //change email
-                        _customerService.SetEmail(customer, model.Email.Trim());
+                        _customerRegistrationService.SetEmail(customer, model.Email.Trim());
                         //re-authenticate (if usernames are disabled)
                         if (!_customerSettings.UsernamesEnabled)
                         {
@@ -1171,7 +1209,7 @@ namespace Nop.Web.Controllers
                     IsReturnRequestAllowed = _orderProcessingService.IsReturnRequestAllowed(order)
                 };
                 var orderTotalInCustomerCurrency = _currencyService.ConvertCurrency(order.OrderTotal, order.CurrencyRate);
-                orderModel.OrderTotal = _priceFormatter.FormatPrice(orderTotalInCustomerCurrency, true, order.CustomerCurrencyCode, false);
+                orderModel.OrderTotal = _priceFormatter.FormatPrice(orderTotalInCustomerCurrency, true, order.CustomerCurrencyCode, false, _workContext.WorkingLanguage);
 
                 model.Orders.Add(orderModel);
             }
@@ -1277,10 +1315,10 @@ namespace Nop.Web.Controllers
                 else
                     itemModel.ProductName = item.ProductVariant.Product.GetLocalized(x => x.Name);
 
-                if (_orderProcessingService.IsDownloadAllowed(item))
+                if (_downloadService.IsDownloadAllowed(item))
                     itemModel.DownloadId = item.ProductVariant.DownloadId;
 
-                if (_orderProcessingService.IsLicenseDownloadAllowed(item))
+                if (_downloadService.IsLicenseDownloadAllowed(item))
                     itemModel.LicenseId = item.LicenseDownloadId.HasValue ? item.LicenseDownloadId.Value : 0;
             }
             
@@ -1375,7 +1413,7 @@ namespace Nop.Web.Controllers
             {
                 var changePasswordRequest = new ChangePasswordRequest(customer.Email,
                     true, PasswordFormat.Hashed, model.NewPassword, model.OldPassword);
-                var changePasswordResult = _customerService.ChangePassword(changePasswordRequest);
+                var changePasswordResult = _customerRegistrationService.ChangePassword(changePasswordRequest);
                 if (changePasswordResult.Success)
                 {
                     model.Result = _localizationService.GetResource("Account.ChangePassword.Success");
@@ -1576,7 +1614,7 @@ namespace Nop.Web.Controllers
             
             if (ModelState.IsValid)
             {
-                var response = _customerService.ChangePassword(new ChangePasswordRequest(email, 
+                var response = _customerRegistrationService.ChangePassword(new ChangePasswordRequest(email, 
                     false, PasswordFormat.Hashed, model.NewPassword));
                 if (response.Success)
                 {
@@ -1599,7 +1637,7 @@ namespace Nop.Web.Controllers
 
         #endregion
 
-        #region Forum Subscriptions
+        #region Forum subscriptions
 
         public ActionResult ForumSubscriptions(int? page)
         {

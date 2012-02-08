@@ -82,6 +82,22 @@
 					<LocaleResource Name="Button">
 						<Value>Change password</Value>
 					</LocaleResource>
+					<LocaleResource Name="Errors">
+						<Children>
+							<LocaleResource Name="EmailIsNotProvided">
+								<Value>Email is not entered</Value>
+							</LocaleResource>
+							<LocaleResource Name="PasswordIsNotProvided">
+								<Value>Password is not entered</Value>
+							</LocaleResource>
+							<LocaleResource Name="EmailNotFound">
+								<Value>The specified email could not be found</Value>
+							</LocaleResource>
+							<LocaleResource Name="OldPasswordDoesntMatch">
+								<Value>Old password doesn't match</Value>
+							</LocaleResource>
+						</Children>
+					</LocaleResource>
 					<LocaleResource Name="Fields">
 						<Children>
 							<LocaleResource Name="OldPassword">
@@ -238,6 +254,25 @@
 			<LocaleResource Name="DownloadableProducts">
 				<Value>Downloadable products</Value>
 			</LocaleResource>
+			<LocaleResource Name="EmailUsernameErrors">
+				<Children>
+					<LocaleResource Name="NewEmailIsNotValid">
+						<Value>New email is not valid</Value>
+					</LocaleResource>
+					<LocaleResource Name="EmailTooLong">
+						<Value>E-mail address is too long</Value>
+					</LocaleResource>
+					<LocaleResource Name="EmailAlreadyExists">
+						<Value>The e-mail address is already in use</Value>
+					</LocaleResource>
+					<LocaleResource Name="UsernameTooLong">
+						<Value>Username is too long</Value>
+					</LocaleResource>
+					<LocaleResource Name="UsernameAlreadyExists">
+						<Value>The username is already in use</Value>
+					</LocaleResource>
+				</Children>
+			</LocaleResource>
 			<LocaleResource Name="Fields">
 				<Children>
 					<LocaleResource Name="City">
@@ -294,7 +329,7 @@
 						<Value>Last name</Value>
 						<Children>
 							<LocaleResource Name="Required">
-								<Value>Last is required.</Value>
+								<Value>Last name is required.</Value>
 							</LocaleResource>
 						</Children>
 					</LocaleResource>
@@ -341,6 +376,9 @@
 						<Children>
 							<LocaleResource Name="Note">
 								<Value>NOTE: Enter VAT number with country code (e.g. GB 111 111 11)</Value>
+							</LocaleResource>
+							<LocaleResource Name="Status">
+								<Value>Status</Value>
 							</LocaleResource>
 						</Children>
 					</LocaleResource>
@@ -508,10 +546,28 @@
 			</LocaleResource>
 			<LocaleResource Name="Register">
 				<Value>Register</Value>
-
 				<Children>
 					<LocaleResource Name="Button">
 						<Value>Register</Value>
+					</LocaleResource>
+					<LocaleResource Name="Errors">
+						<Children>
+							<LocaleResource Name="EmailIsNotProvided">
+								<Value>Email is not provided</Value>
+							</LocaleResource>
+							<LocaleResource Name="PasswordIsNotProvided">
+								<Value>Password is not provided</Value>
+							</LocaleResource>
+							<LocaleResource Name="UsernameIsNotProvided">
+								<Value>Username is not provided</Value>
+							</LocaleResource>
+							<LocaleResource Name="EmailAlreadyExists">
+								<Value>The specified email already exists</Value>
+							</LocaleResource>
+							<LocaleResource Name="UsernameAlreadyExists">
+								<Value>The specified username already exists</Value>
+							</LocaleResource>
+						</Children>
 					</LocaleResource>
 					<LocaleResource Name="Result">
 						<Children>
@@ -813,7 +869,7 @@
 				<Value>You cannot subscribe. Maximum number of allowed subscriptions is {0}</Value>
 			</LocaleResource>
 			<LocaleResource Name="Tooltip">
-				<Value>You'll receive a one time e-mail when this product is available for ordering again. We will not send you any other e-mails or add you to our newsletter, you will only be e-mailed about this product!</Value>
+				<Value>You'll receive a onetime e-mail when this product is available for ordering again. We will not send you any other e-mails or add you to our newsletter; you will only be e-mailed about this product!</Value>
 			</LocaleResource>
 			<LocaleResource Name="Unsubscribe">
 				<Value>Unsubscribe</Value>
@@ -1401,7 +1457,28 @@
 						<Value>Footer</Value>
 					</LocaleResource>
 					<LocaleResource Name="BeforeBodyEndHtmlTag">
-						<Value><![CDATA[After <body> end HTML tag]]></Value>
+						<Value><![CDATA[Before <body> end HTML tag]]></Value>
+					</LocaleResource>
+					<LocaleResource Name="MobileHeadHtmlTag">
+						<Value>Mobile version. Head HTML tag</Value>
+					</LocaleResource>
+					<LocaleResource Name="MobileAfterBodyStartHtmlTag">
+						<Value><![CDATA[Mobile version. After <body> start HTML tag]]></Value>
+					</LocaleResource>
+					<LocaleResource Name="MobileHeaderLinks">
+						<Value>Mobile version. Header links</Value>
+					</LocaleResource>
+					<LocaleResource Name="MobileBeforeContent">
+						<Value>Mobile version. Before content</Value>
+					</LocaleResource>
+					<LocaleResource Name="MobileAfterContent">
+						<Value>Mobile version. After content</Value>
+					</LocaleResource>
+					<LocaleResource Name="MobileFooter">
+						<Value>Mobile version. Footer</Value>
+					</LocaleResource>
+					<LocaleResource Name="MobileBeforeBodyEndHtmlTag">
+						<Value><![CDATA[Mobile version. Before <body> end HTML tag]]></Value>
 					</LocaleResource>
 				</Children>
 			</LocaleResource>
@@ -2176,6 +2253,16 @@
 			</LocaleResource>
 		</Children>
 	</LocaleResource>
+	<LocaleResource Name="Mobile">
+		<Children>
+			<LocaleResource Name="ViewMobileVersion">
+				<Value>View mobile version</Value>
+			</LocaleResource>
+			<LocaleResource Name="ViewFullSite">
+				<Value>View Full Site</Value>
+			</LocaleResource>
+		</Children>
+	</LocaleResource>
 	<LocaleResource Name="News">
 		<Value>News</Value>
 		<Children>
@@ -2636,7 +2723,7 @@
 				<Value>Price</Value>
 			</LocaleResource>
 			<LocaleResource Name="ProductQuantity">
-				<Value>Q-ty</Value>
+				<Value>Qty</Value>
 			</LocaleResource>
 			<LocaleResource Name="ProductTotal">
 				<Value>Total</Value>
@@ -3383,10 +3470,10 @@
 				<Value>Buying is disabled for this product</Value>
 			</LocaleResource>
 			<LocaleResource Name="CannotLoadProduct">
-				<Value>Product (Id={0}) can not be loaded</Value>
+				<Value>Product (Id={0}) cannot be loaded</Value>
 			</LocaleResource>
 			<LocaleResource Name="CannotLoadProductVariant">
-				<Value>Product variant (Id={0}) can not be loaded</Value>
+				<Value>Product variant (Id={0}) cannot be loaded</Value>
 			</LocaleResource>
 			<LocaleResource Name="CannotMixStandardAndAutoshipProducts">
 				<Value>Your cart has standard and auto-ship (recurring) items. Only one product type is allowed per order.</Value>
@@ -3595,6 +3682,9 @@
 			</LocaleResource>
 			<LocaleResource Name="UpdateCart">
 				<Value>Update shopping cart</Value>
+			</LocaleResource>
+			<LocaleResource Name="UpdateCartItem">
+				<Value>Update qty</Value>
 			</LocaleResource>
 			<LocaleResource Name="WishlistDisabled">
 				<Value>Wishlist is disabled for this product</Value>

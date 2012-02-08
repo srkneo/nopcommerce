@@ -19,15 +19,9 @@
             }
         </div>
         <div class="wrapper">
-            @if (!String.IsNullOrEmpty(Model.PostError))
-            {
-                <div class="error-block">
-                    <div class="message-error">
-                        @Model.PostError
-                    </div>
-                </div>
-            }
-            @Html.ValidationSummary(false)
+            <div class="message-error">
+                @Html.ValidationSummary(true)
+            </div>
             @Html.HiddenFor(model => model.Id)
             @Html.HiddenFor(model => model.ForumTopicId)
             <div class="clear">
@@ -41,6 +35,7 @@
                 </div>
                 <div>
                     @Html.TextAreaFor(model => model.Text)
+                    @Html.ValidationMessageFor(model => model.Text)
                 </div>
                 @if (Model.IsCustomerAllowedToSubscribe)
                 {

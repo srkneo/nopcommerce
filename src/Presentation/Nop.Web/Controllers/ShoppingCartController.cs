@@ -130,7 +130,7 @@ namespace Nop.Web.Controllers
         #region Utilities
 
         [NonAction]
-        private ShoppingCartModel PrepareShoppingCartModel(ShoppingCartModel model, 
+        protected ShoppingCartModel PrepareShoppingCartModel(ShoppingCartModel model, 
             IList<ShoppingCartItem> cart, bool isEditable, bool setEstimateShippingDefaultAddress = true)
         {
             if (cart == null)
@@ -409,7 +409,7 @@ namespace Nop.Web.Controllers
         }
 
         [NonAction]
-        private WishlistModel PrepareWishlistModel(WishlistModel model, IList<ShoppingCartItem> cart, bool isEditable)
+        protected WishlistModel PrepareWishlistModel(WishlistModel model, IList<ShoppingCartItem> cart, bool isEditable)
         {
             if (cart == null)
                 throw new ArgumentNullException("cart");
@@ -577,10 +577,11 @@ namespace Nop.Web.Controllers
             return PartialView(model);
         }
 
+        //update all shopping cart items on the page
         [ValidateInput(false)]
         [HttpPost, ActionName("Cart")]
         [FormValueRequired("updatecart")]
-        public ActionResult UpdateCart(FormCollection form)
+        public ActionResult UpdateCartAll(FormCollection form)
         {
             if (!_permissionService.Authorize(StandardPermissionProvider.EnableShoppingCart))
                 return RedirectToAction("Index", "Home");
@@ -598,16 +599,18 @@ namespace Nop.Web.Controllers
                     _shoppingCartService.DeleteShoppingCartItem(sci, true);
                 else
                 {
-                    int newQuantity = sci.Quantity;
                     foreach (string formKey in form.AllKeys)
                         if (formKey.Equals(string.Format("itemquantity{0}", sci.Id), StringComparison.InvariantCultureIgnoreCase))
                         {
-                            int.TryParse(form[formKey], out newQuantity);
+                            int newQuantity = sci.Quantity;
+                            if (int.TryParse(form[formKey], out newQuantity))
+                            {
+                                var currSciWarnings = _shoppingCartService.UpdateShoppingCartItem(_workContext.CurrentCustomer,
+                                    sci.Id, newQuantity, true);
+                                innerWarnings.Add(sci.Id, currSciWarnings);
+                            }
                             break;
                         }
-                    var currSciWarnings = _shoppingCartService.UpdateShoppingCartItem(_workContext.CurrentCustomer,
-                        sci.Id, newQuantity, true);
-                    innerWarnings.Add(sci.Id, currSciWarnings);
                 }
             }
 
@@ -627,6 +630,90 @@ namespace Nop.Web.Controllers
                         if (!sciModel.Warnings.Contains(w))
                             sciModel.Warnings.Add(w);
             }
+            return View(model);
+        }
+
+        //update a certain shopping cart item on the page
+        [ValidateInput(false)]
+        [HttpPost, ActionName("Cart")]
+        [FormValueRequired(FormValueRequirement.StartsWith, "updatecartitem-")]
+        public ActionResult UpdateCartItem(FormCollection form)
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.EnableShoppingCart))
+                return RedirectToAction("Index", "Home");
+
+            //get shopping cart item identifier
+            int sciId = 0;
+            foreach (var formValue in form.AllKeys)
+                if (formValue.StartsWith("updatecartitem-", StringComparison.InvariantCultureIgnoreCase))
+                    sciId = Convert.ToInt32(formValue.Substring("updatecartitem-".Length));
+            //get shopping cart item
+            var cart = _workContext.CurrentCustomer.ShoppingCartItems
+                .Where(x => x.ShoppingCartType == ShoppingCartType.ShoppingCart).ToList();
+            var sci = cart.Where(x => x.Id == sciId).FirstOrDefault();
+            if (sci == null)
+            {
+                return RedirectToRoute("ShoppingCart");
+            }
+
+            //update the cart item
+            var warnings = new List<string>();
+            foreach (string formKey in form.AllKeys)
+                if (formKey.Equals(string.Format("itemquantity{0}", sci.Id), StringComparison.InvariantCultureIgnoreCase))
+                {
+                    int newQuantity = sci.Quantity;
+                    if (int.TryParse(form[formKey], out newQuantity))
+                    {
+                        warnings.AddRange(_shoppingCartService.UpdateShoppingCartItem(_workContext.CurrentCustomer,
+                            sci.Id, newQuantity, true));
+                    }
+                    break;
+                }
+                
+
+            //updated cart
+            cart = _workContext.CurrentCustomer.ShoppingCartItems.Where(x => x.ShoppingCartType == ShoppingCartType.ShoppingCart).ToList();
+            var model = PrepareShoppingCartModel(new ShoppingCartModel(), cart, true);
+            //update current warnings
+            //find model
+            var sciModel = model.Items.Where(x => x.Id == sciId).FirstOrDefault();
+            if (sciModel != null)
+                foreach (var w in warnings)
+                    if (!sciModel.Warnings.Contains(w))
+                        sciModel.Warnings.Add(w);
+            return View(model);
+        }
+
+        //remove a certain shopping cart item on the page
+        [ValidateInput(false)]
+        [HttpPost, ActionName("Cart")]
+        [FormValueRequired(FormValueRequirement.StartsWith, "removefromcart-")]
+        public ActionResult RemoveCartItem(FormCollection form)
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.EnableShoppingCart))
+                return RedirectToAction("Index", "Home");
+
+            //get shopping cart item identifier
+            int sciId = 0;
+            foreach (var formValue in form.AllKeys)
+                if (formValue.StartsWith("removefromcart-", StringComparison.InvariantCultureIgnoreCase))
+                    sciId = Convert.ToInt32(formValue.Substring("removefromcart-".Length));
+            //get shopping cart item
+            var cart = _workContext.CurrentCustomer.ShoppingCartItems
+                .Where(x => x.ShoppingCartType == ShoppingCartType.ShoppingCart).ToList();
+            var sci = cart.Where(x => x.Id == sciId).FirstOrDefault();
+            if (sci == null)
+            {
+                return RedirectToRoute("ShoppingCart");
+            }
+
+            //remove the cart item
+            _shoppingCartService.DeleteShoppingCartItem(sci, true);
+
+
+            //updated cart
+            cart = _workContext.CurrentCustomer.ShoppingCartItems.Where(x => x.ShoppingCartType == ShoppingCartType.ShoppingCart).ToList();
+            var model = PrepareShoppingCartModel(new ShoppingCartModel(), cart, true);
             return View(model);
         }
 
@@ -867,15 +954,10 @@ namespace Nop.Web.Controllers
                             };
                             //calculate discounted and taxed rate
                             Discount appliedDiscount = null;
-                            decimal shippingTotalWithoutDiscount = shippingOption.Rate;
-                            decimal discountAmount = _orderTotalCalculationService.GetShippingDiscount(_workContext.CurrentCustomer,
-                                shippingTotalWithoutDiscount, out appliedDiscount);
-                            decimal shippingTotalWithDiscount = shippingTotalWithoutDiscount - discountAmount;
-                            if (shippingTotalWithDiscount < decimal.Zero)
-                                shippingTotalWithDiscount = decimal.Zero;
-                            shippingTotalWithDiscount = Math.Round(shippingTotalWithDiscount, 2);
+                            decimal shippingTotal = _orderTotalCalculationService.AdjustShippingRate(shippingOption.Rate,
+                                cart, out appliedDiscount);
 
-                            decimal rateBase = _taxService.GetShippingPrice(shippingTotalWithDiscount, _workContext.CurrentCustomer);
+                            decimal rateBase = _taxService.GetShippingPrice(shippingTotal, _workContext.CurrentCustomer);
                             decimal rate = _currencyService.ConvertFromPrimaryStoreCurrency(rateBase, _workContext.WorkingCurrency);
                             soModel.Price = _priceFormatter.FormatShippingPrice(rate, true);
                             model.EstimateShipping.ShippingOptions.Add(soModel);
@@ -1159,10 +1241,11 @@ namespace Nop.Web.Controllers
             return View(model);
         }
 
+        //update all wishlist cart items on the page
         [ValidateInput(false)]
         [HttpPost, ActionName("Wishlist")]
         [FormValueRequired("updatecart")]
-        public ActionResult UpdateWishlist(FormCollection form)
+        public ActionResult UpdateWishlistAll(FormCollection form)
         {
             if (!_permissionService.Authorize(StandardPermissionProvider.EnableWishlist))
                 return RedirectToAction("Index", "Home");
@@ -1180,20 +1263,22 @@ namespace Nop.Web.Controllers
                     _shoppingCartService.DeleteShoppingCartItem(sci, true);
                 else
                 {
-                    int newQuantity = sci.Quantity;
                     foreach (string formKey in form.AllKeys)
                         if (formKey.Equals(string.Format("itemquantity{0}", sci.Id), StringComparison.InvariantCultureIgnoreCase))
                         {
-                            int.TryParse(form[formKey], out newQuantity);
+                            int newQuantity = sci.Quantity;
+                            if (int.TryParse(form[formKey], out newQuantity))
+                            {
+                                var currSciWarnings = _shoppingCartService.UpdateShoppingCartItem(_workContext.CurrentCustomer,
+                                    sci.Id, newQuantity, true);
+                                innerWarnings.Add(sci.Id, currSciWarnings);
+                            }
                             break;
                         }
-                    var currSciWarnings = _shoppingCartService.UpdateShoppingCartItem(_workContext.CurrentCustomer,
-                        sci.Id, newQuantity, true);
-                    innerWarnings.Add(sci.Id, currSciWarnings);
                 }
             }
 
-            //updated cart
+            //updated wishlist
             cart = _workContext.CurrentCustomer.ShoppingCartItems.Where(sci => sci.ShoppingCartType == ShoppingCartType.Wishlist).ToList();
             var model = PrepareWishlistModel(new WishlistModel(), cart, true);
             //update current warnings
@@ -1212,10 +1297,94 @@ namespace Nop.Web.Controllers
             return View(model);
         }
 
+        //update a certain wishlist cart item on the page
+        [ValidateInput(false)]
+        [HttpPost, ActionName("Wishlist")]
+        [FormValueRequired(FormValueRequirement.StartsWith, "updatecartitem-")]
+        public ActionResult UpdateWishlistItem(FormCollection form)
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.EnableWishlist))
+                return RedirectToAction("Index", "Home");
+
+            //get wishlist cart item identifier
+            int sciId = 0;
+            foreach (var formValue in form.AllKeys)
+                if (formValue.StartsWith("updatecartitem-", StringComparison.InvariantCultureIgnoreCase))
+                    sciId = Convert.ToInt32(formValue.Substring("updatecartitem-".Length));
+            //get shopping cart item
+            var cart = _workContext.CurrentCustomer.ShoppingCartItems
+                .Where(x => x.ShoppingCartType == ShoppingCartType.Wishlist).ToList();
+            var sci = cart.Where(x => x.Id == sciId).FirstOrDefault();
+            if (sci == null)
+            {
+                return RedirectToRoute("Wishlist");
+            }
+
+            //update the wishlist cart item
+            var warnings = new List<string>();
+            foreach (string formKey in form.AllKeys)
+                if (formKey.Equals(string.Format("itemquantity{0}", sci.Id), StringComparison.InvariantCultureIgnoreCase))
+                {
+                    int newQuantity = sci.Quantity;
+                    if (int.TryParse(form[formKey], out newQuantity))
+                    {
+                        warnings.AddRange(_shoppingCartService.UpdateShoppingCartItem(_workContext.CurrentCustomer,
+                            sci.Id, newQuantity, true));
+                    }
+                    break;
+                }
+
+
+            //updated wishlist
+            cart = _workContext.CurrentCustomer.ShoppingCartItems.Where(x => x.ShoppingCartType == ShoppingCartType.Wishlist).ToList();
+            var model = PrepareWishlistModel(new WishlistModel(), cart, true);
+            //update current warnings
+            //find model
+            var sciModel = model.Items.Where(x => x.Id == sciId).FirstOrDefault();
+            if (sciModel != null)
+                foreach (var w in warnings)
+                    if (!sciModel.Warnings.Contains(w))
+                        sciModel.Warnings.Add(w);
+            return View(model);
+        }
+
+        //remove a certain wishlist cart item on the page
+        [ValidateInput(false)]
+        [HttpPost, ActionName("Wishlist")]
+        [FormValueRequired(FormValueRequirement.StartsWith, "removefromcart-")]
+        public ActionResult RemoveWishlistItem(FormCollection form)
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.EnableWishlist))
+                return RedirectToAction("Index", "Home");
+
+            //get wishlist cart item identifier
+            int sciId = 0;
+            foreach (var formValue in form.AllKeys)
+                if (formValue.StartsWith("removefromcart-", StringComparison.InvariantCultureIgnoreCase))
+                    sciId = Convert.ToInt32(formValue.Substring("removefromcart-".Length));
+            //get wishlist cart item
+            var cart = _workContext.CurrentCustomer.ShoppingCartItems
+                .Where(x => x.ShoppingCartType == ShoppingCartType.Wishlist).ToList();
+            var sci = cart.Where(x => x.Id == sciId).FirstOrDefault();
+            if (sci == null)
+            {
+                return RedirectToRoute("Wishlist");
+            }
+
+            //remove the wishlist cart item
+            _shoppingCartService.DeleteShoppingCartItem(sci, true);
+
+
+            //updated wishlist
+            cart = _workContext.CurrentCustomer.ShoppingCartItems.Where(x => x.ShoppingCartType == ShoppingCartType.Wishlist).ToList();
+            var model = PrepareWishlistModel(new WishlistModel(), cart, true);
+            return View(model);
+        }
+
         [ValidateInput(false)]
         [HttpPost, ActionName("Wishlist")]
         [FormValueRequired("addtocartbutton")]
-        public ActionResult AddtoCartFromWishlist(FormCollection form)
+        public ActionResult AddItemstoCartFromWishlist(FormCollection form)
         {
             if (!_permissionService.Authorize(StandardPermissionProvider.EnableShoppingCart))
                 return RedirectToAction("Index", "Home");
@@ -1236,8 +1405,46 @@ namespace Nop.Web.Controllers
                 }
             }
 
-            //updated cart
+            //updated wishlist
             cart = _workContext.CurrentCustomer.ShoppingCartItems.Where(sci => sci.ShoppingCartType == ShoppingCartType.Wishlist).ToList();
+            var model = PrepareWishlistModel(new WishlistModel(), cart, true);
+            return View(model);
+        }
+
+        //add a certain wishlist cart item on the page to the shopping cart
+        [ValidateInput(false)]
+        [HttpPost, ActionName("Wishlist")]
+        [FormValueRequired(FormValueRequirement.StartsWith, "addtocart-")]
+        public ActionResult AddOneItemtoCartFromWishlist(FormCollection form)
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.EnableShoppingCart))
+                return RedirectToAction("Index", "Home");
+
+            if (!_permissionService.Authorize(StandardPermissionProvider.EnableWishlist))
+                return RedirectToAction("Index", "Home");
+
+            //get wishlist cart item identifier
+            int sciId = 0;
+            foreach (var formValue in form.AllKeys)
+                if (formValue.StartsWith("addtocart-", StringComparison.InvariantCultureIgnoreCase))
+                    sciId = Convert.ToInt32(formValue.Substring("addtocart-".Length));
+            //get wishlist cart item
+            var cart = _workContext.CurrentCustomer.ShoppingCartItems
+                .Where(x => x.ShoppingCartType == ShoppingCartType.Wishlist).ToList();
+            var sci = cart.Where(x => x.Id == sciId).FirstOrDefault();
+            if (sci == null)
+            {
+                return RedirectToRoute("Wishlist");
+            }
+            _shoppingCartService.AddToCart(_workContext.CurrentCustomer,
+                                           sci.ProductVariant, ShoppingCartType.ShoppingCart,
+                                           sci.AttributesXml, sci.CustomerEnteredPrice, sci.Quantity, true);
+
+
+            //updated wishlist
+            cart =
+                _workContext.CurrentCustomer.ShoppingCartItems.Where(
+                    x => x.ShoppingCartType == ShoppingCartType.Wishlist).ToList();
             var model = PrepareWishlistModel(new WishlistModel(), cart, true);
             return View(model);
         }

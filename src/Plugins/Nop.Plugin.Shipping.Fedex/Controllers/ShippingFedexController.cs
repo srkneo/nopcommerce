@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Text;
 using System.Web.Mvc;
+using Nop.Core;
 using Nop.Plugin.Shipping.Fedex.Domain;
 using Nop.Plugin.Shipping.Fedex.Models;
 using Nop.Services.Configuration;
+using Nop.Web.Framework;
 using Nop.Web.Framework.Controllers;
-using Nop.Core;
 
 namespace Nop.Plugin.Shipping.Fedex.Controllers
 {
@@ -37,6 +38,10 @@ namespace Nop.Plugin.Shipping.Fedex.Controllers
             model.StateOrProvinceCode = _fedexSettings.StateOrProvinceCode;
             model.PostalCode = _fedexSettings.PostalCode;
             model.CountryCode = _fedexSettings.CountryCode;
+            model.PackingPackageVolume = _fedexSettings.PackingPackageVolume;
+            model.PackingType = Convert.ToInt32(_fedexSettings.PackingType);
+            model.PackingTypeValues = _fedexSettings.PackingType.ToSelectList();
+            model.PassDimensions = _fedexSettings.PassDimensions;
 
 
             var services = new FedexServices();
@@ -82,6 +87,9 @@ namespace Nop.Plugin.Shipping.Fedex.Controllers
             _fedexSettings.StateOrProvinceCode = CommonHelper.EnsureMaximumLength(model.StateOrProvinceCode, 2);
             _fedexSettings.PostalCode = model.PostalCode;
             _fedexSettings.CountryCode = model.CountryCode;
+            _fedexSettings.PackingPackageVolume = model.PackingPackageVolume;
+            _fedexSettings.PackingType = (PackingType)model.PackingType;
+            _fedexSettings.PassDimensions = model.PassDimensions;
 
 
 

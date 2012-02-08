@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using Nop.Core;
 using Nop.Core.Caching;
@@ -35,6 +34,7 @@ namespace Nop.Services.Configuration
         /// Ctor
         /// </summary>
         /// <param name="cacheManager">Cache manager</param>
+        /// <param name="eventPublisher">Event publisher</param>
         /// <param name="settingRepository">Setting repository</param>
         public SettingService(ICacheManager cacheManager, IEventPublisher eventPublisher,
             IRepository<Setting> settingRepository)
@@ -95,7 +95,7 @@ namespace Nop.Services.Configuration
         /// <summary>
         /// Gets a setting by identifier
         /// </summary>
-        /// <param name="settingId">Setting identifer</param>
+        /// <param name="settingId">Setting identifier</param>
         /// <returns>Setting</returns>
         public virtual Setting GetSettingById(int settingId)
         {

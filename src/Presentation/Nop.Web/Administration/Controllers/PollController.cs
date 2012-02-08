@@ -2,14 +2,14 @@
 using System.Linq;
 using System.Web.Mvc;
 using Nop.Admin.Models.Polls;
+using Nop.Core.Domain.Common;
 using Nop.Core.Domain.Polls;
 using Nop.Services.Helpers;
 using Nop.Services.Localization;
 using Nop.Services.Polls;
+using Nop.Services.Security;
 using Nop.Web.Framework.Controllers;
 using Telerik.Web.Mvc;
-using Nop.Services.Security;
-using Nop.Core.Domain.Common;
 
 namespace Nop.Admin.Controllers
 {
@@ -239,10 +239,12 @@ namespace Nop.Admin.Controllers
         {
             if (!_permissionService.Authorize(StandardPermissionProvider.ManagePolls))
                 return AccessDeniedView();
-
+            
             if (!ModelState.IsValid)
             {
-                return new JsonResult { Data = "error" };
+                //display the first model error
+                var modelStateErrors = this.ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage);
+                return Content(modelStateErrors.FirstOrDefault());
             }
 
             var pollAnswer = _pollService.GetPollAnswerById(model.Id);
@@ -261,10 +263,12 @@ namespace Nop.Admin.Controllers
         {
             if (!_permissionService.Authorize(StandardPermissionProvider.ManagePolls))
                 return AccessDeniedView();
-
+           
             if (!ModelState.IsValid)
             {
-                return new JsonResult { Data = "error" };
+                //display the first model error
+                var modelStateErrors = this.ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage);
+                return Content(modelStateErrors.FirstOrDefault());
             }
 
             var poll = _pollService.GetPollById(pollId);

@@ -6,9 +6,9 @@ using Nop.Core.Domain.Catalog;
 using Nop.Services.Catalog;
 using Nop.Services.Localization;
 using Nop.Services.Logging;
+using Nop.Services.Security;
 using Nop.Web.Framework.Controllers;
 using Telerik.Web.Mvc;
-using Nop.Services.Security;
 
 namespace Nop.Admin.Controllers
 {
@@ -348,8 +348,7 @@ namespace Nop.Admin.Controllers
 
             var sao = _specificationAttributeService.GetSpecificationAttributeOptionById(optionId);
             if (sao == null)
-                //No specification attribute option found with the specified id
-                return RedirectToAction("List");
+                throw new ArgumentException("No specification attribute option found with the specified id");
 
             _specificationAttributeService.DeleteSpecificationAttributeOption(sao);
 

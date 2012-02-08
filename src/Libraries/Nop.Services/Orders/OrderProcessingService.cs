@@ -7,6 +7,7 @@ using Nop.Core;
 using Nop.Core.Domain.Catalog;
 using Nop.Core.Domain.Common;
 using Nop.Core.Domain.Customers;
+using Nop.Core.Domain.Directory;
 using Nop.Core.Domain.Discounts;
 using Nop.Core.Domain.Localization;
 using Nop.Core.Domain.Logging;
@@ -14,8 +15,10 @@ using Nop.Core.Domain.Orders;
 using Nop.Core.Domain.Payments;
 using Nop.Core.Domain.Shipping;
 using Nop.Core.Domain.Tax;
+using Nop.Core.Events;
 using Nop.Services.Catalog;
 using Nop.Services.Customers;
+using Nop.Services.Directory;
 using Nop.Services.Discounts;
 using Nop.Services.Localization;
 using Nop.Services.Logging;
@@ -24,7 +27,6 @@ using Nop.Services.Payments;
 using Nop.Services.Security;
 using Nop.Services.Shipping;
 using Nop.Services.Tax;
-using Nop.Services.Directory;
 
 namespace Nop.Services.Orders
 {
@@ -59,13 +61,15 @@ namespace Nop.Services.Orders
         private readonly IWorkflowMessageService _workflowMessageService;
         private readonly ISmsService _smsService;
         private readonly ICustomerActivityService _customerActivityService;
-        private readonly ICurrencyService _currencyService;
+        private readonly ICurrencyService _currencyService; 
+        private readonly IEventPublisher _eventPublisher;
 
         private readonly PaymentSettings _paymentSettings;
         private readonly RewardPointsSettings _rewardPointsSettings;
         private readonly OrderSettings _orderSettings;
         private readonly TaxSettings _taxSettings;
         private readonly LocalizationSettings _localizationSettings;
+        private readonly CurrencySettings _currencySettings;
 
         #endregion
 
@@ -97,12 +101,15 @@ namespace Nop.Services.Orders
         /// <param name="workContext">Work context</param>
         /// <param name="workflowMessageService">Workflow message service</param>
         /// <param name="smsService">SMS service</param>
-        /// <param name="customerActivityService">Customer activityservice</param>
+        /// <param name="customerActivityService">Customer activity service</param>
+        /// <param name="currencyService">Currency service</param>
+        /// <param name="eventPublisher">Event published</param>
         /// <param name="paymentSettings">Payment settings</param>
         /// <param name="rewardPointsSettings">Reward points settings</param>
         /// <param name="orderSettings">Order settings</param>
         /// <param name="taxSettings">Tax settings</param>
         /// <param name="localizationSettings">Localization settings</param>
+        /// <param name="currencySettings">Currency settings</param>
         public OrderProcessingService(IOrderService orderService,
             IWebHelper webHelper,
             ILocalizationService localizationService,
@@ -128,11 +135,13 @@ namespace Nop.Services.Orders
             ISmsService smsService,
             ICustomerActivityService customerActivityService,
             ICurrencyService currencyService,
+            IEventPublisher eventPublisher,
             PaymentSettings paymentSettings,
             RewardPointsSettings rewardPointsSettings,
             OrderSettings orderSettings,
             TaxSettings taxSettings,
-            LocalizationSettings localizationSettings)
+            LocalizationSettings localizationSettings,
+            CurrencySettings currencySettings)
         {
             this._orderService = orderService;
             this._webHelper = webHelper;
@@ -159,11 +168,13 @@ namespace Nop.Services.Orders
             this._smsService = smsService;
             this._customerActivityService = customerActivityService;
             this._currencyService = currencyService;
+            this._eventPublisher = eventPublisher;
             this._paymentSettings = paymentSettings;
             this._rewardPointsSettings = rewardPointsSettings;
             this._orderSettings = orderSettings;
             this._taxSettings = taxSettings;
             this._localizationSettings = localizationSettings;
+            this._currencySettings = currencySettings;
         }
 
         #endregion
@@ -416,7 +427,8 @@ namespace Nop.Services.Orders
                 {
                     var customerCurrency = (customer.Currency != null && customer.Currency.Published) ? customer.Currency : _workContext.WorkingCurrency;
                     customerCurrencyCode = customerCurrency.CurrencyCode;
-                    customerCurrencyRate = customerCurrency.Rate;
+                    var primaryStoreCurrency = _currencyService.GetCurrencyById(_currencySettings.PrimaryStoreCurrencyId);
+                    customerCurrencyRate = customerCurrency.Rate / primaryStoreCurrency.Rate;
                 }
                 else
                 {
@@ -704,7 +716,6 @@ namespace Nop.Services.Orders
                 {
                     orderTaxTotal = initialOrder.OrderTax;
                     //VAT number
-                    //TODO: Possible BUG: VAT number status may have changed since original order was placed, probably best to recalculate tax or do some checks?
                     vatNumber = initialOrder.VatNumber;
                 }
 
@@ -1237,14 +1248,14 @@ namespace Nop.Services.Orders
                         //uncomment this line to support transactions
                         //scope.Complete();
 
+                        //raise event       
+                        _eventPublisher.PublishOrderPlaced(order);
 
-                        //TODO raise event             
-                        //EventContext.Current.OnOrderPlaced(null, new OrderEventArgs() { Order = order });
-
-                        //TODO raise event         
-                        //if (order.PaymentStatus == PaymentStatus.Paid)
-                        //    EventContext.Current.OnOrderPaid(null, new OrderEventArgs() { Order = order });
-
+                        //raise event         
+                        if (order.PaymentStatus == PaymentStatus.Paid)
+                        {
+                            _eventPublisher.PublishOrderPaid(order);
+                        }
                         #endregion
                     }
                 }
@@ -1526,7 +1537,7 @@ namespace Nop.Services.Orders
                 throw new ArgumentNullException("order");
 
             if (!CanShip(order))
-                throw new NopException("Can not do shipment for order.");
+                throw new NopException("Cannot do shipment for order.");
 
             order.ShippedDateUtc = DateTime.UtcNow;
             order.ShippingStatusId = (int)ShippingStatus.Shipped;
@@ -1591,7 +1602,7 @@ namespace Nop.Services.Orders
                 throw new ArgumentNullException("order");
 
             if (!CanDeliver(order))
-                throw new NopException("Can not do delivery for order.");
+                throw new NopException("Cannot do delivery for order.");
 
             order.DeliveryDateUtc = DateTime.UtcNow;
             order.ShippingStatusId = (int)ShippingStatus.Delivered;
@@ -1655,7 +1666,7 @@ namespace Nop.Services.Orders
                 throw new ArgumentNullException("order");
 
             if (!CanCancelOrder(order))
-                throw new NopException("Can not do cancel for order.");
+                throw new NopException("Cannot do cancel for order.");
 
             //Cancel order
             SetOrderStatus(order, OrderStatus.Cancelled, notifyCustomer);
@@ -1673,6 +1684,7 @@ namespace Nop.Services.Orders
             var recurringPayments = _orderService.SearchRecurringPayments(0, order.Id, null);
             foreach (var rp in recurringPayments)
             {
+                //use errors?
                 var errors = CancelRecurringPayment(rp);
             }
 
@@ -1761,7 +1773,7 @@ namespace Nop.Services.Orders
                 throw new ArgumentNullException("order");
 
             if (!CanCapture(order))
-                throw new NopException("Can not do capture for order.");
+                throw new NopException("Cannot do capture for order.");
 
             var request = new CapturePaymentRequest();
             CapturePaymentResult result = null;
@@ -1794,11 +1806,10 @@ namespace Nop.Services.Orders
 
                     CheckOrderStatus(order);
 
-                    //TODO raise event         
+                    //raise event         
                     if (order.PaymentStatus == PaymentStatus.Paid)
                     {
-                    //    EventContext.Current.OnOrderPaid(null,
-                    //        new OrderEventArgs() { Order = order });
+                        _eventPublisher.PublishOrderPaid(order);
                     }
                 }
             }
@@ -1884,11 +1895,10 @@ namespace Nop.Services.Orders
 
             CheckOrderStatus(order);
 
-            //TODO raise event         
+            //raise event         
             if (order.PaymentStatus == PaymentStatus.Paid)
             {
-            //    EventContext.Current.OnOrderPaid(null,
-            //        new OrderEventArgs() { Order = order });
+                _eventPublisher.PublishOrderPaid(order);
             }
         }
 
@@ -1928,7 +1938,7 @@ namespace Nop.Services.Orders
                 throw new ArgumentNullException("order");
 
             if (!CanRefund(order))
-                throw new NopException("Can not do refund for order.");
+                throw new NopException("Cannot do refund for order.");
 
             var request = new RefundPaymentRequest();
             RefundPaymentResult result = null;
@@ -2097,7 +2107,7 @@ namespace Nop.Services.Orders
                 throw new ArgumentNullException("order");
 
             if (!CanPartiallyRefund(order, amountToRefund))
-                throw new NopException("Can not do partial refund for order.");
+                throw new NopException("Cannot do partial refund for order.");
 
             var request = new RefundPaymentRequest();
             RefundPaymentResult result = null;
@@ -2215,7 +2225,7 @@ namespace Nop.Services.Orders
 
             //update order info
             order.RefundedAmount = totalAmountRefunded;
-            //TODO if (order.OrderTotal == totalAmountRefunded), then set order.PaymentStatus = PaymentStatus.Refunded;
+            //if (order.OrderTotal == totalAmountRefunded), then set order.PaymentStatus = PaymentStatus.Refunded;
             order.PaymentStatus = PaymentStatus.PartiallyRefunded;
             _orderService.UpdateOrder(order);
 
@@ -2268,7 +2278,7 @@ namespace Nop.Services.Orders
                 throw new ArgumentNullException("order");
 
             if (!CanVoid(order))
-                throw new NopException("Can not do void for order.");
+                throw new NopException("Cannot do void for order.");
 
             var request = new VoidPaymentRequest();
             VoidPaymentResult result = null;
@@ -2397,94 +2407,7 @@ namespace Nop.Services.Orders
                     opv.UnitPriceExclTax, opv.Quantity, false);
             }
         }
-
-        /// <summary>
-        /// Gets a value indicating whether download is allowed
-        /// </summary>
-        /// <param name="orderProductVariant">Order produvt variant to check</param>
-        /// <returns>True if download is allowed; otherwise, false.</returns>
-        public virtual bool IsDownloadAllowed(OrderProductVariant orderProductVariant)
-        {
-            if (orderProductVariant == null)
-                return false;
-
-            var order = orderProductVariant.Order;
-            if (order == null || order.Deleted)
-                return false;
-
-            //order status
-            if (order.OrderStatus == OrderStatus.Cancelled)
-                return false;
-
-            var productVariant = orderProductVariant.ProductVariant;
-            if (productVariant == null || !productVariant.IsDownload)
-                return false;
-
-            //payment status
-            switch (productVariant.DownloadActivationType)
-            {
-                case DownloadActivationType.WhenOrderIsPaid:
-                    {
-                        if (order.PaymentStatus == PaymentStatus.Paid && order.PaidDateUtc.HasValue)
-                        {
-                            //expiration date
-                            if (productVariant.DownloadExpirationDays.HasValue)
-                            {
-                                if (order.PaidDateUtc.Value.AddDays(productVariant.DownloadExpirationDays.Value) > DateTime.UtcNow)
-                                {
-                                    return true;
-                                }
-                            }
-                            else
-                            {
-                                return true;
-                            }
-                        }
-                    }
-                    break;
-                case DownloadActivationType.Manually:
-                    {
-                        if (orderProductVariant.IsDownloadActivated)
-                        {
-                            //expiration date
-                            if (productVariant.DownloadExpirationDays.HasValue)
-                            {
-                                if (order.CreatedOnUtc.AddDays(productVariant.DownloadExpirationDays.Value) > DateTime.UtcNow)
-                                {
-                                    return true;
-                                }
-                            }
-                            else
-                            {
-                                return true;
-                            }
-                        }
-                    }
-                    break;
-                default:
-                    break;
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// Gets a value indicating whether license download is allowed
-        /// </summary>
-        /// <param name="orderProductVariant">Order produvt variant to check</param>
-        /// <returns>True if license download is allowed; otherwise, false.</returns>
-        public virtual bool IsLicenseDownloadAllowed(OrderProductVariant orderProductVariant)
-        {
-            if (orderProductVariant == null)
-                return false;
-
-            return IsDownloadAllowed(orderProductVariant) && 
-                orderProductVariant.LicenseDownloadId.HasValue &&
-                orderProductVariant.LicenseDownloadId > 0;
-        }
-
         
-
         /// <summary>
         /// Check whether return request is allowed
         /// </summary>

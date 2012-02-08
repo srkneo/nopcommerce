@@ -92,7 +92,7 @@ namespace Nop.Web.Controllers
         #region Utilities
 
         [NonAction]
-        private OrderDetailsModel PrepareOrderDetailsModel(Order order)
+        protected OrderDetailsModel PrepareOrderDetailsModel(Order order)
         {
             if (order == null)
                 throw new ArgumentNullException("order");
@@ -201,7 +201,7 @@ namespace Nop.Web.Controllers
 
                     var orderTaxInCustomerCurrency = _currencyService.ConvertCurrency(order.OrderTax, order.CurrencyRate);
                     //TODO pass languageId to _priceFormatter.FormatPrice
-                    model.Tax = _priceFormatter.FormatPrice(orderTaxInCustomerCurrency, true, order.CustomerCurrencyCode, false);
+                    model.Tax = _priceFormatter.FormatPrice(orderTaxInCustomerCurrency, true, order.CustomerCurrencyCode, false, _workContext.WorkingLanguage);
 
                     foreach (var tr in order.TaxRatesDictionary)
                     {
@@ -209,7 +209,7 @@ namespace Nop.Web.Controllers
                         {
                             Rate = _priceFormatter.FormatTaxRate(tr.Key),
                             //TODO pass languageId to _priceFormatter.FormatPrice
-                            Value = _priceFormatter.FormatPrice(_currencyService.ConvertCurrency(tr.Value, order.CurrencyRate), true, order.CustomerCurrencyCode, false),
+                            Value = _priceFormatter.FormatPrice(_currencyService.ConvertCurrency(tr.Value, order.CurrencyRate), true, order.CustomerCurrencyCode, false, _workContext.WorkingLanguage),
                         });
                     }
                 }
@@ -221,7 +221,7 @@ namespace Nop.Web.Controllers
             //discount (applied to order total)
             var orderDiscountInCustomerCurrency = _currencyService.ConvertCurrency(order.OrderDiscount, order.CurrencyRate);
             if (orderDiscountInCustomerCurrency > decimal.Zero)
-                model.OrderTotalDiscount= _priceFormatter.FormatPrice(-orderDiscountInCustomerCurrency, true, order.CustomerCurrencyCode, false);
+                model.OrderTotalDiscount = _priceFormatter.FormatPrice(-orderDiscountInCustomerCurrency, true, order.CustomerCurrencyCode, false, _workContext.WorkingLanguage);
 
 
             //gift cards
@@ -230,7 +230,7 @@ namespace Nop.Web.Controllers
                 model.GiftCards.Add(new OrderDetailsModel.GiftCard()
                 {
                     CouponCode = gcuh.GiftCard.GiftCardCouponCode,
-                    Amount = _priceFormatter.FormatPrice(-(_currencyService.ConvertCurrency(gcuh.UsedValue, order.CurrencyRate)), true, order.CustomerCurrencyCode, false),
+                    Amount = _priceFormatter.FormatPrice(-(_currencyService.ConvertCurrency(gcuh.UsedValue, order.CurrencyRate)), true, order.CustomerCurrencyCode, false, _workContext.WorkingLanguage),
                 });
             }
 
@@ -238,12 +238,12 @@ namespace Nop.Web.Controllers
             if (order.RedeemedRewardPointsEntry != null)
             {
                 model.RedeemedRewardPoints = -order.RedeemedRewardPointsEntry.Points;
-                model.RedeemedRewardPointsAmount = _priceFormatter.FormatPrice(-(_currencyService.ConvertCurrency(order.RedeemedRewardPointsEntry.UsedAmount, order.CurrencyRate)), true, order.CustomerCurrencyCode, false);
+                model.RedeemedRewardPointsAmount = _priceFormatter.FormatPrice(-(_currencyService.ConvertCurrency(order.RedeemedRewardPointsEntry.UsedAmount, order.CurrencyRate)), true, order.CustomerCurrencyCode, false, _workContext.WorkingLanguage);
             }
 
             //total
             var orderTotalInCustomerCurrency = _currencyService.ConvertCurrency(order.OrderTotal, order.CurrencyRate);
-            model.OrderTotal = _priceFormatter.FormatPrice(orderTotalInCustomerCurrency, true, order.CustomerCurrencyCode, false);
+            model.OrderTotal = _priceFormatter.FormatPrice(orderTotalInCustomerCurrency, true, order.CustomerCurrencyCode, false, _workContext.WorkingLanguage);
 
             //checkout attributes
             model.CheckoutAttributeInfo = order.CheckoutAttributeDescription;
@@ -312,7 +312,7 @@ namespace Nop.Web.Controllers
         }
 
         [NonAction]
-        private SubmitReturnRequestModel PrepareReturnRequestModel(SubmitReturnRequestModel model, Order order)
+        protected SubmitReturnRequestModel PrepareReturnRequestModel(SubmitReturnRequestModel model, Order order)
         {
             if (order == null)
                 throw new ArgumentNullException("order");
@@ -455,7 +455,18 @@ namespace Nop.Web.Controllers
                 Order = order
             };
             _paymentService.PostProcessPayment(postProcessPaymentRequest);
-            return RedirectToRoute("OrderDetails", new {orderId = orderId});
+
+            if (this.Response.IsRequestBeingRedirected)
+            {
+                //redirection has been done in PostProcessPayment
+                return Content("Redirected");
+            }
+            else
+            {
+                //if no redirection has been done (to a third-party payment page)
+                //theoretically it's not possible
+                return RedirectToRoute("OrderDetails", new { orderId = orderId });
+            }
         }
 
         #endregion

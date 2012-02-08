@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Nop.Admin.Models.Blogs;
 using Nop.Core.Domain.Blogs;
@@ -10,10 +9,10 @@ using Nop.Services.Blogs;
 using Nop.Services.Customers;
 using Nop.Services.Helpers;
 using Nop.Services.Localization;
+using Nop.Services.Security;
 using Nop.Web.Framework;
 using Nop.Web.Framework.Controllers;
 using Telerik.Web.Mvc;
-using Nop.Services.Security;
 
 namespace Nop.Admin.Controllers
 {
@@ -255,6 +254,9 @@ namespace Nop.Admin.Controllers
                 return AccessDeniedView();
 
             var comment = _customerContentService.GetCustomerContentById(id);
+            if (comment == null)
+                throw new ArgumentException("No comment found with the specified id");
+
             _customerContentService.DeleteCustomerContent(comment);
 
             return Comments(filterByBlogPostId, command);

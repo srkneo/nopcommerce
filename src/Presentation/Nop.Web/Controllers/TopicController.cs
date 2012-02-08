@@ -1,7 +1,6 @@
 ﻿using System.Web.Mvc;
 using Nop.Core;
 using Nop.Core.Caching;
-using Nop.Core.Infrastructure;
 using Nop.Services.Localization;
 using Nop.Services.Topics;
 using Nop.Web.Extensions;
@@ -37,7 +36,8 @@ namespace Nop.Web.Controllers
 
         #region Utilities
 
-        private TopicModel PrepareTopicModel(string systemName)
+        [NonAction]
+        protected TopicModel PrepareTopicModel(string systemName)
         {
             var topic = _topicService.GetTopicBySystemName(systemName);
             if (topic == null)
