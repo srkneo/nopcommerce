@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -7,10 +6,10 @@ using Nop.Admin.Models.Payments;
 using Nop.Core.Domain.Payments;
 using Nop.Services.Configuration;
 using Nop.Services.Payments;
+using Nop.Services.Security;
 using Nop.Web.Framework;
 using Nop.Web.Framework.Controllers;
 using Telerik.Web.Mvc;
-using Nop.Services.Security;
 
 namespace Nop.Admin.Controllers
 {
@@ -94,11 +93,6 @@ namespace Nop.Admin.Controllers
             if (!_permissionService.Authorize(StandardPermissionProvider.ManagePaymentMethods))
                 return AccessDeniedView();
 
-            if (!ModelState.IsValid)
-            {
-                return RedirectToAction("Methods");
-            }
-            
             var pm = _paymentService.LoadPaymentMethodBySystemName(model.SystemName);
             if (pm.IsPaymentMethodActive(_paymentSettings))
             {

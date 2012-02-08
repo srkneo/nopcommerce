@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Nop.Core;
 using Nop.Core.Caching;
 using Nop.Core.Data;
-using Nop.Core.Domain.Catalog;
 using Nop.Core.Domain.Cms;
 using Nop.Core.Events;
 using Nop.Core.Plugins;
@@ -40,7 +38,7 @@ namespace Nop.Services.Cms
         /// <param name="cacheManager">Cache manager</param>
         /// <param name="widgetRepository">Widget repository</param>
         /// <param name="pluginFinder">Plugin finder</param>
-        /// <param name="eventPublisher"></param>
+        /// <param name="eventPublisher">Event published</param>
         public WidgetService(ICacheManager cacheManager,
             IRepository<Widget> widgetRepository, 
             IPluginFinder pluginFinder,

@@ -9,10 +9,10 @@ using Nop.Services.Directory;
 using Nop.Services.Localization;
 using Nop.Services.Logging;
 using Nop.Services.Orders;
+using Nop.Services.Security;
 using Nop.Services.Tax;
 using Nop.Web.Framework.Controllers;
 using Telerik.Web.Mvc;
-using Nop.Services.Security;
 
 namespace Nop.Admin.Controllers
 {
@@ -407,6 +407,8 @@ namespace Nop.Admin.Controllers
                 return AccessDeniedView();
 
             var cav = _checkoutAttributeService.GetCheckoutAttributeValueById(valueId);
+            if (cav == null)
+                throw new ArgumentException("No checkout attribute value found with the specified id");
             _checkoutAttributeService.DeleteCheckoutAttributeValue(cav);
 
             return ValueList(checkoutAttributeId, command);

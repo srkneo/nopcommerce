@@ -4,7 +4,7 @@
 @using Nop.Web.Models.Common
 @using Nop.Web.Framework.UI
 @{
-    Layout = "~/Views/Shared/_MobileRoot.cshtml";
+    Layout = "~/Views/Shared/_Root.cshtml";
 
     //title
     Html.AddTitleParts(T("PageTitle.Checkout").Text);
@@ -105,7 +105,7 @@
                 </div>
                 <div class="clear">
                 </div>
-                <div class="button">
+                <div class="buttons">
                     <input type="submit" name="nextstep" value="@T("Checkout.NextButton")" id="nextstep" />
                 </div>
             }

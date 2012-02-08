@@ -5,7 +5,7 @@
     //title
     Html.AddTitleParts(T("PageTitle.WishlistEmailAFriend").Text);
 }
-<div class="emailafriend-box">
+<div class="emailafriend-page">
     <div class="page-title">
         <h1>@T("Wishlist.EmailAFriend.Title")</h1>
     </div>
@@ -22,7 +22,7 @@
             {
                 <table>
                     <tr>
-                        <td style="width: 100px;">
+                        <td>
                             @Html.LabelFor(model => model.FriendEmail):
                         </td>
                         <td>
@@ -31,7 +31,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td style="width: 100px;">
+                        <td>
                             @Html.LabelFor(model => model.YourEmailAddress):
                         </td>
                         <td>
@@ -40,7 +40,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td style="width: 100px;">
+                        <td>
                             @Html.LabelFor(model => model.PersonalMessage):
                         </td>
                         <td>@Html.TextAreaFor(model => model.PersonalMessage, new { style = "Width: 350px; Height: 150px;" })
@@ -49,7 +49,7 @@
                     </tr>
                     <tr>
                         <td class="message-error" colspan="2">
-                            @Html.ValidationSummary(false)
+                            @Html.ValidationSummary(true)
                         </td>
                     </tr>
                     <tr>

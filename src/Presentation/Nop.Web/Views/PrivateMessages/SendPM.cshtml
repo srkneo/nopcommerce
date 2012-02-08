@@ -1,4 +1,4 @@
-﻿@model Nop.Web.Models.PrivateMessages.PrivateMessageModel
+﻿@model Nop.Web.Models.PrivateMessages.SendPrivateMessageModel
 @using Nop.Web;
 @using Nop.Web.Extensions;
 @{    
@@ -13,12 +13,9 @@
             @T("PrivateMessages.Send.PostMessage")
         </div>
         <div class="wrapper">
-            <div class="error-block">
-                <div class="message-error">
-                    @Model.PostError
-                </div>
+            <div class="message-error">
+                @Html.ValidationSummary(true)
             </div>
-            @Html.ValidationSummary(false)
             @Html.HiddenFor(model => model.ToCustomerId)
             @Html.HiddenFor(model => model.ReplyToMessageId)
             <div class="clear">
@@ -29,7 +26,14 @@
                         @T("PrivateMessages.Send.To")
                     </td>
                     <td>
-                        @Model.customerToName
+                        @if (Model.AllowViewingToProfile)
+                           {
+                                <a href="@Url.RouteUrl("CustomerProfile", new { id = Model.ToCustomerId })">@(Model.CustomerToName)</a>
+                           }
+                           else
+                           {
+                               @Model.CustomerToName
+                           }
                     </td>
                 </tr>
                 <tr>

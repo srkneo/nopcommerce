@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -93,11 +92,6 @@ namespace Nop.Admin.Controllers
         {
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageSmsProviders))
                 return AccessDeniedView();
-
-            if (!ModelState.IsValid)
-            {
-                return new JsonResult { Data = "error" };
-            }
 
             var smsProvider = _smsService.LoadSmsProviderBySystemName(model.SystemName);
             if (smsProvider.IsSmsProviderActive(_smsSettings))

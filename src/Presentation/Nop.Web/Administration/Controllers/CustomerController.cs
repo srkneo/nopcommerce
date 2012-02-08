@@ -7,33 +7,33 @@ using Nop.Admin.Models.Common;
 using Nop.Admin.Models.Customers;
 using Nop.Admin.Models.ShoppingCart;
 using Nop.Core;
+using Nop.Core.Domain.Common;
 using Nop.Core.Domain.Customers;
 using Nop.Core.Domain.Directory;
+using Nop.Core.Domain.Forums;
+using Nop.Core.Domain.Messages;
 using Nop.Core.Domain.Orders;
 using Nop.Core.Domain.Payments;
 using Nop.Core.Domain.Shipping;
 using Nop.Core.Domain.Tax;
+using Nop.Services.Authentication.External;
 using Nop.Services.Catalog;
 using Nop.Services.Common;
 using Nop.Services.Customers;
 using Nop.Services.Directory;
 using Nop.Services.ExportImport;
+using Nop.Services.Forums;
 using Nop.Services.Helpers;
 using Nop.Services.Localization;
 using Nop.Services.Logging;
+using Nop.Services.Messages;
 using Nop.Services.Orders;
+using Nop.Services.Security;
 using Nop.Services.Tax;
 using Nop.Web.Framework;
 using Nop.Web.Framework.Controllers;
 using Nop.Web.Framework.Mvc;
 using Telerik.Web.Mvc;
-using Nop.Services.Security;
-using Nop.Core.Domain.Common;
-using Nop.Services.Messages;
-using Nop.Core.Domain.Messages;
-using Nop.Core.Domain.Forums;
-using Nop.Services.Forums;
-using Nop.Services.Authentication.External;
 
 namespace Nop.Admin.Controllers
 {
@@ -43,6 +43,7 @@ namespace Nop.Admin.Controllers
         #region Fields
 
         private readonly ICustomerService _customerService;
+        private readonly ICustomerRegistrationService _customerRegistrationService;
         private readonly ICustomerReportService _customerReportService;
         private readonly IDateTimeHelper _dateTimeHelper;
         private readonly ILocalizationService _localizationService;
@@ -74,6 +75,7 @@ namespace Nop.Admin.Controllers
         #region Constructors
 
         public CustomerController(ICustomerService customerService,
+            ICustomerRegistrationService customerRegistrationService,
             ICustomerReportService customerReportService, IDateTimeHelper dateTimeHelper,
             ILocalizationService localizationService, DateTimeSettings dateTimeSettings,
             TaxSettings taxSettings, RewardPointsSettings rewardPointsSettings,
@@ -90,6 +92,7 @@ namespace Nop.Admin.Controllers
             IForumService forumService, IOpenAuthenticationService openAuthenticationService)
         {
             this._customerService = customerService;
+            this._customerRegistrationService = customerRegistrationService;
             this._customerReportService = customerReportService;
             this._dateTimeHelper = dateTimeHelper;
             this._localizationService = localizationService;
@@ -197,7 +200,7 @@ namespace Nop.Admin.Controllers
             return new CustomerModel()
             {
                 Id = customer.Id,
-                Email = !String.IsNullOrEmpty(customer.Email) ? customer.Email : (customer.IsGuest() ? "Guest" : "Unknown"),
+                Email = !String.IsNullOrEmpty(customer.Email) ? customer.Email : (customer.IsGuest() ? _localizationService.GetResource("Admin.Customers.Guest") : "Unknown"),
                 Username = customer.Username,
                 FullName = customer.GetFullName(),
                 CustomerRoleNames = GetCustomerRolesNames(customer.CustomerRoles.ToList()),
@@ -468,7 +471,7 @@ namespace Nop.Admin.Controllers
                 if (!String.IsNullOrWhiteSpace(model.Password))
                 {
                     var changePassRequest = new ChangePasswordRequest(model.Email, false, PasswordFormat.Hashed, model.Password);
-                    var changePassResult = _customerService.ChangePassword(changePassRequest);
+                    var changePassResult = _customerRegistrationService.ChangePassword(changePassRequest);
                     if (!changePassResult.Success)
                     {
                         foreach (var changePassError in changePassResult.Errors)
@@ -668,7 +671,7 @@ namespace Nop.Admin.Controllers
                     //email
                     if (!String.IsNullOrWhiteSpace(model.Email))
                     {
-                        _customerService.SetEmail(customer, model.Email);
+                        _customerRegistrationService.SetEmail(customer, model.Email);
                     }
                     else
                     {
@@ -680,7 +683,7 @@ namespace Nop.Admin.Controllers
                     {
                         if (!String.IsNullOrWhiteSpace(model.Username))
                         {
-                            _customerService.SetUsername(customer, model.Username);
+                            _customerRegistrationService.SetUsername(customer, model.Username);
                         }
                         else
                         {
@@ -842,7 +845,7 @@ namespace Nop.Admin.Controllers
             {
                 var changePassRequest = new ChangePasswordRequest(model.Email,
                     false, PasswordFormat.Hashed, model.Password);
-                var changePassResult = _customerService.ChangePassword(changePassRequest);
+                var changePassResult = _customerRegistrationService.ChangePassword(changePassRequest);
                 if (changePassResult.Success)
                     SuccessNotification(_localizationService.GetResource("Admin.Customers.Customers.PasswordChanged"));
                 else
@@ -1376,7 +1379,11 @@ namespace Nop.Admin.Controllers
                     };
                     var customer = _customerService.GetCustomerById(x.CustomerId);
                     if (customer != null)
-                        m.CustomerName = customer.IsGuest() ? "Guest" : customer.GetFullName();
+                    {
+                        m.CustomerName = customer.IsGuest()
+                                             ? _localizationService.GetResource("Admin.Customers.Guest")
+                                             : customer.GetFullName();
+                    }
                     return m;
                 }),
                 Total = items.Count
@@ -1414,7 +1421,11 @@ namespace Nop.Admin.Controllers
                     };
                     var customer = _customerService.GetCustomerById(x.CustomerId);
                     if (customer != null)
-                        m.CustomerName = customer.IsGuest() ? "Guest" : customer.GetFullName();
+                    {
+                        m.CustomerName = customer.IsGuest()
+                                             ? _localizationService.GetResource("Admin.Customers.Guest")
+                                             : customer.GetFullName();
+                    }
                     return m;
                 }),
                 Total = items.Count
@@ -1487,7 +1498,7 @@ namespace Nop.Admin.Controllers
 
         #region Export / Import
 
-        public ActionResult ExportExcel()
+        public ActionResult ExportExcelAll()
         {
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageCustomers))
                 return AccessDeniedView();
@@ -1512,7 +1523,33 @@ namespace Nop.Admin.Controllers
             }
         }
 
-        public ActionResult ExportXml()
+        public ActionResult ExportExcelSelected(string selectedIds)
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManageCustomers))
+                return AccessDeniedView();
+
+            var customers = new List<Customer>();
+            if (selectedIds != null)
+            {
+                foreach (var id in selectedIds
+                    .Split(new char[] {','}, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(x => Convert.ToInt32(x)))
+                {
+                    var customer = _customerService.GetCustomerById(id);
+                    if (customer != null)
+                        customers.Add(customer);
+                }
+            }
+            string fileName = string.Format("customers_{0}_{1}.xlsx", DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss"), CommonHelper.GenerateRandomDigitCode(4));
+            string filePath = string.Format("{0}content\\files\\ExportImport\\{1}", Request.PhysicalApplicationPath, fileName);
+
+            _exportManager.ExportCustomersToXlsx(filePath, customers);
+
+            var bytes = System.IO.File.ReadAllBytes(filePath);
+            return File(bytes, "text/xls", fileName);
+        }
+
+        public ActionResult ExportXmlAll()
         {
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageCustomers))
                 return AccessDeniedView();
@@ -1531,6 +1568,28 @@ namespace Nop.Admin.Controllers
                 ErrorNotification(exc);
                 return RedirectToAction("List");
             }
+        }
+
+        public ActionResult ExportXmlSelected(string selectedIds)
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManageCustomers))
+                return AccessDeniedView();
+
+            var customers = new List<Customer>();
+            if (selectedIds != null)
+            {
+                foreach (var id in selectedIds
+                    .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(x => Convert.ToInt32(x)))
+                {
+                    var customer = _customerService.GetCustomerById(id);
+                    if (customer != null)
+                        customers.Add(customer);
+                }
+            }
+            var fileName = string.Format("customers_{0}.xml", DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss"));
+            var xml = _exportManager.ExportCustomersToXml(customers);
+            return new XmlDownloadResult(xml, fileName);
         }
 
         #endregion

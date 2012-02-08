@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Web.Mvc;
 using Nop.Web.Framework;
 
 namespace Nop.Plugin.Shipping.Fedex.Models
@@ -54,5 +55,15 @@ namespace Nop.Plugin.Shipping.Fedex.Models
 
         [NopResourceDisplayName("Plugins.Shipping.Fedex.Fields.CountryCode")]
         public string CountryCode { get; set; }
+
+        [NopResourceDisplayName("Plugins.Shipping.Fedex.Fields.PassDimensions")]
+        public bool PassDimensions { get; set; }
+
+        [NopResourceDisplayName("Plugins.Shipping.Fedex.Fields.PackingPackageVolume")]
+        public int PackingPackageVolume { get; set; }
+
+        public int PackingType { get; set; }
+        [NopResourceDisplayName("Plugins.Shipping.Fedex.Fields.PackingType")]
+        public SelectList PackingTypeValues { get; set; }
     }
 }

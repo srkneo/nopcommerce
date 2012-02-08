@@ -4,7 +4,6 @@ using System.Linq;
 using Nop.Core;
 using Nop.Core.Caching;
 using Nop.Core.Data;
-using Nop.Core.Domain.Catalog;
 using Nop.Core.Domain.Customers;
 using Nop.Core.Domain.Discounts;
 using Nop.Core.Events;
@@ -45,7 +44,7 @@ namespace Nop.Services.Discounts
         /// <param name="discountRequirementRepository">Discount requirement repository</param>
         /// <param name="discountUsageHistoryRepository">Discount usage history repository</param>
         /// <param name="pluginFinder">Plugin finder</param>
-        /// <param name="eventPublisher"></param>
+        /// <param name="eventPublisher">Event published</param>
         public DiscountService(ICacheManager cacheManager,
             IRepository<Discount> discountRepository,
             IRepository<DiscountRequirement> discountRequirementRepository,
@@ -353,8 +352,8 @@ namespace Nop.Services.Discounts
         /// <summary>
         /// Gets all discount usage history records
         /// </summary>
-        /// <param name="discountId">Discount identifer</param>
-        /// <param name="customerId">Customer identifer</param>
+        /// <param name="discountId">Discount identifier</param>
+        /// <param name="customerId">Customer identifier</param>
         /// <param name="pageIndex">Page index</param>
         /// <param name="pageSize">Page size</param>
         /// <returns>Discount usage history records</returns>

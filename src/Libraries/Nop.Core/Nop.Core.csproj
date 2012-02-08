@@ -51,7 +51,7 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Microsoft ASP.NET\ASP.NET MVC 3\Assemblies\System.Web.Mvc.dll</HintPath>
+      <HintPath>..\..\packages\aspnetmvc\System.Web.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -63,9 +63,9 @@
     <Compile Include="ComponentModel\WriteLockDisposable.cs" />
     <Compile Include="Domain\Catalog\BackInStockSubscription.cs" />
     <Compile Include="Domain\Common\PageTitleSeoAdjustment.cs" />
+    <Compile Include="Domain\Orders\Events.cs" />
     <Compile Include="Domain\Tasks\ScheduleTask.cs" />
-    <Compile Include="Events\EmailSubscribed.cs" />
-    <Compile Include="Events\EmailUnsubscribed.cs" />
+    <Compile Include="Domain\Messages\Events.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Data\BaseDataProviderManager.cs" />
     <Compile Include="Data\IDataProvider.cs" />
@@ -250,6 +250,7 @@
     <Compile Include="Html\ResolveLinksHelper.cs" />
     <Compile Include="PersistentCollection.cs" />
     <Compile Include="Plugins\BasePlugin.cs" />
+    <Compile Include="Plugins\PluginFileParser.cs" />
     <Compile Include="Plugins\PluginManager.cs" />
     <Compile Include="Plugins\PluginDescriptor.cs" />
     <Compile Include="Infrastructure\DependencyManagement\DependencyAttribute.cs" />

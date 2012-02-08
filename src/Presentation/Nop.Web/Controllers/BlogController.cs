@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel.Syndication;
-using System.Text;
 using System.Web.Mvc;
-using System.Xml;
 using Nop.Core;
 using Nop.Core.Domain;
 using Nop.Core.Domain.Blogs;
@@ -76,7 +74,7 @@ namespace Nop.Web.Controllers
         #region Utilities
 
         [NonAction]
-        private void PrepareBlogPostModel(BlogPostModel model, BlogPost blogPost, bool prepareComments)
+        protected void PrepareBlogPostModel(BlogPostModel model, BlogPost blogPost, bool prepareComments)
         {
             if (blogPost == null)
                 throw new ArgumentNullException("blogPost");

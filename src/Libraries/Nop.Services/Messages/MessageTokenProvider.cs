@@ -41,6 +41,7 @@ namespace Nop.Services.Messages
         private readonly ICurrencyService _currencyService;
         private readonly IWebHelper _webHelper;
         private readonly IWorkContext _workContext;
+        private readonly IDownloadService _downloadService;
 
         private readonly StoreInformationSettings _storeSettings;
         private readonly MessageTemplatesSettings _templatesSettings;
@@ -56,7 +57,7 @@ namespace Nop.Services.Messages
             ILocalizationService localizationService, IDateTimeHelper dateTimeHelper,
             IEmailAccountService emailAccountService,
             IPriceFormatter priceFormatter, ICurrencyService currencyService,IWebHelper webHelper,
-            IWorkContext workContext,
+            IWorkContext workContext, IDownloadService downloadService,
             StoreInformationSettings storeSettings, MessageTemplatesSettings templatesSettings,
             EmailAccountSettings emailAccountSettings, CatalogSettings catalogSettings,
             TaxSettings taxSettings)
@@ -69,6 +70,7 @@ namespace Nop.Services.Messages
             this._currencyService = currencyService;
             this._webHelper = webHelper;
             this._workContext = workContext;
+            this._downloadService = downloadService;
 
             this._storeSettings = storeSettings;
             this._templatesSettings = templatesSettings;
@@ -123,9 +125,7 @@ namespace Nop.Services.Messages
 
                 sb.AppendLine("<td style=\"padding: 0.6em 0.4em;text-align: left;\">" + HttpUtility.HtmlEncode(productName));
                 //add download link
-                //TODO we should inject dependencies in contructor but now it causes circular references
-                var orderProcessingService = EngineContext.Current.Resolve<IOrderProcessingService>();
-                if (orderProcessingService.IsDownloadAllowed(opv))
+                if (_downloadService.IsDownloadAllowed(opv))
                 {
                     //TODO add a method for getting URL (use routing because it handles all SEO friendly URLs)
                     string downloadUrl = string.Format("{0}download/getdownload?opvId={1}", _webHelper.GetStoreLocation(false), opv.OrderProductVariantGuid);
@@ -296,8 +296,7 @@ namespace Nop.Services.Messages
                     displayTax = !displayTaxRates;
 
                     var orderTaxInCustomerCurrency = _currencyService.ConvertCurrency(order.OrderTax, order.CurrencyRate);
-                    //TODO pass languageId to _priceFormatter.FormatPrice
-                    string taxStr = _priceFormatter.FormatPrice(orderTaxInCustomerCurrency, true, order.CustomerCurrencyCode, false);
+                    string taxStr = _priceFormatter.FormatPrice(orderTaxInCustomerCurrency, true, order.CustomerCurrencyCode, false, language);
                     cusTaxTotal = taxStr;
                 }
             }
@@ -307,14 +306,13 @@ namespace Nop.Services.Messages
             if (order.OrderDiscount > decimal.Zero)
             {
                 var orderDiscountInCustomerCurrency = _currencyService.ConvertCurrency(order.OrderDiscount, order.CurrencyRate);
-                cusDiscount = _priceFormatter.FormatPrice(-orderDiscountInCustomerCurrency, true, order.CustomerCurrencyCode, false);
+                cusDiscount = _priceFormatter.FormatPrice(-orderDiscountInCustomerCurrency, true, order.CustomerCurrencyCode, false, language);
                 dislayDiscount = true;
             }
 
             //total
             var orderTotalInCustomerCurrency = _currencyService.ConvertCurrency(order.OrderTotal, order.CurrencyRate);
-            //TODO pass languageId to _priceFormatter.FormatPrice
-            cusTotal = _priceFormatter.FormatPrice(orderTotalInCustomerCurrency, true, order.CustomerCurrencyCode, false);
+            cusTotal = _priceFormatter.FormatPrice(orderTotalInCustomerCurrency, true, order.CustomerCurrencyCode, false, language);
 
 
 
@@ -352,8 +350,7 @@ namespace Nop.Services.Messages
                 foreach (var item in taxRates)
                 {
                     string taxRate = String.Format(_localizationService.GetResource("Messages.Order.TaxRateLine"), _priceFormatter.FormatTaxRate(item.Key));
-                    //TODO pass languageId to _priceFormatter.FormatPrice
-                    string taxValue = _priceFormatter.FormatPrice(item.Value, true, order.CustomerCurrencyCode, false);
+                    string taxValue = _priceFormatter.FormatPrice(item.Value, true, order.CustomerCurrencyCode, false, language);
                     sb.AppendLine(string.Format("<tr style=\"text-align:right;\"><td>&nbsp;</td><td colspan=\"2\" style=\"background-color: {0};padding:0.6em 0.4 em;\"><strong>{1}</strong></td> <td style=\"background-color: {0};padding:0.6em 0.4 em;\"><strong>{2}</strong></td></tr>", _templatesSettings.Color3, taxRate, taxValue));
                 }
             }
@@ -369,7 +366,7 @@ namespace Nop.Services.Messages
             foreach (var gcuh in gcuhC)
             {
                 string giftCardText = String.Format(_localizationService.GetResource("Messages.Order.GiftCardInfo", languageId), HttpUtility.HtmlEncode(gcuh.GiftCard.GiftCardCouponCode));
-                string giftCardAmount = _priceFormatter.FormatPrice(-(_currencyService.ConvertCurrency(gcuh.UsedValue, order.CurrencyRate)), true, order.CustomerCurrencyCode, false);
+                string giftCardAmount = _priceFormatter.FormatPrice(-(_currencyService.ConvertCurrency(gcuh.UsedValue, order.CurrencyRate)), true, order.CustomerCurrencyCode, false, language);
                 sb.AppendLine(string.Format("<tr style=\"text-align:right;\"><td>&nbsp;</td><td colspan=\"2\" style=\"background-color: {0};padding:0.6em 0.4 em;\"><strong>{1}</strong></td> <td style=\"background-color: {0};padding:0.6em 0.4 em;\"><strong>{2}</strong></td></tr>", _templatesSettings.Color3, giftCardText, giftCardAmount));
             }
 
@@ -377,7 +374,7 @@ namespace Nop.Services.Messages
             if (order.RedeemedRewardPointsEntry != null)
             {
                 string rpTitle = string.Format(_localizationService.GetResource("Messages.Order.RewardPoints", languageId), -order.RedeemedRewardPointsEntry.Points);
-                string rpAmount = _priceFormatter.FormatPrice(-(_currencyService.ConvertCurrency(order.RedeemedRewardPointsEntry.UsedAmount, order.CurrencyRate)), true, order.CustomerCurrencyCode, false);
+                string rpAmount = _priceFormatter.FormatPrice(-(_currencyService.ConvertCurrency(order.RedeemedRewardPointsEntry.UsedAmount, order.CurrencyRate)), true, order.CustomerCurrencyCode, false, language);
                 sb.AppendLine(string.Format("<tr style=\"text-align:right;\"><td>&nbsp;</td><td colspan=\"2\" style=\"background-color: {0};padding:0.6em 0.4 em;\"><strong>{1}</strong></td> <td style=\"background-color: {0};padding:0.6em 0.4 em;\"><strong>{2}</strong></td></tr>", _templatesSettings.Color3, rpTitle, rpAmount));
             }
 

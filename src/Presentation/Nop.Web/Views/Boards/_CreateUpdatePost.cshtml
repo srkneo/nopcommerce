@@ -20,15 +20,9 @@
             }
         </div>
         <div class="wrapper">
-            @if (!String.IsNullOrEmpty(Model.PostError))
-            {
-                <div class="error-block">
-                    <div class="message-error">
-                        @Model.PostError
-                    </div>
-                </div>
-            }
-            @Html.ValidationSummary(false)
+            <div class="message-error">
+                @Html.ValidationSummary(true)
+            </div>
             @Html.HiddenFor(model => model.Id)
             @Html.HiddenFor(model => model.ForumTopicId)
             <div class="clear">
@@ -84,4 +78,4 @@
             </table>
         </div>
     </div>
-} 
+}

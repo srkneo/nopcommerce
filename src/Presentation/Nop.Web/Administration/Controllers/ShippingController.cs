@@ -9,11 +9,11 @@ using Nop.Core.Domain.Shipping;
 using Nop.Services.Configuration;
 using Nop.Services.Directory;
 using Nop.Services.Localization;
+using Nop.Services.Security;
 using Nop.Services.Shipping;
 using Nop.Web.Framework;
 using Nop.Web.Framework.Controllers;
 using Telerik.Web.Mvc;
-using Nop.Services.Security;
 
 namespace Nop.Admin.Controllers
 {
@@ -127,11 +127,6 @@ namespace Nop.Admin.Controllers
         {
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageShippingSettings))
                 return AccessDeniedView();
-
-            if (!ModelState.IsValid)
-            {
-                return RedirectToAction("Providers");
-            }
 
             var srcm = _shippingService.LoadShippingRateComputationMethodBySystemName(model.SystemName);
             if (srcm.IsShippingRateComputationMethodActive(_shippingSettings))

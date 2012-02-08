@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using Nop.Core;
 using Nop.Core.Caching;
@@ -26,7 +25,6 @@ namespace Nop.Services.Catalog
         private const string PRODUCTS_BY_ID_KEY = "Nop.product.id-{0}";
         private const string PRODUCTVARIANTS_ALL_KEY = "Nop.productvariant.all-{0}-{1}";
         private const string PRODUCTVARIANTS_BY_ID_KEY = "Nop.productvariant.id-{0}";
-        private const string TIERPRICES_ALLBYPRODUCTVARIANTID_KEY = "Nop.tierprice.allbyproductvariantid-{0}";
         private const string PRODUCTS_PATTERN_KEY = "Nop.product.";
         private const string PRODUCTVARIANTS_PATTERN_KEY = "Nop.productvariant.";
         private const string TIERPRICES_PATTERN_KEY = "Nop.tierprice.";
@@ -75,7 +73,7 @@ namespace Nop.Services.Catalog
         /// <param name="dbContext">Database Context</param>
         /// <param name="localizationSettings">Localization settings</param>
         /// <param name="commonSettings">Common settings</param>
-        /// <param name="eventPublisher"></param>
+        /// <param name="eventPublisher">Event published</param>
         public ProductService(ICacheManager cacheManager,
             IRepository<Product> productRepository,
             IRepository<ProductVariant> productVariantRepository,
@@ -267,9 +265,14 @@ namespace Nop.Services.Catalog
                 //stored procedures are enabled and supported by the database. 
                 //It's much faster than the LINQ implementation below 
 
-                //TODO We should not reference SqlParameter here. DAL should do it.
-                var pTotalRecords = new SqlParameter { ParameterName = "TotalRecords", Direction = ParameterDirection.Output, SqlDbType = SqlDbType.Int };
+                #region Use stored procedure
+                
+                var pTotalRecords = _dataProvider.GetParameter();
+                pTotalRecords.ParameterName = "TotalRecords";
+                pTotalRecords.Direction = ParameterDirection.Output;
+                pTotalRecords.DbType = DbType.Int32;
 
+                //pass specification identifiers as comma-delimited string
                 string commaSeparatedSpecIds = "";
                 if (filteredSpecs != null)
                 {
@@ -287,27 +290,101 @@ namespace Nop.Services.Catalog
                 //some databases don't support int.MaxValue
                 if (pageSize == int.MaxValue)
                     pageSize = int.MaxValue - 1;
+                
+                //prepare parameters
+                var pCategoryId = _dataProvider.GetParameter();
+                pCategoryId.ParameterName = "CategoryId";
+                pCategoryId.Value = categoryId;
+                pCategoryId.DbType = DbType.Int32;
 
+                var pManufacturerId = _dataProvider.GetParameter();
+                pManufacturerId.ParameterName = "ManufacturerId";
+                pManufacturerId.Value = manufacturerId;
+                pManufacturerId.DbType = DbType.Int32;
+
+                var pProductTagId = _dataProvider.GetParameter();
+                pProductTagId.ParameterName = "ProductTagId";
+                pProductTagId.Value = productTagId;
+                pProductTagId.DbType = DbType.Int32;
+
+                var pFeaturedProducts = _dataProvider.GetParameter();
+                pFeaturedProducts.ParameterName = "FeaturedProducts";
+                pFeaturedProducts.Value = featuredProducts.HasValue ? (object)featuredProducts.Value : DBNull.Value;
+                pFeaturedProducts.DbType = DbType.Boolean;
+
+                var pPriceMin = _dataProvider.GetParameter();
+                pPriceMin.ParameterName = "PriceMin";
+                pPriceMin.Value = priceMin.HasValue ? (object)priceMin.Value : DBNull.Value;
+                pPriceMin.DbType = DbType.Decimal;
+                
+                var pPriceMax = _dataProvider.GetParameter();
+                pPriceMax.ParameterName = "PriceMax";
+                pPriceMax.Value = priceMax.HasValue ? (object)priceMax.Value : DBNull.Value;
+                pPriceMax.DbType = DbType.Decimal;
+
+                var pKeywords = _dataProvider.GetParameter();
+                pKeywords.ParameterName = "Keywords";
+                pKeywords.Value = keywords != null ? (object)keywords : DBNull.Value;
+                pKeywords.DbType = DbType.String;
+
+                var pSearchDescriptions = _dataProvider.GetParameter();
+                pSearchDescriptions.ParameterName = "SearchDescriptions";
+                pSearchDescriptions.Value = searchDescriptions;
+                pSearchDescriptions.DbType = DbType.Boolean;
+
+                var pFilteredSpecs = _dataProvider.GetParameter();
+                pFilteredSpecs.ParameterName = "FilteredSpecs";
+                pFilteredSpecs.Value = commaSeparatedSpecIds != null ? (object)commaSeparatedSpecIds : DBNull.Value;
+                pFilteredSpecs.DbType = DbType.String;
+
+                var pLanguageId = _dataProvider.GetParameter();
+                pLanguageId.ParameterName = "LanguageId";
+                pLanguageId.Value = searchLocalizedValue ? languageId : 0;
+                pLanguageId.DbType = DbType.Int32;
+
+                var pOrderBy = _dataProvider.GetParameter();
+                pOrderBy.ParameterName = "OrderBy";
+                pOrderBy.Value = (int)orderBy;
+                pOrderBy.DbType = DbType.Int32;
+
+                var pPageIndex = _dataProvider.GetParameter();
+                pPageIndex.ParameterName = "PageIndex";
+                pPageIndex.Value = pageIndex;
+                pPageIndex.DbType = DbType.Int32;
+
+                var pPageSize = _dataProvider.GetParameter();
+                pPageSize.ParameterName = "PageSize";
+                pPageSize.Value = pageSize;
+                pPageSize.DbType = DbType.Int32;
+
+                var pShowHidden = _dataProvider.GetParameter();
+                pShowHidden.ParameterName = "ShowHidden";
+                pShowHidden.Value = showHidden;
+                pShowHidden.DbType = DbType.Boolean;
+
+                //invoke stored procedure
                 var products = _dbContext.ExecuteStoredProcedureList<Product>(
                     //"EXEC [ProductLoadAllPaged] @CategoryId, @ManufacturerId, @ProductTagId, @FeaturedProducts, @PriceMin, @PriceMax, @Keywords, @SearchDescriptions, @FilteredSpecs, @LanguageId, @OrderBy, @PageIndex, @PageSize, @ShowHidden, @TotalRecords",
                     "ProductLoadAllPaged",
-                    new SqlParameter { ParameterName = "CategoryId", Value = categoryId, SqlDbType = SqlDbType.Int },
-                    new SqlParameter { ParameterName = "ManufacturerId", Value = manufacturerId, SqlDbType = SqlDbType.Int },
-                    new SqlParameter { ParameterName = "ProductTagId", Value = productTagId, SqlDbType = SqlDbType.Int },
-                    new SqlParameter { ParameterName = "FeaturedProducts", Value = featuredProducts.HasValue ? (object)featuredProducts.Value : DBNull.Value, SqlDbType = SqlDbType.Bit },
-                    new SqlParameter { ParameterName = "PriceMin", Value = priceMin.HasValue ? (object)priceMin.Value : DBNull.Value, SqlDbType = SqlDbType.Decimal },
-                    new SqlParameter { ParameterName = "PriceMax", Value = priceMax.HasValue ? (object)priceMax.Value : DBNull.Value, SqlDbType = SqlDbType.Decimal },
-                    new SqlParameter { ParameterName = "Keywords", Value = keywords != null ? (object)keywords : DBNull.Value, SqlDbType = SqlDbType.NVarChar },
-                    new SqlParameter { ParameterName = "SearchDescriptions", Value = searchDescriptions, SqlDbType = SqlDbType.Bit },
-                    new SqlParameter { ParameterName = "FilteredSpecs", Value = commaSeparatedSpecIds != null ? (object)commaSeparatedSpecIds : DBNull.Value, SqlDbType = SqlDbType.NVarChar },
-                    new SqlParameter { ParameterName = "LanguageId", Value = searchLocalizedValue ? languageId : 0, SqlDbType = SqlDbType.Int },
-                    new SqlParameter { ParameterName = "OrderBy", Value = (int)orderBy, SqlDbType = SqlDbType.Int },
-                    new SqlParameter { ParameterName = "PageIndex", Value = pageIndex, SqlDbType = SqlDbType.Int },
-                    new SqlParameter { ParameterName = "PageSize", Value = pageSize, SqlDbType = SqlDbType.Int },
-                    new SqlParameter { ParameterName = "ShowHidden", Value = showHidden, SqlDbType = SqlDbType.Bit },
+                    pCategoryId,
+                    pManufacturerId,
+                    pProductTagId,
+                    pFeaturedProducts,
+                    pPriceMin,
+                    pPriceMax,
+                    pKeywords,
+                    pSearchDescriptions,
+                    pFilteredSpecs,
+                    pLanguageId,
+                    pOrderBy,
+                    pPageIndex,
+                    pPageSize,
+                    pShowHidden,
                     pTotalRecords);
                 int totalRecords = (pTotalRecords.Value != DBNull.Value) ? Convert.ToInt32(pTotalRecords.Value) : 0;
                 return new PagedList<Product>(products, pageIndex, pageSize, totalRecords);
+
+                #endregion
             }
             else
             {
@@ -946,7 +1023,7 @@ namespace Nop.Services.Catalog
         /// <summary>
         /// Gets a related product
         /// </summary>
-        /// <param name="relatedProductId">Related product identifer</param>
+        /// <param name="relatedProductId">Related product identifier</param>
         /// <returns>Related product</returns>
         public virtual RelatedProduct GetRelatedProductById(int relatedProductId)
         {
@@ -994,7 +1071,7 @@ namespace Nop.Services.Catalog
         /// <summary>
         /// Deletes a cross-sell product
         /// </summary>
-        /// <param name="crossSellProduct">Cross-sell identifer</param>
+        /// <param name="crossSellProduct">Cross-sell identifier</param>
         public virtual void DeleteCrossSellProduct(CrossSellProduct crossSellProduct)
         {
             if (crossSellProduct == null)
@@ -1028,7 +1105,7 @@ namespace Nop.Services.Catalog
         /// <summary>
         /// Gets a cross-sell product
         /// </summary>
-        /// <param name="crossSellProductId">Cross-sell product identifer</param>
+        /// <param name="crossSellProductId">Cross-sell product identifier</param>
         /// <returns>Cross-sell product</returns>
         public virtual CrossSellProduct GetCrossSellProductById(int crossSellProductId)
         {
@@ -1093,21 +1170,25 @@ namespace Nop.Services.Catalog
                     cartProductIds.Add(prodId);
             }
 
-            for (int i = 0; i < cart.Count; i++)
+            foreach (var sci in cart)
             {
-                var sci = cart[i];
                 var crossSells = GetCrossSellProductsByProductId1(sci.ProductVariant.ProductId);
                 foreach (var crossSell in crossSells)
                 {
-                    //TODO create a helper method to validate product availability (dates, quantity) etc
-
-
                     //validate that this product is not added to result yet
                     //validate that this product is not in the cart
                     if (result.Find(p => p.Id == crossSell.ProductId2) == null &&
                         !cartProductIds.Contains(crossSell.ProductId2))
                     {
                         var productToAdd = GetProductById(crossSell.ProductId2);
+                        //validate product
+                        if (productToAdd == null || productToAdd.Deleted || !productToAdd.Published)
+                            continue;
+                        //at least one variant should be valid and available
+                        if (GetProductVariantsByProductId(productToAdd.Id).Count == 0)
+                            continue;
+
+                        //add a product to result
                         result.Add(productToAdd);
                         if (result.Count >= numberOfProducts)
                             return result;
@@ -1151,28 +1232,6 @@ namespace Nop.Services.Catalog
             
             var tierPrice = _tierPriceRepository.GetById(tierPriceId);
             return tierPrice;
-        }
-
-        /// <summary>
-        /// Gets tier prices by product variant identifier
-        /// </summary>
-        /// <param name="productVariantId">Product variant identifier</param>
-        /// <returns>Tier price collection</returns>
-        public virtual IList<TierPrice> GetTierPricesByProductVariantId(int productVariantId)
-        {
-            if (productVariantId == 0)
-                return new List<TierPrice>();
-
-            string key = string.Format(TIERPRICES_ALLBYPRODUCTVARIANTID_KEY, productVariantId);
-            return _cacheManager.Get(key, () =>
-            {
-                var query = from tp in _tierPriceRepository.Table
-                            orderby tp.Quantity
-                            where tp.ProductVariantId == productVariantId
-                            select tp;
-                var tierPrices = query.ToList();
-                return tierPrices;
-            });
         }
 
         /// <summary>
@@ -1250,7 +1309,7 @@ namespace Nop.Services.Catalog
         /// <summary>
         /// Gets a product picture
         /// </summary>
-        /// <param name="productPictureId">Product picture identifer</param>
+        /// <param name="productPictureId">Product picture identifier</param>
         /// <returns>Product picture</returns>
         public virtual ProductPicture GetProductPictureById(int productPictureId)
         {

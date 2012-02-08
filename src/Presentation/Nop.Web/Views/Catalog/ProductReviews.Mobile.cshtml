@@ -1,7 +1,7 @@
 ﻿@model Nop.Web.Models.Catalog.ProductReviewsModel
 @using Nop.Web.Framework;
 @{
-    Layout = "~/Views/Shared/_MobileRoot.cshtml";
+    Layout = "~/Views/Shared/_Root.cshtml";
 
     //title
     Html.AddTitleParts(T("PageTitle.ProductReviews").Text);
@@ -22,15 +22,16 @@
             @using (Html.BeginForm())
             {
                 <strong>@T("Reviews.Write")</strong>
-                @Html.LabelFor(model => model.AddProductReview.Title)
-                @Html.TextBoxFor(model => model.AddProductReview.Title, Model.AddProductReview.CanCurrentCustomerLeaveReview ? null : (object)(new { disabled = "disabled" }))
-                @Html.ValidationMessageFor(model => model.AddProductReview.Title)
-                        
-                @Html.LabelFor(model => model.AddProductReview.ReviewText)
-                       
-                @Html.TextAreaFor(model => model.AddProductReview.ReviewText, Model.AddProductReview.CanCurrentCustomerLeaveReview ? null : (object)(new { disabled = "disabled" }))
-                @Html.ValidationMessageFor(model => model.AddProductReview.ReviewText)
-                        
+                <div>
+                    @Html.LabelFor(model => model.AddProductReview.Title)
+                    @Html.TextBoxFor(model => model.AddProductReview.Title, Model.AddProductReview.CanCurrentCustomerLeaveReview ? null : (object)(new { disabled = "disabled" }))
+                    @Html.ValidationMessageFor(model => model.AddProductReview.Title)
+                </div>
+                <div>
+                    @Html.LabelFor(model => model.AddProductReview.ReviewText)
+                    @Html.TextAreaFor(model => model.AddProductReview.ReviewText, Model.AddProductReview.CanCurrentCustomerLeaveReview ? null : (object)(new { disabled = "disabled" }))
+                    @Html.ValidationMessageFor(model => model.AddProductReview.ReviewText)
+                </div>   
                 
                 <div data-role="fieldcontain">
                     <fieldset data-role="controlgroup" data-type="horizontal">
@@ -45,7 +46,7 @@
                     </fieldset>
                 </div>
                 <div class="message-error">
-                    @Html.ValidationSummary(false)
+                    @Html.ValidationSummary(true)
                 </div>                    
                 <input type="submit" id="add-review" name="add-review" value="@T("Reviews.SubmitButton")" />
                     

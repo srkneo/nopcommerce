@@ -42,7 +42,7 @@ namespace Nop.Services.Catalog
         /// <param name="manufacturerRepository">Category repository</param>
         /// <param name="productManufacturerRepository">ProductCategory repository</param>
         /// <param name="productRepository">Product repository</param>
-        /// <param name="eventPublisher"></param>
+        /// <param name="eventPublisher">Event published</param>
         public ManufacturerService(ICacheManager cacheManager,
             IRepository<Manufacturer> manufacturerRepository,
             IRepository<ProductManufacturer> productManufacturerRepository,
@@ -234,7 +234,7 @@ namespace Nop.Services.Catalog
         }
         
         /// <summary>
-        /// Get a total number of featured products by manufacturer identifer
+        /// Get a total number of featured products by manufacturer identifier
         /// </summary>
         /// <param name="manufacturerId">Manufacturer identifier</param>
         /// <returns>Number of featured products</returns>

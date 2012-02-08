@@ -337,6 +337,7 @@ namespace Nop.Web.Controllers
             dirsToCheck.Add(rootDir + "content");
             dirsToCheck.Add(rootDir + "content\\images");
             dirsToCheck.Add(rootDir + "content\\images\\thumbs");
+            dirsToCheck.Add(rootDir + "content\\images\\uploaded");
             dirsToCheck.Add(rootDir + "content\\files\\exportimport");
             dirsToCheck.Add(rootDir + "plugins");
             dirsToCheck.Add(rootDir + "plugins\\bin");
@@ -490,7 +491,7 @@ namespace Nop.Web.Controllers
             
             //restart application
             var webHelper = EngineContext.Current.Resolve<IWebHelper>();
-            webHelper.RestartAppDomain("~/Install/Index");
+            webHelper.RestartAppDomain();
 
             //Redirect to home page
             return RedirectToAction("Index", "Home");

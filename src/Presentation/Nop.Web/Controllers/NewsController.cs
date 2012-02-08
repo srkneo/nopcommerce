@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel.Syndication;
-using System.Text;
 using System.Web.Mvc;
-using System.Xml;
 using Nop.Core;
 using Nop.Core.Domain;
 using Nop.Core.Domain.Customers;
@@ -76,7 +74,7 @@ namespace Nop.Web.Controllers
         #region Utilities
 
         [NonAction]
-        private void PrepareNewsItemModel(NewsItemModel model, NewsItem newsItem, bool prepareComments)
+        protected void PrepareNewsItemModel(NewsItemModel model, NewsItem newsItem, bool prepareComments)
         {
             if (newsItem == null)
                 throw new ArgumentNullException("newsItem");

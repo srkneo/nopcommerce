@@ -5,15 +5,14 @@ using System.Text;
 using System.Web.Mvc;
 using Nop.Admin.Models.Messages;
 using Nop.Core;
+using Nop.Core.Domain.Common;
 using Nop.Core.Domain.Messages;
 using Nop.Services.Helpers;
 using Nop.Services.Localization;
 using Nop.Services.Messages;
-using Nop.Web.Framework;
+using Nop.Services.Security;
 using Nop.Web.Framework.Controllers;
 using Telerik.Web.Mvc;
-using Nop.Services.Security;
-using Nop.Core.Domain.Common;
 
 namespace Nop.Admin.Controllers
 {
@@ -94,6 +93,13 @@ namespace Nop.Admin.Controllers
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageNewsletterSubscribers))
                 return AccessDeniedView();
             
+            if (!ModelState.IsValid)
+            {
+                //display the first model error
+                var modelStateErrors = this.ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage);
+                return Content(modelStateErrors.FirstOrDefault());
+            }
+
             var subscription = _newsLetterSubscriptionService.GetNewsLetterSubscriptionById(model.Id);
             subscription.Email = model.Email;
             subscription.Active = model.Active;
@@ -109,6 +115,8 @@ namespace Nop.Admin.Controllers
                 return AccessDeniedView();
 
             var subscription = _newsLetterSubscriptionService.GetNewsLetterSubscriptionById(id);
+            if (subscription == null)
+                throw new ArgumentException("No subscription found with the specified id");
             _newsLetterSubscriptionService.DeleteNewsLetterSubscription(subscription);
 
             return SubscriptionList(command, new NewsLetterSubscriptionListModel());

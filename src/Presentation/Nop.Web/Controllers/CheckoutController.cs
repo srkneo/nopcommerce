@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -104,7 +103,7 @@ namespace Nop.Web.Controllers
         #region Utilities
 
         [NonAction]
-        private bool IsPaymentWorkflowRequired(IList<ShoppingCartItem> cart, bool ignoreRewardPoints = false)
+        protected bool IsPaymentWorkflowRequired(IList<ShoppingCartItem> cart, bool ignoreRewardPoints = false)
         {
             bool result = true;
 
@@ -116,7 +115,7 @@ namespace Nop.Web.Controllers
         }
 
         [NonAction]
-        private CheckoutBillingAddressModel PrepareBillingAddressModel(int? selectedCountryId = null)
+        protected CheckoutBillingAddressModel PrepareBillingAddressModel(int? selectedCountryId = null)
         {
             var model = new CheckoutBillingAddressModel();
             //existing addresses
@@ -144,7 +143,7 @@ namespace Nop.Web.Controllers
         }
 
         [NonAction]
-        private CheckoutShippingAddressModel PrepareShippingAddressModel(int? selectedCountryId = null)
+        protected CheckoutShippingAddressModel PrepareShippingAddressModel(int? selectedCountryId = null)
         {
             var model = new CheckoutShippingAddressModel();
             //existing addresses
@@ -172,7 +171,7 @@ namespace Nop.Web.Controllers
         }
 
         [NonAction]
-        private CheckoutShippingMethodModel PrepareShippingMethodModel(IList<ShoppingCartItem> cart)
+        protected CheckoutShippingMethodModel PrepareShippingMethodModel(IList<ShoppingCartItem> cart)
         {
             var model = new CheckoutShippingMethodModel();
 
@@ -188,17 +187,12 @@ namespace Nop.Web.Controllers
                         ShippingRateComputationMethodSystemName = shippingOption.ShippingRateComputationMethodSystemName,
                     };
 
-                    //calculate discounted and taxed rate
+                    //adjust rate
                     Discount appliedDiscount = null;
-                    decimal shippingTotalWithoutDiscount = shippingOption.Rate;
-                    decimal discountAmount = _orderTotalCalculationService.GetShippingDiscount(_workContext.CurrentCustomer,
-                        shippingTotalWithoutDiscount, out appliedDiscount);
-                    decimal shippingTotalWithDiscount = shippingTotalWithoutDiscount - discountAmount;
-                    if (shippingTotalWithDiscount < decimal.Zero)
-                        shippingTotalWithDiscount = decimal.Zero;
-                    shippingTotalWithDiscount = Math.Round(shippingTotalWithDiscount, 2);
+                    var shippingTotal = _orderTotalCalculationService.AdjustShippingRate(
+                        shippingOption.Rate, cart, out appliedDiscount);
 
-                    decimal rateBase = _taxService.GetShippingPrice(shippingTotalWithDiscount, _workContext.CurrentCustomer);
+                    decimal rateBase = _taxService.GetShippingPrice(shippingTotal, _workContext.CurrentCustomer);
                     decimal rate = _currencyService.ConvertFromPrimaryStoreCurrency(rateBase, _workContext.WorkingCurrency);
                     soModel.Fee = _priceFormatter.FormatShippingPrice(rate, true);
 
@@ -213,7 +207,7 @@ namespace Nop.Web.Controllers
         }
 
         [NonAction]
-        private CheckoutPaymentMethodModel PreparePaymentMethodModel(IList<ShoppingCartItem> cart)
+        protected CheckoutPaymentMethodModel PreparePaymentMethodModel(IList<ShoppingCartItem> cart)
         {
             var model = new CheckoutPaymentMethodModel();
 
@@ -259,7 +253,7 @@ namespace Nop.Web.Controllers
         }
 
         [NonAction]
-        private CheckoutPaymentInfoModel PreparePaymentInfoModel(IPaymentMethod paymentMethod)
+        protected CheckoutPaymentInfoModel PreparePaymentInfoModel(IPaymentMethod paymentMethod)
         {
             var model = new CheckoutPaymentInfoModel();
             string actionName;
@@ -274,7 +268,7 @@ namespace Nop.Web.Controllers
         }
 
         [NonAction]
-        private CheckoutConfirmModel PrepareConfirmOrderModel(IList<ShoppingCartItem> cart)
+        protected CheckoutConfirmModel PrepareConfirmOrderModel(IList<ShoppingCartItem> cart)
         {
             var model = new CheckoutConfirmModel();
             //min order amount validation
@@ -288,7 +282,7 @@ namespace Nop.Web.Controllers
         }
 
         [NonAction]
-        private bool UseOnePageCheckout()
+        protected bool UseOnePageCheckout()
         {
             bool useMobileDevice = _mobileDeviceHelper.IsMobileDevice(_httpContext)
                 && _mobileDeviceHelper.MobileDevicesSupported()
@@ -773,7 +767,17 @@ namespace Nop.Web.Controllers
                     };
                     _paymentService.PostProcessPayment(postProcessPaymentRequest);
 
-                    return RedirectToRoute("CheckoutCompleted");
+                    if (this.Response.IsRequestBeingRedirected)
+                    {
+                        //redirection has been done in PostProcessPayment
+                        return Content("Redirected");
+                    }
+                    else
+                    {
+                        //if no redirection has been done (to a third-party payment page)
+                        //theoretically it's not possible
+                        return RedirectToRoute("CheckoutCompleted");
+                    }
                 }
                 else
                 {
@@ -1429,9 +1433,20 @@ namespace Nop.Web.Controllers
                 {
                     Order = order
                 };
+
                 _paymentService.PostProcessPayment(postProcessPaymentRequest);
 
-                return RedirectToRoute("CheckoutCompleted");
+                if (this.Response.IsRequestBeingRedirected)
+                {
+                    //redirection has been done in PostProcessPayment
+                    return Content("Redirected");
+                }
+                else
+                {
+                    //if no redirection has been done (to a third-party payment page)
+                    //theoretically it's not possible
+                    return RedirectToRoute("CheckoutCompleted");
+                }
             }
             catch (Exception exc)
             {

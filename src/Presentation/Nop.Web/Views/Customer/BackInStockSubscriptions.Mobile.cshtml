@@ -5,7 +5,7 @@
 @using Nop.Web.Models.Customer;
 @using MvcContrib.UI.Grid;
 @{
-    Layout = "~/Views/Shared/_MobileRoot.cshtml";
+    Layout = "~/Views/Shared/_Root.cshtml";
 
     Html.AddTitleParts(T("PageTitle.BackInStockSubscriptions").Text);
 }
@@ -30,7 +30,7 @@
                                 <div>
                                     @Html.RouteLink(biss.ProductName, "Product", new { productId = biss.ProductId, SeName = biss.SeName })
                                 </div>
-                                <div class="button">
+                                <div class="buttons">
                                     <a href="@Url.RouteUrl("DeleteBackInStockSubscription", new { subscriptionId = @biss.Id })" data-role="button">@T("Common.Delete")</a>
                                 </div>
                             </div>

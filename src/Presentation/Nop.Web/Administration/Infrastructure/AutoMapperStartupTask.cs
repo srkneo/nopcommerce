@@ -220,7 +220,7 @@ namespace Nop.Admin.Infrastructure
             Mapper.CreateMap<ActivityLogTypeModel, ActivityLogType>()
                 .ForMember(dest => dest.SystemKeyword, mo => mo.Ignore())
                 .ForMember(dest => dest.ActivityLog, mo => mo.Ignore());
-            Mapper.CreateMap<ActivityLogType, ActivityLogType>();
+            Mapper.CreateMap<ActivityLogType, ActivityLogTypeModel>();
             Mapper.CreateMap<ActivityLog, ActivityLogModel>()
                 .ForMember(dest => dest.ActivityLogTypeName, mo => mo.MapFrom(src => src.ActivityLogType.Name))
                 .ForMember(dest => dest.CustomerName, mo => mo.MapFrom(src => src.Customer.Email))
@@ -468,7 +468,8 @@ namespace Nop.Admin.Infrastructure
                 .ForMember(dest => dest.EnsureWeHaveFilterableSpecAttributes, mo => mo.Ignore())
                 .ForMember(dest => dest.DefaultCategoryPageSizeOptions, mo => mo.Ignore())
                 .ForMember(dest => dest.DefaultManufacturerPageSizeOptions, mo => mo.Ignore())
-                .ForMember(dest => dest.MaximumBackInStockSubscriptions, mo => mo.Ignore());
+                .ForMember(dest => dest.MaximumBackInStockSubscriptions, mo => mo.Ignore())
+                .ForMember(dest => dest.DisplayTierPricesWithDiscounts, mo => mo.Ignore());
             Mapper.CreateMap<RewardPointsSettings, RewardPointsSettingsModel>()
                 .ForMember(dest => dest.PrimaryStoreCurrencyCode, mo => mo.Ignore());
             Mapper.CreateMap<RewardPointsSettingsModel, RewardPointsSettings>();

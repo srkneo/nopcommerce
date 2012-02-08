@@ -6,7 +6,7 @@
 @using Nop.Web.Framework.UI;
 @using Nop.Web.Models.Catalog;
 @{
-    Layout = "~/Views/Shared/_MobileRoot.cshtml";
+    Layout = "~/Views/Shared/_Root.cshtml";
 
     //title
     Html.AddTitleParts(!String.IsNullOrEmpty(Model.MetaTitle) ? Model.MetaTitle : Model.Name);
@@ -24,7 +24,6 @@
 }
 @if (Model.DisplayProductAddedMessage)
 {
-    //TODO display notification in pop-up window for mobile devices
     <script type="text/javascript">
         $(document).ready(function () {
             alert('@T("Products.ProductHasBeenAddedToTheCart").Text');
@@ -45,7 +44,7 @@
                     @if (errors.Count > 0)
                     {
                         //display errors   
-                        <span class="error">
+                        <span class="message-error">
                             @for (int i = 0; i < errors.Count; i++)
                             {
                                 @errors[i]

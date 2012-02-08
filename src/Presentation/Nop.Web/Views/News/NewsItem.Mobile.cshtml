@@ -1,6 +1,6 @@
 ﻿@model Nop.Web.Models.News.NewsItemModel
 @{
-    Layout = "~/Views/Shared/_MobileRoot.cshtml";
+    Layout = "~/Views/Shared/_Root.cshtml";
 
     //title
     Html.AddTitleParts(Model.Title);
@@ -33,24 +33,27 @@
                             @T("News.Comments.LeaveYourComment")
                         </strong>
                     </div>
-                    @Html.LabelFor(model => model.AddNewComment.CommentTitle)
-                    @Html.TextBoxFor(model => model.AddNewComment.CommentTitle)
-                    @Html.ValidationMessageFor(model => model.AddNewComment.CommentTitle)
-                    @Html.LabelFor(model => model.AddNewComment.CommentText)
-                    @Html.TextAreaFor(model => model.AddNewComment.CommentText)
-                    @Html.ValidationMessageFor(model => model.AddNewComment.CommentText)
-                    <div class="message-error">
-                        @{
-                    string result = TempData["nop.news.addcomment.result"] as string;
-                        }
-                        @if (!String.IsNullOrEmpty(result))
-                        {
-                            @result
-                            <br />
-                        }
-                        @Html.ValidationSummary(false)
+                    <div>
+                        @Html.LabelFor(model => model.AddNewComment.CommentTitle)
+                        @Html.TextBoxFor(model => model.AddNewComment.CommentTitle)
+                        @Html.ValidationMessageFor(model => model.AddNewComment.CommentTitle)
                     </div>
-                    <div class="button">
+                    <div>
+                        @Html.LabelFor(model => model.AddNewComment.CommentText)
+                        @Html.TextAreaFor(model => model.AddNewComment.CommentText)
+                        @Html.ValidationMessageFor(model => model.AddNewComment.CommentText)
+                    </div>
+                    string result = TempData["nop.news.addcomment.result"] as string;
+                    if (!String.IsNullOrEmpty(result))
+                    {
+                    <div class="result">
+                        @result
+                    </div>
+                    }
+                    <div class="message-error">
+                        @Html.ValidationSummary(true)
+                    </div>
+                    <div class="buttons">
                         <input type="submit" id="add-comment" name="add-comment" value="@T("News.Comments.SubmitButton")" />
                     </div>
                        

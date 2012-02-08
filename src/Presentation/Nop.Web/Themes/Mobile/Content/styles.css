@@ -15,10 +15,13 @@
 .clear{border:medium none;clear:both;float:none;font-size:0;height:0;line-height:0;}
 .nobr{white-space:nowrap!important;}
 .message-error{font-family:Verdana, Arial, sans-serif;font-weight:700;color:red;}
+.validation-summary-errors{font-family:Verdana, Arial, sans-serif;font-weight:700;color:red;}
+.field-validation-error{font-family:Verdana, Arial, sans-serif;font-weight:700;color:red;}
 .changedevice{text-align:center;}
 .changedevice a{text-decoration:none;}
 .currencyselector,.taxdisplaytypeselector,.languageselector{}
 .currencyselector .title,.taxdisplaytypeselector .title,.languageselector .title{font-weight:700;}
+.homepage-logo {}
 /* PAGER */
 .pager{text-align:center;}
 .pager a{font-size:1em;}
@@ -52,7 +55,6 @@
 .order-summary-content .cart .cart-item-row .totalprice,.wishlist-content .cart .cart-item-row .totalprice{color:Green;}
 .order-summary-content .cart .cart-item-row .remove,.wishlist-content .cart .cart-item-row .remove{}
 .order-summary-content .cart .cart-item-row .shoppingcartquantitytext,.wishlist-content .cart .cart-item-row .shoppingcartquantitytext{width:100px;}
-.order-summary-content .warning-box .warning-text,.wishlist-content .warning-box .warning-text{color:Red;}
 .order-summary-content .cart-footer{}
 .order-summary-content .total-info{margin:0;}
 .cart_total_left{text-align:left;vertical-align:top;font-weight:700;color:#353434;}
@@ -81,25 +83,25 @@
 .checkout-data .enter-address-title{font-weight:700;clear:both;}
 .checkout-data .enter-address{}
 .checkout-data .enter-address .enter-address-body{text-align:left;margin:10px;}
-.checkout-data .enter-address .button{margin:10px;text-align:left;}
+.checkout-data .enter-address .buttons{margin:10px;text-align:left;}
 .checkout-data .enter-address .the-same-address{text-align:left;margin:10px;}
 .checkout-data .shipping-options{text-align:left;height:auto;}
 .checkout-data .shipping-options .shipping-option-item{text-align:left;vertical-align:text-top;}
 .checkout-data .shipping-options .shipping-option-item .option-name{}
 .checkout-data .shipping-options .shipping-option-item .option-description{padding:5px 0 5px 16px;}
 .checkout-data .shipping-options .select-button{text-align:left;}
-.checkout-data .shipping-options .error-block{text-align:left;}
+.checkout-data .shipping-options .message-error{text-align:left;}
 .checkout-data .userewardpoints{margin:0;padding:10px;background:#F7F5E8;border:dotted 1px #d3d3d3;}
 .checkout-data .payment-methods{text-align:left;height:auto;}
 .checkout-data .payment-methods .payment-method-item{text-align:left;vertical-align:text-top;}
 .checkout-data .payment-methods .select-button{text-align:left;}
-.checkout-data .payment-methods .error-block{text-align:left;}
+.checkout-data .payment-methods .message-error{text-align:left;}
 .checkout-data .payment-info{text-align:left;height:auto;}
 .checkout-data .payment-info .body{text-align:left;vertical-align:text-top;}
 .checkout-data .payment-info .select-button{text-align:left;}
 .checkout-data .confirm-order{text-align:left;height:auto;}
 .checkout-data .confirm-order .select-button{text-align:left;}
-.checkout-data .confirm-order .error-block{text-align:left;}
+.checkout-data .confirm-order .message-error{text-align:left;}
 .checkout-data .order-completed{text-align:left;height:auto;}
 .checkout-data .order-completed .body{text-align:left;vertical-align:text-top;}
 .checkout-data .order-completed .select-button{text-align:left;}
@@ -156,12 +158,12 @@
 .registration-page .body{margin:0;padding:0;background-color:inherit;}
 .registration-page .section-title{padding:10px;font-weight:700;clear:both;}
 .registration-page .section-body{text-align:left;padding:10px;border:1px solid #d7d7d7;height:auto;}
-.registration-page .button{float:right;margin-bottom:5px;margin-top:5px;text-align:center;clear:both;}
+.registration-page .buttons{float:right;margin-bottom:5px;margin-top:5px;text-align:center;clear:both;}
 .registration-page .required{color:red;}
 .password-recovery-page,newsletter-page{}
 .password-recovery-page .body,newsletter-page .body{margin:0;padding:0;background-color:inherit;}
 .customer-avatar{padding:10px;}
-.customer-avatar .button{margin:5px 0;}
+.customer-avatar .buttons{margin:5px 0;}
 .account-activation-page{}
 .account-activation-page .body{margin:0;padding:0;background-color:inherit;}
 .address-edit-page{}
@@ -172,7 +174,7 @@
 .search-panel .search-results .result{font-weight:700;}
 .search-panel .warning{text-decoration:underline;}
 .contact-form{}
-.contact-form .button{text-align:right;}
+.contact-form .buttons{text-align:right;}
 .contact-form .send-email{}
 .newslist{}
 .newslist .newsitems{margin:0 5px;padding:0;}
@@ -185,11 +187,12 @@
 .newsitem .newsdate{font-style:italic;}
 .newsitem .newsbody{margin:0;padding:0;}
 .newsitem .newsbody a{text-decoration:underline;}
+.newsitem .result{font-family:Verdana, Arial, sans-serif;font-weight:700;color:red;}
 .newscomments{}
 .newscomments .title{padding:10px;font-weight:700;text-transform:uppercase;font-size:1.1em;color:#3a3a3a;}
 .newscomments .newcomment{margin:0;padding:0;}
 .newscomments .newcomment .leavetitle{padding:0 10px 10px 0;font-weight:700;font-size:1.1em;color:#3a3a3a;}
-.newscomments .newcomment .button{}
+.newscomments .newcomment .buttons{}
 .newscomments .commentlist{}
 .newscomment{font-weight:normal;}
 .newscomment .commentinfo{}
@@ -215,11 +218,12 @@
 .blogpost .postdate{color:#9a9a9a;font-style:italic;}
 .blogpost .postbody,.blogpost .tags{margin:0;padding:0;}
 .blogpost .postbody a,.blogpost .tags a{text-decoration:underline;}
+.blogpost .result{font-family:Verdana, Arial, sans-serif;font-weight:700;color:red;}
 .blogcomments{}
 .blogcomments .title{padding:10px;font-weight:700;text-transform:uppercase;font-size:1.1em;color:#3a3a3a;}
 .blogcomments .newcomment{margin:0;padding:0;}
 .blogcomments .newcomment .leavetitle{padding:0 10px 10px 0;font-weight:700;font-size:1.1em;color:#3a3a3a;}
-.blogcomments .newcomment .button{}
+.blogcomments .newcomment .buttons{}
 .blogcomments .commentlist{}
 .blogcomment{font-weight:normal;}
 .blogcomment .commentinfo{}
@@ -233,9 +237,9 @@
 .blogcomment .commentcontent .commentbody{}
 .blogcomment .commentcontent .commentbody a{text-decoration:underline;}
 .blogcomment .commentcontent .commentbody .commenttext{}
-.emailafriend-box{margin:0;padding:0;}
-.emailafriend-box .send-email{}
-.emailafriend-box .send-email .product{font-weight:700;}
+.emailafriend-page{margin:0;padding:0;}
+.emailafriend-page .send-email{}
+.emailafriend-page .send-email .product{font-weight:700;}
 .recently-added-products{margin:0;padding:0;}
 .recently-viewed-products{margin:0;padding:0;}
 /* CUSTOMER ACCOUNT */
@@ -244,7 +248,7 @@
 .customer-info-box{margin:0;padding:0;}
 .customer-info-box .section-title{padding:10px;font-weight:700;clear:both;}
 .customer-info-box .section-body{text-align:left;padding:10px;border:1px solid #d7d7d7;height:auto;}
-.customer-info-box .button{margin-bottom:5px;margin-top:5px;text-align:center;}
+.customer-info-box .buttons{margin-bottom:5px;margin-top:5px;text-align:center;}
 .customer-addresses{margin:0;padding:0px;background-color:inherit;}
 .customer-addresses .section-title{padding:10px;font-weight:700;clear:both;}
 .customer-addresses .address-list{}
@@ -259,13 +263,14 @@
 .customer-orders .order-list .order-item{font-weight:normal}
 .customer-orders .order-list .order-item .buttons{}
 .customer-pass-recovery{padding:0px;background-color:inherit;}
+.customer-pass-recovery .result{font-family:Verdana, Arial, sans-serif;font-weight:700;color:red;}
 .customer-rewardpoints{margin:0;padding:0px;background-color:inherit;}
 .customer-rewardpoints .section-title{padding:10px;font-weight:700;clear:both;}
 .customer-rewardpoints .reward-points-overview{}
 .customer-rewardpoints .reward-points-history{}
 .customer-rewardpoints .reward-points-history .item{font-weight:normal;}
 .backinstock-subscriptions-box{margin:0;padding:0;}
-.backinstock-subscriptions-box .button{}
+.backinstock-subscriptions-box .buttons{}
 .bissgridpagerstyle{padding:5px;background:#eee;vertical-align:middle;}
 .bissgridpagerstyle span{font-weight:700;font-size:1.1em;}
 
@@ -320,7 +325,6 @@
 .product-variant-line .attributes{}
 .product-variant-line .stock,.product-variant-line .sku,.product-variant-line .manufacturerpartnumber,.product-variant-line .gtin{}
 .product-variant-line .giftCard{}
-.product-details-page .error{font-weight:700;color:Red;}
 .product-essential .price{margin-top:15px;margin-bottom:15px;}
 .product-essential .price .productPrice{color:green;}
 .product-essential .price .oldProductPrice{color:red;text-decoration:line-through;}
@@ -342,6 +346,7 @@
 .tier-prices .prices .item-table .item-price{color:Green;}
 .tier-prices .prices .header-table td{border-bottom:solid 3px #d7d7d7;padding-top:3px;padding-bottom:3px;font-weight:700;}
 .tier-prices .prices .prices-table .field-header{font-weight:700;text-align:center;}
+.home-page-product-grid .title{font-size:.9em;font-weight:700;text-transform:uppercase;padding:7px 10px;color:#333;}
 /* PRIVATE MESSAGES */
 .sendpmbox{}
 .sendpmbox .pmlinkbutton{}
@@ -381,6 +386,8 @@
 /* FORUM PAGE */
 .forum{}
 .forum .forumheader{}
+.forum .forumheader .forumoptions,.forumfooter .forumoptions{}
+.forum .forumheader .forumoptions a,.forumfooter .forumoptions a{}
 .forum .top .foruminfo{}
 .forum .top .foruminfo .forumname{font-weight:700;font-size:1.2em;}
 .forum .top .foruminfo .forumdescription{color:#555;}
@@ -388,6 +395,7 @@
 .forum .top .actions .newtopic{}
 .forum .topics{}
 .forum .topics .topic {vertical-align:middle;padding-left:3px;min-height:40px;}
+.forum .topics .topic a{text-decoration:none;}
 .forum .topics .topic .topicname{font-weight:700;color:#555;float:left;margin:11px 0 0 7px;}
 .forum .topics .topic .replies{font-size:.8em;color:#555;float:right;margin:11px 0 0 7px;}
 .forum .topics .topic .post{float:left;width:36px;height:36px;background:url(images/ico-forum-post.gif) no-repeat 40% 40%;}
@@ -395,7 +403,7 @@
 .forum .pager{padding:5px 3px 5px 0;}
 .forum-subscriptions-box{}
 .forum-subscriptions-box .item{font-weight:normal;}
-.forum-subscriptions-box .button{}
+.forum-subscriptions-box .buttons{}
 /* FORUM TOPIC EDIT */
 .postedit{}
 .postedit .wrapper{}
