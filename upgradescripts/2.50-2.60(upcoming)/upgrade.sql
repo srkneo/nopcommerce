@@ -758,6 +758,60 @@ set @resources='
   <LocaleResource Name="Products.Tags.All">
     <Value>All product tags</Value>
   </LocaleResource>
+  <LocaleResource Name="Admin.Orders.Fields.OrderWeight">
+    <Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Orders.Shipments.Products.ItemWeight">
+    <Value>Item weight</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Orders.Shipments.Products.ItemDimensions">
+    <Value>Item dimensions</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Orders.Products.SKU">
+    <Value>SKU</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Products.Variants.Fields.AllowedQuantities">
+    <Value>Allowed quantities</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Catalog.Products.Variants.Fields.AllowedQuantities.Hint">
+    <Value>Enter a comma separated list of quantities you want this product variant to be restricted to. Instead of a quantity textbox that allows them to enter any quantity, they will receive a dropdown list of the values you enter here.</Value>
+  </LocaleResource>
+  <LocaleResource Name="ShoppingCart.AllowedQuantities">
+    <Value>Allowed quantities for this product: {0}</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.System.Maintenance.DeleteAbandonedCarts">
+    <Value>Deleting abondoned shopping carts</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.System.Maintenance.DeleteAbandonedCarts.OlderThan">
+    <Value>Created before</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.System.Maintenance.DeleteAbandonedCarts.OlderThan.Hint">
+    <Value>Delete shipping cart items created before the specified date.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.System.Maintenance.DeleteAbandonedCarts.TotalDeleted">
+    <Value>{0} items were deleted</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Configuration.Settings.Catalog.ShowProductImagesInSearchAutoComplete">
+    <Value>Show product images in autocomplete box</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Configuration.Settings.Catalog.ShowProductImagesInSearchAutoComplete.Hint">
+    <Value>Determines whether product images should be displayed in the autocomplete search box.</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Configuration.ActivityLog.ActivityLog.Fields.CustomerEmail.Hint">
+    <Value></Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Customers.Customers.ActivityLog">
+    <Value>Activity Log</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Customers.Customers.ActivityLog.ActivityLogType">
+    <Value>Activity Log Type</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Customers.Customers.ActivityLog.Comment">
+    <Value>Comment</Value>
+  </LocaleResource>
+  <LocaleResource Name="Admin.Customers.Customers.ActivityLog.CreatedOn">
+    <Value>Created on</Value>
+  </LocaleResource>
 </Language>
 '
 
@@ -2704,5 +2758,42 @@ IF NOT EXISTS (SELECT 1 FROM [Setting] WHERE [name] = N'catalogsettings.manufact
 BEGIN
 	INSERT [Setting] ([Name], [Value])
 	VALUES (N'catalogsettings.manufacturersblockitemstodisplay', N'5')
+END
+GO
+
+IF EXISTS (SELECT 1 FROM syscolumns WHERE id=object_id('[Order]') and NAME='OrderWeight')
+BEGIN
+	ALTER TABLE [Order]
+	DROP COLUMN [OrderWeight]
+END
+GO
+
+
+--Add 'AllowedQuantities' column to [ProductVariant] table
+IF NOT EXISTS (SELECT 1 FROM syscolumns WHERE id=object_id('[ProductVariant]') and NAME='AllowedQuantities')
+BEGIN
+	ALTER TABLE [ProductVariant]
+	ADD [AllowedQuantities] nvarchar(1000) NULL
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [Setting] WHERE [name] = N'mediasettings.autocompletesearchthumbpicturesize')
+BEGIN
+	INSERT [Setting] ([Name], [Value])
+	VALUES (N'mediasettings.autocompletesearchthumbpicturesize', N'20')
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [Setting] WHERE [name] = N'catalogsettings.showproductimagesinsearchautocomplete')
+BEGIN
+	INSERT [Setting] ([Name], [Value])
+	VALUES (N'catalogsettings.showproductimagesinsearchautocomplete', N'false')
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [Setting] WHERE [name] = N'frooglesettings.passshippinginfo')
+BEGIN
+	INSERT [Setting] ([Name], [Value])
+	VALUES (N'frooglesettings.passshippinginfo', N'false')
 END
 GO

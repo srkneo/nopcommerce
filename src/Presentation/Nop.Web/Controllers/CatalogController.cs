@@ -679,6 +679,16 @@ namespace Nop.Web.Controllers
                     _priceFormatter.FormatPrice(minimumCustomerEnteredPrice, false, false),
                     _priceFormatter.FormatPrice(maximumCustomerEnteredPrice, false, false));
             }
+            //allowed quantities
+            var allowedQuantities = productVariant.ParseAllowedQuatities();
+            foreach (var qty in allowedQuantities)
+            {
+                model.AddToCart.AllowedQuantities.Add(new SelectListItem()
+                {
+                    Text = qty.ToString(),
+                    Value = qty.ToString()
+                });
+            }
 
             #endregion 
             
@@ -1599,6 +1609,19 @@ namespace Nop.Web.Controllers
 
                     //entered quantity
                     productVariantModel.AddToCart.EnteredQuantity = quantity;
+                    //allowed quantities
+                    var allowedQuantities = productVariant.ParseAllowedQuatities();
+                    if (allowedQuantities.Length > 0)
+                    {
+                        var allowedQuantitySelectedItem = productVariantModel.AddToCart.AllowedQuantities
+                            .Where(x => x.Text == quantity.ToString())
+                            .FirstOrDefault();
+                        if (allowedQuantitySelectedItem != null)
+                        {
+                            allowedQuantitySelectedItem.Selected = true;
+                        }
+                    }
+
                     //customer entered price
                     if (productVariantModel.AddToCart.CustomerEntersPrice)
                     {
@@ -2881,6 +2904,7 @@ namespace Nop.Web.Controllers
             var model = new SearchBoxModel()
             {
                 AutoCompleteEnabled = _catalogSettings.ProductSearchAutoCompleteEnabled,
+                ShowProductImagesInSearchAutoComplete = _catalogSettings.ShowProductImagesInSearchAutoComplete,
                 SearchTermMinimumLength = _catalogSettings.ProductSearchTermMinimumLength
             };
             return PartialView(model);
@@ -2900,9 +2924,15 @@ namespace Nop.Web.Controllers
                 term, false, _workContext.WorkingLanguage.Id, null,
                 ProductSortingEnum.Position, 0, productNumber,
                 false, out filterableSpecificationAttributeOptionIds);
-            var models =  PrepareProductOverviewModels(products, false, false).ToList();
+            var models =  PrepareProductOverviewModels(products, false, _catalogSettings.ShowProductImagesInSearchAutoComplete, _mediaSettings.AutoCompleteSearchThumbPictureSize).ToList();
             var result = (from p in models
-                          select new { label = p.Name, producturl = Url.RouteUrl("Product", new { productId = p.Id, SeName = p.SeName }) }).ToList();
+                          select new
+                          {
+                              label = p.Name,
+                              producturl = Url.RouteUrl("Product", new { productId = p.Id, SeName = p.SeName }),
+                              productpictureurl = p.DefaultPictureModel.ImageUrl
+                          })
+                          .ToList();
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
