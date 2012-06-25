@@ -290,6 +290,7 @@ public partial class ExportManager : IExportManager
                         xmlWriter.WriteElementString("AllowBackInStockSubscriptions", null, productVariant.AllowBackInStockSubscriptions.ToString());
                         xmlWriter.WriteElementString("OrderMinimumQuantity", null, productVariant.OrderMinimumQuantity.ToString());
                         xmlWriter.WriteElementString("OrderMaximumQuantity", null, productVariant.OrderMaximumQuantity.ToString());
+                        xmlWriter.WriteElementString("AllowedQuantities", null, productVariant.AllowedQuantities);
                         xmlWriter.WriteElementString("DisableBuyButton", null, productVariant.DisableBuyButton.ToString());
                         xmlWriter.WriteElementString("DisableWishlistButton", null, productVariant.DisableWishlistButton.ToString());
                         xmlWriter.WriteElementString("CallForPrice", null, productVariant.CallForPrice.ToString());
@@ -504,6 +505,7 @@ public partial class ExportManager : IExportManager
                     "AllowBackInStockSubscriptions",
                     "OrderMinimumQuantity",
                     "OrderMaximumQuantity",
+                    "AllowedQuantities",
                     "DisableBuyButton",
                     "DisableWishlistButton",
                     "CallForPrice",
@@ -688,6 +690,9 @@ public partial class ExportManager : IExportManager
                         worksheet.Cells[row, col].Value = pv.OrderMaximumQuantity;
                         col++;
 
+                        worksheet.Cells[row, col].Value = pv.AllowedQuantities;
+                        col++;
+
                         worksheet.Cells[row, col].Value = pv.DisableBuyButton;
                         col++;
 
@@ -857,7 +862,6 @@ public partial class ExportManager : IExportManager
                 xmlWriter.WriteElementString("OrderDiscount", null, order.OrderDiscount.ToString());
                 xmlWriter.WriteElementString("CurrencyRate", null, order.CurrencyRate.ToString());
                 xmlWriter.WriteElementString("CustomerCurrencyCode", null, order.CustomerCurrencyCode);
-                xmlWriter.WriteElementString("OrderWeight", null, order.OrderWeight.ToString());
                 xmlWriter.WriteElementString("AffiliateId", null, order.AffiliateId.ToString());
                 xmlWriter.WriteElementString("OrderStatusId", null, order.OrderStatusId.ToString());
                 xmlWriter.WriteElementString("AllowStoringCreditCardNumber", null, order.AllowStoringCreditCardNumber.ToString());
@@ -986,7 +990,6 @@ public partial class ExportManager : IExportManager
                         "OrderDiscount",
                         "CurrencyRate",
                         "CustomerCurrencyCode",
-                        "OrderWeight",
                         "AffiliateId",
                         "OrderStatusId",
                         "PaymentMethodSystemName",
@@ -1091,9 +1094,6 @@ public partial class ExportManager : IExportManager
                         col++;
 
                         worksheet.Cells[row, col].Value = order.CustomerCurrencyCode;
-                        col++;
-
-                        worksheet.Cells[row, col].Value = order.OrderWeight;
                         col++;
 
                         worksheet.Cells[row, col].Value = order.AffiliateId.HasValue ? order.AffiliateId.Value : 0;

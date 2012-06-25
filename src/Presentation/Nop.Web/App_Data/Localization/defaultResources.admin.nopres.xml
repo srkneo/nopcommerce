@@ -1727,6 +1727,14 @@
 													</LocaleResource>
 												</Children>
 											</LocaleResource>
+                      <LocaleResource Name="AllowedQuantities">
+                        <Value>Allowed quantities</Value>
+                        <Children>
+                          <LocaleResource Name="Hint">
+                            <Value>Enter a comma separated list of quantities you want this product variant to be restricted to. Instead of a quantity textbox that allows them to enter any quantity, they will receive a dropdown list of the values you enter here.</Value>
+                          </LocaleResource>
+                        </Children>
+                      </LocaleResource>
 											<LocaleResource Name="AutomaticallyAddRequiredProductVariants">
 												<Value>Automatically add these product variants to the cart</Value>
 												<Children>
@@ -3711,6 +3719,14 @@
                     <Children>
                       <LocaleResource Name="Hint">
                         <Value>Change number of visible results shown in autocomplete dropdown when searching.</Value>
+                      </LocaleResource>
+                    </Children>
+                  </LocaleResource>
+                  <LocaleResource Name="ShowProductImagesInSearchAutoComplete">
+                    <Value>Show product images in autocomplete box</Value>
+                    <Children>
+                      <LocaleResource Name="Hint">
+                        <Value>Determines whether product images should be displayed in the autocomplete search box.</Value>
                       </LocaleResource>
                     </Children>
                   </LocaleResource>
@@ -6447,6 +6463,20 @@
 					<LocaleResource Name="Customers">
 						<Value>Customers</Value>
 						<Children>
+              <LocaleResource Name="ActivityLog">
+                <Value>Activity Log</Value>
+                <Children>
+                  <LocaleResource Name="ActivityLogType">
+                    <Value>Activity Log Type</Value>
+                  </LocaleResource>
+                  <LocaleResource Name="Comment">
+                    <Value>Comment</Value>
+                  </LocaleResource>
+                  <LocaleResource Name="CreatedOn">
+                    <Value>Created on</Value>
+                  </LocaleResource>
+                </Children>
+              </LocaleResource>
 							<LocaleResource Name="Addresses">
 								<Value>Addresses</Value>
 								<Children>
@@ -7761,14 +7791,6 @@
 									</LocaleResource>
 								</Children>
 							</LocaleResource>
-							<LocaleResource Name="OrderWeight">
-								<Value>Order weight</Value>
-								<Children>
-									<LocaleResource Name="Hint">
-										<Value>The total weight of this order.</Value>
-									</LocaleResource>
-								</Children>
-							</LocaleResource>
 							<LocaleResource Name="PartialRefund">
 								<Value>Partial refund</Value>
 								<Children>
@@ -8110,6 +8132,9 @@
 							<LocaleResource Name="ProductName">
 								<Value>Product name</Value>
 							</LocaleResource>
+              <LocaleResource Name="SKU">
+                <Value>SKU</Value>
+              </LocaleResource>
 							<LocaleResource Name="RecurringPeriod">
 								<Value>[Auto-ship, Every {0} {1}]</Value>
 							</LocaleResource>
@@ -8275,6 +8300,12 @@
                   </LocaleResource>
                   <LocaleResource Name="SKU">
                     <Value>SKU</Value>
+                  </LocaleResource>
+                  <LocaleResource Name="ItemWeight">
+                    <Value>Item weight</Value>
+                  </LocaleResource>
+                  <LocaleResource Name="ItemDimensions">
+                    <Value>Item dimensions</Value>
                   </LocaleResource>
                   <LocaleResource Name="QtyOrdered">
                     <Value>Qty ordered</Value>
@@ -9245,6 +9276,22 @@
 									</LocaleResource>
 								</Children>
 							</LocaleResource>
+              <LocaleResource Name="DeleteAbandonedCarts">
+                <Value>Deleting abondoned shopping carts</Value>
+                <Children>
+                  <LocaleResource Name="OlderThan">
+                    <Value>Created before</Value>
+                    <Children>
+                      <LocaleResource Name="Hint">
+                        <Value>Delete shipping cart items created before the specified date.</Value>
+                      </LocaleResource>
+                    </Children>
+                  </LocaleResource>
+                  <LocaleResource Name="TotalDeleted">
+                    <Value>{0} items were deleted</Value>
+                  </LocaleResource>
+                </Children>
+              </LocaleResource>
 						</Children>
 					</LocaleResource>
 					<LocaleResource Name="QueuedEmails">

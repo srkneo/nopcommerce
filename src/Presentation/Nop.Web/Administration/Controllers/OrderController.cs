@@ -322,13 +322,8 @@ namespace Nop.Admin.Controllers
                 if (order.ShippingAddress.StateProvince != null)
                     model.ShippingAddress.StateProvinceName = order.ShippingAddress.StateProvince.Name;
 
-
                 model.ShippingMethod = order.ShippingMethod;
 
-                model.OrderWeight = order.OrderWeight;
-                var baseWeight = _measureService.GetMeasureWeightById(_measureSettings.BaseWeightId);
-                if (baseWeight != null)
-                    model.BaseWeightIn = baseWeight.Name;
                 model.ShippingAddressGoogleMapsUrl = string.Format("http://maps.google.com/maps?f=q&hl=en&ie=UTF8&oe=UTF8&geocode=&q={0}", Server.UrlEncode(order.ShippingAddress.Address1 + " " + order.ShippingAddress.ZipPostalCode + " " + order.ShippingAddress.City + " " + (order.ShippingAddress.Country != null ? order.ShippingAddress.Country.Name : "")));
                 model.CanAddNewShipments = order.HasItemsToAddToShipment();
             }
@@ -347,6 +342,7 @@ namespace Nop.Admin.Controllers
                 {
                     Id = opv.Id,
                     ProductVariantId = opv.ProductVariantId,
+                    Sku = opv.ProductVariant.Sku,
                     Quantity = opv.Quantity,
                     IsDownload = opv.ProductVariant.IsDownload,
                     DownloadCount = opv.DownloadCount,
@@ -455,11 +451,11 @@ namespace Nop.Admin.Controllers
         [NonAction]
         private ShipmentModel PrepareShipmentModel(Shipment shipment, bool prepareProducts)
         {
-            
-            var baseWeightIn = "";
+            //measures
             var baseWeight = _measureService.GetMeasureWeightById(_measureSettings.BaseWeightId);
-            if (baseWeight != null)
-                baseWeightIn = baseWeight.Name;
+            var baseWeightIn = baseWeight != null ? baseWeight.Name : "";
+            var baseDimension = _measureService.GetMeasureDimensionById(_measureSettings.BaseDimensionId);
+            var baseDimensionIn = baseDimension != null ? baseDimension.Name : "";
 
             var model = new ShipmentModel()
             {
@@ -495,6 +491,8 @@ namespace Nop.Admin.Controllers
                         ProductVariantId = opv.ProductVariantId,
                         Sku = opv.ProductVariant.Sku,
                         AttributeInfo = opv.AttributeDescription,
+                        ItemWeight = opv.ItemWeight.HasValue ? string.Format("{0:F2} [{1}]", opv.ItemWeight, baseWeightIn) : "",
+                        ItemDimensions = string.Format("{0:F2} x {1:F2} x {2:F2} [{3}]", opv.ProductVariant.Length, opv.ProductVariant.Width, opv.ProductVariant.Height, baseDimensionIn),
                         QuantityOrdered = qtyOrdered,
                         QuantityInThisShipment = qtyInThisShipment,
                         QuantityInAllShipments = qtyInAllShipments,
@@ -1842,6 +1840,13 @@ namespace Nop.Admin.Controllers
                 OrderId = order.Id,
             };
 
+            //measures
+            var baseWeight = _measureService.GetMeasureWeightById(_measureSettings.BaseWeightId);
+            var baseWeightIn = baseWeight != null ? baseWeight.Name : "";
+            var baseDimension = _measureService.GetMeasureDimensionById(_measureSettings.BaseDimensionId);
+            var baseDimensionIn = baseDimension != null ? baseDimension.Name : "";
+
+
             foreach (var opv in order.OrderProductVariants)
             {
                 //we can ship only shippable products
@@ -1864,6 +1869,8 @@ namespace Nop.Admin.Controllers
                     ProductVariantId = opv.ProductVariantId,
                     Sku = opv.ProductVariant.Sku,
                     AttributeInfo = opv.AttributeDescription,
+                    ItemWeight = opv.ItemWeight.HasValue ? string.Format("{0:F2} [{1}]", opv.ItemWeight, baseWeightIn) : "",
+                    ItemDimensions = string.Format("{0:F2} x {1:F2} x {2:F2} [{3}]", opv.ProductVariant.Length, opv.ProductVariant.Width, opv.ProductVariant.Height, baseDimensionIn),
                     QuantityOrdered = qtyOrdered,
                     QuantityInThisShipment = qtyInThisShipment,
                     QuantityInAllShipments = qtyInAllShipments,
@@ -1964,7 +1971,7 @@ namespace Nop.Admin.Controllers
             }
             else
             {
-                SuccessNotification(_localizationService.GetResource("Admin.Orders.Shipments.NoProductsSelected"));
+                ErrorNotification(_localizationService.GetResource("Admin.Orders.Shipments.NoProductsSelected"));
                 return RedirectToAction("AddShipment", new { orderId = orderId });
             }
         }
