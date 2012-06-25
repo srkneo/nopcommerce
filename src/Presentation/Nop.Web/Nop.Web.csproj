@@ -333,6 +333,8 @@
     <Content Include="App_Data\Localization\Installation\installation.sp.xml" />
     <Content Include="App_Data\Localization\Installation\installation.tr.xml" />
     <Content Include="App_Data\Localization\Installation\installation.zhs.xml" />
+    <Content Include="App_Data\MySql.Indexes.sql" />
+    <Content Include="App_Data\MySql.StoredProcedures.sql" />
     <Content Include="App_Data\SqlServer.StoredProcedures.sql" />
     <Content Include="App_Data\Localization\defaultResources.admin.nopres.xml">
       <SubType>Designer</SubType>
