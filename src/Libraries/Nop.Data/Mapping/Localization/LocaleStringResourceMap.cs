@@ -9,7 +9,11 @@ namespace Nop.Data.Mapping.Localization
         {
             this.ToTable("LocaleStringResource");
             this.HasKey(lsr => lsr.Id);
-            this.Property(lsr => lsr.ResourceName).IsRequired().HasMaxLength(200);
+
+            //This column is indexed so make sure it is created as a varchar for MySql
+            //MySql will by default create this as a variation of type TEXT unless specified
+            this.Property(lsr => lsr.ResourceName).IsRequired().HasMaxLength(200).HasColumnType("varchar");
+
             this.Property(lsr => lsr.ResourceValue).IsRequired().IsMaxLength();
 
 
