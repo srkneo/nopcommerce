@@ -51,7 +51,7 @@
     </Reference>
     <Reference Include="EntLibContrib.Data.MySql, Version=5.0.505.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="FiftyOne.Foundation">
-      <HintPath>..\..\packages\51Degrees.mobi.2.1.4.5\lib\NET40\FiftyOne.Foundation.dll</HintPath>
+      <HintPath>..\..\packages\51Degrees.mobi.2.1.7.3\FiftyOne.Foundation.dll</HintPath>
     </Reference>
     <Reference Include="FluentValidation, Version=3.3.1.0, Culture=neutral, PublicKeyToken=a82054b837897c66, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -309,7 +309,6 @@
     <Compile Include="Validators\Common\AddressValidator.cs" />
     <Compile Include="Validators\Install\InstallValidator.cs" />
     <Compile Include="Validators\News\NewsItemValidator.cs" />
-    <Compile Include="Validators\Newsletter\NewsletterBoxValidator.cs" />
     <Compile Include="Validators\Customer\PasswordRecoveryConfirmValidator.cs" />
     <Compile Include="Validators\Customer\PasswordRecoveryValidator.cs" />
     <Compile Include="Validators\PrivateMessages\SendPrivateMessageValidator.cs" />
@@ -1137,6 +1136,7 @@
     <Content Include="Content\install\images\topleft.gif" />
     <Content Include="Content\install\images\topright.gif" />
     <Content Include="Content\install\style.css" />
+    <Content Include="Content\install\style.rtl.css" />
     <Content Include="Content\samples\category_accessories.jpg" />
     <Content Include="Content\samples\category_accessories_apparel.jpg" />
     <Content Include="Content\samples\category_apparel_shoes.jpeg" />
@@ -1638,7 +1638,6 @@
     <Content Include="Content\samples\product_PokerFace_1.zip" />
     <Content Include="Content\samples\product_SingleLadies_1.zip" />
     <Content Include="App_Data\GeoIP.dat" />
-    <Content Include="App_Data\51Degrees.mobi-Lite-2012.04.04.dat" />
     <Content Include="App_Data\51Degrees.mobi.config" />
     <None Include="App_Data\Resources.xsd">
       <SubType>Designer</SubType>

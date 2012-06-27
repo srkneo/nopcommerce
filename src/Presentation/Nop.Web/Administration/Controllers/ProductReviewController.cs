@@ -16,7 +16,7 @@ using Telerik.Web.Mvc;
 namespace Nop.Admin.Controllers
 {
     [AdminAuthorize]
-    public class ProductReviewController : BaseNopController
+    public partial class ProductReviewController : BaseNopController
     {
         #region Fields
 
@@ -46,7 +46,7 @@ namespace Nop.Admin.Controllers
         #region Utilities
 
         [NonAction]
-        private void PrepareProductReviewModel(ProductReviewModel model,
+        protected void PrepareProductReviewModel(ProductReviewModel model,
             ProductReview productReview, bool excludeProperties, bool formatReviewText)
         {
             if (model == null)

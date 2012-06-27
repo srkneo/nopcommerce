@@ -25,7 +25,7 @@ using Nop.Web.Framework.Security;
 namespace Nop.Admin.Controllers
 {
     [AdminAuthorize]
-    public class CommonController : BaseNopController
+    public partial class CommonController : BaseNopController
     {
         #region Fields
 
@@ -377,7 +377,7 @@ namespace Nop.Admin.Controllers
 
 
             model.DeleteExportedFiles.NumberOfDeletedFiles = 0;
-            string path = string.Format("{0}content\\files\\exportimport\\", this.Request.PhysicalApplicationPath);
+            string path = System.IO.Path.Combine(this.Request.PhysicalApplicationPath, "content\\files\\exportimport");
             foreach (var fullPath in System.IO.Directory.GetFiles(path))
             {
                 try
