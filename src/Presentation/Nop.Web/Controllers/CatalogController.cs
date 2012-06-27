@@ -35,7 +35,7 @@ using Nop.Web.Models.Media;
 
 namespace Nop.Web.Controllers
 {
-    public class CatalogController : BaseNopController
+    public partial class CatalogController : BaseNopController
     {
 		#region Fields
 
@@ -719,6 +719,7 @@ namespace Nop.Web.Controllers
                         TextPrompt = attribute.TextPrompt,
                         IsRequired = attribute.IsRequired,
                         AttributeControlType = attribute.AttributeControlType,
+                        AllowedFileExtensions = _catalogSettings.FileUploadAllowedExtensions,
                     };
 
                 if (attribute.ShouldHaveValues())

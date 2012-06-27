@@ -19,7 +19,7 @@ using Telerik.Web.Mvc;
 namespace Nop.Admin.Controllers
 {
 	[AdminAuthorize]
-    public class ShippingController : BaseNopController
+    public partial class ShippingController : BaseNopController
 	{
 		#region Fields
 
@@ -56,7 +56,7 @@ namespace Nop.Admin.Controllers
         #region Utilities
 
         [NonAction]
-        public void UpdateLocales(ShippingMethod shippingMethod, ShippingMethodModel model)
+        protected void UpdateLocales(ShippingMethod shippingMethod, ShippingMethodModel model)
         {
             foreach (var localized in model.Locales)
             {

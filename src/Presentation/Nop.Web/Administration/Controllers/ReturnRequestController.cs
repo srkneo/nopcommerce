@@ -19,7 +19,7 @@ using Telerik.Web.Mvc;
 namespace Nop.Admin.Controllers
 {
     [AdminAuthorize]
-    public class ReturnRequestController : BaseNopController
+    public partial class ReturnRequestController : BaseNopController
     {
         #region Fields
 
@@ -59,7 +59,7 @@ namespace Nop.Admin.Controllers
         #region Utilities
 
         [NonAction]
-        private bool PrepareReturnRequestModel(ReturnRequestModel model,
+        protected bool PrepareReturnRequestModel(ReturnRequestModel model,
             ReturnRequest returnRequest, bool excludeProperties)
         {
             if (model == null)

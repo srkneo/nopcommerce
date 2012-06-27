@@ -19,7 +19,7 @@ using Telerik.Web.Mvc;
 namespace Nop.Admin.Controllers
 {
     [AdminAuthorize]
-    public class AffiliateController : BaseNopController
+    public partial class AffiliateController : BaseNopController
     {
         #region Fields
 
@@ -59,7 +59,7 @@ namespace Nop.Admin.Controllers
         #region Utilities
 
         [NonAction]
-        private void PrepareAffiliateModel(AffiliateModel model, Affiliate affiliate, bool excludeProperties)
+        protected void PrepareAffiliateModel(AffiliateModel model, Affiliate affiliate, bool excludeProperties)
         {
             if (model == null)
                 throw new ArgumentNullException("model");

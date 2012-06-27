@@ -17,7 +17,7 @@ using Telerik.Web.Mvc;
 namespace Nop.Admin.Controllers
 {
     [AdminAuthorize]
-    public class RecurringPaymentController : BaseNopController
+    public partial class RecurringPaymentController : BaseNopController
     {
         #region Fields
 
@@ -52,7 +52,7 @@ namespace Nop.Admin.Controllers
         #region Utilities
 
         [NonAction]
-        private void PrepareRecurringPaymentModel(RecurringPaymentModel model, 
+        protected void PrepareRecurringPaymentModel(RecurringPaymentModel model, 
             RecurringPayment recurringPayment, bool includeHistory)
         {
             if (model == null)
@@ -87,7 +87,7 @@ namespace Nop.Admin.Controllers
         }
 
         [NonAction]
-        private void PrepareRecurringPaymentHistoryModel(RecurringPaymentModel.RecurringPaymentHistoryModel model,
+        protected void PrepareRecurringPaymentHistoryModel(RecurringPaymentModel.RecurringPaymentHistoryModel model,
             RecurringPaymentHistory history)
         {
             if (model == null)
