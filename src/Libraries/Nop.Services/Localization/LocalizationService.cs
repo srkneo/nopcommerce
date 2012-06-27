@@ -372,7 +372,19 @@ namespace Nop.Services.Localization
                 pXmlPackage.DbType = DbType.Xml;
 
                 //long-running query. specify timeout (600 seconds)
-                _dbContext.ExecuteSqlCommand("EXEC [LanguagePackImport] @LanguageId, @XmlPackage", 600, pLanguageId, pXmlPackage);
+                if (_dataProvider.GetType() == typeof(MySqlDataProvider))
+                    //try
+                    //{
+                    _dbContext.ExecuteSqlCommand(string.Format("set @LanguageId = {0}; set @xml = '{1}'; CALL LanguagePackImport(@LanguageId, @xml)", 1, xml.Replace("'", "''")), 600);
+                //_dbContext.ExecuteSqlCommand("CALL LanguagePackImport(@LanguageId, @XmlPackage)", 600, pLanguageId, pXmlPackage);
+                //    _dbContext.ExecuteSqlCommand("CALL `LanguagePackImport` (@LanguageId, @XmlPackage)", 600, pLanguageId, pXmlPackage);
+                //}
+                //catch (Exception ex)
+                //{
+
+                    //}
+                else
+                    _dbContext.ExecuteSqlCommand("EXEC [LanguagePackImport] @LanguageId, @XmlPackage", 600, pLanguageId, pXmlPackage);
             }
             else
             {

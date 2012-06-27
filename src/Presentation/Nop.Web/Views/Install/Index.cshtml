@@ -49,22 +49,42 @@
             function toggleProvider() {
                 var selectedProvider = $("input[name=DataProvider]:checked").attr('id');
                 if (selectedProvider == 'provider_sqlce') {
+                    $('#mySqlConnectionInfo').hide();
                     $('#sqlConnectionInfo').hide();
                 }
                 else if (selectedProvider == 'provider_sqlserver') {
+                    $('#mySqlConnectionInfo').hide();
                     $('#sqlConnectionInfo').show();
+                }
+                else if (selectedProvider == 'provider_mysql') {
+                    $('#sqlConnectionInfo').hide();
+                    $('#mySqlConnectionInfo').show();
                 }
             }
 
             function toggleSqlConnectionInfo() {
-                var selectedProvider = $("input[name=SqlConnectionInfo]:checked").attr('id');
-                if (selectedProvider == 'sqlconnectioninfo_values') {
-                    $('#sqlDatabaseInfo').show();
-                    $('#sqlDatabaseConnectionString').hide();
+                var selectedProvider = $("input[name=DataProvider]:checked").attr('id');
+                if (selectedProvider == 'provider_sqlserver') {
+                    var connectionInfo = $("input[name=MySqlConnectionInfo]:checked").attr('id');
+                    if (selectedProvider == 'sqlconnectioninfo_values') {
+                        $('#sqlDatabaseInfo').show();
+                        $('#sqlDatabaseConnectionString').hide();
+                    }
+                    else if (selectedProvider == 'sqlconnectioninfo_raw') {
+                        $('#sqlDatabaseInfo').hide();
+                        $('#sqlDatabaseConnectionString').show();
+                    }
                 }
-                else if (selectedProvider == 'sqlconnectioninfo_raw') {
-                    $('#sqlDatabaseInfo').hide();
-                    $('#sqlDatabaseConnectionString').show();
+                else if (selectedProvider == 'provider_mysql') {
+                    var connectionInfo = $("input[name=MySqlConnectionInfo]:checked").attr('id');
+                    if (connectionInfo == 'mysqlconnectioninfo_values') {
+                        $('#mySqlDatabaseInfo').show();
+                        $('#mySqlDatabaseConnectionString').hide();
+                    }
+                    else if (connectionInfo == 'mysqlconnectioninfo_raw') {
+                        $('#mySqlDatabaseInfo').hide();
+                        $('#mySqlDatabaseConnectionString').show();
+                    }
                 }
             }
 
@@ -197,14 +217,17 @@
                                                 <td colspan="2" align="left">
                                                     @Html.RadioButton("DataProvider", "sqlce", (Model.DataProvider == "sqlce"), new { id = "provider_sqlce" })
                                                     <label for="provider_sqlce">
-                                                        @ILS.GetResource("SqlCompact")</label>
+                                                        @ILS.GetResource("SqlCompact")</label><br />
+                                                @Html.RadioButton("DataProvider", "sqlserver", (Model.DataProvider == "sqlserver"), new { id = "provider_sqlserver" })
+                                                    <label for="provider_sqlserver">
+                                                        @ILS.GetResource("SqlStandard") <b>@ILS.GetResource("Recommended")</b></label><br />
+                                                @Html.RadioButton("DataProvider", "mysql", (Model.DataProvider == "mysql"), new { id = "provider_mysql" })
+                                                <label for="provider_mysql">
+                                                    Use MySql database.</label>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td colspan="2" align="left">
-                                                    @Html.RadioButton("DataProvider", "sqlserver", (Model.DataProvider == "sqlserver"), new { id = "provider_sqlserver" })
-                                                    <label for="provider_sqlserver">
-                                                        @ILS.GetResource("SqlStandard") <b>@ILS.GetResource("Recommended")</b></label>
                                                     <div id="sqlConnectionInfo">
                                                         <br />
                                                         <hr />
@@ -308,6 +331,85 @@
                                                             </table>
                                                         </div>
                                                     </div>
+                                                    <div id="mySqlConnectionInfo">
+                                                    <br />
+                                                    <hr />
+                                                    <br />
+                                                    <div>
+                                                        <table>
+                                                            <tr>
+                                                                <td nowrap="nowrap" align="left">
+                                                                    <label for="MySqlCreateDatabase">
+                                                                        Create database if it doesn't exist:</label>
+                                                                </td>
+                                                                <td width="100%">
+                                                                    @Html.CheckBoxFor(x => x.MySqlCreateDatabase)
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                    <br />
+                                                    @Html.RadioButton("MySqlConnectionInfo", "mysqlconnectioninfo_values", (Model.MySqlConnectionInfo == "mysqlconnectioninfo_values"), new { id = "mysqlconnectioninfo_values" })
+                                                    <label for="mysqlconnectioninfo_values">
+                                                        Enter MySql connection values</label>
+                                                    @Html.RadioButton("MySqlConnectionInfo", "mysqlconnectioninfo_raw", (Model.MySqlConnectionInfo == "mysqlconnectioninfo_raw"), new { id = "mysqlconnectioninfo_raw" })
+                                                    <label for="mysqlconnectioninfo_raw">
+                                                        Enter raw connection string (advanced)</label>
+                                                    <div id="mySqlDatabaseInfo">
+                                                        <table>
+                                                            <tr>
+                                                                <td nowrap="nowrap" align="left">
+                                                                    <label for="MySqlServerName">
+                                                                        MySql Server name:</label>
+                                                                </td>
+                                                                <td width="100%">
+                                                                    @Html.TextBoxFor(x => x.MySqlServerName, new { @class = "textbox" })
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td nowrap="nowrap" align="left">
+                                                                    <label for="MySqlDatabaseName">
+                                                                        Database/Schema name:</label>
+                                                                </td>
+                                                                <td width="100%">
+                                                                    @Html.TextBoxFor(x => x.MySqlDatabaseName, new { @class = "textbox" })
+                                                                </td>
+                                                            </tr>
+                                                            <tr id="pnlMySqlUsername">
+                                                                <td nowrap="nowrap" align="left">
+                                                                    <label for="MySqlUsername">
+                                                                        MySql Username:</label>
+                                                                </td>
+                                                                <td width="100%">
+                                                                    @Html.TextBoxFor(x => x.MySqlUsername, new { @class = "textbox" })
+                                                                </td>
+                                                            </tr>
+                                                            <tr id="pnlMySqlPassword">
+                                                                <td nowrap="nowrap" align="left">
+                                                                    <label for="MySqlPassword">
+                                                                        MySql Password:</label>
+                                                                </td>
+                                                                <td width="100%">
+                                                                    @Html.PasswordFor(x => x.MySqlPassword, new { @class = "textbox" })
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                    <div id="mySqlDatabaseConnectionString">
+                                                        <span style="white-space: nowrap;">
+                                                            <label for="MySqlDatabaseConnectionString">
+                                                                Connection string:</label>
+                                                            @Html.TextBoxFor(x => x.MySqlDatabaseConnectionString, new { @class = "textbox", style = "width:90%;" })
+                                                            @*@Html.TextBoxFor(x => x.DatabaseConnectionString, new { @class = "textbox", style = "width:90%;" })*@
+                                                        </span>
+                                                        <br />
+                                                        <span class="hint">Example:<br />
+                                                            Server=myServerAddress;Database=myDataBase;Uid=myUsername;Pwd=myPassword;
+                                                            <br />
+                                                            Find more info <a href="http://www.connectionstrings.com/mysql" target="_blank">here</a>
+                                                        </span>
+                                                    </div>
+                                                </div>
                                                 </td>
                                             </tr>
                                             <tr>
