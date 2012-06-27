@@ -8,14 +8,14 @@ BEGIN
     CREATE TEMPORARY TABLE nop_splitstring_to_table_TempTable
     (
         `data` LONGTEXT
-    ) ENGINE = MEMORY;
+    );
     
     set @start = 1;    
     set @end = LOCATE(delim, string);
 
     WHILE @start < LENGTH(string) + 1 DO
         IF @end = 0 then
-            SET @end = LEN(@string) + 1;
+            SET @end = LENGTH(string) + 1;
         END IF;
 
         INSERT INTO nop_splitstring_to_table_TempTable (data) 
@@ -620,7 +620,7 @@ set @sql = concat('
     
 	DROP Temporary TABLE PageIndex_TempTable;
 END
---  GO
+-- GO
 
 
 
@@ -633,11 +633,10 @@ END
 
 
 
-CREATE PROCEDURE `FullText_Enable`
-AS
+CREATE PROCEDURE `FullText_Enable`()
 BEGIN	
 	
-    -- These are remarked out because InnoDb doesn't support full text indexes
+    -- These are remarked out because InnoDb doesn't support full text indexes with MySql 5.5 or earlier
     
     -- SELECT COUNT(1) INTO @IndexCount FROM information_schema.statistics 
 --   WHERE table_name = 'Product' AND INDEX_NAME = 'IX_PRODUCT_FULLTEXT';
@@ -664,11 +663,10 @@ END
 
 
 
-CREATE PROCEDURE `FullText_Disable`
-AS
+CREATE PROCEDURE `FullText_Disable`()
 BEGIN	
 	
-    -- These are remarked out because InnoDb doesn't currently support full text indexes
+    -- These are remarked out because InnoDb doesn't currently support full text indexes with MySql 5.5 or earlier
     
     -- SELECT COUNT(1) INTO @IndexCount FROM information_schema.statistics 
 --   WHERE table_name = 'Product' AND INDEX_NAME = 'IX_PRODUCT_FULLTEXT';
@@ -694,30 +692,35 @@ END
 -- GO
 
 
-CREATE PROCEDURE `LanguagePackImport`
-(
+CREATE PROCEDURE `LanguagePackImport`(
 	IN LanguageId int,
 	IN XmlPackage LONGTEXT
 )
 BEGIN
-	IF EXISTS(SELECT * FROM `Language` WHERE `Id` = @LanguageId) THEN
-    drop temporary table if exists KeywordProducts_TempTable;
-	CREATE temporary TABLE KeywordProducts_TempTable
+	IF (EXISTS(SELECT 1 FROM `Language` WHERE `Id` = LanguageId)) THEN
+        
+    drop temporary table if exists LocaleStringResource_TempTable;
+	CREATE temporary TABLE LocaleStringResource_TempTable
 	(
 		LanguageId int NOT NULL,
 				ResourceName nvarchar(200) NOT NULL,
 				ResourceValue LONGTEXT NOT NULL
-	) ENGINE = MEMORY;
+	);
 
-		INSERT INTO LocaleStringResource_TempTable (LanguageID, ResourceName, ResourceValue)
-		SELECT	LanguageId, ExtractValue(XmlPackage, '//Language/LocaleResource/@Name'), ExtractValue(XmlPackage, '//Language/LocaleResource/Value[1]');
-		
+set @i = 1;
+select ExtractValue(@xml, 'count(//Language/LocaleResource/@Name)') into @count;
+WHILE @i <= @count DO
+    insert into LocaleStringResource_TempTable
+    SELECT LanguageId, ExtractValue(@xml, '//Language/LocaleResource[$@i]/@Name'), ExtractValue(@xml, '//Language/LocaleResource[$@i]/Value[1]');
+    SET @i = @i+1;
+END WHILE;		       
+        
         BEGIN
         DECLARE done INT DEFAULT FALSE;
         DECLARE ResourceName nvarchar(200);
 		DECLARE ResourceValue LONGTEXT;
 		DECLARE cur_localeresource CURSOR FOR
-		SELECT LanguageID, ResourceName, ResourceValue
+		SELECT LanguageID, LocaleStringResource_TempTable.ResourceName, LocaleStringResource_TempTable.ResourceValue
 		FROM LocaleStringResource_TempTable;
         DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
         
@@ -729,6 +732,8 @@ BEGIN
       LEAVE read_loop;
     END IF;
     
+    -- select LanguageId, ResourceName, ResourceValue;
+    
     IF (EXISTS (SELECT 1 FROM LocaleStringResource WHERE LocaleStringResource.LanguageID=LanguageId AND LocaleStringResource.ResourceName=ResourceName)) THEN
 				UPDATE LocaleStringResource
 				SET LocaleStringResource.ResourceValue=ResourceValue
@@ -736,9 +741,9 @@ BEGIN
 			ELSE 
 				INSERT INTO LocaleStringResource
 				(
-					LanguageId,
-					ResourceName,
-					ResourceValue
+					LocaleStringResource.LanguageId,
+					LocaleStringResource.ResourceName,
+					LocaleStringResource.ResourceValue
 				)
 				VALUES
 				(
