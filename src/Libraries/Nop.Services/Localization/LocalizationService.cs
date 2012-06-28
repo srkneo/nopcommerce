@@ -59,7 +59,7 @@ namespace Nop.Services.Localization
         /// <param name="eventPublisher">Event published</param>
         public LocalizationService(ICacheManager cacheManager,
             ILogger logger, IWorkContext workContext,
-            IRepository<LocaleStringResource> lsrRepository, 
+            IRepository<LocaleStringResource> lsrRepository,
             ILanguageService languageService,
             IDataProvider dataProvider, IDbContext dbContext, CommonSettings commonSettings,
             LocalizationSettings localizationSettings, IEventPublisher eventPublisher)
@@ -172,7 +172,7 @@ namespace Nop.Services.Localization
         {
             if (localeStringResource == null)
                 throw new ArgumentNullException("localeStringResource");
-            
+
             _lsrRepository.Insert(localeStringResource);
 
             //cache
@@ -205,7 +205,7 @@ namespace Nop.Services.Localization
         /// </summary>
         /// <param name="languageId">Language identifier</param>
         /// <returns>Locale string resources</returns>
-        public virtual Dictionary<string, KeyValuePair<int,string>> GetAllResourceValues(int languageId)
+        public virtual Dictionary<string, KeyValuePair<int, string>> GetAllResourceValues(int languageId)
         {
             string key = string.Format(LOCALSTRINGRESOURCES_ALL_KEY, languageId);
             return _cacheManager.Get(key, () =>
@@ -236,10 +236,10 @@ namespace Nop.Services.Localization
         {
             if (_workContext.WorkingLanguage != null)
                 return GetResource(resourceKey, _workContext.WorkingLanguage.Id);
-            
+
             return "";
         }
-        
+
         /// <summary>
         /// Gets a resource string based on the specified ResourceKey property.
         /// </summary>
@@ -278,14 +278,14 @@ namespace Nop.Services.Localization
                     return query.FirstOrDefault();
                 });
 
-                if (lsr != null) 
+                if (lsr != null)
                     result = lsr;
             }
             if (String.IsNullOrEmpty(result))
             {
                 if (logIfNotFound)
                     _logger.Warning(string.Format("Resource string ({0}) is not found. Language ID = {1}", resourceKey, languageId));
-                
+
                 if (!String.IsNullOrEmpty(defaultValue))
                 {
                     result = defaultValue;
@@ -374,7 +374,7 @@ namespace Nop.Services.Localization
                 //long-running query. specify timeout (600 seconds)
                 if (_dataProvider.GetType() == typeof(MySqlDataProvider))
                     _dbContext.ExecuteSqlCommand(string.Format("set @LanguageId = {0}; set @xml = '{1}'; CALL LanguagePackImport(@LanguageId, @xml)", 1, xml.Replace("'", "''")), 600);
-                //_dbContext.ExecuteSqlCommand("CALL LanguagePackImport(@LanguageId, @XmlPackage)", 600, pLanguageId, pXmlPackage);
+                    //_dbContext.ExecuteSqlCommand("CALL LanguagePackImport(@LanguageId, @XmlPackage)", 600, pLanguageId, pXmlPackage);
                 else
                     _dbContext.ExecuteSqlCommand("EXEC [LanguagePackImport] @LanguageId, @XmlPackage", 600, pLanguageId, pXmlPackage);
             }
