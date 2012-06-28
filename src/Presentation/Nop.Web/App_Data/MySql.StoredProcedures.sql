@@ -23,8 +23,6 @@ BEGIN
         SET @start = @end + 1;
         SET @end = LOCATE(delim, string, @start);
     END WHILE;
-    
-    select * from nop_splitstring_to_table_TempTable;
 END
 -- GO
 
@@ -59,8 +57,7 @@ END
 -- GO
 
 
-CREATE PROCEDURE `ProductLoadAllPaged`
-(
+CREATE PROCEDURE `ProductLoadAllPaged`(
 	IN CategoryIds		LONGTEXT,	-- a list of category IDs (comma-separated list). e.g. 1,2,3
 	IN ManufacturerId		int,
 	IN ProductTagId		int,
@@ -141,7 +138,7 @@ if ManufacturerId is null then
 	IF Keywords != '' then
 		SET @SearchKeywords = 1;
 		
-		IF UseFullTextSearch = 1 then
+		IF UseFullTextSearch = 1 then        
 			-- full-text search
 			IF FullTextMode = 0 then
 				-- 0 - using CONTAINS with <prefix_term>
@@ -198,9 +195,9 @@ if ManufacturerId is null then
 			SET Keywords = concat('%', Keywords, '%');
 		END IF;
 		-- PRINT Keywords
-
+        
 		-- product name
-		SET @sql = 'set @Keywords = ?;
+		SET @sql = '
 		INSERT INTO KeywordProducts_TempTable (`ProductId`)
 		SELECT p.Id
 		FROM Product p
@@ -321,14 +318,22 @@ if ManufacturerId is null then
       END IF;
 		END IF;
 
+    -- select @sql;
+    
+    -- set @TempKeywords = Keywords;
+    -- SET @sql = '
+--         Select @Keywords;';
+        
 		-- PRINT (@sql)
     PREPARE stmt1 FROM @sql; 
     SET SESSION TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;
-    set @Keywords = Keywords;
-    EXECUTE stmt1 USING @Keywords; 
+    
+    EXECUTE stmt1; -- USING @TempKeywords; 
     SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ;
     DEALLOCATE PREPARE stmt1;
     
+    
+    -- select * from KeywordProducts_TempTable;
 		-- EXEC sp_executesql @sql, N'Keywords nvarchar(4000)', Keywords
 	
 	ELSE
@@ -343,11 +348,13 @@ if ManufacturerId is null then
 		CategoryId int not null
 	) ENGINE = MEMORY;
     
+    
+    
     call nop_splitstring_to_table(CategoryIds, ',');
 	INSERT INTO FilteredCategoryIds_TempTable (CategoryId)
 	SELECT (data + 0) FROM nop_splitstring_to_table_TempTable;
     
-    SELECT COUNT(1) into @CategoryIdsCount FROM FilteredCategoryIds_TempTable;
+    SELECT COUNT(1) FROM FilteredCategoryIds_TempTable into @CategoryIdsCount;
 
 	-- filter by attributes
 	SET FilteredSpecs = COALESCE(FilteredSpecs, '');	
@@ -361,7 +368,7 @@ if ManufacturerId is null then
 	INSERT INTO FilteredSpecs_TempTable (SpecificationAttributeOptionId)
 	SELECT (data + 0) FROM nop_splitstring_to_table_TempTable;	
     
-    SELECT COUNT(1) into @SpecAttributesCount FROM FilteredSpecs_TempTable;
+    SELECT COUNT(1) FROM FilteredSpecs_TempTable into @SpecAttributesCount;
 
 	-- paging
 	SET @RowsToReturn = PageSize * (PageIndex + 1);
@@ -550,14 +557,16 @@ if ManufacturerId is null then
 	
 	SET @sql = CONCAT(@sql, '
 	ORDER BY', @sql_orderby);
-	
+    
+    -- select @sql;
+	        
 	-- PRINT (@sql)
     PREPARE stmt2 FROM @sql; 
     SET SESSION TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;
     EXECUTE stmt2; 
     SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ;
     DEALLOCATE PREPARE stmt2;
-
+     
 	DROP Temporary TABLE FilteredCategoryIds_TempTable;
 	DROP Temporary TABLE FilteredSpecs_TempTable;
 
@@ -593,9 +602,9 @@ DROP Temporary TABLE if exists PageIndex_TempTable;
 		FROM `Product_SpecificationAttribute_Mapping` `psam`
 		WHERE `psam`.`AllowFiltering` = 1
 		AND `psam`.`ProductId` IN (SELECT `pi`.ProductId FROM PageIndex_TempTable `pi`);
-
+    
 		-- build comma separated list of filterable identifiers
-    SELECT concat(COALESCE(concat(FilterableSpecificationAttributeOptionIds, ',') , ''), SpecificationAttributeOptionId) into FilterableSpecificationAttributeOptionIds
+    SELECT GROUP_CONCAT(COALESCE(concat(FilterableSpecificationAttributeOptionIds, ',') , ''), SpecificationAttributeOptionId) into FilterableSpecificationAttributeOptionIds
 		FROM FilterableSpecs_TempTable;
 
     DROP Temporary TABLE FilterableSpecs_TempTable;

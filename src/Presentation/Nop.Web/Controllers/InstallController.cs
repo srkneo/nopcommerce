@@ -460,6 +460,7 @@ namespace Nop.Web.Controllers
                             {
                                 //create database
                                 var collation = model.MySqlUseCustomCollation ? model.MySqlCollation : string.Empty;
+                                //var collation = "utf8_general_ci";
                                 var errorCreatingDatabase = createMySqlDatabase(connectionString, collation);
                                 if (!String.IsNullOrEmpty(errorCreatingDatabase))
                                     throw new Exception(errorCreatingDatabase);
