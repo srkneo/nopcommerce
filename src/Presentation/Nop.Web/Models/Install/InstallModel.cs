@@ -44,6 +44,22 @@ namespace Nop.Web.Models.Install
         [AllowHtml]
         public string Collation { get; set; }
 
+        //MySql properties
+        public string MySqlConnectionInfo { get; set; }
+        [AllowHtml]
+        public string MySqlServerName { get; set; }
+        [AllowHtml]
+        public string MySqlDatabaseName { get; set; }
+        [AllowHtml]
+        public string MySqlUsername { get; set; }
+        [AllowHtml]
+        public string MySqlPassword { get; set; }
+        public bool MySqlCreateDatabase { get; set; }
+        [AllowHtml]
+        public string MySqlDatabaseConnectionString { get; set; }
+        public bool MySqlUseCustomCollation { get; set; }
+        [AllowHtml]
+        public string MySqlCollation { get; set; }
 
         public bool InstallSampleData { get; set; }
 
