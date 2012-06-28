@@ -168,7 +168,7 @@ namespace Nop.Services.Catalog
             var products = query.ToList();
             return products;
         }
-        
+
         /// <summary>
         /// Gets product
         /// </summary>
@@ -285,7 +285,7 @@ namespace Nop.Services.Catalog
                 priceMin, priceMax, productTagId, keywords, searchDescriptions, languageId,
                 filteredSpecs, orderBy,
                 pageIndex, pageSize,
-                loadFilterableSpecificationAttributeOptionIds, out filterableSpecificationAttributeOptionIds, 
+                loadFilterableSpecificationAttributeOptionIds, out filterableSpecificationAttributeOptionIds,
                 showHidden);
         }
 
@@ -309,7 +309,7 @@ namespace Nop.Services.Catalog
         /// <param name="filterableSpecificationAttributeOptionIds">The specification attribute option identifiers applied to loaded products (all pages)</param>
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>Product collection</returns>
-        public virtual IPagedList<Product> SearchProducts(IList<int> categoryIds, 
+        public virtual IPagedList<Product> SearchProducts(IList<int> categoryIds,
             int manufacturerId, bool? featuredProducts,
             decimal? priceMin, decimal? priceMax, int productTagId,
             string keywords, bool searchDescriptions, int languageId,
@@ -342,7 +342,7 @@ namespace Nop.Services.Catalog
                 //It's much faster than the LINQ implementation below 
 
                 #region Use stored procedure
-                
+
                 //pass categry identifiers as comma-delimited string
                 string commaSeparatedCategoryIds = "";
                 if (categoryIds != null)
@@ -375,13 +375,13 @@ namespace Nop.Services.Catalog
                 //some databases don't support int.MaxValue
                 if (pageSize == int.MaxValue)
                     pageSize = int.MaxValue - 1;
-                
+
                 //prepare parameters
                 var pCategoryIds = _dataProvider.GetParameter();
                 pCategoryIds.ParameterName = "CategoryIds";
                 pCategoryIds.Value = commaSeparatedCategoryIds != null ? (object)commaSeparatedCategoryIds : DBNull.Value;
                 pCategoryIds.DbType = DbType.String;
-                
+
                 var pManufacturerId = _dataProvider.GetParameter();
                 pManufacturerId.ParameterName = "ManufacturerId";
                 pManufacturerId.Value = manufacturerId;
@@ -401,7 +401,7 @@ namespace Nop.Services.Catalog
                 pPriceMin.ParameterName = "PriceMin";
                 pPriceMin.Value = priceMin.HasValue ? (object)priceMin.Value : DBNull.Value;
                 pPriceMin.DbType = DbType.Decimal;
-                
+
                 var pPriceMax = _dataProvider.GetParameter();
                 pPriceMax.ParameterName = "PriceMax";
                 pPriceMax.Value = priceMax.HasValue ? (object)priceMax.Value : DBNull.Value;
@@ -456,12 +456,12 @@ namespace Nop.Services.Catalog
                 pShowHidden.ParameterName = "ShowHidden";
                 pShowHidden.Value = showHidden;
                 pShowHidden.DbType = DbType.Boolean;
-                
+
                 var pLoadFilterableSpecificationAttributeOptionIds = _dataProvider.GetParameter();
                 pLoadFilterableSpecificationAttributeOptionIds.ParameterName = "LoadFilterableSpecificationAttributeOptionIds";
                 pLoadFilterableSpecificationAttributeOptionIds.Value = loadFilterableSpecificationAttributeOptionIds;
                 pLoadFilterableSpecificationAttributeOptionIds.DbType = DbType.Boolean;
-                
+
                 var pFilterableSpecificationAttributeOptionIds = _dataProvider.GetParameter();
                 pFilterableSpecificationAttributeOptionIds.ParameterName = "FilterableSpecificationAttributeOptionIds";
                 pFilterableSpecificationAttributeOptionIds.Direction = ParameterDirection.Output;
@@ -500,10 +500,10 @@ namespace Nop.Services.Catalog
                 if (loadFilterableSpecificationAttributeOptionIds &&
                     !string.IsNullOrWhiteSpace(filterableSpecificationAttributeOptionIdsStr))
                 {
-                     filterableSpecificationAttributeOptionIds = filterableSpecificationAttributeOptionIdsStr
-                        .Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries)
-                        .Select(x => Convert.ToInt32(x.Trim()))
-                        .ToList();
+                    filterableSpecificationAttributeOptionIds = filterableSpecificationAttributeOptionIdsStr
+                       .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                       .Select(x => Convert.ToInt32(x.Trim()))
+                       .ToList();
                 }
                 //return products
                 int totalRecords = (pTotalRecords.Value != DBNull.Value) ? Convert.ToInt32(pTotalRecords.Value) : 0;
@@ -537,7 +537,7 @@ namespace Nop.Services.Catalog
                                   (searchDescriptions && p.FullDescription.Contains(keywords)) ||
                                   (pv.Name.Contains(keywords)) ||
                                   (searchDescriptions && pv.Description.Contains(keywords)) ||
-                                  //localized values
+                                //localized values
                                   (searchLocalizedValue && lp.LanguageId == languageId && lp.LocaleKeyGroup == "Product" && lp.LocaleKey == "Name" && lp.LocaleValue.Contains(keywords)) ||
                                   (searchDescriptions && searchLocalizedValue && lp.LanguageId == languageId && lp.LocaleKeyGroup == "Product" && lp.LocaleKey == "ShortDescription" && lp.LocaleValue.Contains(keywords)) ||
                                   (searchDescriptions && searchLocalizedValue && lp.LanguageId == languageId && lp.LocaleKeyGroup == "Product" && lp.LocaleKey == "FullDescription" && lp.LocaleValue.Contains(keywords))
@@ -557,22 +557,22 @@ namespace Nop.Services.Catalog
                             (showHidden || pv.Published) &&
                             //price min
                             (
-                                !priceMin.HasValue 
+                                !priceMin.HasValue
                                 ||
-                                //special price (specified price and valid date range)
+                            //special price (specified price and valid date range)
                                 ((pv.SpecialPrice.HasValue && ((!pv.SpecialPriceStartDateTimeUtc.HasValue || pv.SpecialPriceStartDateTimeUtc.Value < nowUtc) && (!pv.SpecialPriceEndDateTimeUtc.HasValue || pv.SpecialPriceEndDateTimeUtc.Value > nowUtc))) && (pv.SpecialPrice >= priceMin.Value))
                                 ||
-                                //regular price (price isn't specified or date range isn't valid)
+                            //regular price (price isn't specified or date range isn't valid)
                                 ((!pv.SpecialPrice.HasValue || ((pv.SpecialPriceStartDateTimeUtc.HasValue && pv.SpecialPriceStartDateTimeUtc.Value > nowUtc) || (pv.SpecialPriceEndDateTimeUtc.HasValue && pv.SpecialPriceEndDateTimeUtc.Value < nowUtc))) && (pv.Price >= priceMin.Value))
                             ) &&
                             //price max
                             (
-                                !priceMax.HasValue 
+                                !priceMax.HasValue
                                 ||
-                                //special price (specified price and valid date range)
+                            //special price (specified price and valid date range)
                                 ((pv.SpecialPrice.HasValue && ((!pv.SpecialPriceStartDateTimeUtc.HasValue || pv.SpecialPriceStartDateTimeUtc.Value < nowUtc) && (!pv.SpecialPriceEndDateTimeUtc.HasValue || pv.SpecialPriceEndDateTimeUtc.Value > nowUtc))) && (pv.SpecialPrice <= priceMax.Value))
                                 ||
-                                //regular price (price isn't specified or date range isn't valid)
+                            //regular price (price isn't specified or date range isn't valid)
                                 ((!pv.SpecialPrice.HasValue || ((pv.SpecialPriceStartDateTimeUtc.HasValue && pv.SpecialPriceStartDateTimeUtc.Value > nowUtc) || (pv.SpecialPriceEndDateTimeUtc.HasValue && pv.SpecialPriceEndDateTimeUtc.Value < nowUtc))) && (pv.Price <= priceMax.Value))
                             ) &&
                             //available dates
@@ -632,11 +632,36 @@ namespace Nop.Services.Catalog
                 //only distinct products (group by ID)
                 //if we use standard Distinct() method, then all fields will be compared (low performance)
                 //it'll not work in SQL Server Compact when searching products by a keyword)
-                query = from p in query
-                        group p by p.Id
-                        into pGroup
-                        orderby pGroup.Key
-                        select pGroup.FirstOrDefault();
+                if (_dataProvider.GetType() == typeof(MySqlDataProvider))
+                {
+                    //FirstOrDefault on a group not supported for MySql, so do it with a loop...slow
+
+                    var groupings = from p in query
+                                    group p by p.Id
+                                        into pGroup
+                                        orderby pGroup.Key
+                                        select pGroup;
+
+                    List<Product> temp = new List<Product>();
+                    foreach (var group in groupings)
+                    {
+                        foreach (var item in group)
+                        {
+                            temp.Add(item);
+                            break;
+                        }
+                    }
+
+                    query = temp.AsQueryable<Product>();
+                }
+                else
+                {
+                    query = from p in query
+                            group p by p.Id
+                                into pGroup
+                                orderby pGroup.Key
+                                select pGroup.FirstOrDefault();
+                }
 
                 //sort products
                 if (orderBy == ProductSortingEnum.Position && categoryIds != null && categoryIds.Count > 0)
@@ -728,7 +753,7 @@ namespace Nop.Services.Catalog
                 throw new ArgumentNullException("product");
 
             int approvedRatingSum = 0;
-            int notApprovedRatingSum = 0; 
+            int notApprovedRatingSum = 0;
             int approvedTotalReviews = 0;
             int notApprovedTotalReviews = 0;
             var reviews = product.ProductReviews;
@@ -737,7 +762,7 @@ namespace Nop.Services.Catalog
                 if (pr.IsApproved)
                 {
                     approvedRatingSum += pr.Rating;
-                    approvedTotalReviews ++;
+                    approvedTotalReviews++;
                 }
                 else
                 {
@@ -756,7 +781,7 @@ namespace Nop.Services.Catalog
         #endregion
 
         #region Product variants
-        
+
         /// <summary>
         /// Get low stock product variants
         /// </summary>
@@ -780,10 +805,34 @@ namespace Nop.Services.Catalog
                          select pv;
             //only distinct products (group by ID)
             //if we use standard Distinct() method, then all fields will be compared (low performance)
-            query2 = from pv in query2
-                    group pv by pv.Id into pGroup
-                    orderby pGroup.Key
-                    select pGroup.FirstOrDefault();
+            if (_dataProvider.GetType() == typeof(MySqlDataProvider))
+            {
+                //FirstOrDefault on a group not supported for MySql, so do it with a loop...slow
+
+                var groupings = from pv in query2
+                                group pv by pv.Id into pGroup
+                                orderby pGroup.Key
+                                select pGroup;
+
+                List<ProductVariant> temp = new List<ProductVariant>();
+                foreach (var group in groupings)
+                {
+                    foreach (var item in group)
+                    {
+                        temp.Add(item);
+                        break;
+                    }
+                }
+
+                query2 = temp.AsQueryable<ProductVariant>();
+            }
+            else
+            {
+                query2 = from pv in query2
+                         group pv by pv.Id into pGroup
+                         orderby pGroup.Key
+                         select pGroup.FirstOrDefault();
+            }
             var productVariants2 = query2.ToList();
 
             var result = new List<ProductVariant>();
@@ -791,7 +840,7 @@ namespace Nop.Services.Catalog
             result.AddRange(productVariants2);
             return result;
         }
-        
+
         /// <summary>
         /// Gets a product variant
         /// </summary>
@@ -809,7 +858,7 @@ namespace Nop.Services.Catalog
                 return pv;
             });
         }
-        
+
         /// <summary>
         /// Get product variants by product identifiers
         /// </summary>
@@ -845,7 +894,7 @@ namespace Nop.Services.Catalog
             var productVariants = query.ToList();
             return productVariants;
         }
-        
+
         /// <summary>
         /// Gets a product variant by SKU
         /// </summary>
@@ -866,7 +915,7 @@ namespace Nop.Services.Catalog
             var productVariant = query.FirstOrDefault();
             return productVariant;
         }
-        
+
         /// <summary>
         /// Inserts a product variant
         /// </summary>
@@ -904,7 +953,7 @@ namespace Nop.Services.Catalog
             //event notification
             _eventPublisher.EntityUpdated(productVariant);
         }
-        
+
         /// <summary>
         /// Gets product variants by product identifier
         /// </summary>
@@ -954,7 +1003,7 @@ namespace Nop.Services.Catalog
             productVariant.Deleted = true;
             UpdateProductVariant(productVariant);
         }
-        
+
         /// <summary>
         /// Adjusts inventory
         /// </summary>
@@ -1018,7 +1067,7 @@ namespace Nop.Services.Catalog
                         //send email notification
                         if (decrease && productVariant.NotifyAdminForQuantityBelow > newStockQuantity)
                             _workflowMessageService.SendQuantityBelowStoreOwnerNotification(productVariant, _localizationSettings.DefaultAdminLanguageId);
-                        
+
                         if (decrease)
                         {
                             var product = productVariant.Product;
@@ -1131,16 +1180,40 @@ namespace Nop.Services.Catalog
             //only distinct products (group by ID)
             //if we use standard Distinct() method, then all fields will be compared (low performance)
             //it'll not work in SQL Server Compact when searching products by a keyword)
-            query = from pv in query
-                    group pv by pv.Id into pvGroup
-                    orderby pvGroup.Key
-                    select pvGroup.FirstOrDefault();
+            if (_dataProvider.GetType() == typeof(MySqlDataProvider))
+            {
+                //FirstOrDefault on a group not supported for MySql, so do it with a loop...slow
+
+                var groupings = from pv in query
+                                group pv by pv.Id into pvGroup
+                                orderby pvGroup.Key
+                                select pvGroup;
+
+                List<ProductVariant> temp = new List<ProductVariant>();
+                foreach (var group in groupings)
+                {
+                    foreach (var item in group)
+                    {
+                        temp.Add(item);
+                        break;
+                    }
+                }
+
+                query = temp.AsQueryable<ProductVariant>();
+            }
+            else
+            {
+                query = from pv in query
+                        group pv by pv.Id into pvGroup
+                        orderby pvGroup.Key
+                        select pvGroup.FirstOrDefault();
+            }
 
             query = query.OrderBy(pv => pv.Product.Name).ThenBy(pv => pv.DisplayOrder);
             var productVariants = new PagedList<ProductVariant>(query, pageIndex, pageSize);
             return productVariants;
         }
-        
+
         /// <summary>
         /// Update HasTierPrices property (used for performance optimization)
         /// </summary>
@@ -1215,7 +1288,7 @@ namespace Nop.Services.Catalog
         {
             if (relatedProductId == 0)
                 return null;
-            
+
             var relatedProduct = _relatedProductRepository.GetById(relatedProductId);
             return relatedProduct;
         }
@@ -1384,9 +1457,9 @@ namespace Nop.Services.Catalog
             return result;
         }
         #endregion
-        
+
         #region Tier prices
-        
+
         /// <summary>
         /// Deletes a tier price
         /// </summary>
@@ -1415,7 +1488,7 @@ namespace Nop.Services.Catalog
         {
             if (tierPriceId == 0)
                 return null;
-            
+
             var tierPrice = _tierPriceRepository.GetById(tierPriceId);
             return tierPrice;
         }
