@@ -778,9 +778,20 @@
 			<LocaleResource Name="EditWidget">
 				<Value>Edited a widget (ID = {0})</Value>
 			</LocaleResource>
-			<LocaleResource Name="PlaceOrder">
-				<Value>Placed a new order</Value>
-			</LocaleResource>
+      <LocaleResource Name="PublicStore">
+        <Children>
+          <LocaleResource Name="ViewCategory">
+            <Value>Public store. Viewed a category details page ('{0}')</Value>
+          </LocaleResource>
+          <LocaleResource Name="ViewManufacturer">
+            <Value>Public store. Viewed a manufacturer details page (''{0}'')</Value>
+          </LocaleResource>
+          <LocaleResource Name="ViewProduct">
+            <Value>Public store. Viewed a product details page (''{0}'')</Value>
+          </LocaleResource>
+          <LocaleResource Name="PlaceOrder">
+            <Value>Placed a new order (ID = {0})</Value>
+          </LocaleResource>
 		</Children>
 	</LocaleResource>
 	<LocaleResource Name="Address">
@@ -2506,6 +2517,9 @@
 					</LocaleResource>
 				</Children>
 			</LocaleResource>
+      <LocaleResource Name="PurchaseOrderNumber">
+        <Value>Purchase Order Number</Value>
+      </LocaleResource>
 			<LocaleResource Name="Reorder">
 				<Value>Re-order</Value>
 			</LocaleResource>
@@ -2869,6 +2883,9 @@
 			<LocaleResource Name="ProductTotal">
 				<Value>Total</Value>
 			</LocaleResource>
+      <LocaleResource Name="PurchaseOrderNumber">
+        <Value>Purchase Order Number: {0}</Value>
+      </LocaleResource>
 			<LocaleResource Name="RewardPoints">
 				<Value>{0} reward points:</Value>
 			</LocaleResource>
