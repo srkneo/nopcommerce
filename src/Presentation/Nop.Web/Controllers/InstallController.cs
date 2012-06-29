@@ -206,12 +206,15 @@ namespace Nop.Web.Controllers
             //builder.IntegratedSecurity = trustedConnection;
             builder.Server = serverName;
             builder.Database = databaseName;
+
+            //The install can timeout, so set really high
             builder.DefaultCommandTimeout = 30000;
+
             builder.AllowUserVariables = true;
             //if (!trustedConnection)
             //{
-                builder.UserID = userName;
-                builder.Password = password;
+            builder.UserID = userName;
+            builder.Password = password;
             //}
             builder.PersistSecurityInfo = false;
             //builder.MultipleActiveResultSets = true;
@@ -460,7 +463,6 @@ namespace Nop.Web.Controllers
                             {
                                 //create database
                                 var collation = model.MySqlUseCustomCollation ? model.MySqlCollation : string.Empty;
-                                //var collation = "utf8_general_ci";
                                 var errorCreatingDatabase = createMySqlDatabase(connectionString, collation);
                                 if (!String.IsNullOrEmpty(errorCreatingDatabase))
                                     throw new Exception(errorCreatingDatabase);

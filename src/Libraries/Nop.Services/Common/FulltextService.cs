@@ -56,8 +56,14 @@ namespace Nop.Services.Common
         {
             if (_commonSettings.UseStoredProceduresIfSupported && _dataProvider.StoredProceduredSupported)
             {
+                IEnumerable<int> result = null;
+
                 //stored procedures are enabled and supported by the database. 
-                var result = _dbContext.SqlQuery<int>("EXEC [FullText_IsSupported]");
+                if (_dataProvider.GetType() == typeof(MySqlDataProvider))
+                    result = _dbContext.SqlQuery<int>("CALL FullText_IsSupported");
+                else
+                    result = _dbContext.SqlQuery<int>("EXEC [FullText_IsSupported]");
+
                 return result.FirstOrDefault() > 0;
             }
             else
@@ -75,7 +81,10 @@ namespace Nop.Services.Common
             if (_commonSettings.UseStoredProceduresIfSupported && _dataProvider.StoredProceduredSupported)
             {
                 //stored procedures are enabled and supported by the database.
-                _dbContext.ExecuteSqlCommand("EXEC [FullText_Enable]");
+                if (_dataProvider.GetType() == typeof(MySqlDataProvider))
+                    _dbContext.SqlQuery<int>("CALL FullText_Enable");
+                else
+                    _dbContext.ExecuteSqlCommand("EXEC [FullText_Enable]");
             }
             else
             {
@@ -91,7 +100,10 @@ namespace Nop.Services.Common
             if (_commonSettings.UseStoredProceduresIfSupported && _dataProvider.StoredProceduredSupported)
             {
                 //stored procedures are enabled and supported by the database.
-                _dbContext.ExecuteSqlCommand("EXEC [FullText_Disable]");
+                if (_dataProvider.GetType() == typeof(MySqlDataProvider))
+                    _dbContext.SqlQuery<int>("CALL FullText_Disable");
+                else
+                    _dbContext.ExecuteSqlCommand("EXEC [FullText_Disable]");
             }
             else
             {
