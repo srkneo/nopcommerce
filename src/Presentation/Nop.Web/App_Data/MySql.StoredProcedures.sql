@@ -131,7 +131,6 @@ if ManufacturerId is null then
 		ProductId int NOT NULL
 	) ENGINE = MEMORY;
 	
-	
 	-- filter by keywords
 	SET Keywords = coalesce(Keywords, '');
 	SET Keywords = rtrim(ltrim(Keywords));
@@ -142,7 +141,7 @@ if ManufacturerId is null then
 			-- full-text search
 			IF FullTextMode = 0 then
 				-- 0 - using CONTAINS with <prefix_term>
-				SET Keywords = concat(' "', Keywords, '*" ');
+				SET Keywords = concat(' ', Keywords, '* ');
 			ELSE
 				-- 5 - using CONTAINS and OR with <prefix_term>
 				-- 10 - using CONTAINS and AND with <prefix_term>
@@ -156,39 +155,39 @@ if ManufacturerId is null then
         END WHILE;
 
 				IF FullTextMode = 5 then -- 5 - using CONTAINS and OR with <prefix_term>
-					SET @concat_term = 'OR';				
+					SET @concat_term = '';				
 				ELSEIF FullTextMode = 10 then -- 10 - using CONTAINS and AND with <prefix_term>
-					SET @concat_term = 'AND';
+					SET @concat_term = '+';
 				END IF;
 
 				-- now let's build search string
 				set @fulltext_keywords = N'';
 		
-				set @index = LOCATE(' ', Keywords, 0);
+				set @index = LOCATE(' ', Keywords);
 
 				--  if index = 0, then only one field was passed
 				IF @index = 0 then
-					set @fulltext_keywords = CONCAT(' "', Keywords, '*" ');
+					set @fulltext_keywords = CONCAT(' ', Keywords, '* ');
 				ELSE
-					SET  @first = 1;
+					-- SET  @first = 1;
 					WHILE @index > 0 DO
-						IF @first = 0 then
-							SET @fulltext_keywords = CONCAT(@fulltext_keywords, ' ', @concat_term, ' ');
-						ELSE
-							SET @first = 0;
-            END IF;
+						-- IF @first = 1 then
+-- 							SET @fulltext_keywords = @concat_term; -- CONCAT(@fulltext_keywords, ' ', @concat_term, ' ');
+-- 						-- ELSE
+-- 							SET @first = 0;
+--             END IF;
 
-						SET @fulltext_keywords = CONCAT(@fulltext_keywords, '"', SUBSTRING(Keywords, 1, @index - 1), '*"');
+						SET @fulltext_keywords = CONCAT(@fulltext_keywords, ' ', @concat_term, SUBSTRING(Keywords, 1, @index - 1), '*');
 						SET Keywords = SUBSTRING(Keywords, @index + 1, LENGTH(Keywords) - @index);
-						SET @index = LOCATE(' ', Keywords, 0);
+						SET @index = LOCATE(' ', Keywords);
 					end while;
-					
+                    
 					--  add the last field
 					IF LENGTH(@fulltext_keywords) > 0 THEN
-						SET @fulltext_keywords = CONCAT(@fulltext_keywords, ' ', @concat_term, ' ', '"', SUBSTRING(Keywords, 1, LENGTH(Keywords)), '*"');
+						SET @fulltext_keywords = CONCAT(@fulltext_keywords, ' ', @concat_term, SUBSTRING(Keywords, 1, LENGTH(Keywords)), '*');
           END IF;
 				END IF;
-				SET Keywords = @fulltext_keywords;
+				SET Keywords = ltrim(rtrim(@fulltext_keywords));
 			END IF;
 		ELSE
 			-- usual search by PATINDEX
@@ -319,11 +318,12 @@ if ManufacturerId is null then
 		END IF;
 
     -- select @sql;
+    -- select Keywords;
     
     set @TempKeywords = Keywords;
     
-    -- SET @sql = '
---         Select @Keywords;';
+     -- SET @sql = '
+--          Select @TempKeywords;';
         
 		-- PRINT (@sql)
     PREPARE stmt1 FROM @sql; 
@@ -652,14 +652,14 @@ BEGIN
 --   WHERE table_name = 'Product' AND INDEX_NAME = 'IX_PRODUCT_FULLTEXT';
 --   
 --   if @IndexCount = 0 then
---     CREATE FULLTEXT INDEX `IX_PRODUCT_FULLTEXT` ON `product` ( `Name`, `ShortDescription`, `FullDescription`);
+--     CREATE FULLTEXT INDEX `IX_PRODUCT_FULLTEXT` ON `product` ( `Name`, `ShortDescription`, `FullDescription` );
 --   end if;	
 --     
 --     SELECT COUNT(1) INTO @IndexCount FROM information_schema.statistics 
 --   WHERE table_name = 'ProductVariant' AND INDEX_NAME = 'IX_ProductVariant_FULLTEXT';
 --   
 --   if @IndexCount = 0 then
---     CREATE FULLTEXT INDEX `IX_ProductVariant_FULLTEXT` ON `ProductVariant` ( `Description`, `SKU`, `FullDescription`);
+--     CREATE FULLTEXT INDEX `IX_ProductVariant_FULLTEXT` ON `ProductVariant` ( `Name`, `Description`, `SKU` );
 --   end if;
 -- 
 -- SELECT COUNT(1) INTO @IndexCount FROM information_schema.statistics 
