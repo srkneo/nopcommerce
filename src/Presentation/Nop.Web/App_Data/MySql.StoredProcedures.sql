@@ -203,9 +203,9 @@ if ManufacturerId is null then
 		FROM Product p
 		WHERE ';
 		IF UseFullTextSearch = 1 THEN
-			SET @sql = CONCAT(@sql, 'MATCH (p.`Name`) AGAINST (@Keywords IN BOOLEAN MODE) ');
+			SET @sql = CONCAT(@sql, 'MATCH (p.`Name`) AGAINST (@TempKeywords IN BOOLEAN MODE) ');
 		ELSE
-			SET @sql = CONCAT(@sql, 'p.`Name` LIKE @Keywords ');
+			SET @sql = CONCAT(@sql, 'p.`Name` LIKE @TempKeywords ');
     END IF;
 
 
@@ -216,9 +216,9 @@ if ManufacturerId is null then
 		FROM ProductVariant pv
 		WHERE ');
 		IF UseFullTextSearch = 1 THEN
-			SET @sql = CONCAT(@sql, 'MATCH (pv.`Name`) AGAINST (@Keywords IN BOOLEAN MODE) ');
+			SET @sql = CONCAT(@sql, 'MATCH (pv.`Name`) AGAINST (@TempKeywords IN BOOLEAN MODE) ');
 		ELSE
-			SET @sql = CONCAT(@sql, 'pv.`Name` LIKE @Keywords ');
+			SET @sql = CONCAT(@sql, 'pv.`Name` LIKE @TempKeywords ');
     END IF;
 
 		-- SKU
@@ -228,9 +228,9 @@ if ManufacturerId is null then
 		FROM ProductVariant pv
 		WHERE ');
 		IF UseFullTextSearch = 1 THEN
-			SET @sql = CONCAT(@sql, 'MATCH (pv.`Sku`) AGAINST (@Keywords IN BOOLEAN MODE) ');
+			SET @sql = CONCAT(@sql, 'MATCH (pv.`Sku`) AGAINST (@TempKeywords IN BOOLEAN MODE) ');
 		ELSE
-			SET @sql = CONCAT(@sql, 'pv.`Sku` LIKE @Keywords ');
+			SET @sql = CONCAT(@sql, 'pv.`Sku` LIKE @TempKeywords ');
     END IF;
 
 		-- localized product name
@@ -243,9 +243,9 @@ if ManufacturerId is null then
 			AND lp.LanguageId = ', COALESCE(LanguageId, 0), '
 			AND lp.LocaleKey = N''Name''');
 		IF UseFullTextSearch = 1 THEN
-			SET @sql = CONCAT(@sql, ' AND MATCH (lp.`LocaleValue`) AGAINST (@Keywords IN BOOLEAN MODE) ');
+			SET @sql = CONCAT(@sql, ' AND MATCH (lp.`LocaleValue`) AGAINST (@TempKeywords IN BOOLEAN MODE) ');
 		ELSE
-			SET @sql = CONCAT(@sql, ' AND lp.`LocaleValue` LIKE @Keywords ');
+			SET @sql = CONCAT(@sql, ' AND lp.`LocaleValue` LIKE @TempKeywords ');
     END IF;	
 
 		-- product short description
@@ -256,9 +256,9 @@ if ManufacturerId is null then
 			FROM Product p
 			WHERE ');
 			IF UseFullTextSearch = 1 THEN
-				SET @sql = CONCAT(@sql, 'MATCH (p.`ShortDescription`) AGAINST (@Keywords IN BOOLEAN MODE) ');
+				SET @sql = CONCAT(@sql, 'MATCH (p.`ShortDescription`) AGAINST (@TempKeywords IN BOOLEAN MODE) ');
 			ELSE
-				SET @sql = CONCAT(@sql, 'p.`ShortDescription` LIKE @Keywords ');
+				SET @sql = CONCAT(@sql, 'p.`ShortDescription` LIKE @TempKeywords ');
       END IF;
 
 
@@ -269,9 +269,9 @@ if ManufacturerId is null then
 			FROM Product p
 			WHERE ');
 			IF UseFullTextSearch = 1 THEN
-				SET @sql = CONCAT(@sql, 'MATCH (p.`FullDescription`) AGAINST (@Keywords IN BOOLEAN MODE) ');
+				SET @sql = CONCAT(@sql, 'MATCH (p.`FullDescription`) AGAINST (@TempKeywords IN BOOLEAN MODE) ');
 			ELSE
-				SET @sql = CONCAT(@sql, 'p.`FullDescription` LIKE @Keywords ');
+				SET @sql = CONCAT(@sql, 'p.`FullDescription` LIKE @TempKeywords ');
       END IF;
 
 			-- product variant description
@@ -281,9 +281,9 @@ if ManufacturerId is null then
 			FROM ProductVariant pv
 			WHERE ');
 			IF UseFullTextSearch = 1 THEN
-				SET @sql = CONCAT(@sql, 'MATCH (pv.`Description`) AGAINST (@Keywords IN BOOLEAN MODE) ');
+				SET @sql = CONCAT(@sql, 'MATCH (pv.`Description`) AGAINST (@TempKeywords IN BOOLEAN MODE) ');
 			ELSE
-				SET @sql = CONCAT(@sql, 'pv.`Description` LIKE @Keywords ');
+				SET @sql = CONCAT(@sql, 'pv.`Description` LIKE @TempKeywords ');
       END IF;
 
 
@@ -297,9 +297,9 @@ if ManufacturerId is null then
 				AND lp.LanguageId = ', COALESCE(LanguageId, 0), '
 				AND lp.LocaleKey = N''ShortDescription''');
 			IF UseFullTextSearch = 1 THEN
-				SET @sql = CONCAT(@sql, ' AND MATCH (lp.`LocaleValue`) AGAINST (@Keywords IN BOOLEAN MODE) ');
+				SET @sql = CONCAT(@sql, ' AND MATCH (lp.`LocaleValue`) AGAINST (@TempKeywords IN BOOLEAN MODE) ');
 			ELSE
-				SET @sql = CONCAT(@sql, ' AND lp.`LocaleValue` LIKE @Keywords ');
+				SET @sql = CONCAT(@sql, ' AND lp.`LocaleValue` LIKE @TempKeywords ');
       END IF;				
 
 			-- localized product full description
@@ -312,15 +312,16 @@ if ManufacturerId is null then
 				AND lp.LanguageId = ', COALESCE(LanguageId, 0), '
 				AND lp.LocaleKey = N''FullDescription''');
 			IF UseFullTextSearch = 1 THEN
-				SET @sql = CONCAT(@sql, ' AND MATCH (lp.`LocaleValue`) AGAINST (@Keywords IN BOOLEAN MODE) ');
+				SET @sql = CONCAT(@sql, ' AND MATCH (lp.`LocaleValue`) AGAINST (@TempKeywords IN BOOLEAN MODE) ');
 			ELSE
-				SET @sql = CONCAT(@sql, ' AND lp.`LocaleValue` LIKE @Keywords ');
+				SET @sql = CONCAT(@sql, ' AND lp.`LocaleValue` LIKE @TempKeywords ');
       END IF;
 		END IF;
 
     -- select @sql;
     
-    -- set @TempKeywords = Keywords;
+    set @TempKeywords = Keywords;
+    
     -- SET @sql = '
 --         Select @Keywords;';
         
