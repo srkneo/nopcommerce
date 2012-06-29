@@ -104,7 +104,8 @@ namespace Nop.Services.Customers
                 query = query.Where(c => registrationTo.Value >= c.CreatedOnUtc);
             query = query.Where(c => !c.Deleted);
             if (customerRoleIds != null && customerRoleIds.Length > 0)
-                query = query.Where(c => c.CustomerRoles.Select(cr => cr.Id).Intersect(customerRoleIds).Count() > 0);
+                query = query.Where(c => c.CustomerRoles.Count(cr => customerRoleIds.Contains(cr.Id)) > 0);
+            //query = query.Where(c => c.CustomerRoles.Select(cr => cr.Id).Intersect(customerRoleIds).Count() > 0);
             if (!String.IsNullOrWhiteSpace(email))
                 query = query.Where(c => c.Email.Contains(email));
             if (!String.IsNullOrWhiteSpace(username))

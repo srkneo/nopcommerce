@@ -373,6 +373,8 @@ namespace Nop.Services.Localization
 
                 //long-running query. specify timeout (600 seconds)
                 if (_dataProvider.GetType() == typeof(MySqlDataProvider))
+                    //I don't like doing this with string.format, but it won't work the proper way...unless
+                    //I run the string.format way first, then running the proper way works...I don't know why
                     _dbContext.ExecuteSqlCommand(string.Format("set @LanguageId = {0}; set @xml = '{1}'; CALL LanguagePackImport(@LanguageId, @xml)", 1, xml.Replace("'", "''")), 600);
                     //_dbContext.ExecuteSqlCommand("CALL LanguagePackImport(@LanguageId, @XmlPackage)", 600, pLanguageId, pXmlPackage);
                 else
