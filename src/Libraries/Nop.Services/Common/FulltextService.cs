@@ -82,7 +82,7 @@ namespace Nop.Services.Common
             {
                 //stored procedures are enabled and supported by the database.
                 if (_dataProvider.GetType() == typeof(MySqlDataProvider))
-                    _dbContext.SqlQuery<int>("CALL FullText_Enable");
+                    _dbContext.ExecuteSqlCommand("CALL FullText_Enable");
                 else
                     _dbContext.ExecuteSqlCommand("EXEC [FullText_Enable]");
             }
@@ -101,7 +101,7 @@ namespace Nop.Services.Common
             {
                 //stored procedures are enabled and supported by the database.
                 if (_dataProvider.GetType() == typeof(MySqlDataProvider))
-                    _dbContext.SqlQuery<int>("CALL FullText_Disable");
+                    _dbContext.ExecuteSqlCommand("CALL FullText_Disable");
                 else
                     _dbContext.ExecuteSqlCommand("EXEC [FullText_Disable]");
             }

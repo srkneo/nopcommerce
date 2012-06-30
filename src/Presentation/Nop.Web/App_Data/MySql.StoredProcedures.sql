@@ -47,8 +47,8 @@ END
 
 CREATE PROCEDURE `nop_getprimarykey_indexname`
 (
-    IN table_name nvarchar(1000),
-    OUT index_name nvarchar(1000)
+    IN table_name varchar(1000),
+    OUT index_name varchar(1000)
 )
 BEGIN
     select CONSTRAINT_NAME into index_name from information_schema.table_constraints t
@@ -335,7 +335,7 @@ if ManufacturerId is null then
     
     
     -- select * from KeywordProducts_TempTable;
-		-- EXEC sp_executesql @sql, N'Keywords nvarchar(4000)', Keywords
+		-- EXEC sp_executesql @sql, N'Keywords varchar(4000)', Keywords
 	
 	ELSE
 		SET @SearchKeywords = 0;
@@ -636,8 +636,10 @@ END
 
 CREATE PROCEDURE `FullText_IsSupported`()
 BEGIN	
-    -- Not sure how to test for this in MySql or if it's always on
-    SELECT 1;
+    -- Since InnoDB under MySql 5.5 doesn't support fulltext indexing, just return 0.
+	-- If your using InnoDB and MySql 5.6 or even MyIsam and MySql 5.5 then you should be able to return 1
+	-- and uncomment the fulltext enable/disable procedures
+    SELECT 0;
 END
 -- GO
 
@@ -713,7 +715,7 @@ BEGIN
 	CREATE temporary TABLE LocaleStringResource_TempTable
 	(
 		LanguageId int NOT NULL,
-				ResourceName nvarchar(200) NOT NULL,
+				ResourceName varchar(200) NOT NULL,
 				ResourceValue LONGTEXT NOT NULL
 	);
 
@@ -727,7 +729,7 @@ END WHILE;
         
         BEGIN
         DECLARE done INT DEFAULT FALSE;
-        DECLARE ResourceName nvarchar(200);
+        DECLARE ResourceName varchar(200);
 		DECLARE ResourceValue LONGTEXT;
 		DECLARE cur_localeresource CURSOR FOR
 		SELECT LanguageID, LocaleStringResource_TempTable.ResourceName, LocaleStringResource_TempTable.ResourceValue
