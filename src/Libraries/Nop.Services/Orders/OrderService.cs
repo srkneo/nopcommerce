@@ -469,15 +469,30 @@ namespace Nop.Services.Orders
             if (initialOrderStatus.HasValue)
                 initialOrderStatusId = (int)initialOrderStatus.Value;
 
-            var query1 = from rp in _recurringPaymentRepository.Table
-                         join c in _customerRepository.Table on rp.InitialOrder.CustomerId equals c.Id
-                         where
-                         (!rp.Deleted && !rp.InitialOrder.Deleted && !c.Deleted) &&
+            //Original that didn't work correctly with MySql, had to break up into the 2 following
+            //var query1 = from rp in _recurringPaymentRepository.Table
+            //             join c in _customerRepository.Table on rp.InitialOrder.CustomerId equals c.Id
+            //             where
+            //             (!rp.Deleted && !rp.InitialOrder.Deleted && !c.Deleted) &&
+            //             (showHidden || rp.IsActive) &&
+            //             (customerId == 0 || rp.InitialOrder.CustomerId == customerId) &&
+            //             (initialOrderId == 0 || rp.InitialOrder.Id == initialOrderId) &&
+            //             (!initialOrderStatusId.HasValue || initialOrderStatusId.Value == 0 || rp.InitialOrder.OrderStatusId == initialOrderStatusId.Value)
+            //             select rp.Id;
+
+            var preQuery1 = from rp in _recurringPaymentRepository.Table
+                     where
+                         (!rp.Deleted && !rp.InitialOrder.Deleted) &&
                          (showHidden || rp.IsActive) &&
                          (customerId == 0 || rp.InitialOrder.CustomerId == customerId) &&
                          (initialOrderId == 0 || rp.InitialOrder.Id == initialOrderId) &&
                          (!initialOrderStatusId.HasValue || initialOrderStatusId.Value == 0 || rp.InitialOrder.OrderStatusId == initialOrderStatusId.Value)
-                         select rp.Id;
+                     select new { Id = rp.Id, CustomerId = rp.InitialOrder.CustomerId };
+
+            var query1 = from rp in preQuery1
+                     join c in _customerRepository.Table on rp.CustomerId equals c.Id
+                     where !c.Deleted
+                     select rp.Id;            
 
             var query2 = from rp in _recurringPaymentRepository.Table
                          where query1.Contains(rp.Id)
