@@ -792,8 +792,10 @@
           <LocaleResource Name="PlaceOrder">
             <Value>Placed a new order (ID = {0})</Value>
           </LocaleResource>
-		</Children>
-	</LocaleResource>
+        </Children>
+      </LocaleResource>
+    </Children>
+  </LocaleResource>
 	<LocaleResource Name="Address">
 		<Value>Address</Value>
 		<Children>
@@ -2683,8 +2685,8 @@
 			<LocaleResource Name="Login">
 				<Value>Login</Value>
 			</LocaleResource>
-			<LocaleResource Name="Manufactures">
-				<Value>Manufactures</Value>
+			<LocaleResource Name="Manufacturers">
+				<Value>Manufacturers</Value>
 			</LocaleResource>
 			<LocaleResource Name="NewsArchive">
 				<Value>News Archive</Value>
@@ -2783,6 +2785,20 @@
 			<LocaleResource Name="ExpirationDate">
 				<Value>Expiration date</Value>
 			</LocaleResource>
+      <LocaleResource Name="ExpireMonth">
+        <Children>
+          <LocaleResource Name="Required">
+            <Value>Expire month is required</Value>
+          </LocaleResource>
+        </Children>
+      </LocaleResource>
+      <LocaleResource Name="ExpireYear">
+        <Children>
+          <LocaleResource Name="Required">
+            <Value>Expire year is required</Value>
+          </LocaleResource>
+        </Children>
+      </LocaleResource>
 			<LocaleResource Name="SelectCreditCard">
 				<Value>Select credit card</Value>
 			</LocaleResource>

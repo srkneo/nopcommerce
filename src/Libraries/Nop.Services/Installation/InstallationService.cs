@@ -505,7 +505,7 @@ namespace Nop.Services.Installation
                 {
                     Name = "Euro",
                     CurrencyCode = "EUR",
-                    Rate = 0.68M,
+                    Rate = 0.79M,
                     DisplayLocale = "",
                     //CustomFormatting = "ˆ0.00",
                     CustomFormatting = string.Format("{0}0.00", "\u20ac"),
@@ -4691,6 +4691,7 @@ namespace Nop.Services.Installation
             EngineContext.Current.Resolve<IConfigurationProvider<SecuritySettings>>()
                 .SaveSettings(new SecuritySettings()
                 {
+                    ForceSslForAllPages = false,
                     EncryptionKey = "273ece6f97dd844d",
                     AdminAreaAllowedIpAddresses = null
                 });
