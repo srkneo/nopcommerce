@@ -106,10 +106,21 @@ namespace Nop.Services.Orders
             if (!String.IsNullOrEmpty(billingEmail))
                 query = query.Where(o => o.BillingAddress != null && !String.IsNullOrEmpty(o.BillingAddress.Email) && o.BillingAddress.Email.Contains(billingEmail));
 
-			var item = (from oq in query
-						group oq by 1 into result
-						select new { OrderCount = result.Count(), OrderTaxSum = result.Sum(o => o.OrderTax), OrderTotalSum = result.Sum(o => o.OrderTotal) }
-					   ).Select(r => new OrderAverageReportLine(){ SumTax = r.OrderTaxSum, CountOrders=r.OrderCount, SumOrders = r.OrderTotalSum}).FirstOrDefault();
+
+            //This was the original, had to break out into 2 steps to work with MySql
+            //var item = (from oq in query
+            //            group oq by 1 into result
+            //            select new { OrderCount = result.Count(), OrderTaxSum = result.Sum(o => o.OrderTax), OrderTotalSum = result.Sum(o => o.OrderTotal) }
+            //           ).Select(r => new OrderAverageReportLine() { SumTax = r.OrderTaxSum, CountOrders = r.OrderCount, SumOrders = r.OrderTotalSum }).FirstOrDefault();
+
+            var grouping = (from oq in query
+                        group oq by 1 into result
+                        select result).AsEnumerable();
+
+            var item = (from result in grouping
+                        select new { OrderCount = result.Count(), OrderTaxSum = result.Sum(o => o.OrderTax), OrderTotalSum = result.Sum(o => o.OrderTotal) })
+                        .Select(r => new OrderAverageReportLine() { SumTax = r.OrderTaxSum, CountOrders = r.OrderCount, SumOrders = r.OrderTotalSum }).FirstOrDefault();
+			
 
 			item = item ?? new OrderAverageReportLine() { CountOrders = 0, SumOrders = decimal.Zero, SumTax = decimal.Zero };
             return item;
@@ -349,15 +360,47 @@ namespace Nop.Services.Orders
             //only distinct products (group by ID)
             //if we use standard Distinct() method, then all fields will be compared (low performance)
             //it'll not work in SQL Server Compact when searching products by a keyword)
-            var query3 = from pv in query2
-                         group pv by pv.Id
-                         into pvGroup
-                         orderby pvGroup.Key
-                         select pvGroup.FirstOrDefault();
+            PagedList<ProductVariant> productVariants = null;
+            try
+            {
+                var query3 = from pv in query2
+                             group pv by pv.Id
+                                 into pvGroup
+                                 orderby pvGroup.Key
+                                 select pvGroup.FirstOrDefault();
 
-            query3 = query3.OrderBy(x => x.Id);
+                query3 = query3.OrderBy(x => x.Id);
 
-            var productVariants = new PagedList<ProductVariant>(query3, pageIndex, pageSize);
+                productVariants = new PagedList<ProductVariant>(query3, pageIndex, pageSize);
+            }
+            catch (System.Data.EntityCommandCompilationException ex) //group.firstordefault not supported in MySql
+            {
+                //I would prefer to do a test for MySql data provider, but didn't want to make changes
+                //to the original class to include the data provider.
+                //Will leave that up to official devs if they choose to
+                var groupings = from pv in query2
+                                group pv by pv.Id
+                                    into pvGroup
+                                    orderby pvGroup.Key
+                                    select pvGroup;
+
+                List<ProductVariant> tempList = new List<ProductVariant>();
+                foreach (var group in groupings)
+                {
+                    foreach (var item in group)
+                    {
+                        tempList.Add(item);
+                        break;
+                    }
+                }
+
+                var query3 = tempList.AsQueryable<ProductVariant>();
+
+                query3 = query3.OrderBy(x => x.Id);
+
+                productVariants = new PagedList<ProductVariant>(query3, pageIndex, pageSize);
+            }
+            
             return productVariants;
         }
 

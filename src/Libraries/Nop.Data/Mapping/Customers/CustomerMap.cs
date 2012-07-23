@@ -10,8 +10,15 @@ namespace Nop.Data.Mapping.Customers
         {
             this.ToTable("Customer");
             this.HasKey(c => c.Id);
-            this.Property(u => u.Username).HasMaxLength(1000);
-            this.Property(u => u.Email).HasMaxLength(1000);
+
+            //This column is indexed so make sure it is created as a varchar for MySql
+            //MySql will by default create this as a variation of type TEXT unless specified
+            this.Property(u => u.Username).HasMaxLength(1000).HasColumnType("varchar");
+
+            //This column is indexed so make sure it is created as a varchar for MySql
+            //MySql will by default create this as a variation of type TEXT unless specified
+            this.Property(u => u.Email).HasMaxLength(1000).HasColumnType("varchar");
+            
             this.Property(u => u.Password);
             this.Property(c => c.AdminComment).IsMaxLength();
             this.Property(c => c.CheckoutAttributes).IsMaxLength();
