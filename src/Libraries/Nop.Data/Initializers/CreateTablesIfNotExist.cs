@@ -36,8 +36,19 @@ namespace Nop.Data.Initializers
                 if (_tablesToValidate != null && _tablesToValidate.Length > 0)
                 {
                     //we have some table names to validate
-                    var existingTableNames = new List<string>(context.Database.SqlQuery<string>("SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE table_type = 'BASE TABLE'"));
-                    createTables = existingTableNames.Intersect(_tablesToValidate, StringComparer.InvariantCultureIgnoreCase).Count() == 0;
+                    string query = @"SELECT table_name 
+                              FROM INFORMATION_SCHEMA.TABLES 
+                              WHERE table_type = 'BASE TABLE'";
+
+                    if (context.Database.Connection.ToString().ToLowerInvariant().Contains("mysql"))
+                        query = @"SELECT table_name 
+                          FROM INFORMATION_SCHEMA.TABLES 
+                          WHERE table_type = 'BASE TABLE' 
+                          AND table_schema = '" + context.Database.Connection.Database + "'";
+
+                    var existingTableNames = new List<string>(context.Database.SqlQuery<string>(query));
+                    createTables = existingTableNames.Intersect(_tablesToValidate,
+                         StringComparer.InvariantCultureIgnoreCase).Count() == 0;
                 }
                 else
                 {
