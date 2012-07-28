@@ -38,7 +38,9 @@ namespace Nop.Data
             customCommands.AddRange(ParseCommands(HostingEnvironment.MapPath("~/App_Data/MySql.Indexes.sql"), false));
             //use webHelper.MapPath instead of HostingEnvironment.MapPath which is not available in unit tests
             customCommands.AddRange(ParseCommands(HostingEnvironment.MapPath("~/App_Data/MySql.StoredProcedures.sql"), false));
-            
+
+            customCommands.AddRange(ParseCommands(HostingEnvironment.MapPath("~/App_Data/MySql.Fixes.sql"), false));
+
             var initializer = new CreateTablesIfNotExist<NopObjectContext>(tablesToValidate, customCommands.ToArray());
             Database.SetInitializer(initializer);
         }
