@@ -16,16 +16,16 @@ CREATE INDEX `IX_Currency_DisplayOrder` ON `Currency` ( `DisplayOrder` ASC)
 CREATE INDEX `IX_Log_CreatedOnUtc` ON `Log` (`CreatedOnUtc` ASC)
 -- GO
 
-CREATE INDEX `IX_Customer_Email` ON `Customer` (`Email` ASC)
+CREATE INDEX `IX_Customer_Email` ON `Customer` (`Email` (255) ASC)
 -- GO
 
-CREATE INDEX `IX_Customer_Username` ON `Customer` (`Username` ASC)
+CREATE INDEX `IX_Customer_Username` ON `Customer` (`Username` (255) ASC)
 -- GO
 
 CREATE INDEX `IX_Customer_CustomerGuid` ON `Customer` (`CustomerGuid` ASC)
 -- GO
 
-CREATE INDEX `IX_GenericAttribute_EntityId_and_KeyGroup` ON `GenericAttribute` (`EntityId` ASC, `KeyGroup` ASC)
+CREATE INDEX `IX_GenericAttribute_EntityId_and_KeyGroup` ON `GenericAttribute` (`EntityId` ASC, `KeyGroup` (255) ASC)
 -- GO
 
 CREATE INDEX `IX_QueuedEmail_CreatedOnUtc` ON `QueuedEmail` (`CreatedOnUtc` ASC)
